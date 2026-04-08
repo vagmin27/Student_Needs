@@ -27,10 +27,13 @@ export function AlumniDashboard() {
   const [showCreateReferral, setShowCreateReferral] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isCreatingReferral, setIsCreatingReferral] = useState(false);
+  
+  // Student Profile Modal state
   const [showStudentProfile, setShowStudentProfile] = useState(false);
   const [selectedStudentProfile, setSelectedStudentProfile] = useState(null);
   const [loadingStudentProfile, setLoadingStudentProfile] = useState(false);
 
+  // Get alumni name from backend auth or default
   const alumniName = user ? `${user.firstName} ${user.lastName}` : 'Alumni';
   const alumniCompany = user?.accountType === 'Alumni' ? user.company : '';
 
@@ -54,6 +57,7 @@ export function AlumniDashboard() {
     vacancy: '',
   });
 
+  // Update company in forms when user data loads
   useEffect(() => {
     if (user?.accountType === 'Alumni') {
       const company = user.company || '';
@@ -67,6 +71,7 @@ export function AlumniDashboard() {
   }, [user]);
 
   const loadData = async () => {
+    // Fetch opportunities from backend if authenticated
     if (isAuthenticated && user) {
       try {
         const response = await opportunitiesApi.getMyOpportunities();
@@ -79,6 +84,7 @@ export function AlumniDashboard() {
     }
   };
 
+  // Load student profile
   const loadStudentProfile = async (studentId) => {
     setLoadingStudentProfile(true);
     setShowStudentProfile(true);
@@ -91,7 +97,7 @@ export function AlumniDashboard() {
       console.error('Failed to load student profile:', error);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || 'Failed to load student profile',
+        message: error.response?.data?.message || 'Failed to load student profile',
       });
       setShowStudentProfile(false);
     } finally {
@@ -99,6 +105,7 @@ export function AlumniDashboard() {
     }
   };
 
+  // Load applications for a selected opportunity
   const loadApplicationsForOpportunity = async (opportunityId) => {
     try {
       const response = await applicationsApi.getApplicationsForOpportunity(opportunityId);
@@ -142,8 +149,9 @@ export function AlumniDashboard() {
       };
 
       const response = await opportunitiesApi.createOpportunity(payload);
-      dismissToast(toastId);
 
+      dismissToast(toastId);
+      
       if (response.success) {
         showToast({
           type: 'success',
@@ -168,7 +176,7 @@ export function AlumniDashboard() {
       dismissToast(toastId);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || error.message || 'Failed to create job opportunity',
+        message: error.response?.data?.message || error.message || 'Failed to create job opportunity',
       });
     } finally {
       setIsCreating(false);
@@ -183,20 +191,22 @@ export function AlumniDashboard() {
 
     try {
       const response = await applicationsApi.shortlistApplication(applicationId);
+      
       dismissToast(toastId);
-
+      
       if (response.success) {
         showToast({
           type: 'success',
           message: 'Candidate shortlisted successfully!',
         });
+        
         await loadApplicationsForOpportunity(opportunityId);
       }
     } catch (error) {
       dismissToast(toastId);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || error.message || 'Failed to shortlist candidate',
+        message: error.response?.data?.message || error.message || 'Failed to shortlist candidate',
       });
     }
   };
@@ -209,20 +219,22 @@ export function AlumniDashboard() {
 
     try {
       const response = await applicationsApi.referApplication(applicationId);
+      
       dismissToast(toastId);
-
+      
       if (response.success) {
         showToast({
           type: 'success',
           message: 'Referral provided successfully!',
         });
+        
         await loadApplicationsForOpportunity(opportunityId);
       }
     } catch (error) {
       dismissToast(toastId);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || error.message || 'Failed to provide referral',
+        message: error.response?.data?.message || error.message || 'Failed to provide referral',
       });
     }
   };
@@ -235,20 +247,22 @@ export function AlumniDashboard() {
 
     try {
       const response = await applicationsApi.rejectApplication(applicationId);
+      
       dismissToast(toastId);
-
+      
       if (response.success) {
         showToast({
           type: 'success',
           message: 'Application rejected',
         });
+        
         await loadApplicationsForOpportunity(opportunityId);
       }
     } catch (error) {
       dismissToast(toastId);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || error.message || 'Failed to reject application',
+        message: error.response?.data?.message || error.message || 'Failed to reject application',
       });
     }
   };
@@ -263,13 +277,15 @@ export function AlumniDashboard() {
 
     try {
       const response = await opportunitiesApi.updateOpportunity(opportunityId, updateData);
+      
       dismissToast(toastId);
-
+      
       if (response.success) {
         showToast({
           type: 'success',
           message: 'Opportunity updated successfully!',
         });
+        
         setShowEditOpportunity(false);
         setSelectedBackendOpportunity(null);
         await loadData();
@@ -278,7 +294,7 @@ export function AlumniDashboard() {
       dismissToast(toastId);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || error.message || 'Failed to update opportunity',
+        message: error.response?.data?.message || error.message || 'Failed to update opportunity',
       });
     } finally {
       setIsUpdatingOpportunity(false);
@@ -293,20 +309,22 @@ export function AlumniDashboard() {
 
     try {
       const response = await opportunitiesApi.deleteOpportunity(opportunityId);
+      
       dismissToast(toastId);
-
+      
       if (response.success) {
         showToast({
           type: 'success',
           message: 'Opportunity closed successfully!',
         });
+        
         await loadData();
       }
     } catch (error) {
       dismissToast(toastId);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || error.message || 'Failed to close opportunity',
+        message: error.response?.data?.message || error.message || 'Failed to close opportunity',
       });
     }
   };
@@ -344,8 +362,9 @@ export function AlumniDashboard() {
       };
 
       const response = await opportunitiesApi.createOpportunity(payload);
-      dismissToast(toastId);
 
+      dismissToast(toastId);
+      
       if (response.success) {
         showToast({
           type: 'success',
@@ -370,7 +389,7 @@ export function AlumniDashboard() {
       dismissToast(toastId);
       showToast({
         type: 'error',
-        message: error?.response?.data?.message || error.message || 'Failed to create referral opportunity',
+        message: error.response?.data?.message || error.message || 'Failed to create referral opportunity',
       });
     } finally {
       setIsCreatingReferral(false);
@@ -379,99 +398,181 @@ export function AlumniDashboard() {
 
   return (
     <div className="space-y-4 sm:space-y-6 mt-20 sm:mt-24 px-4 sm:px-6 md:px-8">
-  {/* Header */}
-  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-    <h2 className="text-2xl font-bold tracking-tight">Alumni Dashboard</h2>
-    <div className="mt-2 sm:mt-0 flex gap-2">
-      <Button
-        variant="default"
-        onClick={() => setShowCreateJob(true)}
-        className="flex items-center gap-2"
-      >
-        <Plus className="w-4 h-4" /> Post Job
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() => setShowCreateReferral(true)}
-        className="flex items-center gap-2"
-      >
-        <Plus className="w-4 h-4" /> Post Referral
-      </Button>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col items-start justify-center">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight text-foreground">
+              <span className="gradient-text2">Alumni </span> 
+              <span className="gradient-text3">Dashboard</span>
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              {user ? `Welcome back, ${alumniName}!` : 'Create jobs and provide signed referrals to verified students'}
+            </p>
+        </div>
+        <div className="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
+          <Button variant="alumni" onClick={() => setShowCreateJob(true)}
+          className='text-background rounded-md hover:bg-muted-foreground bg-primary text-sm sm:text-base'>
+            <Briefcase className="w-4 h-4" />
+            Post Job
+          </Button>
+          <Button variant="success" onClick={() => setShowCreateReferral(true)}
+          className='text-background rounded-md bg-muted-foreground hover:bg-primary text-sm sm:text-base'>
+            <Star className="w-4 h-4" />
+            Post Referral
+          </Button>
+        </div>
+      </div>
+
+      <AlumniStats backendOpportunities={backendOpportunities} />
+
+      <AlumniTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      {(activeTab === 'referrals' || activeTab === 'jobs') && (
+        <div className="space-y-4 sm:space-y-6">
+          {isAuthenticated && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+              <BackendOpportunitiesList
+                opportunities={backendOpportunities}
+                selectedOpportunity={selectedBackendOpportunity}
+                onSelectOpportunity={(opp) => {
+                  setSelectedBackendOpportunity(opp);
+                  loadApplicationsForOpportunity(opp._id);
+                }}
+                onCreateOpportunity={() => activeTab === 'jobs' ? setShowCreateJob(true) : setShowCreateReferral(true)}
+                onEditOpportunity={handleEditOpportunityClick}
+                onDeleteOpportunity={handleDeleteOpportunity}
+              />
+              <div className="bg-card rounded-xl border border-border/50">
+                {selectedBackendOpportunity ? (
+                  <div className="p-4 sm:p-6">
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 truncate">
+                      Applications for "{selectedBackendOpportunity.jobTitle}"
+                    </h3>
+                    {!Array.isArray(selectedOpportunityApplications) || selectedOpportunityApplications.length === 0 ? (
+                      <div className="text-center py-6 sm:py-8 text-muted-foreground">
+                        <Briefcase className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 opacity-50" />
+                        <p className="text-sm sm:text-base">No applications yet</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2 sm:space-y-3 max-h-[400px] sm:max-h-[600px] overflow-y-auto">
+                        {selectedOpportunityApplications.map((application) => (
+                          <ApplicationCard
+                            key={application._id}
+                            application={application}
+                            opportunityId={selectedBackendOpportunity._id}
+                            onViewProfile={loadStudentProfile}
+                            onShortlist={handleShortlistBackend}
+                            onReject={handleRejectBackend}
+                            onRefer={handleReferBackend}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full min-h-[200px] sm:min-h-[300px] text-sm sm:text-base text-muted-foreground px-4">
+                    <p className="text-center">Select an opportunity to view applications</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'candidates' && (
+        <div className="space-y-4 sm:space-y-6">
+          {isAuthenticated && backendOpportunities.length > 0 && (
+            <div className="bg-card rounded-xl border border-border/50 p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">
+                Candidates from Backend Opportunities
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                {backendOpportunities.map((opportunity) => (
+                  <div key={opportunity._id} className="border border-border/50 rounded-lg p-3 sm:p-4">
+                    <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 mb-2 sm:mb-3">
+                      <h4 className="font-medium text-sm sm:text-base text-foreground truncate">{opportunity.jobTitle}</h4>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setSelectedBackendOpportunity(opportunity);
+                          loadApplicationsForOpportunity(opportunity._id);
+                          setActiveTab('jobs');
+                        }}
+                        className="text-xs sm:text-sm whitespace-nowrap w-full xs:w-auto"
+                      >
+                        View Applications
+                      </Button>
+                    </div>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      {opportunity.referralsGiven || 0} / {opportunity.numberOfReferrals} referrals given
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {(!isAuthenticated || backendOpportunities.length === 0) && (
+            <div className="bg-card rounded-xl p-6 sm:p-8 md:p-12 border border-border/50 text-center">
+              <Briefcase className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
+                No Candidates Yet
+              </h3>
+              <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4">
+                Post opportunities to start receiving applications from candidates
+              </p>
+              <Button 
+                variant="alumni" 
+                onClick={() => setActiveTab('jobs')}
+                className='bg-primary text-background'
+              >
+                <Briefcase className="w-4 h-4" />
+                Post Opportunity
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
+
+      <CreateJobModal
+        showModal={showCreateJob}
+        onClose={() => setShowCreateJob(false)}
+        jobForm={jobForm}
+        setJobForm={setJobForm}
+        onSubmit={handleCreateJob}
+        isCreating={isCreating}
+      />
+
+      <PostReferralModal
+        showModal={showCreateReferral}
+        onClose={() => setShowCreateReferral(false)}
+        referralForm={referralForm}
+        setReferralForm={setReferralForm}
+        onSubmit={handleCreateReferral}
+        isCreating={isCreatingReferral}
+      />
+
+      <EditOpportunityModal
+        showModal={showEditOpportunity}
+        onClose={() => {
+          setShowEditOpportunity(false);
+          setSelectedBackendOpportunity(null);
+        }}
+        opportunity={selectedBackendOpportunity}
+        onSubmit={handleUpdateOpportunity}
+        isUpdating={isUpdatingOpportunity}
+      />
+
+      <StudentProfileModal
+        isOpen={showStudentProfile}
+        onClose={() => {
+          setShowStudentProfile(false);
+          setSelectedStudentProfile(null);
+        }}
+        student={selectedStudentProfile}
+        loading={loadingStudentProfile}
+      />
     </div>
-  </div>
-
-  {/* Alumni Stats */}
-  <AlumniStats user={user} />
-
-  {/* Tab Navigation */}
-  <AlumniTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-
-  {/* Tabs Content */}
-  {activeTab === 'jobs' && (
-    <BackendOpportunitiesList
-      opportunities={backendOpportunities}
-      onEditOpportunity={handleEditOpportunityClick}
-      onDeleteOpportunity={handleDeleteOpportunity}
-      onViewApplications={loadApplicationsForOpportunity}
-    />
-  )}
-
-  {activeTab === 'candidates' && (
-    <div className="grid gap-4">
-      {selectedOpportunityApplications.map((application) => (
-        <ApplicationCard
-          key={application.id}
-          application={application}
-          onShortlist={() => handleShortlistBackend(application.id, selectedBackendOpportunity?.id)}
-          onRefer={() => handleReferBackend(application.id, selectedBackendOpportunity?.id)}
-          onReject={() => handleRejectBackend(application.id, selectedBackendOpportunity?.id)}
-          onViewStudent={() => loadStudentProfile(application.studentId)}
-        />
-      ))}
-    </div>
-  )}
-
-  {/* Modals */}
-  {showCreateJob && (
-    <CreateJobModal
-      isOpen={showCreateJob}
-      onClose={() => setShowCreateJob(false)}
-      jobForm={jobForm}
-      setJobForm={setJobForm}
-      onSubmit={handleCreateJob}
-      isSubmitting={isCreating}
-    />
-  )}
-
-  {showCreateReferral && (
-    <PostReferralModal
-      isOpen={showCreateReferral}
-      onClose={() => setShowCreateReferral(false)}
-      referralForm={referralForm}
-      setReferralForm={setReferralForm}
-      onSubmit={handleCreateReferral}
-      isSubmitting={isCreatingReferral}
-    />
-  )}
-
-  {showEditOpportunity && selectedBackendOpportunity && (
-    <EditOpportunityModal
-      isOpen={showEditOpportunity}
-      onClose={() => setShowEditOpportunity(false)}
-      opportunity={selectedBackendOpportunity}
-      onSubmit={handleUpdateOpportunity}
-      isSubmitting={isUpdatingOpportunity}
-    />
-  )}
-
-  {showStudentProfile && selectedStudentProfile && (
-    <StudentProfileModal
-      isOpen={showStudentProfile}
-      onClose={() => setShowStudentProfile(false)}
-      student={selectedStudentProfile}
-      isLoading={loadingStudentProfile}
-    />
-  )}
-</div>
   );
 }

@@ -82,6 +82,7 @@ export default function InterviewPage() {
         if (user?._id) {
           addLog('Fetching student data...');
           try {
+            // Get API base URL
             const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1';
             const authToken = localStorage.getItem('auth_token');
 
@@ -93,6 +94,7 @@ export default function InterviewPage() {
 
             addLog(`Using API base: ${apiBaseUrl}`);
 
+            // Fetch student profile from correct endpoint
             const endpoint = `${apiBaseUrl}/student/profile`;
             
             console.log('Fetching from:', endpoint);
@@ -116,6 +118,8 @@ export default function InterviewPage() {
             }
 
             const studentJsonData = await studentResponse.json();
+            console.log('Student data received:', studentJsonData);
+            
             const student = studentJsonData.data;
 
             if (!student) {
@@ -124,6 +128,7 @@ export default function InterviewPage() {
               return;
             }
 
+            // Prepare student data
             const preparedData = {
               githubUrl: student.githubUrl,
             };
@@ -193,6 +198,7 @@ export default function InterviewPage() {
             }
           } catch (studentError) {
             addLog(`Error loading student profile: ${studentError.message}`);
+            console.error('Student data fetch error:', studentError);
             setStudentData({});
           }
         } else {
@@ -201,6 +207,7 @@ export default function InterviewPage() {
         }
       } catch (error) {
         addLog(`Error loading data: ${error.message}`);
+        console.error('Fetch data error:', error);
       } finally {
         setIsLoading(false);
       }
@@ -211,8 +218,11 @@ export default function InterviewPage() {
 
   const analyzeProfile = async () => {
     try {
+      console.log('analyzeProfile called', { studentData, opportunityData });
+      
       if (!opportunityData) {
         addLog('Error: Opportunity data not loaded');
+        console.error('opportunityData is null');
         return;
       }
 
@@ -248,6 +258,7 @@ export default function InterviewPage() {
 
         const githubUrl = studentData.githubUrl || 'https://github.com';
 
+        addLog(`Sending data to analyzer...`);
         const analyzeResponse = await analyzeApi.analyzeProfile(
           resumeFile,
           linkedinFile,
@@ -266,7 +277,7 @@ export default function InterviewPage() {
           const score = analysisData.compatibility_score_percent;
           
           if (score === undefined || score === null) {
-            addLog(`Error: No compatibility score - got: ${score}`);
+            addLog(`Error: No compatibility score received`);
             return;
           }
           
@@ -284,10 +295,6 @@ export default function InterviewPage() {
             addLog(`✓ Top Skills: ${skills.slice(0, 5).join(', ')}${skills.length > 5 ? '...' : ''}`);
           }
           
-          if (analysisData.weak_skills && analysisData.weak_skills.length > 0) {
-            addLog(`⚠ Areas to improve: ${analysisData.weak_skills.join(', ')}`);
-          }
-          
           addLog('');
           addLog('✅ Ready to proceed with interview');
         } else {
@@ -296,7 +303,7 @@ export default function InterviewPage() {
       } catch (analyzeError) {
         addLog(`❌ Analysis Error: ${analyzeError.message}`);
         addLog('');
-        addLog('⚠️ Unable to reach analyzer API.');
+        addLog('⚠️ Unable to reach analyzer API. Proceeding with default score.');
         setProfileScore(50); 
         localStorage.setItem('analysisSkipped', 'true');
       }
@@ -363,7 +370,7 @@ export default function InterviewPage() {
       };
 
       conversationRef.current.onDisconnect = () => {
-        addLog('[Disconnected] Connection lost. Attempting to reconnect...');
+        addLog('[Disconnected] Connection lost.');
         if (isConversationActive) {
           handleReconnection();
         }
@@ -385,7 +392,7 @@ export default function InterviewPage() {
         await conversationRef.current.reconnect();
         addLog('✓ Reconnected successfully');
       } else {
-        addLog('Manual reconnection required. Please restart the interview.');
+        addLog('Manual reconnection required.');
         setIsConversationActive(false);
       }
     } catch (error) {
@@ -405,7 +412,7 @@ export default function InterviewPage() {
         }
         
         setIsConversationActive(false);
-        const generatedScore = Math.floor(Math.random() * 40) + 60;
+        const generatedScore = Math.floor(Math.random() * 40) + 60; 
         setInterviewScore(generatedScore);
         
         addLog(`Interview Score: ${generatedScore}`);
@@ -491,10 +498,10 @@ export default function InterviewPage() {
           </Button>
           <div className="flex-1">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight text-foreground">
-              <span className="gradient-text2">AI </span>
-              Interview
-              <span className="gradient-text3"> Session</span>
-            </h1>
+            <span className="gradient-text2">AI </span>
+            Interview
+            <span className="gradient-text3"> Session</span>
+          </h1>
           </div>
         </div>
       </div>
