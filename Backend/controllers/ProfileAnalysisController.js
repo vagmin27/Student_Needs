@@ -1,7 +1,7 @@
-const axios = require('axios');
-const FormData = require('form-data');
-const fs = require('fs');
-const path = require('path');
+import axios from 'axios';
+import FormData from 'form-data';
+import fs from 'fs';
+import path from 'path';
 
 const ANALYZE_API_URL = 'https://niftier-gaylene-buccal.ngrok-free.dev/analyze';
 
@@ -42,7 +42,7 @@ const getMockAnalysisResponse = (target_role) => {
 };
 
 // Analyze student profile against target role
-exports.analyzeProfile = async (req, res) => {
+export const analyzeProfile = async (req, res) => {
   try {
     console.log('[Profile Analysis] Request received');
     console.log('[Profile Analysis] req.files:', req.files);

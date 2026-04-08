@@ -1,16 +1,18 @@
-const Application = require("../models/ApplicationModel");
-const Opportunity = require("../models/OpportunityModel");
-const Student = require("../models/StudentModel");
-const Alumni = require("../models/AlumniModel");
+import Application from "../models/ApplicationModel.js";
+import Opportunity from "../models/OpportunityModel.js";
+import Student from "../models/StudentModel.js";
+import Alumni from "../models/AlumniModel.js";
 
+// =====================================================
+// ALUMNI SIDE - Management Endpoints
+// =====================================================
 
 // View Applications for an Opportunity
-exports.viewApplications = async (req, res) => {
+export const viewApplications = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { opportunityId } = req.params;
 
-        // Find opportunity
         const opportunity = await Opportunity.findById(opportunityId);
 
         if (!opportunity) {
@@ -20,7 +22,6 @@ exports.viewApplications = async (req, res) => {
             });
         }
 
-        // Check if the alumni is the owner of the opportunity
         if (opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
@@ -28,7 +29,6 @@ exports.viewApplications = async (req, res) => {
             });
         }
 
-        // Find all applications for this opportunity
         const applications = await Application.find({
             opportunity: opportunityId,
         })
@@ -36,7 +36,6 @@ exports.viewApplications = async (req, res) => {
         .populate('opportunity', 'jobTitle experienceLevel')
         .sort({ createdAt: -1 });
 
-        // Group applications by status
         const groupedApplications = {
             applied: applications.filter(app => app.status === "Applied"),
             shortlisted: applications.filter(app => app.status === "Shortlisted"),
@@ -69,20 +68,16 @@ exports.viewApplications = async (req, res) => {
     }
 };
 
-
-
 // View Student Profile (Read-Only)
-exports.viewStudentProfile = async (req, res) => {
+export const viewStudentProfile = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { studentId } = req.params;
 
-        // Find student with full details (exclude password and resume binary data)
         const student = await Student.findById(studentId)
             .select("-password -resume.data -linkedIn.data")
             .populate('college', 'name matchingName');
-        // console.log(student);
-        // console.log("new ");
+
         if (!student) {
             return res.status(404).json({
                 success: false,
@@ -90,18 +85,14 @@ exports.viewStudentProfile = async (req, res) => {
             });
         }
 
-        // Verify that there's at least one application from this student to any opportunity posted by this alumni
-        
         const alumni = await Alumni.findById(alumniId).populate('college', 'name matchingName');
-        // console.log(alumni);
-        if (!alumni || !alumni.college._id) {
+        if (!alumni || !alumni.college?._id) {
             return res.status(400).json({
                 success: false,
                 message: "Alumni college information not found",
             });
         }
 
-        // Check if student is from the same college
         if (student.college.matchingName !== alumni.college.matchingName) {
             return res.status(403).json({
                 success: false,
@@ -125,12 +116,11 @@ exports.viewStudentProfile = async (req, res) => {
 };
 
 // Shortlist Student
-exports.shortlistStudent = async (req, res) => {
+export const shortlistStudent = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { applicationId } = req.params;
 
-        // Find application
         const application = await Application.findById(applicationId)
             .populate('opportunity')
             .populate('student', 'firstName lastName email');
@@ -142,7 +132,6 @@ exports.shortlistStudent = async (req, res) => {
             });
         }
 
-        // Check if the alumni is the owner of the opportunity
         if (application.opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
@@ -150,7 +139,6 @@ exports.shortlistStudent = async (req, res) => {
             });
         }
 
-        // Check if already shortlisted or referred
         if (application.status === "Shortlisted") {
             return res.status(400).json({
                 success: false,
@@ -165,7 +153,6 @@ exports.shortlistStudent = async (req, res) => {
             });
         }
 
-        // Update application status
         application.status = "Shortlisted";
         application.shortlistedAt = new Date();
         await application.save();
@@ -186,12 +173,11 @@ exports.shortlistStudent = async (req, res) => {
 };
 
 // Mark as Referred
-exports.markAsReferred = async (req, res) => {
+export const markAsReferred = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { applicationId } = req.params;
 
-        // Find application
         const application = await Application.findById(applicationId)
             .populate('opportunity')
             .populate('student', 'firstName lastName email');
@@ -203,7 +189,6 @@ exports.markAsReferred = async (req, res) => {
             });
         }
 
-        // Check if the alumni is the owner of the opportunity
         if (application.opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
@@ -211,7 +196,6 @@ exports.markAsReferred = async (req, res) => {
             });
         }
 
-        // Check if already referred
         if (application.status === "Referred") {
             return res.status(400).json({
                 success: false,
@@ -219,7 +203,6 @@ exports.markAsReferred = async (req, res) => {
             });
         }
 
-        // Check if referrals are still available
         const opportunity = await Opportunity.findById(application.opportunity._id);
         if (opportunity.referralsGiven >= opportunity.numberOfReferrals) {
             return res.status(400).json({
@@ -228,21 +211,17 @@ exports.markAsReferred = async (req, res) => {
             });
         }
 
-        // Update application status
         application.status = "Referred";
         application.referredAt = new Date();
         
-        // If not already shortlisted, set shortlisted date as well
         if (!application.shortlistedAt) {
             application.shortlistedAt = new Date();
         }
 
         await application.save();
 
-        // Increment referralsGiven on the opportunity
         opportunity.referralsGiven += 1;
         
-        // Auto-close opportunity if all referral slots are filled
         if (opportunity.referralsGiven >= opportunity.numberOfReferrals) {
             opportunity.status = "Closed";
         }
@@ -264,12 +243,11 @@ exports.markAsReferred = async (req, res) => {
 };
 
 // Reject Application
-exports.rejectApplication = async (req, res) => {
+export const rejectApplication = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { applicationId } = req.params;
 
-        // Find application
         const application = await Application.findById(applicationId)
             .populate('opportunity');
 
@@ -280,7 +258,6 @@ exports.rejectApplication = async (req, res) => {
             });
         }
 
-        // Check if the alumni is the owner of the opportunity
         if (application.opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
@@ -288,7 +265,6 @@ exports.rejectApplication = async (req, res) => {
             });
         }
 
-        // Check if already referred
         if (application.status === "Referred") {
             return res.status(400).json({
                 success: false,
@@ -296,7 +272,6 @@ exports.rejectApplication = async (req, res) => {
             });
         }
 
-        // Update application status
         application.status = "Rejected";
         await application.save();
 
@@ -314,18 +289,15 @@ exports.rejectApplication = async (req, res) => {
     }
 };
 
-
 // =====================================================
 // STUDENT SIDE - Referral Application Endpoints
 // =====================================================
 
-// 5.1 Apply for Referral
-exports.applyForReferral = async (req, res) => {
+export const applyForReferral = async (req, res) => {
     try {
         const studentId = req.user.id;
         const { opportunityId } = req.body;
 
-        // Validate input
         if (!opportunityId) {
             return res.status(400).json({
                 success: false,
@@ -333,7 +305,6 @@ exports.applyForReferral = async (req, res) => {
             });
         }
 
-        // Find the student with college info
         const student = await Student.findById(studentId)
             .populate('college', 'name matchingName');
 
@@ -344,15 +315,13 @@ exports.applyForReferral = async (req, res) => {
             });
         }
 
-        // Check if resume is uploaded (resume is stored as binary data in MongoDB)
-        if (!student.resume || !student.resume.data) {
+        if (!student.resume?.data) {
             return res.status(400).json({
                 success: false,
                 message: "Please upload your resume before applying for referrals",
             });
         }
 
-        // Find the opportunity with alumni and college info
         const opportunity = await Opportunity.findById(opportunityId)
             .populate({
                 path: 'postedBy',
@@ -371,7 +340,6 @@ exports.applyForReferral = async (req, res) => {
             });
         }
 
-        // Check if opportunity is still open
         if (opportunity.status !== "Open") {
             return res.status(400).json({
                 success: false,
@@ -379,7 +347,6 @@ exports.applyForReferral = async (req, res) => {
             });
         }
 
-        // Check if referral slots are still available
         if (opportunity.referralsGiven >= opportunity.numberOfReferrals) {
             return res.status(400).json({
                 success: false,
@@ -387,7 +354,6 @@ exports.applyForReferral = async (req, res) => {
             });
         }
 
-        // Check college match
         if (!student.college || !opportunity.college) {
             return res.status(400).json({
                 success: false,
@@ -402,7 +368,6 @@ exports.applyForReferral = async (req, res) => {
             });
         }
 
-        // Check if already applied
         const existingApplication = await Application.findOne({
             opportunity: opportunityId,
             student: studentId,
@@ -415,7 +380,6 @@ exports.applyForReferral = async (req, res) => {
             });
         }
 
-        // Create profile snapshot
         const profileSnapshot = {
             firstName: student.firstName,
             lastName: student.lastName,
@@ -426,7 +390,6 @@ exports.applyForReferral = async (req, res) => {
             profileCompleteness: student.profileCompleteness,
         };
 
-        // Create resume snapshot (store reference info, not actual binary data)
         const resumeSnapshot = {
             fileName: student.resume.fileName,
             fileSize: student.resume.fileSize,
@@ -434,7 +397,6 @@ exports.applyForReferral = async (req, res) => {
             uploadedAt: student.resume.uploadedAt,
         };
 
-        // Create application
         const application = await Application.create({
             opportunity: opportunityId,
             student: studentId,
@@ -454,7 +416,6 @@ exports.applyForReferral = async (req, res) => {
             }],
         });
 
-        // Populate the created application for response
         const populatedApplication = await Application.findById(application._id)
             .populate('opportunity', 'jobTitle roleDescription experienceLevel requiredSkills')
             .populate('alumni', 'firstName lastName company currentRole');
@@ -471,7 +432,6 @@ exports.applyForReferral = async (req, res) => {
     } catch (error) {
         console.error("Apply for referral error:", error);
         
-        // Handle duplicate key error
         if (error.code === 11000) {
             return res.status(400).json({
                 success: false,
@@ -486,22 +446,19 @@ exports.applyForReferral = async (req, res) => {
     }
 };
 
-// 5.2 Application Status List - Get all applications for a student
-exports.getMyApplications = async (req, res) => {
+// Application Status List
+export const getMyApplications = async (req, res) => {
     try {
         const studentId = req.user.id;
         const { status, page = 1, limit = 10 } = req.query;
 
-        // Build filter query
         const filter = { student: studentId };
         if (status && ["Applied", "Shortlisted", "Referred", "Rejected"].includes(status)) {
             filter.status = status;
         }
 
-        // Get total count
         const totalCount = await Application.countDocuments(filter);
 
-        // Find applications with pagination
         const applications = await Application.find(filter)
             .populate('opportunity', 'jobTitle roleDescription experienceLevel requiredSkills status')
             .populate('alumni', 'firstName lastName email company currentRole image')
@@ -509,7 +466,6 @@ exports.getMyApplications = async (req, res) => {
             .skip((page - 1) * limit)
             .limit(parseInt(limit));
 
-        // Group by status for summary
         const allApplications = await Application.find({ student: studentId });
         const statusSummary = {
             applied: allApplications.filter(app => app.status === "Applied").length,
@@ -543,13 +499,12 @@ exports.getMyApplications = async (req, res) => {
     }
 };
 
-// 5.3 Application Details - Get specific application details
-exports.getApplicationDetails = async (req, res) => {
+// Application Details
+export const getApplicationDetails = async (req, res) => {
     try {
         const studentId = req.user.id;
         const { applicationId } = req.params;
 
-        // Find application
         const application = await Application.findById(applicationId)
             .populate('opportunity', 'jobTitle roleDescription experienceLevel requiredSkills status numberOfReferrals createdAt')
             .populate('alumni', 'firstName lastName email company currentRole image linkedIn')
@@ -562,7 +517,6 @@ exports.getApplicationDetails = async (req, res) => {
             });
         }
 
-        // Verify the student owns this application
         if (application.student._id.toString() !== studentId) {
             return res.status(403).json({
                 success: false,
@@ -570,7 +524,6 @@ exports.getApplicationDetails = async (req, res) => {
             });
         }
 
-        // Build detailed response
         const applicationDetails = {
             _id: application._id,
             status: application.status,
@@ -595,7 +548,6 @@ exports.getApplicationDetails = async (req, res) => {
                 image: application.alumni.image,
                 linkedIn: application.alumni.linkedIn,
             },
-            // Show the snapshot used during application
             resumeSnapshot: application.resumeSnapshot,
             profileSnapshot: application.profileSnapshot,
             statusHistory: application.statusHistory || [],
@@ -618,13 +570,12 @@ exports.getApplicationDetails = async (req, res) => {
     }
 };
 
-// Download Student Resume (Alumni - same college)
-exports.downloadStudentResume = async (req, res) => {
+// Download Student Resume
+export const downloadStudentResume = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { studentId } = req.params;
 
-        // Find student with resume data
         const student = await Student.findById(studentId)
             .select('resume college')
             .populate('college', 'matchingName');
@@ -636,10 +587,9 @@ exports.downloadStudentResume = async (req, res) => {
             });
         }
 
-        // Verify alumni is from same college
         const alumni = await Alumni.findById(alumniId).populate('college', 'matchingName');
         
-        if (!alumni || !alumni.college) {
+        if (!alumni?.college) {
             return res.status(400).json({
                 success: false,
                 message: "Alumni college information not found",
@@ -653,19 +603,17 @@ exports.downloadStudentResume = async (req, res) => {
             });
         }
 
-        if (!student.resume || !student.resume.data) {
+        if (!student.resume?.data) {
             return res.status(404).json({
                 success: false,
                 message: "No resume found for this student",
             });
         }
 
-        // Set headers for PDF download
         res.setHeader('Content-Type', student.resume.contentType);
         res.setHeader('Content-Disposition', `attachment; filename="${student.resume.fileName}"`);
         res.setHeader('Content-Length', student.resume.fileSize);
 
-        // Send the PDF file
         return res.send(student.resume.data);
 
     } catch (error) {

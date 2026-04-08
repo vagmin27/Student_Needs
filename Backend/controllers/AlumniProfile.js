@@ -1,7 +1,7 @@
-const Alumni = require("../models/AlumniModel");
+import Alumni from "../models/AlumniModel.js";
 
 // Create / Update Profile
-exports.updateProfile = async (req, res) => {
+export const updateProfile = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const {
@@ -62,7 +62,7 @@ exports.updateProfile = async (req, res) => {
 };
 
 // Get Own Profile
-exports.getProfile = async (req, res) => {
+export const getProfile = async (req, res) => {
     try {
         const alumniId = req.user.id;
 

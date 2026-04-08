@@ -1,8 +1,9 @@
-const Opportunity = require("../models/OpportunityModel");
-const Alumni = require("../models/AlumniModel");
+import Opportunity from "../models/OpportunityModel.js";
+import Alumni from "../models/AlumniModel.js";
+import Student from "../models/StudentModel.js"; // Moved from dynamic require
 
 // Post Referral Opportunity
-exports.createOpportunity = async (req, res) => {
+export const createOpportunity = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const {
@@ -20,7 +21,6 @@ exports.createOpportunity = async (req, res) => {
                 message: "Job title, role description, experience level, and number of referrals are required",
             });
         }
-
 
         // Validate numberOfReferrals
         if (numberOfReferrals < 1) {
@@ -80,7 +80,7 @@ exports.createOpportunity = async (req, res) => {
 };
 
 // Update Referral Opportunity
-exports.updateOpportunity = async (req, res) => {
+export const updateOpportunity = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { opportunityId } = req.params;
@@ -92,7 +92,6 @@ exports.updateOpportunity = async (req, res) => {
             numberOfReferrals,
         } = req.body;
 
-        // Find opportunity
         const opportunity = await Opportunity.findById(opportunityId);
 
         if (!opportunity) {
@@ -102,7 +101,6 @@ exports.updateOpportunity = async (req, res) => {
             });
         }
 
-        // Check if the alumni is the owner of the opportunity
         if (opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
@@ -110,8 +108,6 @@ exports.updateOpportunity = async (req, res) => {
             });
         }
 
-        
-        // Validate numberOfReferrals if provided
         if (numberOfReferrals !== undefined && numberOfReferrals < 1) {
             return res.status(400).json({
                 success: false,
@@ -128,7 +124,6 @@ exports.updateOpportunity = async (req, res) => {
 
         await opportunity.save();
 
-        // Populate alumni and college details
         await opportunity.populate([
             { path: 'postedBy', select: 'firstName lastName email company jobTitle' },
             { path: 'college', select: 'name matchingName' }
@@ -150,12 +145,11 @@ exports.updateOpportunity = async (req, res) => {
 };
 
 // Close/Delete Referral Opportunity
-exports.deleteOpportunity = async (req, res) => {
+export const deleteOpportunity = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const { opportunityId } = req.params;
 
-        // Find opportunity
         const opportunity = await Opportunity.findById(opportunityId);
 
         if (!opportunity) {
@@ -165,7 +159,6 @@ exports.deleteOpportunity = async (req, res) => {
             });
         }
 
-        // Check if the alumni is the owner of the opportunity
         if (opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
@@ -173,7 +166,7 @@ exports.deleteOpportunity = async (req, res) => {
             });
         }
 
-        // Close the opportunity (soft delete by changing status)
+        // Close the opportunity (soft delete)
         opportunity.status = "Closed";
         await opportunity.save();
 
@@ -191,17 +184,15 @@ exports.deleteOpportunity = async (req, res) => {
     }
 };
 
-// View Posted Opportunities (for students - filtered by same college)
-exports.getOpportunities = async (req, res) => {
+// View Posted Opportunities
+export const getOpportunities = async (req, res) => {
     try {
         const userId = req.user.id;
         const accountType = req.user.accountType;
 
         let userCollege;
 
-        // Get user's college based on account type
         if (accountType === "Student") {
-            const Student = require("../models/StudentModel");
             const student = await Student.findById(userId).select("college");
             if (!student) {
                 return res.status(404).json({
@@ -233,7 +224,6 @@ exports.getOpportunities = async (req, res) => {
             });
         }
 
-        // Find all open opportunities from the same college
         const opportunities = await Opportunity.find({
             college: userCollege,
             status: "Open",
@@ -259,11 +249,10 @@ exports.getOpportunities = async (req, res) => {
 };
 
 // Get Alumni's Own Posted Opportunities
-exports.getMyOpportunities = async (req, res) => {
+export const getMyOpportunities = async (req, res) => {
     try {
         const alumniId = req.user.id;
 
-        // Find all opportunities posted by this alumni
         const opportunities = await Opportunity.find({
             postedBy: alumniId,
         })

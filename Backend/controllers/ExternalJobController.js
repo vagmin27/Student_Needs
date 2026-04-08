@@ -1,7 +1,7 @@
-const axios = require('axios');
+import axios from "axios";
 
 // Get jobs from Arbeitnow API
-exports.getExternalJobs = async (req, res) => {
+export const getExternalJobs = async (req, res) => {
     try {
         const { page = 1 } = req.query;
 
@@ -50,7 +50,7 @@ exports.getExternalJobs = async (req, res) => {
 };
 
 // Search jobs from Arbeitnow API
-exports.searchExternalJobs = async (req, res) => {
+export const searchExternalJobs = async (req, res) => {
     try {
         const { search, page = 1 } = req.query;
 

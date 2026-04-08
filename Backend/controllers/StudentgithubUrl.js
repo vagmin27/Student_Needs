@@ -1,8 +1,8 @@
-const Student = require("../models/StudentModel");
-const { calculateProfileCompleteness } = require("../utils/calculateProfileScore");
+import Student from "../models/StudentModel.js";
+import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js";
 
 // Add GitHub URL (first time)
-exports.addGithubUrl = async (req, res) => {
+export const addGithubUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
     const { githubUrl } = req.body;
@@ -64,7 +64,7 @@ exports.addGithubUrl = async (req, res) => {
 };
 
 // Update GitHub URL
-exports.updateGithubUrl = async (req, res) => {
+export const updateGithubUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
     const { githubUrl } = req.body;
@@ -118,7 +118,7 @@ exports.updateGithubUrl = async (req, res) => {
 };
 
 // Get GitHub URL
-exports.getGithubUrl = async (req, res) => {
+export const getGithubUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -155,7 +155,7 @@ exports.getGithubUrl = async (req, res) => {
 };
 
 // Delete GitHub URL
-exports.deleteGithubUrl = async (req, res) => {
+export const deleteGithubUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
 

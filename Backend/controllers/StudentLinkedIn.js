@@ -1,8 +1,8 @@
-const Student = require("../models/StudentModel");
-const { uploadPdfToMongoDB } = require("../utils/getStringFromPdf");
-const { calculateProfileCompleteness } = require("../utils/calculateProfileScore");
+import Student from "../models/StudentModel.js";
+import { uploadPdfToMongoDB } from "../utils/getStringFromPdf.js";
+import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js";
 
-exports.uploadLinkedIn = async (req, res) => {
+export const uploadLinkedIn = async (req, res) => {
   try {
     const studentId = req.user.id;
     const { linkedInUrl } = req.body;
@@ -63,7 +63,7 @@ exports.uploadLinkedIn = async (req, res) => {
   }
 };
 
-exports.updateLinkedInLink = async (req, res) => {
+export const updateLinkedInLink = async (req, res) => {
   try {
     const studentId = req.user.id;
     const { linkedInUrl } = req.body;
@@ -109,7 +109,7 @@ exports.updateLinkedInLink = async (req, res) => {
   }
 };
 
-exports.updateLinkedInPdf = async (req, res) => {
+export const updateLinkedInPdf = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -160,7 +160,7 @@ exports.updateLinkedInPdf = async (req, res) => {
   }
 };
 
-exports.getLinkedIn = async (req, res) => {
+export const getLinkedIn = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -197,7 +197,7 @@ exports.getLinkedIn = async (req, res) => {
   }
 };
 
-exports.deleteLinkedIn = async (req, res) => {
+export const deleteLinkedIn = async (req, res) => {
   try {
     const studentId = req.user.id;
 

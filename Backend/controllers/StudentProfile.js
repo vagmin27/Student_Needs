@@ -1,8 +1,8 @@
-const Student = require("../models/StudentModel");
-const { calculateProfileCompleteness } = require("../utils/calculateProfileScore");
+import Student from "../models/StudentModel.js";
+import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js";
 
 // Create / Update Profile
-exports.updateProfile = async (req, res) => {
+export const updateProfile = async (req, res) => {
     try {
         const studentId = req.user.id;
         const {
@@ -68,7 +68,7 @@ exports.updateProfile = async (req, res) => {
 };
 
 // Get Own Profile
-exports.getProfile = async (req, res) => {
+export const getProfile = async (req, res) => {
     try {
         const studentId = req.user.id;
 
@@ -100,7 +100,7 @@ exports.getProfile = async (req, res) => {
 };
 
 // Get Profile Completion Status
-exports.getProfileStatus = async (req, res) => {
+export const getProfileStatus = async (req, res) => {
     try {
         const studentId = req.user.id;
 

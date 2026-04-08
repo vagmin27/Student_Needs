@@ -1,11 +1,13 @@
-const bcrypt = require("bcrypt")
-const Student = require("../models/StudentModel")
-const College = require("../models/CollegeModel")
-const jwt = require("jsonwebtoken")
-const {handleAuthSuccess} = require('../utils/tokenGenerator');
-require("dotenv").config()
-const validator = require("validator")
-const { calculateProfileCompleteness } = require("../utils/calculateProfileScore");
+import bcrypt from "bcrypt"
+import Student from "../models/StudentModel"
+import College from "../models/CollegeModel"
+import jwt from "jsonwebtoken"
+import { handleAuthSuccess } from '../utils/tokenGenerator.js'
+import dotenv from "dotenv"
+import validator from "validator"
+import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js"
+
+dotenv.config()
 
 // Signup Controller for Registering USers
 
@@ -23,7 +25,7 @@ function validateEmail(email, res) {
 
 
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     // Destructure fields from the request body
     const {
@@ -115,7 +117,7 @@ exports.signup = async (req, res) => {
 }
 
 // Login controller for authenticating users
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     // Get email and password from request body
     const { email, password } = req.body

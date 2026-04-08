@@ -1,8 +1,8 @@
-const Student = require("../models/StudentModel");
-const { uploadPdfToMongoDB } = require("../utils/getStringFromPdf");
-const { calculateProfileCompleteness } = require("../utils/calculateProfileScore");
+import Student from "../models/StudentModel.js";
+import { uploadPdfToMongoDB } from "../utils/getStringFromPdf.js";
+import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js";
 
-exports.uploadResume = async (req, res) => {
+export const uploadResume = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -58,7 +58,7 @@ exports.uploadResume = async (req, res) => {
   }
 };
 
-exports.updateResume = async (req, res) => {
+export const updateResume = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -106,7 +106,7 @@ exports.updateResume = async (req, res) => {
   }
 };
 
-exports.getResume = async (req, res) => {
+export const getResume = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -143,7 +143,7 @@ exports.getResume = async (req, res) => {
   }
 };
 
-exports.deleteResume = async (req, res) => {
+export const deleteResume = async (req, res) => {
   try {
     const studentId = req.user.id;
 
