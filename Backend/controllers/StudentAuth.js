@@ -1,88 +1,63 @@
-import bcrypt from "bcrypt"
-import Student from "../models/StudentModel"
-import College from "../models/CollegeModel"
-import jwt from "jsonwebtoken"
-import { handleAuthSuccess } from '../utils/tokenGenerator.js'
-import dotenv from "dotenv"
-import validator from "validator"
-import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js"
+import bcrypt from "bcrypt";
+import Student from "../models/StudentModel.js";
+import College from "../models/CollegeModel.js";
+import jwt from "jsonwebtoken";
+import { handleAuthSuccess } from "../utils/tokenGenerator.js";
+import dotenv from "dotenv";
+import validator from "validator";
+import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js";
 
-dotenv.config()
+dotenv.config();
 
-// Signup Controller for Registering USers
-
-// Helper function for email and password validation
+// ================= VALIDATION =================
 function validateEmail(email, res) {
-    if (!validator.isEmail(email)) {
-        res.status(403).json({
-            success: false,
-            message: "Invalid Email",
-        });
-        return false;
-    }
-    return true;
+  if (!validator.isEmail(email)) {
+    res.status(403).json({
+      success: false,
+      message: "Invalid Email",
+    });
+    return false;
+  }
+  return true;
 }
 
-
-
+// ================= SIGNUP =================
 export const signup = async (req, res) => {
   try {
-    // Destructure fields from the request body
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      accountType,
-      collegeName,
-    } = req.body
-    // Check if All Details are there or not
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !password ||
-      !collegeName
-    ) {
-      return res.status(403).send({
+    const { firstName, lastName, email, password, accountType, collegeName } = req.body;
+
+    if (!firstName || !lastName || !email || !password || !collegeName) {
+      return res.status(403).json({
         success: false,
         message: "All Fields are required",
-      })
+      });
     }
-    //validator
-    if (!validateEmail(email, res)) {
-        return;
-    }
-   
-    // Check if user already exists
-    const existingStudent = await Student.findOne({ email })
+
+    if (!validateEmail(email, res)) return;
+
+    const existingStudent = await Student.findOne({ email });
     if (existingStudent) {
       return res.status(400).json({
         success: false,
-        message: "Student already exists. Please sign in to continue.",
-      })
+        message: "Student already exists. Please login.",
+      });
     }
 
-    // Remove spaces from college name to create matchingName
-    const matchingName = collegeName.replace(/\s+/g, '').toLowerCase();
+    const matchingName = collegeName.replace(/\s+/g, "").toLowerCase();
 
-    // Check if college exists with matching name
     let college = await College.findOne({ matchingName });
 
-    // If college doesn't exist, create it
     if (!college) {
       college = await College.create({
         name: collegeName,
-        matchingName: matchingName,
+        matchingName,
         Student: [],
         Alumni: [],
       });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    
     const student = await Student.create({
       firstName,
       lastName,
@@ -91,78 +66,96 @@ export const signup = async (req, res) => {
       accountType: accountType || "Student",
       image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`,
       college: college._id,
-    })
+    });
 
-    // Calculate profile completeness
+    // Profile score
     student.profileCompleteness = calculateProfileCompleteness(student);
     await student.save();
 
-    // Add student to college's student array
+    // Add to college
     college.Student.push(student._id);
     await college.save();
 
-    // Populate college details before sending response
-    await student.populate('college', 'name matchingName');
+    await student.populate("college", "name matchingName");
 
-    // token generation, user object transformation, and response
-    handleAuthSuccess(student, res, "student registered successfully");
+    return handleAuthSuccess(student, res, "Student registered successfully");
 
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return res.status(500).json({
       success: false,
-      message: "student cannot be registered. Please try again.",
-    })
+      message: "Student cannot be registered",
+    });
   }
-}
+};
 
-// Login controller for authenticating users
+// ================= LOGIN =================
 export const login = async (req, res) => {
   try {
-    // Get email and password from request body
-    const { email, password } = req.body
-      console.log("Login request body:", req.body);
-    // Check if email or password is missing
+    const { email, password } = req.body;
+
     if (!email || !password) {
-      // Return 400 Bad Request status code with error message
       return res.status(400).json({
         success: false,
-        message: `Please Fill up All the Required Fields`,
-      })
+        message: "Please fill all required fields",
+      });
     }
 
-    if (!validateEmail(email, res)) {
-      return;
-    }
+    if (!validateEmail(email, res)) return;
 
-    // Find user with provided email
     const student = await Student.findOne({ email });
 
-    // If user not found with provided email
     if (!student) {
-      // Return 401 Unauthorized status code with error message
       return res.status(401).json({
         success: false,
-        message: `Student is not Registered with Us Please SignUp to Continue`,
-      })
+        message: "Student not registered",
+      });
     }
 
-    // Generate JWT token and Compare Password
     if (await bcrypt.compare(password, student.password)) {
-        // token generation, user object transformation, and response
-        return handleAuthSuccess(student, res, "Student logged in successfully");
+      return handleAuthSuccess(student, res, "Login successful");
     } else {
       return res.status(401).json({
         success: false,
-        message: `Password is incorrect`,
-      })
+        message: "Incorrect password",
+      });
     }
+
   } catch (error) {
-    console.error(error)
-    // Return 500 Internal Server Error status code with error message
+    console.error(error);
     return res.status(500).json({
       success: false,
-      message: `Login Failure Please Try Again`,
-    })
+      message: "Login failed",
+    });
   }
-}
+};
+
+// ================= GET STUDENT DATA (🔥 FIX ADDED) =================
+export const getStudentData = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const student = await Student.findById(studentId)
+      .select("-password")
+      .populate("college", "name matchingName");
+
+    if (!student) {
+      return res.status(404).json({
+        success: false,
+        message: "Student not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: student,
+    });
+
+  } catch (error) {
+    console.error("Get Student Error:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch student data",
+    });
+  }
+};

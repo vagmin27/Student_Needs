@@ -1,14 +1,13 @@
 import bcrypt from "bcrypt";
 import Alumni from "../models/AlumniModel.js";
 import College from "../models/CollegeModel.js";
-import jwt from "jsonwebtoken";
 import { handleAuthSuccess } from "../utils/tokenGenerator.js";
 import dotenv from "dotenv";
 import validator from "validator";
 
 dotenv.config();
 
-// Helper function for email validation
+// ================= VALIDATION =================
 function validateEmail(email, res) {
   if (!validator.isEmail(email)) {
     res.status(403).json({
@@ -20,7 +19,7 @@ function validateEmail(email, res) {
   return true;
 }
 
-// Alumni Signup Controller
+// ================= SIGNUP =================
 export const signup = async (req, res) => {
   try {
     const {
@@ -34,7 +33,7 @@ export const signup = async (req, res) => {
     } = req.body;
 
     if (!firstName || !lastName || !email || !password || !collegeName) {
-      return res.status(403).send({
+      return res.status(403).json({
         success: false,
         message: "All required fields are required",
       });
@@ -46,7 +45,7 @@ export const signup = async (req, res) => {
     if (existingAlumni) {
       return res.status(400).json({
         success: false,
-        message: "Alumni already exists. Please sign in to continue.",
+        message: "Alumni already exists. Please login.",
       });
     }
 
@@ -57,7 +56,7 @@ export const signup = async (req, res) => {
     if (!college) {
       college = await College.create({
         name: collegeName,
-        matchingName: matchingName,
+        matchingName,
         Student: [],
         Alumni: [],
       });
@@ -82,7 +81,8 @@ export const signup = async (req, res) => {
 
     await alumni.populate("college", "name matchingName");
 
-    handleAuthSuccess(alumni, res, "Alumni registered successfully");
+    return handleAuthSuccess(alumni, res, "Alumni registered successfully");
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -92,7 +92,7 @@ export const signup = async (req, res) => {
   }
 };
 
-// Alumni Login Controller
+// ================= LOGIN =================
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -100,18 +100,21 @@ export const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: `Please fill up all the required fields`,
+        message: "Please fill all required fields",
       });
     }
 
     if (!validateEmail(email, res)) return;
 
-    const alumni = await Alumni.findOne({ email }).populate("college", "name matchingName");
+    const alumni = await Alumni.findOne({ email }).populate(
+      "college",
+      "name matchingName"
+    );
 
     if (!alumni) {
       return res.status(401).json({
         success: false,
-        message: `Alumni is not registered with us. Please sign up to continue`,
+        message: "Alumni not registered",
       });
     }
 
@@ -122,14 +125,45 @@ export const login = async (req, res) => {
     } else {
       return res.status(401).json({
         success: false,
-        message: `Password is incorrect`,
+        message: "Incorrect password",
       });
     }
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: `Login failure. Please try again`,
+      message: "Login failed",
+    });
+  }
+};
+
+// ================= 🔥 ADD THIS (FIX) =================
+export const getAlumniData = async (req, res) => {
+  try {
+    const alumniId = req.user.id;
+
+    const alumni = await Alumni.findById(alumniId)
+      .select("-password")
+      .populate("college", "name matchingName");
+
+    if (!alumni) {
+      return res.status(404).json({
+        success: false,
+        message: "Alumni not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: alumni,
+    });
+
+  } catch (error) {
+    console.error("Get Alumni Error:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch alumni data",
     });
   }
 };

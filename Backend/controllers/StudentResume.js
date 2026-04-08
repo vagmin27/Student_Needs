@@ -1,7 +1,10 @@
+// controllers/StudentResume.js
+
 import Student from "../models/StudentModel.js";
 import { uploadPdfToMongoDB } from "../utils/getStringFromPdf.js";
 import { calculateProfileCompleteness } from "../utils/calculateProfileScore.js";
 
+// Upload Resume
 export const uploadResume = async (req, res) => {
   try {
     const studentId = req.user.id;
@@ -21,18 +24,15 @@ export const uploadResume = async (req, res) => {
       });
     }
 
-    // Check if resume already exists
     if (student.resume && student.resume.data) {
       return res.status(400).json({
         success: false,
-        message: "Resume already exists. Use update endpoint to replace it.",
+        message: "Resume already exists. Use update endpoint.",
       });
     }
 
-    // Upload PDF and get data
     const pdfData = await uploadPdfToMongoDB(req.files.resume);
 
-    // Store PDF in MongoDB
     student.resume = pdfData;
     student.profileCompleteness = calculateProfileCompleteness(student);
 
@@ -58,6 +58,7 @@ export const uploadResume = async (req, res) => {
   }
 };
 
+// Update Resume
 export const updateResume = async (req, res) => {
   try {
     const studentId = req.user.id;
@@ -77,10 +78,8 @@ export const updateResume = async (req, res) => {
       });
     }
 
-    // Upload new PDF and get data
     const pdfData = await uploadPdfToMongoDB(req.files.resume);
 
-    // Update resume in MongoDB
     student.resume = pdfData;
     student.profileCompleteness = calculateProfileCompleteness(student);
 
@@ -106,12 +105,13 @@ export const updateResume = async (req, res) => {
   }
 };
 
+// Get Resume
 export const getResume = async (req, res) => {
   try {
     const studentId = req.user.id;
 
-    const student = await Student.findById(studentId).select('resume');
-    
+    const student = await Student.findById(studentId).select("resume");
+
     if (!student) {
       return res.status(404).json({
         success: false,
@@ -126,12 +126,13 @@ export const getResume = async (req, res) => {
       });
     }
 
-    // Set headers for PDF download
-    res.setHeader('Content-Type', student.resume.contentType);
-    res.setHeader('Content-Disposition', `attachment; filename="${student.resume.fileName}"`);
-    res.setHeader('Content-Length', student.resume.fileSize);
+    res.setHeader("Content-Type", student.resume.contentType);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${student.resume.fileName}"`
+    );
+    res.setHeader("Content-Length", student.resume.fileSize);
 
-    // Send the PDF file
     return res.send(student.resume.data);
 
   } catch (error) {
@@ -143,12 +144,13 @@ export const getResume = async (req, res) => {
   }
 };
 
+// Delete Resume
 export const deleteResume = async (req, res) => {
   try {
     const studentId = req.user.id;
 
     const student = await Student.findById(studentId);
-    
+
     if (!student) {
       return res.status(404).json({
         success: false,
@@ -163,10 +165,9 @@ export const deleteResume = async (req, res) => {
       });
     }
 
-    // Remove resume from MongoDB
     student.resume = undefined;
     student.profileCompleteness = calculateProfileCompleteness(student);
-    
+
     await student.save();
 
     return res.status(200).json({

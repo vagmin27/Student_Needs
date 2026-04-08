@@ -2,7 +2,8 @@ import express from "express";
 const router = express.Router();
 
 // Import controllers
-import { signup, login, getAlumniData } from "../controllers/AlumniAuth.js";
+// import { signup, login, getAlumniData } from "../controllers/AlumniAuth.js";
+import { signup, login } from "../controllers/AlumniAuth.js";
 
 // Import middleware
 import { auth } from "../middlewares/auth.js";

@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 
 // Import controllers
-import { getSignedUrl } from "../controllers/inteview.js";
+import { getSignedUrl } from "../controllers/interview.js";
 
 // Import middleware
 import { auth } from "../middlewares/auth.js";

@@ -1,26 +1,43 @@
-export const calculateProfileCompleteness = (student) => {
-    let score = 0;
-    const fields = [
-        { field: student.firstName, weight: 7 },
-        { field: student.lastName, weight: 7 },
-        { field: student.email, weight: 6 },
-        { field: student.image, weight: 5 },
-        { field: student.college, weight: 10 },
-        { field: student.branch, weight: 8 },
-        { field: student.graduationYear, weight: 8 },
-        { field: student.skills && student.skills.length > 0, weight: 10 },
-        { field: student.projects && student.projects.length > 0, weight: 10 },
-        { field: student.certifications && student.certifications.length > 0, weight: 5 },
-        { field: student.preferredRoles && student.preferredRoles.length > 0, weight: 5 },
-        { field: student.resume && student.resume.data, weight: 7 },
-        { field: student.linkedIn && student.linkedIn.data, weight: 5 },
-        { field: student.linkedIn && student.linkedIn.linkedInUrl, weight: 2 },
-        { field: student.githubUrl, weight: 5 },
-    ];
+// utils/getStringFromPdf.js
 
-    fields.forEach(({ field, weight }) => {
-        if (field) score += weight;
-    });
+import fs from "fs";
 
-    return score;
-}
+/**
+ * Uploads PDF to MongoDB
+ */
+export const uploadPdfToMongoDB = async (resumeFile) => {
+  try {
+    if (!resumeFile) {
+      throw new Error("Resume file is required");
+    }
+
+    if (!resumeFile.name.toLowerCase().endsWith(".pdf")) {
+      throw new Error("Only PDF files are allowed");
+    }
+
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    if (resumeFile.size > maxSize) {
+      throw new Error("File size should not exceed 2MB");
+    }
+
+    // Read file buffer
+    const fileData = fs.readFileSync(resumeFile.tempFilePath);
+
+    // Delete temp file
+    fs.unlinkSync(resumeFile.tempFilePath);
+
+    return {
+      data: fileData,
+      contentType: resumeFile.mimetype,
+      fileName: resumeFile.name,
+      fileSize: resumeFile.size,
+      uploadedAt: new Date(),
+    };
+
+  } catch (error) {
+    if (resumeFile?.tempFilePath && fs.existsSync(resumeFile.tempFilePath)) {
+      fs.unlinkSync(resumeFile.tempFilePath);
+    }
+    throw error;
+  }
+};
