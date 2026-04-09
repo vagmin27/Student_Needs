@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx';
+import { Button } from '@/components/ui/button.jsx';
+import { Badge } from '@/components/ui/badge.jsx';
 import { 
   FileText, 
   Upload, 
@@ -12,8 +12,8 @@ import {
   AlertCircle,
   RefreshCw 
 } from 'lucide-react';
-import { resumeApi } from '@/services/studentProfile';
-import { showTransactionToast, dismissToast } from '@/components/TransactionToast';
+import { resumeApi } from '@/services/studentProfile.js';
+import { showTransactionToast, dismissToast } from '@/components/TransactionToast.jsx';
 
 /**
  * ResumeSection Component

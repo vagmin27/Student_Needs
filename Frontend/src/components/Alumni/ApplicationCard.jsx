@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button.jsx';
+import { cn } from '@/lib/utils.js';
 import { Eye } from 'lucide-react';
 
 /**

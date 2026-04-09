@@ -2,7 +2,7 @@
 
 import React from "react"
 import { motion } from "framer-motion" // or "motion/react" depending on your package version
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils.js"
 
 /**
  * BorderBeam Component

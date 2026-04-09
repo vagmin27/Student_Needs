@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cva } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.js";
 
 /**
  * Defines the styling variants for the Alert component using class-variance-authority.

@@ -1,5 +1,5 @@
 // Authentication API Service Layer
-import { AUTH_ENDPOINTS } from './config';
+import { AUTH_ENDPOINTS } from './config.js';
 
 /**
  * Generic fetch wrapper for API calls

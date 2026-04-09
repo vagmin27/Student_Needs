@@ -2,7 +2,7 @@
 // This file exports all authentication-related modules
 
 // Context and Provider
-export { AuthProvider, useAuth } from './AuthContext';
+export { AuthProvider, useAuth } from './AuthContext.jsx';
 
 // API functions
 export {

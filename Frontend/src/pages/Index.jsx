@@ -1,21 +1,21 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Home from '@/pages/Home';
-import About from '@/pages/About';
-import { StudentDashboard } from '@/pages/StudentDashboard';
-import { AlumniDashboard } from '@/pages/AlumniDashboard';
-import { VerifierDashboard } from '@/pages/VerifierDashboard';
-import InterviewPage from '@/pages/InterviewPage';
-import NotFound from '@/pages/NotFound';
-import { RoleSelector } from '@/pages/RoleSelector';
-import Navbar from '@/components/Navbar';
-import { useAuth } from '@/services/Auth/AuthContext';
-import { StudentLoginPage } from '@/components/Student/Auth/StudentLogin';
-import { StudentSignupPage } from '@/components/Student/Auth/StudentSignup';
-import { AlumniLoginPage } from '@/components/Alumni/Auth/AlumniLogin';
-import { AlumniSignupPage } from '@/components/Alumni/Auth/AlumniSignup';
-import { VerifierLoginPage } from '@/components/Verifier/Auth/VerifierLogin';
-import { VerifierSignupPage } from '@/components/Verifier/Auth/VerifierSignup';
+import Home from '@/pages/Home.jsx';
+import About from '@/pages/About.jsx';
+import { StudentDashboard } from '@/pages/StudentDashboard.jsx';
+import { AlumniDashboard } from '@/pages/AlumniDashboard.jsx';
+import { VerifierDashboard } from '@/pages/VerifierDashboard.jsx';
+import InterviewPage from '@/pages/InterviewPage.jsx';
+import NotFound from '@/pages/NotFound.jsx';
+import { RoleSelector } from '@/pages/RoleSelector.jsx';
+import Navbar from '@/components/Navbar.jsx';
+import { useAuth } from '@/services/Auth/AuthContext.jsx';
+import { StudentLoginPage } from '@/components/Student/Auth/StudentLogin.jsx';
+import { StudentSignupPage } from '@/components/Student/Auth/StudentSignup.jsx';
+import { AlumniLoginPage } from '@/components/Alumni/Auth/AlumniLogin.jsx';
+import { AlumniSignupPage } from '@/components/Alumni/Auth/AlumniSignup.jsx';
+import { VerifierLoginPage } from '@/components/Verifier/Auth/VerifierLogin.jsx';
+import { VerifierSignupPage } from '@/components/Verifier/Auth/VerifierSignup.jsx';
 
 function DashboardLayout({ children }) {
   return (

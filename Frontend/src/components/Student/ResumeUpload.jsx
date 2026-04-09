@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { StatusBadge } from '@/components/StatusBadge';
+import { Button } from '@/components/ui/button.jsx';
+import { StatusBadge } from '@/components/StatusBadge.jsx';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils.js';
 import {
   Upload,
   CheckCircle,

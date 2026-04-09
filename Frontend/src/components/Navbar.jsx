@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { NavLink } from '@/components/NavLink';
-import { useAuth } from '@/services/Auth/AuthContext';
-import { Button } from '@/components/ui/button';
+import { NavLink } from '@/components/NavLink.jsx';
+import { useAuth } from '@/services/Auth/AuthContext.jsx';
+import { Button } from '@/components/ui/button.jsx';
 import { LogOut, User, GraduationCap } from 'lucide-react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/services/Auth/AuthContext';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { showToast, dismissToast } from '@/components/TransactionToast';
-import { AlumniStats } from '@/components/Alumni/AlumniStats';
-import { AlumniTabNavigation } from '@/components/Alumni/AlumniTabNavigation';
-import { CreateJobModal } from '@/components/Alumni/CreateJobModal';
-import { PostReferralModal } from '@/components/Alumni/PostReferralModal';
-import { BackendOpportunitiesList } from '@/components/Alumni/BackendOpportunitiesList';
-import { EditOpportunityModal } from '@/components/Alumni/EditOpportunityModal';
-import { StudentProfileModal } from '@/components/Alumni/StudentProfileModal';
-import { ApplicationCard } from '@/components/Alumni/ApplicationCard';
+import { useAuth } from '@/services/Auth/AuthContext.jsx';
+import { Button } from '@/components/ui/button.jsx';
+import { cn } from '@/lib/utils.js';
+import { showToast, dismissToast } from '@/components/TransactionToast.jsx';
+import { AlumniStats } from '@/components/Alumni/AlumniStats.jsx';
+import { AlumniTabNavigation } from '@/components/Alumni/AlumniTabNavigation.jsx';
+import { CreateJobModal } from '@/components/Alumni/CreateJobModal.jsx';
+import { PostReferralModal } from '@/components/Alumni/PostReferralModal.jsx';
+import { BackendOpportunitiesList } from '@/components/Alumni/BackendOpportunitiesList.jsx';
+import { EditOpportunityModal } from '@/components/Alumni/EditOpportunityModal.jsx';
+import { StudentProfileModal } from '@/components/Alumni/StudentProfileModal.jsx';
+import { ApplicationCard } from '@/components/Alumni/ApplicationCard.jsx';
 import { Briefcase, Plus, ArrowLeft, Star, Eye } from 'lucide-react';
-import { opportunitiesApi } from '@/services/opportunities';
-import { applicationsApi } from '@/services/applications';
+import { opportunitiesApi } from '@/services/opportunities.js';
+import { applicationsApi } from '@/services/application.js';
 
 export function AlumniDashboard() {
   const { user, isAuthenticated } = useAuth();

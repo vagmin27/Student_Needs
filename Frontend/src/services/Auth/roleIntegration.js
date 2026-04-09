@@ -3,7 +3,7 @@
 
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from './AuthContext.jsx';
 
 /**
  * Hook to handle role selection and route to appropriate auth flow

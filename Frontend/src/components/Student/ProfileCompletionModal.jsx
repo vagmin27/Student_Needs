@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button.jsx';
+import { Input } from '@/components/ui/input.jsx';
+import { Label } from '@/components/ui/label.jsx';
 import {
   X,
   CheckCircle,
@@ -25,7 +25,7 @@ import {
   resumeApi,
   linkedInApi,
   githubApi,
-} from '@/services/studentProfile';
+} from '@/services/studentProfile.js';
 
 /**
  * Step configuration for the modal

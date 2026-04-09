@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button.jsx';
+import { cn } from '@/lib/utils.js';
 import {
   Building2,
   MapPin,

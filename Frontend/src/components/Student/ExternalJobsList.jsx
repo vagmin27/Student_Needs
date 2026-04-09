@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button.jsx';
 import { ExternalLink, MapPin, Calendar, Building2, Briefcase } from 'lucide-react';
 
 /**

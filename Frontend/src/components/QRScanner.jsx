@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, QrCode, User, Mail, Building2, GraduationCap, Calendar, Hash, CheckCircle, XCircle, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button.jsx';
 
 /**
  * QRScanner Component

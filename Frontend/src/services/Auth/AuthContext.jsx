@@ -1,7 +1,7 @@
 // Authentication Context Provider
 import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
-import * as api from './api';
-import * as storage from './storage';
+import * as api from './api.js';
+import * as storage from './storage.js';
 
 // ============================================
 // Initial State

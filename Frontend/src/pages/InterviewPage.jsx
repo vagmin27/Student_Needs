@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { interviewApi } from '@/services/interview';
-import { opportunitiesApi } from '@/services/opportunities';
-import { analyzeApi } from '@/services/analyze';
-import { useAuth } from '@/services/Auth/AuthContext';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { interviewApi } from '@/services/interview.js';
+import { opportunitiesApi } from '@/services/opportunities.js';
+import { analyzeApi } from '@/services/analyze.js';
+import { useAuth } from '@/services/Auth/AuthContext.jsx';
+import { Button } from '@/components/ui/button.jsx';
+import { cn } from '@/lib/utils.js';
 import {
   Mic,
   MicOff,

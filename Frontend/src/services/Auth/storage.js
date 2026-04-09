@@ -1,5 +1,5 @@
 // Token and Storage Utilities
-import { TOKEN_STORAGE_KEY, USER_STORAGE_KEY } from './config';
+import { TOKEN_STORAGE_KEY, USER_STORAGE_KEY } from './config.js';
 
 // ============================================
 // Token Management

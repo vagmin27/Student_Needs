@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef } from "react"
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion" // or "motion/react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils.js"
 
 /**
  * MagicCard Component

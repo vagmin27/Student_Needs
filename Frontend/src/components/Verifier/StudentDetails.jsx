@@ -10,8 +10,8 @@ import {
   GraduationCap,
   Calendar,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button.jsx';
+import { cn } from '@/lib/utils.js';
 
 /**
  * StudentDetails Component

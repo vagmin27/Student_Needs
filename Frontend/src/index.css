@@ -95,7 +95,6 @@
   }
 
   .dark {
-    /* --background: oklch(0.1822 0 0); */
     --background: oklch(0.178 0.0021 286.18);
     --foreground: oklch(76.993% 0.00009 271.152);
     --card: oklch(20.463% 0.00002 271.152);
@@ -210,10 +209,16 @@
     --tracking-wide: calc(var(--tracking-normal) + 0.025em);
     --tracking-wider: calc(var(--tracking-normal) + 0.05em);
     --tracking-widest: calc(var(--tracking-normal) + 0.1em);
-  }
-  .theme {
-    --animate-shiny-text: shiny-text 8s infinite;
-    --animate-shine: shine var(--duration) infinite linear;
+
+    @keyframes shiny-text {
+      0%, 90%, 100% { background-position: calc(-100% - var(--shiny-width)) 0; }
+      30%, 60% { background-position: calc(100% + var(--shiny-width)) 0; }
+    }
+    @keyframes shine {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      to { background-position: 0% 0%; }
+    }
   }
 }
 
@@ -228,23 +233,19 @@
     letter-spacing: var(--tracking-normal);
   }
 
-  /* Performance optimizations for smooth animations and scrolling */
   * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* GPU acceleration utilities */
   .will-change-transform {
     will-change: transform;
   }
   
-  /* Layout containment for performance */
   .contain-layout {
     contain: layout style paint;
   }
 
-  /* Smooth scrolling optimization for Lenis */
   html {
     overflow-x: hidden;
   }
@@ -261,20 +262,17 @@
     overscroll-behavior: contain;
   }
 
-  /* Performance optimization for large sections */
   .lowerHero {
     content-visibility: auto;
     contain-intrinsic-size: auto 750px;
     contain: layout style paint;
   }
 
-  /* Improve rendering performance for animated sections */
   [class*="motion"] img {
     transform: translateZ(0);
     backface-visibility: hidden;
   }
 
-  /* CSS-based animations to replace Framer Motion JS observers */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -296,7 +294,6 @@
     opacity: 0;
   }
 
-  /* Prevent reflow on sections that have been animated */
   .upperHero,
   .lowerHero,
   [class*="process"] {
@@ -309,6 +306,16 @@
 }
 
 @layer utilities {
+  /* MOVED FROM @THEME TO @LAYER UTILITIES TO FIX ERROR */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   .glass {
     background-color: color-mix(in oklch, var(--card) 80%, transparent);
     backdrop-filter: blur(24px);
@@ -391,21 +398,13 @@
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 /* Toast/Notification Styling */
@@ -437,45 +436,4 @@
 [data-sonner-toast][data-type="loading"] {
   border-color: var(--primary) !important;
   background-color: color-mix(in oklch, var(--primary) 10%, transparent) !important;
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@theme inline {
-  @keyframes shiny-text {
-  0%, 90%, 100% {
-    background-position: calc(-100% - var(--shiny-width)) 0;
-    }
-  30%, 60% {
-    background-position: calc(100% + var(--shiny-width)) 0;
-    }
-  }
-  @keyframes shine {
-  0% {
-    background-position: 0% 0%;
-    }
-  50% {
-    background-position: 100% 100%;
-    }
-  to {
-    background-position: 0% 0%;
-    }
-  }
-
-  /* Hide scrollbar but keep scrollability */
-  .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
-  }
 }

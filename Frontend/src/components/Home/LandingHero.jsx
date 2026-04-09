@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext.jsx";
 import { Blocks } from "lucide-react";
-import { GetStarted } from "@/components/GetStarted";
+import { GetStarted } from "@/components/GetStarted.jsx";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { BorderBeam } from "../ui/border-beam";
+import { BorderBeam } from "../ui/border-beam.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
