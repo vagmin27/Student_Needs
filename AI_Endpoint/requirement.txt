@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pymupdf
+spacy
+scikit-learn
+numpy
+requests
