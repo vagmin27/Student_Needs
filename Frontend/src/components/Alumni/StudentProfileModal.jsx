@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button.jsx';
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import {
   X,
   User,
@@ -9,18 +9,17 @@ import {
   Building2,
   Calendar,
   MapPin,
-  Github,
-  Linkedin,
+  Link,
   FileText,
   Star,
   Briefcase,
   Code,
   Award,
   ExternalLink,
-} from 'lucide-react';
-import { cn } from '@/lib/utils.js';
-import { applicationsApi } from '@/services/applications.js';
-import { showToast } from '@/components/TransactionToast.jsx';
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { applicationsApi } from "@/services/application";
+import { showToast } from "@/components/TransactionToast";
 
 /**
  * Modal component to display a detailed student profile to alumni/verifiers.
@@ -30,12 +29,7 @@ import { showToast } from '@/components/TransactionToast.jsx';
  * @param {Object|null} props.student - Student profile data object
  * @param {boolean} [props.loading] - Loading state for fetching data
  */
-export function StudentProfileModal({
-  isOpen,
-  onClose,
-  student,
-  loading,
-}) {
+export function StudentProfileModal({ isOpen, onClose, student, loading }) {
   if (!isOpen) return null;
 
   return (
@@ -90,17 +84,21 @@ export function StudentProfileModal({
                     {student.firstName} {student.lastName}
                   </h2>
                   <p className="text-muted-foreground mb-3">
-                    {student.branch || 'Student'} • Class of {student.graduationYear || 'N/A'}
+                    {student.branch || "Student"} • Class of{" "}
+                    {student.graduationYear || "N/A"}
                   </p>
-                  
+
                   {student.profileCompleteness !== undefined && (
                     <div className="flex items-center gap-2 mb-3">
                       <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden max-w-[200px]">
                         <div
                           className={cn(
                             "h-full rounded-full transition-all",
-                            student.profileCompleteness >= 80 ? "bg-success" :
-                            student.profileCompleteness >= 50 ? "bg-yellow-500" : "bg-destructive"
+                            student.profileCompleteness >= 80
+                              ? "bg-success"
+                              : student.profileCompleteness >= 50
+                                ? "bg-yellow-500"
+                                : "bg-destructive",
                           )}
                           style={{ width: `${student.profileCompleteness}%` }}
                         />
@@ -114,24 +112,30 @@ export function StudentProfileModal({
                   <div className="flex flex-wrap gap-2">
                     {(student.linkedIn?.linkedInUrl || student.linkedinUrl) && (
                       <a
-                        href={student.linkedIn?.linkedInUrl || student.linkedinUrl}
+                        href={
+                          student.linkedIn?.linkedInUrl || student.linkedinUrl
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-500 text-sm hover:bg-blue-500/20 transition-colors"
                       >
-                        <Linkedin className="w-4 h-4" />
+                        <Link className="w-4 h-4" />
                         LinkedIn
                         <ExternalLink className="w-3 h-3" />
                       </a>
                     )}
                     {student.githubUrl && (
                       <a
-                        href={student.githubUrl.startsWith('http') ? student.githubUrl : `https://github.com/${student.githubUrl}`}
+                        href={
+                          student.githubUrl.startsWith("http")
+                            ? student.githubUrl
+                            : `https://github.com/${student.githubUrl}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-500/10 text-gray-400 text-sm hover:bg-gray-500/20 transition-colors"
                       >
-                        <Github className="w-4 h-4" />
+                        <Code className="w-4 h-4" />
                         GitHub
                         <ExternalLink className="w-3 h-3" />
                       </a>
@@ -168,14 +172,18 @@ export function StudentProfileModal({
                       {student.phone && (
                         <div className="flex items-center gap-3 text-sm">
                           <Phone className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-foreground">{student.phone}</span>
+                          <span className="text-foreground">
+                            {student.phone}
+                          </span>
                         </div>
                       )}
                       {(student.city || student.state || student.address) && (
                         <div className="flex items-center gap-3 text-sm">
                           <MapPin className="w-4 h-4 text-muted-foreground" />
                           <span className="text-foreground">
-                            {[student.address, student.city, student.state].filter(Boolean).join(', ')}
+                            {[student.address, student.city, student.state]
+                              .filter(Boolean)
+                              .join(", ")}
                           </span>
                         </div>
                       )}
@@ -192,14 +200,15 @@ export function StudentProfileModal({
                         <Building2 className="w-5 h-5 text-primary mt-0.5" />
                         <div>
                           <p className="font-medium text-foreground">
-                            {student.college?.name || 'College not specified'}
+                            {student.college?.name || "College not specified"}
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            {student.branch || 'Branch not specified'}
+                            {student.branch || "Branch not specified"}
                           </p>
                           <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                             <Calendar className="w-3 h-3" />
-                            Expected Graduation: {student.graduationYear || 'N/A'}
+                            Expected Graduation:{" "}
+                            {student.graduationYear || "N/A"}
                           </p>
                         </div>
                       </div>
@@ -224,7 +233,8 @@ export function StudentProfileModal({
                               </p>
                               {student.resume.fileSize && (
                                 <p className="text-xs text-muted-foreground">
-                                  {(student.resume.fileSize / 1024).toFixed(1)} KB
+                                  {(student.resume.fileSize / 1024).toFixed(1)}{" "}
+                                  KB
                                 </p>
                               )}
                             </div>
@@ -234,10 +244,18 @@ export function StudentProfileModal({
                             variant="outline"
                             onClick={async () => {
                               try {
-                                await applicationsApi.downloadStudentResume(student._id);
-                                showToast({ type: 'success', message: 'Resume downloaded!' });
+                                await applicationsApi.downloadStudentResume(
+                                  student._id,
+                                );
+                                showToast({
+                                  type: "success",
+                                  message: "Resume downloaded!",
+                                });
                               } catch (error) {
-                                showToast({ type: 'error', message: 'Failed to download resume' });
+                                showToast({
+                                  type: "error",
+                                  message: "Failed to download resume",
+                                });
                               }
                             }}
                           >
@@ -258,7 +276,9 @@ export function StudentProfileModal({
                         About
                       </h3>
                       <div className="bg-muted/30 rounded-lg p-4">
-                        <p className="text-sm text-foreground leading-relaxed">{student.bio}</p>
+                        <p className="text-sm text-foreground leading-relaxed">
+                          {student.bio}
+                        </p>
                       </div>
                     </div>
                   )}
@@ -290,11 +310,20 @@ export function StudentProfileModal({
                       </h3>
                       <div className="space-y-3">
                         {student.experience.map((exp, index) => (
-                          <div key={index} className="bg-muted/30 rounded-lg p-4">
-                            <p className="font-medium text-foreground">{exp.title}</p>
-                            <p className="text-sm text-muted-foreground">{exp.company}</p>
+                          <div
+                            key={index}
+                            className="bg-muted/30 rounded-lg p-4"
+                          >
+                            <p className="font-medium text-foreground">
+                              {exp.title}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {exp.company}
+                            </p>
                             {exp.description && (
-                              <p className="text-sm text-foreground mt-2">{exp.description}</p>
+                              <p className="text-sm text-foreground mt-2">
+                                {exp.description}
+                              </p>
                             )}
                           </div>
                         ))}
@@ -310,12 +339,21 @@ export function StudentProfileModal({
                       </h3>
                       <div className="space-y-3">
                         {student.projects.map((project, index) => (
-                          <div key={index} className="bg-muted/30 rounded-lg p-4">
+                          <div
+                            key={index}
+                            className="bg-muted/30 rounded-lg p-4"
+                          >
                             <div className="flex items-center justify-between">
-                              <p className="font-medium text-foreground">{project.title || project.name}</p>
+                              <p className="font-medium text-foreground">
+                                {project.title || project.name}
+                              </p>
                               {project.link && (
                                 <a
-                                  href={project.link.startsWith('http') ? project.link : `https://${project.link}`}
+                                  href={
+                                    project.link.startsWith("http")
+                                      ? project.link
+                                      : `https://${project.link}`
+                                  }
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-primary hover:underline"
@@ -325,7 +363,9 @@ export function StudentProfileModal({
                               )}
                             </div>
                             {project.description && (
-                              <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                              <p className="text-sm text-muted-foreground mt-1">
+                                {project.description}
+                              </p>
                             )}
                           </div>
                         ))}
