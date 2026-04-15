@@ -10,7 +10,7 @@ export function GetStarted() {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate("/role-selector");
+    navigate("/landing");
   };
 
   return (
