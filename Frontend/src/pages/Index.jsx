@@ -16,6 +16,7 @@ import { AlumniLoginPage } from '@/components/Alumni/Auth/AlumniLogin.jsx';
 import { AlumniSignupPage } from '@/components/Alumni/Auth/AlumniSignup.jsx';
 import { VerifierLoginPage } from '@/components/Verifier/Auth/VerifierLogin.jsx';
 import { VerifierSignupPage } from '@/components/Verifier/Auth/VerifierSignup.jsx';
+import LandingPage from "@/pages/LandingPage";
 
 function DashboardLayout({ children }) {
   return (
@@ -79,6 +80,7 @@ function AppContent() {
       <Route path="/auth/alumni/signup" element={<AlumniSignupPage />} />
       <Route path="/auth/verifier/login" element={<VerifierLoginPage />} />
       <Route path="/auth/verifier/signup" element={<VerifierSignupPage />} />
+      <Route path="/landing" element={<LandingPage />} />
 
       {/* Student Dashboard */}
       <Route
