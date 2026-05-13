@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/Landing.css";
+import "../../styles/Tutorials/Landing.css";
 
 /**
  * @returns footer that generates new date every year

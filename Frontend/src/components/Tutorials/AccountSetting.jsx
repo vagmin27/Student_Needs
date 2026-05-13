@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PricePanel from "./PricePanel";
-import { useAuth } from "../utils/auth";
-import "../assets/styles/AccountSetting.css";
+import { useAuth } from "../../utils/Tutorials/auth";
+import "../../styles/Tutorials/AccountSetting.css";
 
 function AccountSetting() {
   const navigate = useNavigate();

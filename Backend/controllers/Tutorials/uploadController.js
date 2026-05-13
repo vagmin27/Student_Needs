@@ -1,4 +1,4 @@
-import User from "../models/user.js";
+import User from "../../models/Tutorials/user.js";
 
 export const uploadProfilePic = async (req, res) => {
   try {

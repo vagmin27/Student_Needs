@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../utils/auth";
+import { useAuth } from "../../utils/Tutorials/auth";
 
 function RequireAuth({ children }) {
   const { user, fetchUser } = useAuth();

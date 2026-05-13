@@ -1,5 +1,5 @@
-import myDB from "../db/myDB.js";
-import cloudinary from "../utils/cloudinary.js";
+import myDB from "../../db/Tutorials/myDB.js";
+import cloudinary from "../../utils/Tutorials/cloudinary.js";
 
 export const delProfile = async (req, res) => {
   let id = req.params.id;

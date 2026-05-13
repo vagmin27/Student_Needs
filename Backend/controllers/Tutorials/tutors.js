@@ -1,5 +1,5 @@
-import myDB from "../db/myDB.js";
-import Tutor from "../models/Tutor.js";
+import myDB from "../../db/Tutorials/myDB.js";
+import Tutor from "../../models/Tutorials/Tutor.js";
 
 export const searchAllTutors = async (req, res) => {
   try {

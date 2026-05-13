@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/TutorPagination.css";
+import "../../styles/Tutorials/TutorPagination.css";
 import PropTypes from "prop-types";
 
 /**

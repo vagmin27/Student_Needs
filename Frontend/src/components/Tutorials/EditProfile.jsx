@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../assets/styles/EditProfile.css";
+import "../../styles/Tutorials/EditProfile.css";
 import bulb2 from "../assets/images/bulb2.png";
 import { useNavigate } from "react-router-dom";
 

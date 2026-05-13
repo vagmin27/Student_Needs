@@ -1,4 +1,4 @@
-import Tutor from "../models/Tutor.js";
+import Tutor from "../../models/Tutorials/Tutor.js";
 import bcrypt from "bcrypt";
 
 export const tutorLogin = async (req, res) => {

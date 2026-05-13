@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../assets/styles/Profile.css";
+import "../../styles/Tutorials/Profile.css";
 import { AiOutlineMail, AiOutlineSchedule } from "react-icons/ai";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { MdOutlineFreeCancellation } from "react-icons/md";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../assets/styles/BookModal.css";
+import "../../styles/Tutorials/BookModal.css";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 

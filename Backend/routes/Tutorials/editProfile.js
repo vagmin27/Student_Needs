@@ -4,10 +4,10 @@ import {
   uploadPic,
   delPic,
   retrieveProfileInfo,
-} from "../controllers/editProfile.js";
+} from "../../controllers/Tutorials/editProfile.js";
 
-import upload from "../utils/multer.js";
-import { isAuthenticated } from "../middleware/auth.js";
+import upload from "../../utils/Tutorials/multer.js";
+import { isAuthenticated } from "../../middlewares/Tutorials/auth.js";
 
 const router = express.Router();
 

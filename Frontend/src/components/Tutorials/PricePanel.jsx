@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/PricePanel.css";
+import "../../styles/Tutorials/PricePanel.css";
 import { pricePanelData } from "./PricePanelData";
 
 /**

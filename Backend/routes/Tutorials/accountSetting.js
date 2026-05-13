@@ -1,5 +1,5 @@
 import express from "express";
-import { delProfile } from "../controllers/accountSetting.js";
+import { delProfile } from "../../controllers/Tutorials/accountSetting.js";
 
 const router = express.Router();
 

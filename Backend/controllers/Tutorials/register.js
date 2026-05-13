@@ -1,5 +1,5 @@
-import myDB from "../db/myDB.js";
-import { hashPassword } from "../utils/passwordUtilities.js";
+import myDB from "../../db/Tutorials/myDB.js";
+import { hashPassword } from "../../utils/Tutorials/passwordUtilities.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 

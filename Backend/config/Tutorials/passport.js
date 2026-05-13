@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import myDB from "../db/myDB.js";
-import { comparePassword } from "../utils/passwordUtilities.js";
+import myDB from "../../db/Tutorials/myDB.js";
+import { comparePassword } from "../../utils/Tutorials/passwordUtilities.js";
 
 // 🔐 LOCAL STRATEGY
 passport.use(

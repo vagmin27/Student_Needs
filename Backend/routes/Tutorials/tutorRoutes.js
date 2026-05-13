@@ -1,9 +1,9 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
-import Tutor from "../models/Tutor.js";
-import Booking from "../models/Booking.js";
-import upload from "../utils/multer.js";
+import Tutor from "../../models/Tutorials/Tutor.js";
+import Booking from "../../models/Tutorials/Booking.js";
+import upload from "../../utils/Tutorials/multer.js";
 
 
 // Temporary in-memory OTP store

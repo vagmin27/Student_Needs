@@ -1,6 +1,6 @@
-import myDB from "../db/myDB.js";
-import cloudinary from "../utils/cloudinary.js";
-import User from "../models/user.js";
+import myDB from "../../db/Tutorials/myDB.js";
+import cloudinary from "../../utils/Tutorials/cloudinary.js";
+import User from "../../models/Tutorials/user.js";
 import fs from "fs";
 
 export const updateProfile = async (req, res) => {

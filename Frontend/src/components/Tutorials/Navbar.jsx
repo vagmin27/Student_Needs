@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../assets/styles/Navbar.css";
+import "../../styles/Tutorials/Navbar.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../utils/auth";
+import { useAuth } from "../../utils/Tutorials/auth";
 import bulb2 from "../assets/images/bulb2.png";
 
 function Navbar() {

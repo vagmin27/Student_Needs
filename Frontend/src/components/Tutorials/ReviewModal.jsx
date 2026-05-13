@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import "../assets/styles/ReviewModal.css";
+import "../../styles/Tutorials/ReviewModal.css";
 import PropTypes from "prop-types";
 import Rate from "./Rate";
 

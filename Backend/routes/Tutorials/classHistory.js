@@ -1,6 +1,6 @@
 import express from "express";
-import Booking from "../models/Booking.js";
-import User from "../models/user.js";
+import Booking from "../../models/Tutorials/Booking.js";
+import User from "../../models/Tutorials/user.js";
 
 const router = express.Router();
 

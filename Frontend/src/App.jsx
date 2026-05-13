@@ -1,19 +1,43 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+// ======================================================
+//                    QUERY + UI
+// ======================================================
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { Toaster as HotToaster } from "react-hot-toast";
 import { Toaster } from "@/components/Referrals/ui/toaster.jsx";
 import { Toaster as Sonner } from "@/components/Referrals/ui/sonner.jsx";
 import { TooltipProvider } from "@/components/Referrals/ui/tooltip.jsx";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// ======================================================
+//                    CONTEXTS
+// ======================================================
+
 import { ThemeProvider } from "@/contexts/Referrals/ThemeContext.jsx";
 import { AuthProvider as ReferralAuthProvider } from "@/services/Referrals/Auth/AuthContext.jsx";
+
+import { AuthProvider } from "./utils/Tutorials/auth";
+import { useAuth } from "./contexts/Attendance/AuthContext";
+
+// ======================================================
+//                    LENIS
+// ======================================================
 
 import Lenis from "lenis";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// ================= ATTENDANCE =================
-import { useAuth } from "./contexts/Attendance/AuthContext";
+// ======================================================
+//                    ATTENDANCE
+// ======================================================
+
 import ProtectedRoute from "./components/Attendance/ProtectedRoute";
 
 import DashboardLayout from "./layouts/Attendance/DashboardLayout";
@@ -29,20 +53,64 @@ import RemoveStudent from "./pages/Attendance/RemoveStudent";
 import AddSubject from "./pages/Attendance/AddSubject";
 import StudentDashboard from "./pages/Attendance/StudentDashboard";
 
-// ================= REFERRALS =================
+// ======================================================
+//                    REFERRALS
+// ======================================================
+
 import Index from "@/pages/Referrals/Index.jsx";
 
-// ================= QUERY CLIENT =================
+// ======================================================
+//                    TUTORIALS
+// ======================================================
+
+import LoginPage from "./pages/Tutorials/LoginPage";
+import RegisterPage from "./pages/Tutorials/RegisterPage";
+import Landing from "./pages/Tutorials/Landing";
+import Profile from "./pages/Tutorials/ProfilePage";
+import EditProfilePage from "./pages/Tutorials/EditProfilePage";
+import AccountSettingPage from "./pages/Tutorials/AccountSettingPage";
+import NotFound from "./pages/Tutorials/NotFound";
+import BookClass from "./pages/Tutorials/BookClass";
+import ManageBookingPage from "./pages/Tutorials/ManageBookingPage";
+import ClassHistoryPage from "./pages/Tutorials/ClassHistoryPage";
+import RequireAuth from "./components/Tutorials/RequireAuth";
+import TutorLoginPage from "./pages/Tutorials/TutorLoginPage";
+import SelectRole from "./pages/Tutorials/SelectRole";
+import TutorRegisterPage from "./pages/Tutorials/TutorRegisterPage";
+import TutorAvailability from "./pages/Tutorials/TutorAvailability";
+import TutorDashboard from "./pages/Tutorials/TutorDashboard";
+import TutorSchedulePage from "./pages/Tutorials/TutorsSchedulePage";
+import TutorAcceptPage from "./pages/Tutorials/TutorAcceptPage";
+import TutorEditProfilePage from "./pages/Tutorials/TutorEditProfilePage";
+
+// ======================================================
+//                    LAZY LOAD
+// ======================================================
+
+const LazySearch = React.lazy(() =>
+  import("./components/Tutorials/SearchTutor")
+);
+
+// ======================================================
+//                    QUERY CLIENT
+// ======================================================
+
 const queryClient = new QueryClient();
 
-// ================= LAYOUT WRAPPER =================
+// ======================================================
+//                    LAYOUT WRAPPER
+// ======================================================
+
 const WithLayout = ({ title, children }) => (
   <DashboardLayout pageTitle={title}>
     {children}
   </DashboardLayout>
 );
 
-// ================= ATTENDANCE ROUTES =================
+// ======================================================
+//                    ATTENDANCE ROUTES
+// ======================================================
+
 const AttendanceRoutes = () => {
   const { isAuthenticated, isTeacher, loading } = useAuth();
 
@@ -56,13 +124,28 @@ const AttendanceRoutes = () => {
 
   return (
     <Routes>
-      {/* ================= PUBLIC ROUTES ================= */}
+      {/* ======================================================
+                      REFERRALS OPENING PAGE
+      ====================================================== */}
+
+      <Route path="/" element={<Index />} />
+
+      {/* ======================================================
+                        REFERRALS ROUTES
+      ====================================================== */}
+
+      <Route path="/referrals/*" element={<Index />} />
+
+      {/* ======================================================
+                        ATTENDANCE AUTH
+      ====================================================== */}
+
       <Route
-        path="/login"
+        path="/attendance/login"
         element={
           isAuthenticated ? (
             <Navigate
-              to={isTeacher ? "/dashboard" : "/student-dashboard"}
+              to={isTeacher ? "/attendance/dashboard" : "/student-dashboard"}
             />
           ) : (
             <Login />
@@ -71,11 +154,11 @@ const AttendanceRoutes = () => {
       />
 
       <Route
-        path="/register"
+        path="/attendance/register"
         element={
           isAuthenticated ? (
             <Navigate
-              to={isTeacher ? "/dashboard" : "/student-dashboard"}
+              to={isTeacher ? "/attendance/dashboard" : "/student-dashboard"}
             />
           ) : (
             <Register />
@@ -83,24 +166,12 @@ const AttendanceRoutes = () => {
         }
       />
 
-      {/* ================= REFERRALS HOME ================= */}
-      <Route path="/" element={<Index />} />
+      {/* ======================================================
+                        ATTENDANCE ROUTES
+      ====================================================== */}
 
-      {/* ================= ROOT REDIRECT ================= */}
       <Route
-        path="/home"
-        element={
-          <ProtectedRoute>
-            <Navigate
-              to={isTeacher ? "/dashboard" : "/student-dashboard"}
-            />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* ================= TEACHER ROUTES ================= */}
-      <Route
-        path="/dashboard"
+        path="/attendance/dashboard"
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Dashboard">
@@ -111,7 +182,7 @@ const AttendanceRoutes = () => {
       />
 
       <Route
-        path="/attendance"
+        path="/attendance/attendance"
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Attendance">
@@ -122,7 +193,7 @@ const AttendanceRoutes = () => {
       />
 
       <Route
-        path="/add-student"
+        path="/attendance/add-student"
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Add Student">
@@ -133,7 +204,7 @@ const AttendanceRoutes = () => {
       />
 
       <Route
-        path="/remove-student"
+        path="/attendance/remove-student"
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Remove Student">
@@ -144,7 +215,7 @@ const AttendanceRoutes = () => {
       />
 
       <Route
-        path="/add-subject"
+        path="/attendance/add-subject"
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Add Subject">
@@ -155,7 +226,7 @@ const AttendanceRoutes = () => {
       />
 
       <Route
-        path="/reports"
+        path="/attendance/reports"
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Reports">
@@ -165,7 +236,6 @@ const AttendanceRoutes = () => {
         }
       />
 
-      {/* ================= STUDENT ROUTES ================= */}
       <Route
         path="/student-dashboard"
         element={
@@ -177,18 +247,155 @@ const AttendanceRoutes = () => {
         }
       />
 
-      {/* ================= REFERRALS ROUTE ================= */}
-      <Route path="/referrals/*" element={<Index />} />
+      {/* ======================================================
+                        TUTORIAL AUTH
+      ====================================================== */}
 
-      {/* ================= FALLBACK ================= */}
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/tutorials/login" element={<SelectRole />} />
+
+      <Route
+        path="/tutorials/login/student"
+        element={<LoginPage />}
+      />
+
+      <Route
+        path="/tutorials/login/tutor"
+        element={<TutorLoginPage />}
+      />
+
+      <Route
+        path="/tutorials/register"
+        element={<RegisterPage />}
+      />
+
+      <Route
+        path="/tutorials/register/tutor"
+        element={<TutorRegisterPage />}
+      />
+
+      {/* ======================================================
+                        TUTOR ROUTES
+      ====================================================== */}
+
+      <Route
+        path="/tutorials/tutor/dashboard"
+        element={<TutorDashboard />}
+      />
+
+      <Route
+        path="/tutorials/tutor/availability"
+        element={<TutorAvailability />}
+      />
+
+      <Route
+        path="/tutorials/tutor/schedule"
+        element={<TutorSchedulePage />}
+      />
+
+      <Route
+        path="/tutorials/tutor/accept"
+        element={<TutorAcceptPage />}
+      />
+
+      <Route
+        path="/tutorials/tutor/editProfile"
+        element={<TutorEditProfilePage />}
+      />
+
+      {/* ======================================================
+                        BOOKING
+      ====================================================== */}
+
+      <Route
+        path="/tutorials/book"
+        element={<BookClass />}
+      />
+
+      {/* ======================================================
+                        STUDENT PROFILE
+      ====================================================== */}
+
+      <Route
+        path="/tutorials/profile"
+        element={
+          <RequireAuth>
+            <Profile />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/tutorials/profile/editProfile"
+        element={
+          <RequireAuth>
+            <EditProfilePage />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/tutorials/profile/manageBooking"
+        element={
+          <RequireAuth>
+            <ManageBookingPage />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/tutorials/profile/classHistory"
+        element={
+          <RequireAuth>
+            <ClassHistoryPage />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="/tutorials/profile/accountSettings"
+        element={
+          <RequireAuth>
+            <AccountSettingPage />
+          </RequireAuth>
+        }
+      />
+
+      {/* ======================================================
+                        SEARCH
+      ====================================================== */}
+
+      <Route
+        path="/tutorials/searchTutor"
+        element={
+          <Suspense fallback="Searching...">
+            <LazySearch />
+          </Suspense>
+        }
+      />
+
+      {/* ======================================================
+                        TUTORIAL LANDING
+      ====================================================== */}
+
+      <Route
+        path="/tutorials"
+        element={<Landing />}
+      />
+
+      {/* ======================================================
+                        FALLBACK
+      ====================================================== */}
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
 
-// ================= MAIN APP =================
+// ======================================================
+//                    MAIN APP
+// ======================================================
+
 function App() {
-  // ================= LENIS SMOOTH SCROLL =================
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -218,47 +425,43 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <ReferralAuthProvider>
-          <TooltipProvider>
-            <BrowserRouter
-              future={{
-                v7_startTransition: true,
-                v7_relativeSplatPath: true,
-              }}
-            >
-              {/* ================= TOASTERS ================= */}
-              <HotToaster
-                position="top-right"
-                toastOptions={{
-                  duration: 3500,
-                  style: {
-                    background: "#1e293b",
-                    color: "#f1f5f9",
-                    border: "1px solid #334155",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "14px",
-                  },
-                  success: {
-                    iconTheme: {
-                      primary: "#22c55e",
-                      secondary: "#1e293b",
-                    },
-                  },
-                  error: {
-                    iconTheme: {
-                      primary: "#ef4444",
-                      secondary: "#1e293b",
-                    },
-                  },
+          <AuthProvider>
+            <TooltipProvider>
+              <BrowserRouter
+                future={{
+                  v7_startTransition: true,
+                  v7_relativeSplatPath: true,
                 }}
-              />
+              >
+                {/* ======================================================
+                                TOASTERS
+                ====================================================== */}
 
-              <Toaster />
-              <Sonner />
+                <HotToaster
+                  position="top-right"
+                  toastOptions={{
+                    duration: 3500,
+                    style: {
+                      background: "#1e293b",
+                      color: "#f1f5f9",
+                      border: "1px solid #334155",
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "14px",
+                    },
+                  }}
+                />
 
-              {/* ================= ALL ROUTES ================= */}
-              <AttendanceRoutes />
-            </BrowserRouter>
-          </TooltipProvider>
+                <Toaster />
+                <Sonner />
+
+                {/* ======================================================
+                                ROUTES
+                ====================================================== */}
+
+                <AttendanceRoutes />
+              </BrowserRouter>
+            </TooltipProvider>
+          </AuthProvider>
         </ReferralAuthProvider>
       </ThemeProvider>
     </QueryClientProvider>

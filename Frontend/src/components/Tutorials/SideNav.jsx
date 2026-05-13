@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/styles/SideNav.css";
+import "../a../styles/Tutorials/SideNav.css";
 import { Link } from "react-router-dom";
 import { sidebarData } from "./sidebarData";
 

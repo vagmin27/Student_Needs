@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import "../assets/styles/TutorProfile.css";
-import { BASE_URL } from "../utils/api";
+import "../../styles/Tutorials/TutorProfile.css";
+import { BASE_URL } from "../../utils/Tutorials/api";
 import defaultAvatar from "../assets/images/bulb2.png";
 
 

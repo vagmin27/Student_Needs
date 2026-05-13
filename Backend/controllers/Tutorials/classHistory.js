@@ -1,4 +1,4 @@
-import myDB from "../db/myDB.js";
+import myDB from "../../db/Tutorials/myDB.js";
 
 export const addReview = async (req, res) => {
   try {

@@ -4,8 +4,8 @@ import {
   getTutor,
   updateClass,
   getSchedule,
-} from "../controllers/tutors.js";
-import { isAuthenticated, isTutor } from "../middleware/auth.js";
+} from "../../controllers/Tutorials/tutors.js";
+import { isAuthenticated, isTutor } from "../../middlewares/Tutorials/auth.js";
 
 const router = express.Router();
 

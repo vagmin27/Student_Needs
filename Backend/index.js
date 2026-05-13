@@ -9,14 +9,14 @@ import passport from "passport";
 import fileUpload from "express-fileupload";
 import path from "path";
 
-import "./config/passport.js";
+import "./config/Tutorials/passport.js";
 
 // =====================================================
 //                    CONFIG IMPORTS
 // =====================================================
 
 // Tutorials DB
-import { connectDB } from "./db/Tutorials/connections.js";
+import { connectDB } from "./db/Tutorials/connection.js";
 
 // Referral DB + Cloudinary
 import { dbconnect } from "./config/Referrals/database.js";
@@ -73,7 +73,7 @@ import {
   isAuthenticated,
   isStudent,
   isTutor,
-} from "./middleware/Tutorials/auth.js";
+} from "./middlewares/Tutorials/auth.js";
 
 // =====================================================
 //                    ENV CONFIG

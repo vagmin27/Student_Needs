@@ -4,7 +4,7 @@ import {
   requestOtp,
   verifyOtpAndRegister,
   resendOtp,
-} from "../controllers/register.js";
+} from "../../controllers/Tutorials/register.js";
 
 const router = express.Router();
 

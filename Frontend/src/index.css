@@ -559,3 +559,80 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+
+
+/* ================= GLOBAL RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= DEFAULT THEME ================= */
+html {
+  --bg-color: #f5f7fb;
+  --text-color: #222222;
+
+  --nav-bg: #667a6f;
+  --nav-active: #aec7bb;
+}
+
+/* ================= DARK THEME ================= */
+html[data-theme="dark"] {
+  --bg-color: #111827;
+  --text-color: #ffffff;
+
+  --nav-bg: #1f2937;
+  --nav-active: #374151;
+}
+
+/* ================= BODY ================= */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+body {
+  margin: 0;
+  padding-top: 90px;
+  background: #1e1f26;
+  font-family: "Poppins", sans-serif;
+}
+/* ================= LINKS ================= */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ================= BUTTONS ================= */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ================= FLEX ================= */
+.flex {
+  display: flex;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}

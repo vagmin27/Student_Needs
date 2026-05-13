@@ -1,4 +1,4 @@
-import myDB from "../db/myDB.js";
+import myDB from "../../db/Tutorials/myDB.js";
 
 export const deleteClass = async (req, res) => {
   try {

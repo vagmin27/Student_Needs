@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../utils/auth";
-import "../assets/styles/ClassHistory.css";
+import { useAuth } from "../../utils/Tutorials/auth";
+import "../../styles/Tutorials/ClassHistory.css";
 import ReviewModal from "./ReviewModal";
 
 /**
