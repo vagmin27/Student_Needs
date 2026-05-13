@@ -1,6 +1,6 @@
 import React, { useEffect, Suspense } from "react";
 import {
-  BrowserRouter,
+  // BrowserRouter,
   Routes,
   Route,
   Navigate,
@@ -429,12 +429,12 @@ function App() {
         <ReferralAuthProvider>
           <AuthProvider>
             <TooltipProvider>
-              <BrowserRouter
+              {/* <BrowserRouter
                 future={{
                   v7_startTransition: true,
                   v7_relativeSplatPath: true,
                 }}
-              >
+              > */}
                 {/* ======================================================
                                 TOASTERS
                 ====================================================== */}
@@ -461,7 +461,7 @@ function App() {
                 ====================================================== */}
 
                 <AttendanceRoutes />
-              </BrowserRouter>
+              {/* </BrowserRouter> */}
             </TooltipProvider>
           </AuthProvider>
         </ReferralAuthProvider>
