@@ -1,10 +1,22 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React, { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
 
-createRoot(document.getElementById('root')).render(
+import App from "./App";
+
+// ================= ATTENDANCE AUTH =================
+import { AuthProvider } from "./contexts/Attendance/AuthContext";
+
+// ================= GLOBAL STYLES =================
+import "./styles/Attendance/main.css";
+import "./index.css";
+
+// ================= ROOT =================
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </StrictMode>
+);
