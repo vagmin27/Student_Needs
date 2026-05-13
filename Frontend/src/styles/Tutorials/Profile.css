@@ -1,0 +1,167 @@
+/* GLOBAL */
+* {
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* MAIN CONTAINER */
+.container-profile {
+  width: 100%;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* MAIN CARD */
+.main-profile {
+  background: #f8faf7;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* FLEX WRAPPER */
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* LEFT PROFILE INFO */
+.profileInnerDiv {
+  flex: 2;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* USER NAME */
+.userName {
+  color: #f76612;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* RIGHT SIDE CARD */
+.secondDiv {
+  flex: 1;
+  background: white;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  color: #444;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* PROFILE IMAGE */
+.img-account-profile {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #f5a440;
+  padding: 4px;
+  background: white;
+}
+
+/* UPLOAD BUTTON CONTAINER */
+#picForm div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  align-items: center;
+}
+
+/* BUTTONS */
+.btnEditProfile {
+  width: 80%;
+  max-width: 220px;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* BUTTON HOVER */
+.btnEditProfile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(255, 122, 24, 0.3);
+}
+
+/* DELETE BUTTON (LAST ONE) */
+.btnEditProfile:last-child {
+  background: #e63946;
+}
+
+.btnEditProfile:last-child:hover {
+  box-shadow: 0 8px 18px rgba(230, 57, 70, 0.3);
+}
+
+/* SMALL TEXT */
+.small {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* POLICY SECTION */
+.policy h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* LINK */
+.bookATrial {
+  color: #4c6ef5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.bookATrial:hover {
+  text-decoration: underline;
+}
+
+/* INNER TEXT */
+.innerTextPolicy {
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+/* REMOVE UNUSED */
+.dashboard,
+.schedule {
+  display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .welcome {
+    flex-direction: column;
+  }
+
+  .profileInnerDiv,
+  .secondDiv {
+    width: 100%;
+  }
+
+  .userName {
+    font-size: 1.3rem;
+  }
+}

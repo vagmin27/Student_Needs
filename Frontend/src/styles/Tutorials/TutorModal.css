@@ -1,0 +1,88 @@
+/* MODAL CONTAINER */
+.modalContainerTutor {
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CLOSE BUTTON */
+.closeBtnReview {
+  align-self: flex-end;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  transition: 0.2s;
+}
+
+.closeBtnReview:hover {
+  color: #000;
+}
+
+/* CONTENT */
+.contentReview {
+  margin-top: 0.5rem;
+}
+
+/* TITLE */
+.titleReview {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* LIST */
+.tutorUL {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* LIST ITEMS */
+.tutorli {
+  padding: 0.6rem 0;
+  font-size: 0.95rem;
+  color: #444;
+  border-bottom: 1px solid #eee;
+}
+
+/* LAST ITEM REMOVE BORDER */
+.tutorli:last-child {
+  border-bottom: none;
+}
+
+/* LABEL STYLE */
+.tutorli strong {
+  color: #222;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .modalContainerTutor {
+    padding: 1rem;
+  }
+
+  .titleReview {
+    font-size: 1.1rem;
+  }
+}

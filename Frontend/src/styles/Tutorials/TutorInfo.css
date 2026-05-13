@@ -1,0 +1,173 @@
+/* MAIN CARD */
+#cardimage2 {
+  width: 100%;
+  max-width: 1100px;
+  margin: 2rem auto;
+  background: #f8faf7;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* REMOVE FULL HEIGHT */
+.card2 {
+  border: none;
+  border-radius: 1rem;
+  height: auto;
+}
+
+/* IMAGE */
+.imgs2 {
+  width: 100%;
+  max-width: 280px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 1rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* TITLE */
+.card-title2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #2f3e3a;
+}
+
+/* TEXT */
+.card-text2 {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+/* STAR */
+.fa-star {
+  color: #f3e031;
+}
+
+/* LEFT SECTION */
+.div1 {
+  flex: 1;
+}
+
+/* RIGHT SECTION (REVIEWS) */
+.div2 {
+  flex: 1.5;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+/* SCROLLBAR (OPTIONAL NICE LOOK) */
+.div2::-webkit-scrollbar {
+  width: 6px;
+}
+.div2::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* REVIEW TITLE */
+.student {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* REVIEW CARD */
+.review-base {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* REMOVE OLD QUOTE POSITION BUG */
+.review .review-base .review-text:before,
+.review .review-base .review-text2:before {
+  position: static;
+  font-size: 1.5rem;
+  margin-right: 5px;
+  color: #ccc;
+}
+
+/* CLEAN TEXT */
+.review-text,
+.review-text2 {
+  text-indent: 0;
+  line-height: 1.6;
+}
+
+/* BUTTON */
+.btnSpan {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.bookBtnTutor {
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* HOVER */
+.bookBtnTutor:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 122, 24, 0.3);
+}
+
+/* BACK BUTTON */
+.backDiv {
+  max-width: 1100px;
+  margin: 1rem auto;
+}
+
+.backBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+  color: #555;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.backBtn:hover {
+  background: #f5f5f5;
+}
+
+/* REMOVE OLD TRANSFORMS */
+.innerDiv {
+  padding: 0;
+  transform: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .rowDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .imgs2 {
+    max-width: 100%;
+    height: 200px;
+  }
+
+  .div2 {
+    max-height: none;
+  }
+}

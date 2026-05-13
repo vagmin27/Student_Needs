@@ -1,0 +1,82 @@
+/* MAIN CONTAINER */
+.PricePanel {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  background-color: #f8faf7;
+  border-radius: 16px;
+}
+
+/* EACH CARD */
+.price-panelDiv {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.price-panelDiv:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* IMAGE */
+.price-img {
+  width: 70%;
+  max-width: 120px;
+  margin-bottom: 1rem;
+}
+
+/* PLAN TITLE */
+.pricing-features {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #c3591c;
+  margin: 1rem 0 0.5rem;
+}
+
+/* FEATURE ITEMS */
+.pricing-features-items {
+  font-size: 0.9rem;
+  color: #555;
+  padding: 0.6rem 0;
+  border-top: 1px solid #eee;
+}
+
+/* PRICE (LAST ITEM STYLE) */
+.pricing-features-items:last-child {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #4caf50;
+  border-top: none;
+  margin-top: 0.5rem;
+}
+
+/* REMOVE OLD BORDERS */
+.price-panelDiv:first-child,
+.price-panelDiv:last-child {
+  border: none;
+}
+
+/* LIST RESET */
+ol,
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .price-panelDiv {
+    width: 100%;
+    max-width: 350px;
+  }
+}

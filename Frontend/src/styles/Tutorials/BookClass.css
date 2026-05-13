@@ -1,0 +1,63 @@
+/* GLOBAL RESET */
+* {
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* BODY */
+body {
+  background: #f5f7fb;
+  color: #333;
+}
+
+/* MAIN WRAPPER */
+.BookClassMain {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CONTAINER */
+.BookContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+/* SEARCH / CONTENT AREA */
+.searchDiv {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  min-height: 400px;
+  transition: all 0.3s ease;
+}
+
+/* SMOOTH PAGE TRANSITION */
+.searchDiv:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* PAGINATION SECTION */
+.paginationContainer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .BookContainer {
+    padding: 1rem;
+  }
+
+  .searchDiv {
+    padding: 1rem;
+  }
+}

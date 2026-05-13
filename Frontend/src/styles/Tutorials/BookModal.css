@@ -1,0 +1,151 @@
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+/* MODAL BOX */
+.modalContainer {
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CLOSE BUTTON */
+.closeBtn {
+  align-self: flex-end;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  transition: 0.2s;
+}
+
+.closeBtn:hover {
+  color: #000;
+}
+
+/* CONTENT SCROLL */
+.content {
+  margin-top: 1rem;
+  overflow-y: auto;
+  max-height: 55vh;
+  padding-right: 0.5rem;
+}
+
+/* DATE ROW */
+.time {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+/* DATE TITLE */
+.time p {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* HOURS GRID */
+.hourDiv {
+  display: inline-block;
+  margin: 5px;
+}
+
+/* BUTTON BASE */
+.hourBtn,
+.hourBtnSelect {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* DEFAULT SLOT */
+.hourBtn {
+  background: #f5f7fa;
+  color: #333;
+}
+
+.hourBtn:hover {
+  background: #e6edf5;
+  transform: translateY(-1px);
+}
+
+/* SELECTED SLOT */
+.hourBtnSelect {
+  background: #4caf50;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+}
+
+.hourBtnSelect:hover {
+  background: #43a047;
+}
+
+/* CONFIRM BUTTON */
+.btnContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.confirmBtn {
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirmBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 122, 24, 0.3);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+  .modalContainer {
+    padding: 1rem;
+  }
+
+  .hourBtn,
+  .hourBtnSelect {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hourDiv {
+    display: block;
+  }
+}
