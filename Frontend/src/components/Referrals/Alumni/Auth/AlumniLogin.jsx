@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Briefcase, ArrowLeft, Loader2 } from 'lucide-react';
-import { useAlumniLogin } from '../../../services/Referrals/Auth/hooks';
+import { useAlumniLogin } from '../../../../services/Referrals/Auth/hooks';
 import { Button } from '@/components/Referrals/ui/button.jsx';
 import { Input } from '@/components/Referrals/ui/input.jsx';
 import { Label } from '@/components/Referrals/ui/label.jsx';
