@@ -22,6 +22,9 @@ import { connectDB } from "./db/Tutorials/connection.js";
 import { dbconnect } from "./config/Referrals/database.js";
 import cloudinary from "./config/Referrals/cloudinary.js";
 
+// Expenses DB
+import connectDb from "../backend/db/Expenses/db.js";
+
 // =====================================================
 //                    TUTORIAL ROUTES
 // =====================================================
@@ -64,6 +67,27 @@ import applicationRoutes from "./routes/Referrals/ApplicationRoutes.js";
 import externalJobRoutes from "./routes/Referrals/ExternalJobRoutes.js";
 import interviewRoutes from "./routes/Referrals/InterviewRoutes.js";
 import profileAnalysisRoutes from "./routes/Referrals/ProfileAnalysisRoutes.js";
+
+// =====================================================
+//                  EXPENSE ROUTES
+// =====================================================
+
+import userRouter from "./router/Expenses/userRouter.js";
+import expenseRouter from "./router/Expenses/expenseRouter.js";
+import budgetRouter from "./router/Expenses/budgetRouter.js";
+import goalRouter from "./router/Expenses/goalRouter.js";
+import analyticsRouter from "./router/Expenses/analyticsRouter.js";
+import notificationRouter from "./router/Expenses/notificationRouter.js";
+
+// =====================================================
+//                  EXPENSE SCHEDULERS
+// =====================================================
+
+import {
+  smartReminderScheduler,
+  monthlyAnalysisScheduler,
+  recurringTransactionScheduler,
+} from "./utils/Expenses/scheduler.js";
 
 // =====================================================
 //                    MIDDLEWARES
@@ -139,15 +163,10 @@ app.use(passport.session());
 // =====================================================
 
 const allowedOrigins = [
-  // Tutorials
   "http://localhost:5173",
-
-  // Attendance
   "http://localhost:3000",
   "https://attendancemonitoringsyst-b1ae8.web.app",
   "https://mern-attendance-app.onrender.com",
-
-  // Referral
   "http://localhost:8080",
   "http://localhost:8081",
   "http://127.0.0.1:8080",
@@ -250,6 +269,22 @@ app.use("/api/v1", interviewRoutes);
 app.use("/api/v1", profileAnalysisRoutes);
 
 // =====================================================
+//                EXPENSE MODULE ROUTES
+// =====================================================
+
+app.use("/auth", userRouter);
+
+app.use("/analytics", analyticsRouter);
+
+app.use("/budgets", budgetRouter);
+
+app.use("/expenses", expenseRouter);
+
+app.use("/goals", goalRouter);
+
+app.use("/notifications", notificationRouter);
+
+// =====================================================
 //                    404 HANDLER
 // =====================================================
 
@@ -286,6 +321,14 @@ const initializeServer = async () => {
     // Referral DB
     await dbconnect();
     console.log("✅ Referral Database Connected");
+
+    // Expenses DB
+    connectDb();
+
+    // Expense Schedulers
+    smartReminderScheduler();
+    monthlyAnalysisScheduler();
+    recurringTransactionScheduler();
 
     // Cloudinary
     cloudinary.cloudinaryConnect();
