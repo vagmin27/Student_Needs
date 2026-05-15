@@ -5,6 +5,7 @@ import { AiOutlineMail, AiOutlineSchedule } from "react-icons/ai";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { MdOutlineFreeCancellation } from "react-icons/md";
 import bulb2 from "../../assets/images/bulb2.png";
+import API, { BASE_URL } from "../../utils/Tutorials/api";
 
 function Profile() {
 const navigate = useNavigate();
@@ -24,13 +25,7 @@ const [pic, setPic] = useState(null);
 useEffect(() => {
 const fetchExistData = async () => {
 try {
-      const res = await fetch("/api/profile", {
-        method: "GET",
-        credentials: "include",
-      });
-
-
-    const data = await res.json();
+      const { data } = await API.get("/profile");
 
     if (data.user) {
       const profileInDB = data.user.profile || {};
@@ -46,7 +41,7 @@ try {
 
       setProfile(profileData);
       setPreferredSchedule(data.user.schedule || []);
-      setPic(data.user.pic ? `http://localhost:8000/uploads/${data.user.pic}` : null);
+      setPic(data.user.pic ? `${BASE_URL}/uploads/${data.user.pic}` : null);
     }
 
   } catch (err) {
@@ -121,7 +116,7 @@ return ( <main className="container-profile"> <div className="main-profile"> <di
 
           <div className="innerTextPolicy">
             <AiOutlineSchedule />{" "}
-            <Link to="/book" className="bookATrial">
+            <Link to="/tutorials/book" className="bookATrial">
               Book a Trial
             </Link>
           </div>

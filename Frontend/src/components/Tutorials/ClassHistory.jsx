@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../utils/Tutorials/auth";
 import "../../styles/Tutorials/ClassHistory.css";
 import ReviewModal from "./ReviewModal";
+import API from "../../utils/Tutorials/api";
 
 /**
  * component that renders user class history
@@ -19,8 +20,7 @@ function ClassHistory() {
   useEffect(() => {
     try {
       const fetchSchedule = async () => {
-        const res = await fetch("/api/getSchedule");
-        const resHistory = await res.json();
+        const { data: resHistory } = await API.get("/getSchedule");
         const userHistory = resHistory.data.history;
         setHistory([...userHistory]);
       };

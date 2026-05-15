@@ -33,7 +33,7 @@ const Home = () => {
   };
   useEffect(() => {
     if (!userSettings.monthlyBudget || userSettings.monthlyBudget === 0) {
-      navigate("/settings");
+      navigate("/expenses-tracker/settings");
     }
   }, []);
 
@@ -49,7 +49,7 @@ const Home = () => {
     setIsLoading(true);
 
     if (!userdata) {
-      navigate("/login");
+      navigate("/expenses-tracker/login");
       return;
     }
 
@@ -240,7 +240,7 @@ const Home = () => {
         <div className="lg:col-span-1 glass-panel p-6 space-y-4">
           <h3 className="text-lg font-bold text-white mb-4">Quick Actions</h3>
           <button
-            onClick={() => navigate("/recurring")}
+            onClick={() => navigate("/expenses-tracker/recurring")}
             className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors group"
           >
             <div className="flex items-center gap-3">

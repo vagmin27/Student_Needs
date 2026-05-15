@@ -14,10 +14,10 @@ function TutorDashboard() {
         const res = await getTutorProfile();
 
         if (!res.data?.profile) {
-          navigate("/login/tutor");
+          navigate("/login/teacher");
         }
       } catch {
-        navigate("/login/tutor");
+        navigate("/login/teacher");
       }
     };
 

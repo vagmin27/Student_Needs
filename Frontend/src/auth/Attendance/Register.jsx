@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiUserCheck } from "react-icons/fi";
 import { MdOutlineSchool } from "react-icons/md";
+import { attendanceApiClient } from "@/services/apiClient.js";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -45,14 +45,14 @@ const Register = () => {
     }
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await attendanceApiClient.post("/auth/register", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
         role: formData.role,
       });
       toast.success("Account created! Please log in.");
-      navigate("/login");
+      navigate("/attendance/login");
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed. Try again.");
     } finally {

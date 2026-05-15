@@ -15,7 +15,7 @@ function Signup() {
 
   useEffect(() => {
     if (localStorage.getItem("User")) {
-      navigate("/");
+      navigate("/expenses-tracker");
     }
   }, [navigate]);
 
@@ -42,7 +42,7 @@ function Signup() {
       );
 
       ref.current.complete();
-      navigate("/login");
+      navigate("/expenses-tracker/login");
     } catch (error) {
       console.log(error.message);
       toast.error("Internal server error or email already exists");

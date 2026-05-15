@@ -20,7 +20,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await API.post("/api/login", user);
+      const res = await API.post("/login", user);
 
       if (res.data.status === "ok") {
         alert("Login successful ✅");
@@ -30,7 +30,7 @@ function Login() {
           await auth.fetchUser();
         }
 
-        navigate("/profile", { replace: true });
+        navigate("/tutorials/profile", { replace: true });
       } else {
         alert(res.data.message || "Login failed ❌");
       }
@@ -103,7 +103,7 @@ function Login() {
               No Account?{" "}
               <span
                 style={styles.link}
-                onClick={() => navigate("/register")}
+                onClick={() => navigate("/tutorials/register")}
               >
                 Sign Up!
               </span>

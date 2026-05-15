@@ -10,7 +10,7 @@ function ManageBookingPage() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await API.get("/api/booking");
+        const res = await API.get("/booking");
 
         const sorted = res.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -29,7 +29,7 @@ function ManageBookingPage() {
     if (!window.confirm("Cancel this booking?")) return;
 
     try {
-      await API.patch(`/api/booking/${id}/cancel`);
+      await API.patch(`/booking/${id}/cancel`);
 
       setBookings((prev) =>
         prev.map((b) =>

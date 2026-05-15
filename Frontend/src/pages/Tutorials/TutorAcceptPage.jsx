@@ -12,7 +12,7 @@ function TutorAcceptPage() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await API.get("/api/booking/for-tutor");
+        const res = await API.get("/booking/for-tutor");
         setBookings(res.data.bookings || []);
       } catch (err) {
         console.error("Error fetching bookings:", err);
@@ -26,7 +26,7 @@ function TutorAcceptPage() {
 
   const updateStatus = async (id, status) => {
     try {
-      await API.patch(`/api/booking/${id}/status`, { status });
+      await API.patch(`/booking/${id}/status`, { status });
 
       setBookings((prev) =>
         prev.map((b) =>

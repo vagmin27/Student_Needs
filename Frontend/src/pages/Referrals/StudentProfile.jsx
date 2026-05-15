@@ -24,6 +24,7 @@ import {
   Award,
 } from "lucide-react";
 import { studentProfileApi } from "@/services/Referrals/studentProfile.js";
+import { referralsApiClient } from "@/services/apiClient.js";
 import {
   showTransactionToast,
   dismissToast,
@@ -68,17 +69,9 @@ export function StudentProfilePage() {
   const fetchScores = async () => {
     try {
       // Fetch applications to get interview and profile scores
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/v1"}/applications`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          },
-        },
-      );
-
-      if (response.ok) {
-        const data = await response.json();
+      const response = await referralsApiClient.get("/applications");
+      if (response.status === 200) {
+        const data = response.data;
         const applications = data.data || data;
 
         // Calculate average scores from all applications

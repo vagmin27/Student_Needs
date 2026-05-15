@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { interviewApi } from '@/services/Referrals/interview.js';
 import { opportunitiesApi } from '@/services/Referrals/opportunities.js';
 import { analyzeApi } from '@/services/Referrals/analyze.js';
+import { linkedInApi, resumeApi, studentProfileApi } from '@/services/Referrals/studentProfile.js';
 import { useAuth } from '@/services/Referrals/Auth/AuthContext.jsx';
 import { Button } from '@/components/Referrals/ui/button.jsx';
 import { cn } from '@/lib/Referrals/utils.js';
@@ -82,42 +83,7 @@ export default function InterviewPage() {
         if (user?._id) {
           addLog('Fetching student data...');
           try {
-            // Get API base URL
-            const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1';
-            const authToken = localStorage.getItem('auth_token');
-
-            if (!authToken) {
-              addLog('Error: Authentication token not found');
-              setStudentData({});
-              return;
-            }
-
-            addLog(`Using API base: ${apiBaseUrl}`);
-
-            // Fetch student profile from correct endpoint
-            const endpoint = `${apiBaseUrl}/student/profile`;
-            
-            console.log('Fetching from:', endpoint);
-            const studentResponse = await fetch(endpoint, {
-              headers: {
-                'Authorization': `Bearer ${authToken}`
-              }
-            });
-
-            addLog(`Response from ${endpoint}: ${studentResponse.status}`);
-
-            if (!studentResponse.ok) {
-              const errorText = await studentResponse.text();
-              addLog(`Error: Failed to fetch student profile (${studentResponse.status})`);
-              console.error('Student profile response:', errorText);
-              
-              setStudentData({
-                githubUrl: undefined,
-              });
-              return;
-            }
-
-            const studentJsonData = await studentResponse.json();
+            const studentJsonData = await studentProfileApi.getProfile();
             console.log('Student data received:', studentJsonData);
             
             const student = studentJsonData.data;
@@ -137,24 +103,12 @@ export default function InterviewPage() {
             if (student.resume?.fileName) {
               try {
                 addLog('Fetching resume...');
-                const resumeResponse = await fetch(
-                  `${apiBaseUrl}/student/resume`,
-                  {
-                    headers: {
-                      'Authorization': `Bearer ${authToken}`
-                    }
-                  }
-                );
-                if (resumeResponse.ok) {
-                  const resumeBlob = await resumeResponse.blob();
-                  preparedData.resume = {
-                    fileName: student.resume.fileName,
-                    data: resumeBlob,
-                  };
-                  addLog(`✓ Resume loaded: ${student.resume.fileName} (${resumeBlob.size} bytes)`);
-                } else {
-                  addLog(`Note: Could not fetch resume (${resumeResponse.status})`);
-                }
+                const resumeBlob = await resumeApi.getResume();
+                preparedData.resume = {
+                  fileName: student.resume.fileName,
+                  data: resumeBlob,
+                };
+                addLog(`Resume loaded: ${student.resume.fileName} (${resumeBlob.size} bytes)`);
               } catch (resumeError) {
                 addLog(`Note: Resume fetch error - ${resumeError.message}`);
               }
@@ -166,24 +120,12 @@ export default function InterviewPage() {
             if (student.linkedIn?.fileName) {
               try {
                 addLog('Fetching LinkedIn profile...');
-                const linkedinResponse = await fetch(
-                  `${apiBaseUrl}/student/linkedin`,
-                  {
-                    headers: {
-                      'Authorization': `Bearer ${authToken}`
-                    }
-                  }
-                );
-                if (linkedinResponse.ok) {
-                  const linkedinBlob = await linkedinResponse.blob();
-                  preparedData.linkedIn = {
-                    fileName: student.linkedIn.fileName,
-                    data: linkedinBlob,
-                  };
-                  addLog(`✓ LinkedIn profile loaded: ${student.linkedIn.fileName}`);
-                } else {
-                  addLog(`Note: Could not fetch LinkedIn (${linkedinResponse.status})`);
-                }
+                const linkedinBlob = await linkedInApi.getLinkedIn();
+                preparedData.linkedIn = {
+                  fileName: student.linkedIn.fileName,
+                  data: linkedinBlob,
+                };
+                addLog(`LinkedIn profile loaded: ${student.linkedIn.fileName}`);
               } catch (linkedinError) {
                 addLog(`Note: LinkedIn fetch error - ${linkedinError.message}`);
               }

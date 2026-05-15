@@ -73,7 +73,6 @@ const initialStudentSignup = {
   lastName: '',
   email: '',
   password: '',
-  collegeName: '',
 };
 
 export function useStudentSignup() {
@@ -110,11 +109,6 @@ export function useStudentSignup() {
       isValid = false;
     }
 
-    if (!form.data.collegeName.trim()) {
-      form.setError('collegeName', 'College name is required');
-      isValid = false;
-    }
-
     return isValid;
   }, [form]);
 
@@ -128,7 +122,7 @@ export function useStudentSignup() {
       const response = await studentSignup(form.data);
       if (response.success) {
         form.resetForm();
-        navigate('/student/referrals');
+        navigate('/student/dashboard');
       } else {
         form.setSubmitError(response.message);
       }
@@ -192,7 +186,7 @@ export function useStudentLogin() {
       const response = await studentLogin(form.data);
       if (response.success) {
         form.resetForm();
-        navigate('/student/referrals');
+        navigate('/student/dashboard');
       } else {
         form.setSubmitError(response.message);
       }
@@ -222,7 +216,6 @@ const initialAlumniSignup = {
   lastName: '',
   email: '',
   password: '',
-  collegeName: '',
   company: '',
   jobTitle: '',
 };
@@ -261,10 +254,6 @@ export function useAlumniSignup() {
       isValid = false;
     }
 
-    if (!form.data.collegeName.trim()) {
-      form.setError('collegeName', 'College name is required');
-      isValid = false;
-    }
 
     return isValid;
   }, [form]);
@@ -279,7 +268,7 @@ export function useAlumniSignup() {
       const response = await alumniSignup(form.data);
       if (response.success) {
         form.resetForm();
-        navigate('/alumni');
+        navigate('/alumni/dashboard');
       } else {
         form.setSubmitError(response.message);
       }
@@ -338,7 +327,7 @@ export function useAlumniLogin() {
       const response = await alumniLogin(form.data);
       if (response.success) {
         form.resetForm();
-        navigate('/alumni');
+        navigate('/alumni/dashboard');
       } else {
         form.setSubmitError(response.message);
       }
@@ -368,7 +357,6 @@ const initialVerifierSignup = {
   lastName: '',
   email: '',
   password: '',
-  collegeName: '',
 };
 
 export function useVerifierSignup() {
@@ -405,10 +393,6 @@ export function useVerifierSignup() {
       isValid = false;
     }
 
-    if (!form.data.collegeName.trim()) {
-      form.setError('collegeName', 'College name is required');
-      isValid = false;
-    }
 
     return isValid;
   }, [form]);

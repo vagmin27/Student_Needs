@@ -30,7 +30,7 @@ function TutorSchedulePage() {
     if (!window.confirm("Delete this slot? This cannot be undone.")) return;
 
     try {
-      await API.delete(`/api/tutor/schedule/${slotId}`);
+      await API.delete(`/tutor/schedule/${slotId}`);
 
       setSchedule((prev) =>
         prev.filter((s) => s._id !== slotId)
@@ -142,7 +142,7 @@ function TutorSchedulePage() {
                       className="save-link-btn"
                       onClick={async () => {
                         try {
-                          await API.post("/api/tutor/save-link", {
+                          await API.post("/tutor/save-link", {
                             slotTime: `${item.date} - ${item.time}`,
                             link: item.meetingLink,
                           });

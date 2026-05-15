@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { deleteExpense } from "../../../utils/Expenses/renders";
+import { createExpense, deleteExpense } from "../../../utils/Expenses/renders";
 import Modal from "../ui/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -123,7 +123,6 @@ const TransactionsTable = ({ transactions, onUpdate }) => {
         userId: selectedTx.userId,
       });
 
-      const { createExpense } = require("../../utils/renders");
       await createExpense({
         userId: selectedTx.userId,
         category: editForm.category,

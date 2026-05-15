@@ -37,10 +37,6 @@ const studentSchema = new mongoose.Schema({
       type: String,
       default: "",
     },
-    college: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "College",
-    },
     branch: {
       type: String,
       trim: true,

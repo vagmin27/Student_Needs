@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../../styles/Tutorials/LoginRegister.css";
+import API from "../../utils/Tutorials/api";
 
 /**
  * Amanda Au-Yeung
@@ -27,18 +28,12 @@ function Register() {
 
   const requestOtp = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/register/request-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const res = await API.post("/register/request-otp", {
         email: user.email,
         password: user.password,
-      }),
     });
-    const data = await res.json();
-    if (res.ok) {
+    const data = res.data;
+    if (res.status === 200) {
       setStep("otp");
       setMessage(data.message);
     } else {
@@ -48,18 +43,12 @@ function Register() {
 
   const verifyOtp = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/register/verify-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const res = await API.post("/register/verify-otp", {
         email: user.email,
         otp: otp,
-      }),
     });
-    const data = await res.json();
-    if (res.ok) {
+    const data = res.data;
+    if (res.status === 200) {
       setStep("success");
       setMessage(data.message);
       setTimeout(() => {
@@ -71,16 +60,10 @@ function Register() {
   };
 
   const resendOtp = async () => {
-    const res = await fetch("/api/register/resend-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const res = await API.post("/register/resend-otp", {
         email: user.email,
-      }),
     });
-    const data = await res.json();
+    const data = res.data;
     setMessage(data.message);
   };
 

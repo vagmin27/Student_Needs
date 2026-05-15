@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "../../styles/Tutorials/ReviewModal.css";
 import PropTypes from "prop-types";
 import Rate from "./Rate";
+import API from "../../utils/Tutorials/api";
 
 /**
  * @param {props} props from parent component ClassHistory.jsx
@@ -22,14 +23,7 @@ function ReviewModal({ handleModal, currTutor }) {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      const res = await fetch("/api/addReview", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(comment),
-      });
-      const resMsg = await res.json();
+      const { data: resMsg } = await API.post("/addReview", comment);
       alert(resMsg.msg);
     } catch (err) {
       console.error(err);
