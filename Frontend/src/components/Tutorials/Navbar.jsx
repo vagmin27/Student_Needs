@@ -11,7 +11,7 @@ function Navbar() {
 
   const [navColor, setNavColor] = useState(false);
 
-  const isTutorRoute = location.pathname.startsWith("/tutor");
+  const isTutorRoute = location.pathname.startsWith("/tutorials/tutor");
 
   const changeNavBackground = () => {
     window.scrollY >= 66 ? setNavColor(true) : setNavColor(false);
@@ -62,25 +62,25 @@ function Navbar() {
   {isTutorRoute ? (
     <>
       <li>
-        <NavLink className="nav-link" to="/tutor/dashboard">
+          <NavLink className="nav-link" to="/tutorials/tutor/dashboard">
           Dashboard
         </NavLink>
       </li>
 
       <li>
-        <NavLink className="nav-link" to="/tutor/editProfile">
+          <NavLink className="nav-link" to="/tutorials/tutor/editProfile">
           Profile
         </NavLink>
       </li>
 
       <li>
-        <NavLink className="nav-link" to="/tutor/schedule">
+          <NavLink className="nav-link" to="/tutorials/tutor/schedule">
           Schedule
         </NavLink>
       </li>
 
       <li>
-        <NavLink className="nav-link" to="/tutor/accept">
+          <NavLink className="nav-link" to="/tutorials/tutor/accept">
           Requests
         </NavLink>
       </li>
@@ -89,14 +89,14 @@ function Navbar() {
     <>
       {/* STUDENT / PUBLIC */}
       <li>
-        <NavLink className="nav-link" to="/book">
+        <NavLink className="nav-link" to="/tutorials/book">
           Book Class
         </NavLink>
       </li>
 
       {auth.user?.role === "student" && (
         <li>
-          <NavLink className="nav-link" to="/profile">
+          <NavLink className="nav-link" to="/tutorials/profile">
             My Profile
           </NavLink>
         </li>
@@ -114,7 +114,7 @@ function Navbar() {
           ) : (
             <button
               className="loginBtn"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/tutorials/login")}
             >
               Login
             </button>

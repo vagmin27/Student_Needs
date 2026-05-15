@@ -20,7 +20,7 @@ function TutorRegisterPage() {
   const handleRequestOtp = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/api/tutor/register/request-otp", tutor);
+      const res = await API.post("/tutor/register/request-otp", tutor);
       setMessage(res.data.message);
       setStep("otp");
     } catch (err) {
@@ -32,13 +32,13 @@ function TutorRegisterPage() {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/api/tutor/register/verify-otp", {
+      const res = await API.post("/tutor/register/verify-otp", {
         email: tutor.email,
         otp,
       });
       if (res.data.status === "ok") {
         alert("Registered successfully! Please log in 🎉");
-        navigate("/login/tutor");
+        navigate("/login/teacher");
       }
     } catch (err) {
       alert(err.response?.data?.message || "Invalid OTP ❌");
@@ -94,7 +94,7 @@ function TutorRegisterPage() {
                 Already have an account?{" "}
                 <span
                   style={{ color: "#ff7a2f", cursor: "pointer", fontWeight: "bold" }}
-                  onClick={() => navigate("/login/tutor")}
+                  onClick={() => navigate("/login/teacher")}
                 >
                   Login
                 </span>

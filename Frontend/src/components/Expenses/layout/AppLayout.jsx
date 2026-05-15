@@ -8,7 +8,7 @@ const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   if (!localStorage.getItem("User")) {
-    return <Navigate to='/login' />;
+    return <Navigate to='/expenses-tracker/login' />;
   }
 
   return (

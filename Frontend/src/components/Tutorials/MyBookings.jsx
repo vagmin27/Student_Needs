@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../../utils/Tutorials/api";
 
 function MyBookings() {
 const [bookings, setBookings] = useState([]);
@@ -10,9 +10,7 @@ const navigate = useNavigate();
 useEffect(() => {
 const fetchBookings = async () => {
 try {
-const res = await axios.get("/api/booking", {
-withCredentials: true,
-});
+const res = await API.get("/booking");
     setBookings(res.data);
   } catch (err) {
     console.error("❌ Error fetching bookings:", err);
@@ -26,9 +24,7 @@ fetchBookings();
 // ✅ DELETE BOOKING
 const handleDelete = async (id) => {
 try {
-await axios.delete(`/api/booking/deleteClass/${id}`, {
-withCredentials: true,
-});
+await API.delete(`/booking/deleteClass/${id}`);
 
   // remove from UI instantly
   setBookings((prev) => prev.filter((b) => b.id !== id));
@@ -42,7 +38,6 @@ withCredentials: true,
 return (
 <div style={{ padding: "2rem" }}> <h1>📚 My Bookings</h1>
 
-```
   {bookings.length === 0 ? (
     <p>No bookings found</p>
   ) : (

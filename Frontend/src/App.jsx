@@ -1,4 +1,5 @@
 import React, { useEffect, Suspense } from "react";
+import "./App.css";
 import {
   // BrowserRouter,
   Routes,
@@ -58,6 +59,13 @@ import StudentDashboard from "./pages/Attendance/StudentDashboard";
 // ======================================================
 
 import Index from "@/pages/Referrals/Index.jsx";
+import {
+  ModuleOverviewPage,
+  RoleAuthPage,
+  RoleSelectionPage,
+  StudentOverviewDashboard,
+  UnifiedLanding,
+} from "@/pages/UnifiedFlow.jsx";
 
 // ======================================================
 //                    TUTORIALS
@@ -139,16 +147,39 @@ const AttendanceRoutes = () => {
   return (
     <Routes>
       {/* ======================================================
-                      REFERRALS OPENING PAGE
+                      UNIFIED OPENING FLOW
       ====================================================== */}
 
-      <Route path="/" element={<Index />} />
+      <Route path="/" element={<UnifiedLanding />} />
+      <Route path="/role-selection" element={<RoleSelectionPage />} />
+      <Route path="/role-selector" element={<Navigate to="/role-selection" replace />} />
+      <Route path="/login" element={<Navigate to="/login/student" replace />} />
+      <Route path="/login/:role" element={<RoleAuthPage mode="login" />} />
+      <Route path="/signup" element={<Navigate to="/signup/student" replace />} />
+      <Route path="/signup/:role" element={<RoleAuthPage mode="signup" />} />
+      <Route path="/register/:role" element={<RoleAuthPage mode="signup" />} />
+      <Route path="/auth/student/login" element={<Navigate to="/login/student" replace />} />
+      <Route path="/auth/student/signup" element={<Navigate to="/signup/student" replace />} />
+      <Route path="/auth/alumni/login" element={<Navigate to="/login/alumni" replace />} />
+      <Route path="/auth/alumni/signup" element={<Navigate to="/signup/alumni" replace />} />
+      <Route path="/auth/verifier/login" element={<Navigate to="/login/verifier" replace />} />
+      <Route path="/auth/verifier/signup" element={<Navigate to="/signup/verifier" replace />} />
+      <Route path="/student/dashboard" element={<StudentOverviewDashboard />} />
+      <Route path="/student/attendance" element={<Navigate to="/student-dashboard" replace />} />
+      <Route path="/student/expenses" element={<Navigate to="/expenses-tracker" replace />} />
+      <Route path="/modules" element={<ModuleOverviewPage />} />
+      <Route path="/teacher/dashboard" element={<TutorDashboard />} />
+      <Route path="/alumni/dashboard" element={<Index />} />
 
       {/* ======================================================
                         REFERRALS ROUTES
       ====================================================== */}
 
       <Route path="/referrals/*" element={<Index />} />
+      <Route path="/student/*" element={<Index />} />
+      <Route path="/alumni/*" element={<Index />} />
+      <Route path="/verifier/*" element={<Index />} />
+      <Route path="/auth/*" element={<Index />} />
 
       {/* ======================================================
                         ATTENDANCE AUTH

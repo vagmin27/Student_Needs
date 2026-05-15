@@ -9,14 +9,14 @@ import {
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const navItems = [
-    { name: "Dashboard", path: "/", icon: <MdDashboard size={24} /> },
+    { name: "Dashboard", path: "/expenses-tracker", icon: <MdDashboard size={24} /> },
     {
       name: "Recurring",
-      path: "/recurring",
+      path: "/expenses-tracker/recurring",
       icon: <MdAccountBalanceWallet size={24} />,
     },
-    { name: "Analytics", path: "/analytics", icon: <MdPieChart size={24} /> },
-    { name: "Settings", path: "/settings", icon: <MdSettings size={24} /> },
+    { name: "Analytics", path: "/expenses-tracker/analytics", icon: <MdPieChart size={24} /> },
+    { name: "Settings", path: "/expenses-tracker/settings", icon: <MdSettings size={24} /> },
   ];
 
   return (
@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <NavLink
               key={item.name}
               to={item.path}
-              end={item.path === "/"}
+              end={item.path === "/expenses-tracker"}
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${

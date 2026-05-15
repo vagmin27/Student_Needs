@@ -14,13 +14,13 @@ function TutorLoginPage() {
     e.preventDefault();
 
     try {
-      const res = await API.post("/api/tutor/login", { email, password });
+      const res = await API.post("/tutor/login", { email, password });
 
       // ✅ SUCCESS LOGIN
       if (res.data.status === "ok") {
         alert("Login successful ✅");
 
-        navigate("/tutor/schedule", { replace: true });
+        navigate("/tutorials/tutor/schedule", { replace: true });
       } else {
         handleError(res.data.message);
       }
@@ -39,7 +39,7 @@ function TutorLoginPage() {
 
     if (message.toLowerCase().includes("not")) {
       alert("Tutor not found. Redirecting to Sign Up 🚀");
-      navigate("/register/tutor");
+      navigate("/signup/teacher");
     } else {
       alert(message);
     }
@@ -50,7 +50,7 @@ function TutorLoginPage() {
       {/* 🔝 Navbar */}
       <div className="tutor-navbar">
         <h2>💡 Tutor Match</h2>
-        <button onClick={() => navigate("/login")}>Back</button>
+        <button onClick={() => navigate("/role-selection")}>Back</button>
       </div>
 
       {/* 🔥 Layout */}
@@ -95,7 +95,7 @@ function TutorLoginPage() {
                   cursor: "pointer",
                   fontWeight: "bold",
                 }}
-                onClick={() => navigate("/register/tutor")}
+                onClick={() => navigate("/signup/teacher")}
               >
                 Sign Up
               </span>

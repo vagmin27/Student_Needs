@@ -24,9 +24,9 @@ function validateEmail(email, res) {
 // ================= SIGNUP =================
 export const signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, accountType, collegeName } = req.body;
+    const { firstName, lastName, email, password, accountType } = req.body;
 
-    if (!firstName || !lastName || !email || !password || !collegeName) {
+    if (!firstName || !lastName || !email || !password) {
       return res.status(403).json({
         success: false,
         message: "All Fields are required",
@@ -43,18 +43,7 @@ export const signup = async (req, res) => {
       });
     }
 
-    const matchingName = collegeName.replace(/\s+/g, "").toLowerCase();
-
-    let college = await College.findOne({ matchingName });
-
-    if (!college) {
-      college = await College.create({
-        name: collegeName,
-        matchingName,
-        Student: [],
-        Alumni: [],
-      });
-    }
+    
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -65,28 +54,25 @@ export const signup = async (req, res) => {
       password: hashedPassword,
       accountType: accountType || "Student",
       image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`,
-      college: college._id,
     });
 
     // Profile score
     student.profileCompleteness = calculateProfileCompleteness(student);
     await student.save();
 
-    // Add to college
-    college.Student.push(student._id);
-    await college.save();
 
-    await student.populate("college", "name matchingName");
 
     return handleAuthSuccess(student, res, "Student registered successfully");
 
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Student cannot be registered",
-    });
-  }
+  } catch(err){
+   console.error("SIGNUP ERROR:", err);
+
+   res.status(500).json({
+      success:false,
+      message:err.message,
+      stack:err.stack
+   });
+}
 };
 
 // ================= LOGIN =================

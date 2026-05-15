@@ -1,6 +1,3 @@
-import axios from "axios";
+import { expensesApiClient } from "@/services/apiClient.js";
 
-
-export const axiosClient = axios.create({
-    baseURL : 'https://expensify-tracker.onrender.com'
-})
+export const axiosClient = expensesApiClient;

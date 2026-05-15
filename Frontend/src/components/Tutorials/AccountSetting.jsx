@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PricePanel from "./PricePanel";
 import { useAuth } from "../../utils/Tutorials/auth";
 import "../../styles/Tutorials/AccountSetting.css";
+import API from "../../utils/Tutorials/api";
 
 function AccountSetting() {
   const navigate = useNavigate();
@@ -19,15 +20,7 @@ function AccountSetting() {
   // ✅ FIXED DELETE ACCOUNT API
   const delAC = async () => {
     try {
-      const res = await fetch(
-        `/api/account/deleteAccount/${auth.user?._id}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
-
-      const data = await res.json();
+      const { data } = await API.delete(`/account/deleteAccount/${auth.user?._id}`);
       alert(data.message);
 
       auth.logout();

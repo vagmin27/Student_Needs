@@ -1,23 +1,3 @@
-import axios from "axios";
-
-const API = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_URL,
-});
-
-// Add request interceptor to include auth token
-API.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+import { attendanceApiClient as API } from "@/services/apiClient.js";
 
 export default API;

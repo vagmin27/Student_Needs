@@ -1,20 +1,17 @@
-// API Configuration
+import { API_PREFIXES, AUTH_STORAGE_KEYS, getApiUrl } from "@/config/api.js";
 
-// Base API URL - can be configured via environment variable
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://next-ref-alumni-connect.onrender.com/api/v1";
+export const API_BASE_URL = getApiUrl(API_PREFIXES.referrals);
 
-// Auth API endpoints
 export const AUTH_ENDPOINTS = {
   student: {
-    signup: `${API_BASE_URL}/student/signup`,
-    login: `${API_BASE_URL}/student/login`,
+    signup: "/student/signup",
+    login: "/student/login",
   },
   alumni: {
-    signup: `${API_BASE_URL}/alumni/signup`,
-    login: `${API_BASE_URL}/alumni/login`,
+    signup: "/alumni/signup",
+    login: "/alumni/login",
   },
 };
 
-// Token storage key
-export const TOKEN_STORAGE_KEY = 'auth_token';
-export const USER_STORAGE_KEY = 'auth_user';
+export const TOKEN_STORAGE_KEY = AUTH_STORAGE_KEYS.token;
+export const USER_STORAGE_KEY = AUTH_STORAGE_KEYS.user;

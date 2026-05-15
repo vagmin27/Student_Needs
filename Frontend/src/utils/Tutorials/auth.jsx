@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
-import { BASE_URL } from "./api";
+import API from "./api";
 
 
 const AuthContext = createContext(null);
@@ -13,29 +13,19 @@ const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/api/user`, {
-        credentials: "include",
-      });
-
-
-      if (res.status !== 200) return;
-
-      const data = await res.json();
+      const { data } = await API.get("/user");
       setUser(data.user);
     } catch (err) {}
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
 
 
   const logout = async () => {
     try {
-      await fetch(`${BASE_URL}/api/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await API.post("/logout");
 
     } finally {
       setUser(null);

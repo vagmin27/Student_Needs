@@ -10,6 +10,7 @@ import {
   uploadProfilePic,
   deleteProfilePic,
 } from "../../utils/Tutorials/api";
+import { BASE_URL } from "../../utils/Tutorials/api";
 
 function EditProfile() {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ function EditProfile() {
           setPreferredSchedule(p.schedule || []);
         }
 
-        setPic(data.pic ? `http://localhost:8000/uploads/${data.pic}` : null);
+        setPic(data.pic ? `${BASE_URL}/uploads/${data.pic}` : null);
       } catch (err) {
         console.error("❌ Error fetching profile:", err);
       }
@@ -95,7 +96,7 @@ function EditProfile() {
         setPreferredSchedule(p.schedule || []);
       }
 
-      navigate("/profile");
+      navigate("/tutorials/profile");
     } catch (err) {
       console.error("❌ Error saving profile:", err);
     }
@@ -136,7 +137,7 @@ function EditProfile() {
 
       if (res.data.success) {
         alert("Profile Picture Saved!");
-        navigate("/profile/editProfile");
+        navigate("/tutorials/profile/editProfile");
       }
     } catch (err) {
       console.error("❌ Upload error:", err);

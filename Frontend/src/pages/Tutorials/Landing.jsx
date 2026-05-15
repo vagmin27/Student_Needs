@@ -21,7 +21,7 @@ function Landing() {
               Learn smarter, faster, and more efficiently with expert tutors
             </p>
 
-            <NavLink to="/book" className="ctaLink">
+            <NavLink to="/tutorials/book" className="ctaLink">
               <button className="bookBtn">
                 🚀 Book Class Now
               </button>

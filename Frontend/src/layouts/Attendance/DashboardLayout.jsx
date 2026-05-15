@@ -39,7 +39,7 @@ const DashboardLayout = ({ children, pageTitle }) => {
   const handleLogout = () => {
     logout();
     toast.success("Logged out successfully");
-    navigate("/login");
+    navigate("/attendance/login");
   };
 
   const initials = user?.name

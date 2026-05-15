@@ -153,11 +153,7 @@ function BookClass() {
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const res = await fetch("/api/tutor/schedule", {
-          credentials: "include",
-        });
-
-        const resSchedule = await res.json();
+        const { data: resSchedule } = await API.get("/tutor/schedule");
 
         if (resSchedule.data?.schedule) {
           const tempMap = new Map();
@@ -225,7 +221,7 @@ function BookClass() {
         : tutorProfile?.subjects);
 
     try {
-      const res = await API.post("/api/booking", {
+      const res = await API.post("/booking", {
         tutorId,
         tutorName,
         subject,
@@ -239,7 +235,7 @@ function BookClass() {
       ) {
         alert("Booking confirmed! ✅");
         setModalIsOpen(false);
-        navigate("/profile");
+        navigate("/tutorials/profile");
       } else {
         alert(res.data.msg || "Booking failed ❌");
       }
@@ -257,12 +253,7 @@ function BookClass() {
     }
 
     try {
-      const res = await fetch(
-        `/api/tutors?query=${searchword}&page=${newPage}`,
-        { credentials: "include" },
-      );
-
-      const data = await res.json();
+      const { data } = await API.get(`/tutors?query=${searchword}&page=${newPage}`);
 
       if (!data.data?.length) {
         setNotFound(true);

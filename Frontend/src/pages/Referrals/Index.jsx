@@ -34,31 +34,58 @@ function DashboardLayout({ children }) {
 
 // Backend auth protected route
 function ProtectedRoute({ children, requiredRole }) {
-  const { isAuthenticated, user, isLoading } = useAuth();
+ 
+  const { isAuthenticated, user, isLoading, isInitialized } = useAuth();
 
   // Wait for auth to load
-  if (isLoading) {
+  if (!isInitialized || isLoading) {
     return null;
   }
-
+  console.log("REFERRAL AUTH STATE", {
+  isAuthenticated,
+  user,
+  isLoading,
+  isInitialized
+});
+console.log("AUTH USER:", user);
   // Check backend auth
-  const hasBackendAuth = isAuthenticated && user && 
-    ((requiredRole === 'student' && user.accountType === 'Student') ||
-     (requiredRole === 'alumni' && user.accountType === 'Alumni') ||
-     (requiredRole === 'verifier' && user.accountType === 'Verifier'));
+  const hasBackendAuth =
+    isAuthenticated &&
+    user &&
+    (
+      (requiredRole === "student" && user.accountType === "Student") ||
+      (requiredRole === "alumni" && user.accountType === "Alumni") ||
+      (requiredRole === "verifier" && user.accountType === "Verifier")
+    );
 
   // Allow access if auth is valid
   if (hasBackendAuth) {
     return <>{children}</>;
   }
 
+  // Redirect authenticated users to correct dashboards
   if (isAuthenticated && user) {
-    const userRole = user.accountType.toLowerCase();
-    return <Navigate to={`/${userRole}`} replace />;
+    const userRole = user.accountType?.toLowerCase();
+
+    if (userRole === "student") {
+      return <Navigate to="/student/dashboard" replace />;
+    }
+
+    if (userRole === "alumni") {
+      return <Navigate to="/alumni" replace />;
+    }
+
+    if (userRole === "verifier") {
+      return <Navigate to="/verifier" replace />;
+    }
   }
 
-  // No auth - redirect to home
-  return <Navigate to="/" replace />;
+  // No auth
+  return (
+  <div style={{ color: "white", padding: "40px" }}>
+    Redirect blocked for debugging
+  </div>
+);
 }
 
 function AppContent() {
@@ -84,7 +111,7 @@ function AppContent() {
 
       {/* Student Dashboard */}
       <Route
-        path="/student"
+        index
         element={
           <ProtectedRoute requiredRole="student">
             <DashboardLayout>
@@ -94,7 +121,7 @@ function AppContent() {
         }
       />
       <Route
-        path="/student/referrals"
+        path="referrals"
         element={
           <ProtectedRoute requiredRole="student">
             <DashboardLayout>
@@ -104,7 +131,7 @@ function AppContent() {
         }
       />
       <Route
-        path="/student/jobs"
+        path="jobs"
         element={
           <ProtectedRoute requiredRole="student">
             <DashboardLayout>
@@ -114,7 +141,7 @@ function AppContent() {
         }
       />
       <Route
-        path="/student/profile"
+        path="profile"
         element={
           <ProtectedRoute requiredRole="student">
             <DashboardLayout>
@@ -124,7 +151,7 @@ function AppContent() {
         }
       />
       <Route
-        path="/student/qrcode"
+        path="qrcode"
         element={
           <ProtectedRoute requiredRole="student">
             <DashboardLayout>
@@ -134,7 +161,7 @@ function AppContent() {
         }
       />
       <Route
-        path="/student/applied"
+        path="applied"
         element={
           <ProtectedRoute requiredRole="student">
             <DashboardLayout>
@@ -146,7 +173,7 @@ function AppContent() {
 
       {/* Interview Page */}
       <Route
-        path="/student/interview"
+        path="interview"
         element={
           <ProtectedRoute requiredRole="student">
             <DashboardLayout>

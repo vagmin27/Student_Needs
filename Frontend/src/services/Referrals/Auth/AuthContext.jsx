@@ -12,10 +12,10 @@ const initialState = {
   user: null,
   token: null,
   isAuthenticated: false,
-  isLoading: true, // Start as loading to check stored auth
+  isInitialized: false,
+  isLoading: true,
   error: null,
 };
-
 // ============================================
 // Reducer
 // ============================================
@@ -39,6 +39,7 @@ function authReducer(state, action) {
         user: action.payload.user,
         token: action.payload.token,
         isAuthenticated: true,
+        isInitialized: true,
         isLoading: false,
         error: null,
       };
@@ -49,6 +50,7 @@ function authReducer(state, action) {
         user: null,
         token: null,
         isAuthenticated: false,
+        isInitialized: true,
         isLoading: false,
         error: action.payload,
       };
@@ -59,6 +61,7 @@ function authReducer(state, action) {
         user: null,
         token: null,
         isAuthenticated: false,
+        isInitialized: true,
         isLoading: false,
         error: null,
       };
@@ -78,6 +81,7 @@ function authReducer(state, action) {
     case 'INIT_COMPLETE':
       return {
         ...state,
+        isInitialized: true,
         isLoading: false,
       };
 

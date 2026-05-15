@@ -23,7 +23,7 @@ import { dbconnect } from "./config/Referrals/database.js";
 import cloudinary from "./config/Referrals/cloudinary.js";
 
 // Expenses DB
-import connectDb from "../backend/db/Expenses/db.js";
+import connectDb from "./db/Expenses/db.js";
 
 // =====================================================
 //                    TUTORIAL ROUTES
@@ -90,30 +90,47 @@ import {
 } from "./utils/Expenses/scheduler.js";
 
 // =====================================================
-//                    MIDDLEWARES
-// =====================================================
-
-import {
-  isAuthenticated,
-  isStudent,
-  isTutor,
-} from "./middlewares/Tutorials/auth.js";
-
-// =====================================================
 //                    ENV CONFIG
 // =====================================================
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8000;
+
+// =====================================================
+//                    CORS CONFIG
+// =====================================================
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
+app.options(/.*/, cors());
+
+// =====================================================
+//                DEBUG ORIGIN LOGGER
+// =====================================================
+
+app.use((req, res, next) => {
+  console.log("Origin:", req.headers.origin);
+  next();
+});
 
 // =====================================================
 //                    MIDDLEWARE
 // =====================================================
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 app.use(cookieParser());
 
@@ -142,6 +159,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     saveUninitialized: false,
+
     cookie: {
       httpOnly: true,
       secure: false,
@@ -156,41 +174,8 @@ app.use(
 // =====================================================
 
 app.use(passport.initialize());
+
 app.use(passport.session());
-
-// =====================================================
-//                    CORS CONFIG
-// =====================================================
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "https://attendancemonitoringsyst-b1ae8.web.app",
-  "https://mern-attendance-app.onrender.com",
-  "http://localhost:8080",
-  "http://localhost:8081",
-  "http://127.0.0.1:8080",
-  "http://127.0.0.1:8081",
-  "http://127.0.0.1:5173",
-  "http://172.26.38.74:8080",
-  "https://next-ref-alumni-connect.vercel.app",
-  "https://next-reff-alumni-connect.vercel.app",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS Not Allowed"));
-      }
-    },
-    credentials: true,
-  })
-);
 
 // =====================================================
 //                    HOME ROUTE
@@ -272,16 +257,19 @@ app.use("/api/v1", profileAnalysisRoutes);
 //                EXPENSE MODULE ROUTES
 // =====================================================
 
+app.use("/api/expenses/auth", userRouter);
+app.use("/api/expenses/analytics", analyticsRouter);
+app.use("/api/expenses/budgets", budgetRouter);
+app.use("/api/expenses/expenses", expenseRouter);
+app.use("/api/expenses/goals", goalRouter);
+app.use("/api/expenses/notifications", notificationRouter);
+
+// Legacy expense mounts kept temporarily for old in-app references.
 app.use("/auth", userRouter);
-
 app.use("/analytics", analyticsRouter);
-
 app.use("/budgets", budgetRouter);
-
 app.use("/expenses", expenseRouter);
-
 app.use("/goals", goalRouter);
-
 app.use("/notifications", notificationRouter);
 
 // =====================================================
@@ -323,7 +311,7 @@ const initializeServer = async () => {
     console.log("✅ Referral Database Connected");
 
     // Expenses DB
-    connectDb();
+    await connectDb();
 
     // Expense Schedulers
     smartReminderScheduler();
@@ -338,9 +326,9 @@ const initializeServer = async () => {
     app.listen(PORT, () => {
       console.log(`🚀 Unified Server running on port ${PORT}`);
     });
-
   } catch (error) {
     console.error("❌ Server Initialization Failed");
+
     console.error(error.message);
 
     process.exit(1);

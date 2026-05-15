@@ -21,9 +21,11 @@ export function saveToken(token) {
  */
 export function getToken() {
   try {
-    return localStorage.getItem(TOKEN_STORAGE_KEY);
+    return (
+      localStorage.getItem(TOKEN_STORAGE_KEY) ||
+      localStorage.getItem("token")
+    );
   } catch (error) {
-    console.error('Failed to get token:', error);
     return null;
   }
 }
@@ -66,10 +68,12 @@ export function saveUser(user) {
  */
 export function getUser() {
   try {
-    const userStr = localStorage.getItem(USER_STORAGE_KEY);
+    const userStr =
+      localStorage.getItem(USER_STORAGE_KEY) ||
+      localStorage.getItem("user");
+
     return userStr ? JSON.parse(userStr) : null;
   } catch (error) {
-    console.error('Failed to get user:', error);
     return null;
   }
 }

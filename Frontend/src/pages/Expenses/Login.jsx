@@ -13,7 +13,7 @@ function Login() {
   
   useEffect (() => {
     if(localStorage.getItem("User")) {
-      navigate("/");
+      navigate("/expenses-tracker");
     }
   }, [navigate]);
 
@@ -26,7 +26,7 @@ function Login() {
         password
       });
       
-      if(response.data.statusCode !== 201) {
+      if(response.data.statusCode !== 200) {
         toast.error(response.data.message);
         ref.current.complete();
         return;
@@ -34,8 +34,9 @@ function Login() {
       
       toast.success("Successfully Logged In !!");
       localStorage.setItem('User', JSON.stringify(response.data.message));
+      localStorage.setItem('auth_token', response.data.message.token);
       ref.current.complete();
-      navigate('/');
+      navigate('/expenses-tracker');
     } catch (error) {
       console.log(error.message);
       toast.error("Internal server error");

@@ -21,12 +21,12 @@ function TutorAvailability() {
         const res = await getTutorProfile();
 
         if (!res.data?.profile) {
-          navigate("/login/tutor");
+          navigate("/login/teacher");
           return;
         }
       } catch (err) {
         console.error("Not authenticated");
-        navigate("/login/tutor");
+        navigate("/login/teacher");
       }
     };
 

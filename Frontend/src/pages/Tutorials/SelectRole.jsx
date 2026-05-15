@@ -12,7 +12,7 @@ function SelectRole() {
         
         <div
           style={styles.card}
-          onClick={() => navigate("/login/student")}
+          onClick={() => navigate("/tutorials/login/student")}
           onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
           onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
@@ -23,7 +23,7 @@ function SelectRole() {
 
         <div
           style={styles.card}
-          onClick={() => navigate("/login/tutor")}
+          onClick={() => navigate("/tutorials/login/tutor")}
           onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
           onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
