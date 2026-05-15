@@ -32,6 +32,30 @@ import {
   useStudentSignup,
 } from "@/services/Referrals/Auth/hooks.js";
 
+// const roles = [
+//   {
+//     id: "student",
+//     title: "Student",
+//     description: "Access all student features and tools",
+//     icon: GraduationCap,
+//     loginTo: "/login/student",
+//   },
+//   {
+//     id: "teacher",
+//     title: "Teacher / Tutor",
+//     description: "Teach, manage students and track performance",
+//     icon: BookOpen,
+//     loginTo: "/login/teacher",
+//   },
+//   {
+//     id: "alumni",
+//     title: "Alumni / Verifier",
+//     description: "Provide referrals, verify students and opportunities",
+//     icon: ShieldCheck,
+//     loginTo: "/login/alumni",
+//   },
+// ];
+
 const roles = [
   {
     id: "student",
@@ -41,18 +65,25 @@ const roles = [
     loginTo: "/login/student",
   },
   {
-    id: "teacher",
-    title: "Teacher / Tutor",
+    id: "tutor",
+    title: "Tutor",
     description: "Teach, manage students and track performance",
     icon: BookOpen,
-    loginTo: "/login/teacher",
+    loginTo: "/login/tutor",
   },
   {
     id: "alumni",
-    title: "Alumni / Verifier",
-    description: "Provide referrals, verify students and opportunities",
-    icon: ShieldCheck,
+    title: "Alumni",
+    description: "Provide referrals and opportunities",
+    icon: Briefcase,
     loginTo: "/login/alumni",
+  },
+  {
+    id: "verifier",
+    title: "Verifier",
+    description: "Verify students and opportunities",
+    icon: ShieldCheck,
+    loginTo: "/login/verifier",
   },
 ];
 
@@ -179,7 +210,7 @@ export function RoleSelectionPage() {
 
 export function RoleAuthPage({ mode = "login" }) {
   const { role } = useParams();
-  const normalizedRole = role === "tutor" ? "teacher" : role;
+  const normalizedRole = role;
 
   if (normalizedRole === "student") {
     return mode === "signup" ? <StudentSignupFlow /> : <StudentLoginFlow />;
@@ -462,9 +493,9 @@ export function ModuleOverviewPage() {
             </Link>
           );
         })}
-        <Link to="/teacher/dashboard" className="uc-module-card">
+        <Link to="/tutor/dashboard" className="uc-module-card">
           <BarChart3 />
-          <small>Teacher Dashboard</small>
+          <small>Tutor Dashboard</small>
           <p>Manage students, attendance and assessments.</p>
         </Link>
       </section>
