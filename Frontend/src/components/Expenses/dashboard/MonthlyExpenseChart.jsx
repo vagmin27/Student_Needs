@@ -1,31 +1,8 @@
 import React, { useMemo } from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const MonthlyExpenseChart = ({ exdata }) => {
   const chartData = useMemo(() => {
-    // Process the exdata to group by month
-    // We will assume exdata has { amount, date }
-    // As a fallback simulation, we just sum up recent months if data exists
-    
-    // Simple grouping by month name
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const monthlyTotals = Array(12).fill(0);
     
@@ -38,73 +15,20 @@ const MonthlyExpenseChart = ({ exdata }) => {
       });
     }
 
-    // Get current month to show last 6 months
     const currentMonth = new Date().getMonth();
-    const labels = [];
     const data = [];
     
     for (let i = 5; i >= 0; i--) {
       let m = currentMonth - i;
       if (m < 0) m += 12; // wrap around
-      labels.push(monthNames[m]);
-      data.push(monthlyTotals[m]);
+      data.push({
+        name: monthNames[m],
+        Expenses: monthlyTotals[m]
+      });
     }
 
-    return {
-      labels,
-      datasets: [
-        {
-          label: 'Expenses',
-          data,
-          backgroundColor: 'rgba(99, 102, 241, 0.8)', // brand-primary
-          hoverBackgroundColor: 'rgba(99, 102, 241, 1)',
-          borderRadius: 6,
-          barThickness: 32,
-        },
-      ],
-    };
+    return data;
   }, [exdata]);
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false, // hide legend for this simple bar chart
-      },
-      tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        titleColor: '#fff',
-        bodyColor: '#cbd5e1',
-        padding: 12,
-        callbacks: {
-          label: (context) => `₹ ${context.parsed.y.toLocaleString()}`
-        }
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        grid: {
-          color: 'rgba(255, 255, 255, 0.05)',
-          drawBorder: false,
-        },
-        ticks: {
-          color: '#64748b',
-          callback: (value) => `₹${value}`
-        }
-      },
-      x: {
-        grid: {
-          display: false,
-          drawBorder: false,
-        },
-        ticks: {
-          color: '#94a3b8',
-        }
-      }
-    },
-  };
 
   return (
     <div className="glass-panel p-6 flex flex-col h-full min-h-[300px]">
@@ -116,7 +40,20 @@ const MonthlyExpenseChart = ({ exdata }) => {
         </select>
       </div>
       <div className="flex-1 w-full relative min-h-[220px]">
-        <Bar data={chartData} options={options} />
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <YAxis stroke="#64748b" tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value}`} />
+            <Tooltip 
+              cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+              contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
+              itemStyle={{ color: '#cbd5e1' }}
+              formatter={(value) => `₹${value.toLocaleString()}`}
+            />
+            <Bar dataKey="Expenses" fill="rgba(99, 102, 241, 0.8)" radius={[6, 6, 0, 0]} barSize={32} />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

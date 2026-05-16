@@ -19,7 +19,14 @@ import {
   UserRound,
   UsersRound,
   Loader2,
+  ArrowRight,
+  Clock,
+  TrendingUp,
 } from "lucide-react";
+
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 import TutorLoginPage from "./Tutorials/TutorLoginPage";
 import TutorRegisterPage from "./Tutorials/TutorRegisterPage";
@@ -405,76 +412,210 @@ function AlumniSignupFlow() {
 
 export function StudentOverviewDashboard() {
   return (
-    <main className="uc-dashboard">
-      <aside className="uc-sidebar">
-        <Brand />
-        <nav>
-          {sidebarItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink key={item.label} to={item.to}>
-                <Icon />
-                <span>{item.label}</span>
-              </NavLink>
-            );
-          })}
-          <Link to="/"><LogOut /><span>Logout</span></Link>
-        </nav>
-      </aside>
+    <DashboardLayout pageTitle="Student Dashboard" role="student">
+      {/* Welcome Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Welcome back, Student</h1>
+          <p className="text-muted-foreground">Here is what is happening today.</p>
+        </div>
+        <Button>
+          <Search className="w-4 h-4 mr-2" /> Find a Tutor
+        </Button>
+      </div>
 
-      <section className="uc-dashboard-main">
-        <header className="uc-dashboard-header">
-          <div>
-            <h1>Welcome back, Student</h1>
-            <p>Here is what is happening today.</p>
-          </div>
-          <div className="uc-header-icons">
-            <Bell />
-            <UserRound />
-          </div>
-        </header>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-muted-foreground">Attendance</p>
+                <p className="text-3xl font-bold">92%</p>
+              </div>
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <CheckSquare className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center text-sm text-success">
+              <TrendingUp className="w-4 h-4 mr-1" />
+              <span>+2% from last month</span>
+            </div>
+          </CardContent>
+        </Card>
 
-        <div className="uc-stat-grid">
-          <article><small>Attendance</small><strong>92%</strong><span>This Month</span></article>
-          <article><small>Expenses</small><strong>Rs 4,250</strong><span>This Month</span></article>
-          <article><small>Current CGPA</small><strong>8.45</strong><span>Semester 4</span></article>
-          <article><small>Opportunities</small><strong>12</strong><span>New</span></article>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-muted-foreground">Expenses</p>
+                <p className="text-3xl font-bold">Rs 4,250</p>
+              </div>
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <ReceiptText className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center text-sm text-muted-foreground">
+              <span>This Month</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-muted-foreground">Current CGPA</p>
+                <p className="text-3xl font-bold">8.45</p>
+              </div>
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <GraduationCap className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center text-sm text-muted-foreground">
+              <span>Semester 4</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex justify-between items-start">
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-muted-foreground">Opportunities</p>
+                <p className="text-3xl font-bold">12</p>
+              </div>
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Briefcase className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center text-sm text-success">
+              <span className="bg-success/10 text-success px-2 py-0.5 rounded-full text-xs font-medium">New</span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Left Column (Takes up 2/3 on large screens) */}
+        <div className="lg:col-span-2 space-y-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-border">
+              <div className="space-y-0.5">
+                <CardTitle className="text-base">Upcoming Classes</CardTitle>
+                <CardDescription>Your schedule for today</CardDescription>
+              </div>
+              <Link to="/tutorials/profile/classHistory" className="text-sm text-primary hover:underline font-medium">
+                View Calendar
+              </Link>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="divide-y divide-border">
+                <div className="flex items-center gap-4 p-4 hover:bg-secondary/50 transition-colors">
+                  <div className="p-3 bg-primary/10 rounded-lg text-primary">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-foreground">Data Structures</h4>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                      <Clock className="w-3.5 h-3.5" /> 9:00 AM - 10:00 AM
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm">Join</Button>
+                </div>
+                <div className="flex items-center gap-4 p-4 hover:bg-secondary/50 transition-colors">
+                  <div className="p-3 bg-primary/10 rounded-lg text-primary">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-foreground">Operating Systems</h4>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                      <Clock className="w-3.5 h-3.5" /> 11:00 AM - 12:00 PM
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm">Join</Button>
+                </div>
+                <div className="flex items-center gap-4 p-4 hover:bg-secondary/50 transition-colors">
+                  <div className="p-3 bg-primary/10 rounded-lg text-primary">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-foreground">Database Systems</h4>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                      <Clock className="w-3.5 h-3.5" /> 1:00 PM - 2:00 PM
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm">Join</Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <div className="uc-dashboard-grid">
-          <section className="uc-panel">
-            <h2>Upcoming Classes</h2>
-            <p><BookOpen /> Data Structures <span>9:00 AM - 10:00 AM</span></p>
-            <p><BookOpen /> Operating Systems <span>11:00 AM - 12:00 PM</span></p>
-            <p><BookOpen /> Database Systems <span>1:00 PM - 2:00 PM</span></p>
-            <Link to="/tutorials/profile/classHistory">View Calendar</Link>
-          </section>
+        {/* Right Column (Takes up 1/3 on large screens) */}
+        <div className="space-y-6">
+          <Card>
+            <CardHeader className="border-b border-border">
+              <CardTitle className="text-base">Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 grid grid-cols-2 gap-3">
+              {studentModules.slice(0, 4).map((module) => {
+                const Icon = module.icon;
+                return (
+                  <Link
+                    to={module.to}
+                    key={module.title}
+                    className="flex flex-col items-center justify-center p-4 text-center rounded-xl bg-secondary/50 hover:bg-primary hover:text-primary-foreground border border-border hover:border-primary transition-all group"
+                  >
+                    <Icon className="w-6 h-6 mb-2 text-primary group-hover:text-primary-foreground" />
+                    <span className="text-xs font-medium">{module.title}</span>
+                  </Link>
+                );
+              })}
+            </CardContent>
+          </Card>
 
-          <section className="uc-panel">
-            <h2>Recent Activity</h2>
-            <p><CheckSquare /> Attendance marked for Data Structures</p>
-            <p><ReceiptText /> New expense added: Rs 450 - Books</p>
-            <p><Briefcase /> New internship posted: Frontend Developer</p>
-            <Link to="/student/referrals">View All</Link>
-          </section>
-        </div>
-
-        <section className="uc-quick-actions">
-          <h2>Quick Actions</h2>
-          <div>
-            {studentModules.slice(0, 4).map((module) => {
-              const Icon = module.icon;
-              return (
-                <Link to={module.to} key={module.title}>
-                  <Icon />
-                  <span>{module.title}</span>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center justify-between">
+                Recent Activity
+                <Link to="/student/referrals" className="text-xs font-medium text-primary hover:underline">
+                  View All
                 </Link>
-              );
-            })}
-          </div>
-        </section>
-      </section>
-    </main>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <div className="space-y-4">
+                <div className="flex gap-3">
+                  <div className="mt-0.5 w-2 h-2 rounded-full bg-success flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium">Attendance marked for Data Structures</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">2 hours ago</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="mt-0.5 w-2 h-2 rounded-full bg-warning flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium">New expense added: Rs 450 - Books</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">5 hours ago</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="mt-0.5 w-2 h-2 rounded-full bg-primary flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium">New internship posted: Frontend Developer</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Yesterday</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        
+      </div>
+    </DashboardLayout>
   );
 }
 

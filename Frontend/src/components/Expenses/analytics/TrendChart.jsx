@@ -1,56 +1,32 @@
 import React from 'react';
-import {
-  Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const TrendChart = ({ data, labels }) => {
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        fill: true,
-        label: 'Monthly Spending (₹)',
-        data,
-        borderColor: 'rgba(99, 102, 241, 1)',
-        backgroundColor: 'rgba(99, 102, 241, 0.2)', // brand-primary alpha
-        tension: 0.4,
-        pointBackgroundColor: '#1E293B',
-        pointBorderColor: 'rgba(99, 102, 241, 1)',
-        pointBorderWidth: 2,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-      },
-    ],
-  };
+  const chartData = labels?.map((label, index) => ({
+    name: label,
+    Amount: data[index] || 0
+  })) || [];
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        titleColor: '#fff',
-        bodyColor: '#cbd5e1',
-        padding: 12,
-      },
-    },
-    scales: {
-      y: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
-        ticks: { color: '#94a3b8' }
-      },
-      x: {
-        grid: { display: false, drawBorder: false },
-        ticks: { color: '#94a3b8' }
-      }
-    },
-  };
-
-  return <Line data={chartData} options={options} />;
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <defs>
+          <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="rgba(99, 102, 241, 1)" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="rgba(99, 102, 241, 1)" stopOpacity={0}/>
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+        <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} />
+        <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+        <Tooltip 
+          contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
+          itemStyle={{ color: '#cbd5e1' }}
+        />
+        <Area type="monotone" dataKey="Amount" stroke="rgba(99, 102, 241, 1)" fillOpacity={1} fill="url(#colorAmount)" />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
 };
 
 export default TrendChart;

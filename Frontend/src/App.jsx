@@ -5,6 +5,7 @@ import {
   Routes,
   Route,
   Navigate,
+  Outlet,
 } from "react-router-dom";
 
 // ======================================================
@@ -41,24 +42,24 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ProtectedRoute from "./components/Attendance/ProtectedRoute";
 
-import DashboardLayout from "./layouts/Attendance/DashboardLayout";
+import DashboardLayout from "./components/layouts/DashboardLayout";
 
 import Login from "./auth/Attendance/Login";
 import Register from "./auth/Attendance/Register";
 
-import Dashboard from "./pages/Attendance/Dashboard";
-import Attendance from "./pages/Attendance/Attendance";
-import AddStudent from "./pages/Attendance/AddStudent";
-import Reports from "./pages/Attendance/Reports";
-import RemoveStudent from "./pages/Attendance/RemoveStudent";
-import AddSubject from "./pages/Attendance/AddSubject";
-import StudentDashboard from "./pages/Attendance/StudentDashboard";
+const Dashboard = React.lazy(() => import("./pages/Attendance/Dashboard"));
+const Attendance = React.lazy(() => import("./pages/Attendance/Attendance"));
+const AddStudent = React.lazy(() => import("./pages/Attendance/AddStudent"));
+const Reports = React.lazy(() => import("./pages/Attendance/Reports"));
+const RemoveStudent = React.lazy(() => import("./pages/Attendance/RemoveStudent"));
+const AddSubject = React.lazy(() => import("./pages/Attendance/AddSubject"));
+const StudentDashboard = React.lazy(() => import("./pages/Attendance/StudentDashboard"));
 
 // ======================================================
 //                    REFERRALS
 // ======================================================
 
-import Index from "@/pages/Referrals/Index.jsx";
+const Index = React.lazy(() => import("@/pages/Referrals/Index.jsx"));
 import {
   ModuleOverviewPage,
   RoleAuthPage,
@@ -87,7 +88,7 @@ import SelectRole from "./pages/Tutorials/SelectRole";
 import TutorRegisterPage from "./pages/Tutorials/TutorRegisterPage";
 // import TutorAvailability from "./pages/Tutorials/TutorAvailability";
 import TutorAvailability from "./pages/Tutorials/TutorAvailabilty";
-import TutorDashboard from "./pages/Tutorials/TutorDashboard";
+const TutorDashboard = React.lazy(() => import("./pages/Tutorials/TutorDashboard"));
 // import TutorSchedulePage from "./pages/Tutorials/TutorsSchedulePage";
 import TutorSchedulePage from "./pages/Tutorials/TutorSchedulePage";
 import TutorAcceptPage from "./pages/Tutorials/TutorAcceptPage";
@@ -97,12 +98,12 @@ import TutorEditProfilePage from "./pages/Tutorials/TutorEditProfilePage";
 //                    EXPENSES
 // ======================================================
 
-import Home from "./pages/Expenses/Home";
+const Home = React.lazy(() => import("./pages/Expenses/Home"));
 import ExpenseLogin from "./pages/Expenses/Login";
 import Signup from "./pages/Expenses/Signup";
-import RecurringTransactions from "./pages/Expenses/RecurringTransactions";
-import Analytics from "./pages/Expenses/Analytics";
-import Settings from "./pages/Expenses/Settings";
+const RecurringTransactions = React.lazy(() => import("./pages/Expenses/RecurringTransactions"));
+const Analytics = React.lazy(() => import("./pages/Expenses/Analytics"));
+const Settings = React.lazy(() => import("./pages/Expenses/Settings"));
 import AppLayout from "./components/Expenses/layout/AppLayout";
 
 // ======================================================
@@ -112,6 +113,8 @@ import AppLayout from "./components/Expenses/layout/AppLayout";
 const LazySearch = React.lazy(() =>
   import("./components/Tutorials/SearchTutor")
 );
+
+import DashboardSkeleton from "@/components/ui/DashboardSkeleton";
 
 // ======================================================
 //                    QUERY CLIENT
@@ -169,17 +172,17 @@ const AttendanceRoutes = () => {
       <Route path="/student/expenses" element={<Navigate to="/expenses-tracker" replace />} />
       <Route path="/modules" element={<ModuleOverviewPage />} />
       <Route path="/teacher/dashboard" element={<TutorDashboard />} />
-      <Route path="/alumni/dashboard" element={<Index />} />
+      <Route path="/alumni/dashboard" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
 
       {/* ======================================================
                         REFERRALS ROUTES
       ====================================================== */}
 
-      <Route path="/referrals/*" element={<Index />} />
-      <Route path="/student/*" element={<Index />} />
-      <Route path="/alumni/*" element={<Index />} />
-      <Route path="/verifier/*" element={<Index />} />
-      <Route path="/auth/*" element={<Index />} />
+      <Route path="/referrals/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/student/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/alumni/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/verifier/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/auth/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
 
       {/* ======================================================
                         ATTENDANCE AUTH
@@ -220,7 +223,9 @@ const AttendanceRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Dashboard">
-              <Dashboard />
+              <Suspense fallback={<DashboardSkeleton />}>
+                <Dashboard />
+              </Suspense>
             </WithLayout>
           </ProtectedRoute>
         }
@@ -231,7 +236,9 @@ const AttendanceRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Attendance">
-              <Attendance />
+              <Suspense fallback={<DashboardSkeleton />}>
+                <Attendance />
+              </Suspense>
             </WithLayout>
           </ProtectedRoute>
         }
@@ -242,7 +249,9 @@ const AttendanceRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Add Student">
-              <AddStudent />
+              <Suspense fallback={<DashboardSkeleton />}>
+                <AddStudent />
+              </Suspense>
             </WithLayout>
           </ProtectedRoute>
         }
@@ -253,7 +262,9 @@ const AttendanceRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Remove Student">
-              <RemoveStudent />
+              <Suspense fallback={<DashboardSkeleton />}>
+                <RemoveStudent />
+              </Suspense>
             </WithLayout>
           </ProtectedRoute>
         }
@@ -264,7 +275,9 @@ const AttendanceRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Add Subject">
-              <AddSubject />
+              <Suspense fallback={<DashboardSkeleton />}>
+                <AddSubject />
+              </Suspense>
             </WithLayout>
           </ProtectedRoute>
         }
@@ -275,7 +288,9 @@ const AttendanceRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["teacher"]}>
             <WithLayout title="Reports">
-              <Reports />
+              <Suspense fallback={<DashboardSkeleton />}>
+                <Reports />
+              </Suspense>
             </WithLayout>
           </ProtectedRoute>
         }
@@ -286,7 +301,9 @@ const AttendanceRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["student"]}>
             <WithLayout title="My Dashboard">
-              <StudentDashboard />
+              <Suspense fallback={<DashboardSkeleton />}>
+                <StudentDashboard />
+              </Suspense>
             </WithLayout>
           </ProtectedRoute>
         }
@@ -324,7 +341,7 @@ const AttendanceRoutes = () => {
 
       <Route
         path="/tutorials/tutor/dashboard"
-        element={<TutorDashboard />}
+        element={<Suspense fallback={<DashboardSkeleton />}><TutorDashboard /></Suspense>}
       />
 
       <Route
@@ -435,22 +452,22 @@ const AttendanceRoutes = () => {
                         EXPENSE TRACKER
       ====================================================== */}
 
-      <Route element={<AppLayout />}>
-        <Route path="/expenses-tracker" element={<Home />} />
+      <Route element={<DashboardLayout pageTitle="Expenses" role="student"><Outlet /></DashboardLayout>}>
+        <Route path="/expenses-tracker" element={<Suspense fallback={<DashboardSkeleton />}><Home /></Suspense>} />
 
         <Route
           path="/expenses-tracker/recurring"
-          element={<RecurringTransactions />}
+          element={<Suspense fallback={<DashboardSkeleton />}><RecurringTransactions /></Suspense>}
         />
 
         <Route
           path="/expenses-tracker/analytics"
-          element={<Analytics />}
+          element={<Suspense fallback={<DashboardSkeleton />}><Analytics /></Suspense>}
         />
 
         <Route
           path="/expenses-tracker/settings"
-          element={<Settings />}
+          element={<Suspense fallback={<DashboardSkeleton />}><Settings /></Suspense>}
         />
       </Route>
 

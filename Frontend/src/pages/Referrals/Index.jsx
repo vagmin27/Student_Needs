@@ -8,7 +8,6 @@ import { VerifierDashboard } from '@/pages/Referrals/VerifierDashboard.jsx';
 import InterviewPage from '@/pages/Referrals/InterviewPage.jsx';
 import NotFound from '@/pages/Referrals/NotFound.jsx';
 import { RoleSelector } from '@/pages/Referrals/RoleSelector.jsx';
-import Navbar from '@/components/Referrals/Navbar.jsx';
 import { useAuth } from '@/services/Referrals/Auth/AuthContext.jsx';
 import { StudentLoginPage } from '@/components/Referrals/Student/Auth/StudentLogin.jsx';
 import { StudentSignupPage } from '@/components/Referrals/Student/Auth/StudentSignup.jsx';
@@ -17,20 +16,7 @@ import { AlumniSignupPage } from '@/components/Referrals/Alumni/Auth/AlumniSignu
 import { VerifierLoginPage } from '@/components/Referrals/Verifier/Auth/VerifierLogin.jsx';
 import { VerifierSignupPage } from '@/components/Referrals/Verifier/Auth/VerifierSignup.jsx';
 import LandingPage from "@/pages/Referrals/LandingPage";
-
-function DashboardLayout({ children }) {
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <Navbar />
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        {children}
-      </main>
-    </div>
-  );
-}
+import DashboardLayout from '@/components/layouts/DashboardLayout.jsx';
 
 // Backend auth protected route
 function ProtectedRoute({ children, requiredRole }) {
@@ -114,7 +100,7 @@ function AppContent() {
         index
         element={
           <ProtectedRoute requiredRole="student">
-            <DashboardLayout>
+            <DashboardLayout role="student" pageTitle="Student Referrals">
               <StudentDashboard />
             </DashboardLayout>
           </ProtectedRoute>
@@ -124,7 +110,7 @@ function AppContent() {
         path="referrals"
         element={
           <ProtectedRoute requiredRole="student">
-            <DashboardLayout>
+            <DashboardLayout role="student" pageTitle="Student Referrals">
               <StudentDashboard />
             </DashboardLayout>
           </ProtectedRoute>
@@ -134,7 +120,7 @@ function AppContent() {
         path="jobs"
         element={
           <ProtectedRoute requiredRole="student">
-            <DashboardLayout>
+            <DashboardLayout role="student" pageTitle="Student Jobs">
               <StudentDashboard />
             </DashboardLayout>
           </ProtectedRoute>
@@ -144,7 +130,7 @@ function AppContent() {
         path="profile"
         element={
           <ProtectedRoute requiredRole="student">
-            <DashboardLayout>
+            <DashboardLayout role="student" pageTitle="Student Profile">
               <StudentDashboard />
             </DashboardLayout>
           </ProtectedRoute>
@@ -154,7 +140,7 @@ function AppContent() {
         path="qrcode"
         element={
           <ProtectedRoute requiredRole="student">
-            <DashboardLayout>
+            <DashboardLayout role="student" pageTitle="QR Code">
               <StudentDashboard />
             </DashboardLayout>
           </ProtectedRoute>
@@ -164,7 +150,7 @@ function AppContent() {
         path="applied"
         element={
           <ProtectedRoute requiredRole="student">
-            <DashboardLayout>
+            <DashboardLayout role="student" pageTitle="Applied Jobs">
               <StudentDashboard />
             </DashboardLayout>
           </ProtectedRoute>
@@ -176,7 +162,7 @@ function AppContent() {
         path="interview"
         element={
           <ProtectedRoute requiredRole="student">
-            <DashboardLayout>
+            <DashboardLayout role="student" pageTitle="Interviews">
               <InterviewPage />
             </DashboardLayout>
           </ProtectedRoute>
@@ -188,7 +174,7 @@ function AppContent() {
         path="/alumni"
         element={
           <ProtectedRoute requiredRole="alumni">
-            <DashboardLayout>
+            <DashboardLayout role="alumni" pageTitle="Alumni Dashboard">
               <AlumniDashboard />
             </DashboardLayout>
           </ProtectedRoute>
@@ -200,7 +186,7 @@ function AppContent() {
         path="/verifier"
         element={
           <ProtectedRoute requiredRole="verifier">
-            <DashboardLayout>
+            <DashboardLayout role="verifier" pageTitle="Verifier Dashboard">
               <VerifierDashboard />
             </DashboardLayout>
           </ProtectedRoute>

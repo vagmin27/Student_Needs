@@ -1,60 +1,29 @@
 import React from 'react';
-import {
-  Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const WeeklySpendingChart = ({ data, labels }) => {
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        label: 'This Week',
-        data,
-        backgroundColor: 'rgba(52, 211, 153, 0.8)', // emerald
-        borderRadius: 4,
-      },
-      {
-        label: 'Last Week',
-        data: data.map(val => val * (0.8 + Math.random() * 0.4)), // mock comparison
-        backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-        borderRadius: 4,
-      }
-    ],
-  };
+  const chartData = labels?.map((label, index) => ({
+    name: label,
+    ThisWeek: data[index] || 0,
+    LastWeek: (data[index] || 0) * (0.8 + Math.random() * 0.4)
+  })) || [];
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'top',
-        labels: { color: '#94a3b8', usePointStyle: true, boxWidth: 8 }
-      },
-      tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        titleColor: '#fff',
-        bodyColor: '#cbd5e1',
-        padding: 12,
-      },
-    },
-    scales: {
-      y: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
-        ticks: { color: '#94a3b8' },
-        stacked: false,
-      },
-      x: {
-        grid: { display: false, drawBorder: false },
-        ticks: { color: '#94a3b8' },
-        stacked: false,
-      }
-    },
-  };
-
-  return <Bar data={chartData} options={options} />;
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+        <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} />
+        <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+        <Tooltip 
+          contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
+          itemStyle={{ color: '#cbd5e1' }}
+        />
+        <Legend wrapperStyle={{ color: '#94a3b8' }} iconType="circle" />
+        <Bar dataKey="ThisWeek" fill="rgba(52, 211, 153, 0.8)" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="LastWeek" fill="rgba(255, 255, 255, 0.1)" radius={[4, 4, 0, 0]} />
+      </BarChart>
+    </ResponsiveContainer>
+  );
 };
 
 export default WeeklySpendingChart;
