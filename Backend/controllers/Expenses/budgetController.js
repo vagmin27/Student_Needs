@@ -1,14 +1,15 @@
-import mongoose from "mongoose";
-import budgetModel from "../../models/Expenses/budgetModel.js";
-import expenseModel from "../../models/Expenses/expenseModel.js";
 import { success, error } from "../../utils/Expenses/handler.js";
+import { BudgetService } from "../../services/Expenses/BudgetService.js";
+import { validateExpenseRequest, budgetCreateSchema, budgetStatusSchema } from "../../validations/Expenses/expense.validation.js";
 
 export const createBudget = async (req, res) => {
   try {
-    const { category, limit } = req.body;
-    const userId = req.user.userId;
+    const { isValid, data, errorResponse } = validateExpenseRequest(budgetCreateSchema, req.body);
+    if (!isValid) return res.status(400).send(errorResponse);
 
-    const budget = await budgetModel.create({ userId, category, limit });
+    const userId = req.user.userId;
+    const budget = await BudgetService.createBudget(userId, data.category, data.limit);
+    
     const response = success(201, budget);
     return res.status(response.statusCode).send(response);
   } catch (err) {
@@ -20,7 +21,8 @@ export const createBudget = async (req, res) => {
 export const getBudgets = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const budgets = await budgetModel.find({ userId });
+    const budgets = await BudgetService.getBudgets(userId);
+    
     const response = success(200, budgets);
     return res.status(response.statusCode).send(response);
   } catch (err) {
@@ -31,37 +33,16 @@ export const getBudgets = async (req, res) => {
 
 export const getBudgetStatus = async (req, res) => {
   try {
-    const { category } = req.body;
+    const { isValid, data, errorResponse } = validateExpenseRequest(budgetStatusSchema, req.body);
+    if (!isValid) return res.status(400).send(errorResponse);
+
     const userId = req.user.userId;
+    const status = await BudgetService.getBudgetStatus(userId, data.category);
 
-    const budget = await budgetModel.findOne({ userId, category });
-
-    const spent = await expenseModel.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(userId),
-          category,
-          type: "expense",
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          total: { $sum: "$amount" },
-        },
-      },
-    ]);
-
-    const totalSpent = spent[0]?.total || 0;
-
-    const response = success(200, {
-      limit: budget?.limit || 0,
-      spent: totalSpent,
-      remaining: (budget?.limit || 0) - totalSpent,
-    });
+    const response = success(200, status);
     return res.status(response.statusCode).send(response);
   } catch (err) {
     const response = error(500, err.message);
     return res.status(response.statusCode).send(response);
   }
-};
+};

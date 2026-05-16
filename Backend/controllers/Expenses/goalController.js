@@ -1,21 +1,19 @@
-import goalModel from "../../models/Expenses/goalModel.js";
 import { success, error } from "../../utils/Expenses/handler.js";
+import { GoalService } from "../../services/Expenses/GoalService.js";
+import { validateExpenseRequest, goalCreateSchema, goalUpdateSavingsSchema } from "../../validations/Expenses/expense.validation.js";
 
 export const createGoal = async (req, res) => {
   try {
-    const { title, targetAmount, deadline } = req.body;
-    const userId = req.user.userId;
+    const { isValid, data, errorResponse } = validateExpenseRequest(goalCreateSchema, req.body);
+    if (!isValid) return res.status(400).send(errorResponse);
 
-    const goal = await goalModel.create({
-      userId,
-      title,
-      targetAmount,
-      deadline,
-    });
+    const userId = req.user.userId;
+    const goal = await GoalService.createGoal(userId, data.title, data.targetAmount, data.deadline);
+    
     const response = success(201, goal);
     return res.status(response.statusCode).send(response);
   } catch (e) {
-    const response = error(500, e.message);
+    const response = error(e.statusCode || 500, e.message);
     return res.status(response.statusCode).send(response);
   }
 };
@@ -23,39 +21,28 @@ export const createGoal = async (req, res) => {
 export const getGoals = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const goals = await goalModel.find({ userId });
+    const goals = await GoalService.getGoals(userId);
+    
     const response = success(200, goals);
     return res.status(response.statusCode).send(response);
   } catch (e) {
-    const response = error(500, e.message);
+    const response = error(e.statusCode || 500, e.message);
     return res.status(response.statusCode).send(response);
   }
 };
 
 export const updateSavings = async (req, res) => {
   try {
-    const { goalId, amount } = req.body;
+    const { isValid, data, errorResponse } = validateExpenseRequest(goalUpdateSavingsSchema, req.body);
+    if (!isValid) return res.status(400).send(errorResponse);
+
     const userId = req.user.userId;
-
-    const goal = await goalModel.findById(goalId);
-    if (!goal) {
-      const response = error(404, "Goal not found");
-      return res.status(response.statusCode).send(response);
-    }
-
-    // Additional ownership check (middleware already verifies)
-    if (goal.userId.toString() !== userId.toString()) {
-      const response = error(403, "Unauthorized: userId does not match");
-      return res.status(response.statusCode).send(response);
-    }
-
-    goal.savedAmount += amount;
-    await goal.save();
+    const goal = await GoalService.updateSavings(userId, data.goalId, data.amount);
 
     const response = success(200, goal);
     return res.status(response.statusCode).send(response);
   } catch (e) {
-    const response = error(500, e.message);
+    const response = error(e.statusCode || 500, e.message);
     return res.status(response.statusCode).send(response);
   }
 };

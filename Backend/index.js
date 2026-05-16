@@ -3,13 +3,19 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import logger from "morgan";
+import morgan from "morgan";
 import session from "express-session";
 import passport from "passport";
 import fileUpload from "express-fileupload";
 import path from "path";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+
+import { validateEnv } from "./config/envValidator.js";
+import { logger as winstonLogger } from "./utils/logger.js";
 
 import "./config/Tutorials/passport.js";
+
 
 // =====================================================
 //                    CONFIG IMPORTS
@@ -124,6 +130,10 @@ app.use((req, res, next) => {
 //                    MIDDLEWARE
 // =====================================================
 
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
+
 app.use(express.json());
 
 app.use(
@@ -134,7 +144,7 @@ app.use(
 
 app.use(cookieParser());
 
-app.use(logger("dev"));
+app.use(morgan("combined", { stream: winstonLogger.stream }));
 
 app.use(
   fileUpload({
@@ -142,6 +152,19 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+// =====================================================
+//                 RATE LIMITERS
+// =====================================================
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Limit each IP to 10 requests per windowMs
+  message: "Too many login/signup attempts from this IP, please try again after 15 minutes",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 
 // =====================================================
 //                    STATIC FILES
@@ -195,7 +218,8 @@ app.get("/", (req, res) => {
 
 app.use("/api", authTutorialRoutes);
 
-app.use("/api/register", register);
+app.use("/api/register", authLimiter, register);
+
 
 app.use("/api/tutors", tutor);
 
@@ -217,7 +241,8 @@ app.use("/api/upload", uploadRoutes);
 //                ATTENDANCE MODULE ROUTES
 // =====================================================
 
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authLimiter, authRoutes);
+
 
 app.use("/api/students", studentRoutes);
 
@@ -257,7 +282,8 @@ app.use("/api/v1", profileAnalysisRoutes);
 //                EXPENSE MODULE ROUTES
 // =====================================================
 
-app.use("/api/expenses/auth", userRouter);
+app.use("/api/expenses/auth", authLimiter, userRouter);
+
 app.use("/api/expenses/analytics", analyticsRouter);
 app.use("/api/expenses/budgets", budgetRouter);
 app.use("/api/expenses/expenses", expenseRouter);
@@ -265,7 +291,7 @@ app.use("/api/expenses/goals", goalRouter);
 app.use("/api/expenses/notifications", notificationRouter);
 
 // Legacy expense mounts kept temporarily for old in-app references.
-app.use("/auth", userRouter);
+app.use("/auth", authLimiter, userRouter);
 app.use("/analytics", analyticsRouter);
 app.use("/budgets", budgetRouter);
 app.use("/expenses", expenseRouter);
@@ -288,7 +314,7 @@ app.use((req, res) => {
 // =====================================================
 
 app.use((err, req, res, next) => {
-  console.error("🔥 Error:", err.stack);
+  winstonLogger.error(`🔥 Error: ${err.message}`, { stack: err.stack });
 
   res.status(err.status || 500).json({
     success: false,
@@ -296,12 +322,16 @@ app.use((err, req, res, next) => {
   });
 });
 
+
 // =====================================================
 //                SERVER INITIALIZATION
 // =====================================================
 
 const initializeServer = async () => {
   try {
+    // Validate Environment
+    validateEnv();
+
     // Tutorials DB
     await connectDB();
     console.log("✅ Tutorials Database Connected");

@@ -1,29 +1,17 @@
-import expenseModel from "../../models/Expenses/expenseModel.js";
 import { success, error } from "../../utils/Expenses/handler.js";
-import mongoose from "mongoose";
+import { AnalyticsService } from "../../services/Expenses/AnalyticsService.js";
+import { validateExpenseRequest, analyticsCategorySchema } from "../../validations/Expenses/expense.validation.js";
 
 // 1. category breakdown
 export const getCategoryBreakdown = async (req, res) => {
   try {
-    const { type = "expense" } = req.body;
+    const { isValid, data, errorResponse } = validateExpenseRequest(analyticsCategorySchema, req.body);
+    if (!isValid) return res.status(400).send(errorResponse);
+    
     const userId = req.user.userId;
+    const result = await AnalyticsService.getCategoryBreakdown(userId, data.type);
 
-    const data = await expenseModel.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(userId),
-          type,
-        },
-      },
-      {
-        $group: {
-          _id: "$category",
-          total: { $sum: "$amount" },
-        },
-      },
-    ]);
-
-    const response = success(200, data);
+    const response = success(200, result);
     return res.status(response.statusCode).send(response);
   } catch (e) {
     const response = error(500, e.message);
@@ -35,23 +23,9 @@ export const getCategoryBreakdown = async (req, res) => {
 export const getMonthlyTrend = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const result = await AnalyticsService.getMonthlyTrend(userId);
 
-    const data = await expenseModel.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(userId),
-        },
-      },
-      {
-        $group: {
-          _id: { $month: "$date" },
-          total: { $sum: "$amount" },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ]);
-
-    const response = success(200, data);
+    const response = success(200, result);
     return res.status(response.statusCode).send(response);
   } catch (e) {
     const response = error(500, e.message);
@@ -63,32 +37,9 @@ export const getMonthlyTrend = async (req, res) => {
 export const getOverview = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const result = await AnalyticsService.getOverview(userId);
 
-    const expenses = await expenseModel.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(userId),
-          type: "expense",
-        },
-      },
-      { $group: { _id: null, total: { $sum: "$amount" } } },
-    ]);
-
-    const income = await expenseModel.aggregate([
-      {
-        $match: { userId: new mongoose.Types.ObjectId(userId), type: "income" },
-      },
-      { $group: { _id: null, total: { $sum: "$amount" } } },
-    ]);
-
-    const totalExpense = expenses[0]?.total || 0;
-    const totalIncome = income[0]?.total || 0;
-
-    const response = success(200, {
-      totalIncome,
-      totalExpense,
-      savings: totalIncome - totalExpense,
-    });
+    const response = success(200, result);
     return res.status(response.statusCode).send(response);
   } catch (e) {
     const response = error(500, e.message);
@@ -99,65 +50,9 @@ export const getOverview = async (req, res) => {
 export const getSpendingInsights = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const result = await AnalyticsService.getSpendingInsights(userId);
 
-    const currentMonth = new Date().getMonth() + 1;
-    const prevMonth = currentMonth - 1;
-
-    const current = await expenseModel.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(userId),
-          type: "expense",
-          $expr: { $eq: [{ $month: "$date" }, currentMonth] },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          total: { $sum: "$amount" },
-        },
-      },
-    ]);
-
-    const previous = await expenseModel.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(userId),
-          type: "expense",
-          $expr: { $eq: [{ $month: "$date" }, prevMonth] },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          total: { $sum: "$amount" },
-        },
-      },
-    ]);
-
-    const currentTotal = current[0]?.total || 0;
-    const previousTotal = previous[0]?.total || 0;
-
-    let percentageIncrease = 0;
-    if (previousTotal > 0) {
-      percentageIncrease = (
-        ((currentTotal - previousTotal) / previousTotal) *
-        100
-      ).toFixed(2);
-    }
-
-    let message = "Spending is stable";
-
-    if (percentageIncrease > 0) {
-      message = `Your spending increased by ${percentageIncrease}% compared to last month`;
-    }
-
-    const response = success(200, {
-      currentTotal,
-      previousTotal,
-      percentageIncrease,
-      message,
-    });
+    const response = success(200, result);
     return res.status(response.statusCode).send(response);
   } catch (e) {
     const response = error(500, e.message);
@@ -168,35 +63,12 @@ export const getSpendingInsights = async (req, res) => {
 export const predictNextMonthExpense = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const result = await AnalyticsService.predictNextMonthExpense(userId);
 
-    const last3Months = await expenseModel.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(userId),
-          type: "expense",
-        },
-      },
-      {
-        $group: {
-          _id: { $month: "$date" },
-          total: { $sum: "$amount" },
-        },
-      },
-      { $sort: { _id: -1 } },
-      { $limit: 3 },
-    ]);
-
-    const avg =
-      last3Months.reduce((sum, item) => sum + item.total, 0) /
-      (last3Months.length || 1);
-
-    const response = success(200, {
-      last3Months,
-      predictedNextMonthExpense: Math.round(avg),
-    });
+    const response = success(200, result);
     return res.status(response.statusCode).send(response);
   } catch (e) {
     const response = error(500, e.message);
     return res.status(response.statusCode).send(response);
   }
-};
+};
