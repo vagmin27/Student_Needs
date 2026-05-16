@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getUserExpenses } from "../../utils/Expenses/renders";
+import { expensesApi } from "../../services/api/expensesApi";
 import { CategoryPieChart } from "../../components/Expenses/dashboard/CategoryPieChart";
 import TrendChart from "../../components/Expenses/analytics/TrendChart";
 import WeeklySpendingChart from "../../components/Expenses/analytics/WeeklySpendingChart";
@@ -12,7 +12,7 @@ const Analytics = () => {
 
   useEffect(() => {
     if (userdata?._id) {
-      getUserExpenses(userdata._id).then((data) => setUserexp(data || []));
+      expensesApi.getUserExpenses(userdata._id).then((data) => setUserexp(data || []));
     }
   }, [userdata?._id]);
 

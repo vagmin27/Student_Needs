@@ -1,0 +1,5 @@
+# WebSockets Placeholder
+
+This directory is intended for Socket.io or ws implementations for real-time features (e.g., live attendance tracking, instant notifications).
+
+Currently unused.

@@ -34,6 +34,8 @@ export const downloadReportSchema = z.object({
 });
 
 export const deleteAttendanceSchema = z.object({
-  studentId: z.string().min(1, "Student ID is required"),
+  studentId: z.string().optional(),
   register: z.string().optional(),
+}).refine((data) => data.studentId || data.register, {
+  message: "Either Student ID or Register number is required",
 });

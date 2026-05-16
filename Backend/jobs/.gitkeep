@@ -1,0 +1,5 @@
+# Background Jobs Placeholder
+
+This directory is intended for CRON jobs and background task processors (e.g., node-cron) such as generating weekly expense summaries or checking missed attendance.
+
+Currently unused.

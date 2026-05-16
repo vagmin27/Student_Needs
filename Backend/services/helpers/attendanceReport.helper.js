@@ -55,7 +55,7 @@ export const generateCsvData = async (attendanceRecords, startDate, endDate) => 
     ...uniqueDates.map((date) => ({ id: date, title: date })),
   ];
 
-  const path = "attendance.csv";
+  const path = `attendance-${Date.now()}-${Math.floor(Math.random() * 1000)}.csv`;
   const csvWriter = createCsvWriter({ path, header: csvHeader });
   await csvWriter.writeRecords(csvData);
   

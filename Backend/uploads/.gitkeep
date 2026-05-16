@@ -1,0 +1,5 @@
+# Uploads Directory Placeholder
+
+This directory is used to temporarily store files uploaded via Multer (e.g., profile pictures, CSV files) before they are processed or sent to Cloudinary.
+
+This directory should be excluded from version control if actual files are stored here.

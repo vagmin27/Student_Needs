@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { createExpense, deleteExpense } from "../../../utils/Expenses/renders";
+import { expensesApi } from "../../../services/api/expensesApi";
 import Modal from "../ui/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -91,7 +91,7 @@ const TransactionsTable = ({ transactions, onUpdate }) => {
 
   const confirmDelete = async () => {
     if (selectedTx) {
-      await deleteExpense({
+      await expensesApi.deleteExpense({
         expenseId: selectedTx._id,
         userId: selectedTx.userId,
       });
@@ -118,12 +118,12 @@ const TransactionsTable = ({ transactions, onUpdate }) => {
     // Note: The prompt instructed 'Use local mock state only for recurring'
     // but standard expense editing currently lacks API. We mock it globally.
     if (selectedTx) {
-      await deleteExpense({
+      await expensesApi.deleteExpense({
         expenseId: selectedTx._id,
         userId: selectedTx.userId,
       });
 
-      await createExpense({
+      await expensesApi.createExpense({
         userId: selectedTx.userId,
         category: editForm.category,
         date: editForm.date,

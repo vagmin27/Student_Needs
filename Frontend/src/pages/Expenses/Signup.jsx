@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { axiosClient } from "../../utils/Expenses/axiosClient";
+import { expensesApi } from "../../services/api/expensesApi";
 import { toast } from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
@@ -23,7 +23,7 @@ function Signup() {
     e.preventDefault();
     try {
       ref.current.staticStart();
-      const response = await axiosClient.post("/auth/signup", {
+      const response = await expensesApi.signup({
         username,
         email,
         password,

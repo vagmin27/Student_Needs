@@ -1,17 +1,5 @@
 import fs from "fs";
 
-import officegen from "officegen";
-
-import {
-  createObjectCsvWriter as createCsvWriter,
-} from "csv-writer";
-
-import AttendanceModel from "../../models/Attendance/Attendance.js";
-
-import StudentModel from "../../models/Attendance/Student.js";
-
-import { Parser } from "json2csv";
-
 
 import { AttendanceService } from "../../services/AttendanceService.js";
 import { generateCsvData, generateDocxDocument } from "../../services/helpers/attendanceReport.helper.js";
@@ -36,9 +24,21 @@ export const downloadAttendance = catchAsync(async (req, res) => {
   const csvFilePath = await generateCsvData(attendanceRecords, data.start, data.end);
 
   res.setHeader("Content-Type", "text/csv");
-  res.setHeader("Content-Disposition", "attachment; filename=attendance.csv");
+  res.setHeader("Content-Disposition", `attachment; filename=attendance_${data.start}_to_${data.end}.csv`);
 
   const stream = fs.createReadStream(csvFilePath);
+  
+  stream.on("error", (err) => {
+    console.error("[Attendance] Stream read error:", err);
+    if (!res.headersSent) res.status(500).json({ success: false, message: "Error reading report file" });
+  });
+
+  res.on("finish", () => {
+    fs.unlink(csvFilePath, (err) => {
+      if (err && err.code !== "ENOENT") console.error("[Attendance] Temp file cleanup error:", err);
+    });
+  });
+
   stream.pipe(res);
 });
 

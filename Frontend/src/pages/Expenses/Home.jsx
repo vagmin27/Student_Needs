@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserExpenses, createExpense } from "../../utils/Expenses/renders";
+import { expensesApi } from "../../services/api/expensesApi";
 import StatCard from "../../components/Expenses/dashboard/StatCard";
 import { CategoryPieChart } from "../../components/Expenses/dashboard/CategoryPieChart";
 import MonthlyExpenseChart from "../../components/Expenses/dashboard/MonthlyExpenseChart";
@@ -53,7 +53,7 @@ const Home = () => {
       return;
     }
 
-    const data = await getUserExpenses(userdata._id);
+    const data = await expensesApi.getUserExpenses(userdata._id);
       setUserexp(data || []);
 
     setTimeout(() => setIsLoading(false), 800); // Simulate realistic loading
@@ -65,7 +65,7 @@ const Home = () => {
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
-    await createExpense({
+    await expensesApi.createExpense({
       userId: userdata._id,
       amount: Number(formData.amount),
       category: formData.category,
