@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/Attendance/AuthContext";
 import API from "../../services/Attendance/api";
-import {
-  MdCheckCircle, MdCancel, MdWarning, MdCalendarToday, MdPerson,
-} from "react-icons/md";
+import { MdCheckCircle, MdCancel, MdWarning, MdCalendarToday, MdPerson } from "react-icons/md";
+import { DashboardSection } from "../../components/dashboard/shared/DashboardSection";
+import { DashboardCard } from "../../components/dashboard/shared/DashboardCard";
+import { MetricCard } from "../../components/dashboard/shared/MetricCard";
+import { CGPAProgressionChart } from "../../components/dashboard/student/CGPAProgressionChart";
+import { ExpenseBreakdownChart } from "../../components/dashboard/student/ExpenseBreakdownChart";
+import { UpcomingTasks } from "../../components/dashboard/student/UpcomingTasks";
+import { MOCK_CGPA_DATA, MOCK_EXPENSE_DATA, MOCK_UPCOMING_TASKS } from "../../data/dashboard/studentMockData";
 
 const StudentDashboard = () => {
   const { user } = useAuth();
@@ -23,15 +28,15 @@ const StudentDashboard = () => {
     }
   };
 
-  const stats = (() => {
+  const stats = React.useMemo(() => {
     const total = attendanceData.length;
     const present = attendanceData.filter((a) => a.attendance === "present").length;
     const absent = total - present;
     const percentage = total > 0 ? ((present / total) * 100).toFixed(1) : 0;
     return { total, present, absent, percentage };
-  })();
+  }, [attendanceData]);
 
-  const subjectStats = (() => {
+  const subjectStats = React.useMemo(() => {
     const map = {};
     attendanceData.forEach((r) => {
       if (!map[r.subject]) map[r.subject] = { total: 0, present: 0 };
@@ -44,9 +49,11 @@ const StudentDashboard = () => {
       present: s.present,
       total: s.total,
     }));
-  })();
+  }, [attendanceData]);
 
-  const lowAttendance = subjectStats.filter((s) => parseFloat(s.percentage) < 75);
+  const lowAttendance = React.useMemo(() => 
+    subjectStats.filter((s) => parseFloat(s.percentage) < 75), 
+  [subjectStats]);
 
   const getBarColor = (pct) => {
     if (pct >= 75) return "green";
@@ -60,202 +67,117 @@ const StudentDashboard = () => {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", paddingTop: 80 }}>
+      <div className="flex justify-center pt-20">
         <span className="spinner spinner-lg" />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="space-y-6">
       {/* Header */}
-      <div className="page-header" style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        <div className="user-avatar" style={{ width: 48, height: 48, fontSize: 18, flexShrink: 0 }}>
-          {initials}
-        </div>
-        <div>
-          <h1>Welcome, {user?.name}</h1>
-          <p>Here's your attendance summary</p>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0">
+            {initials}
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Welcome, {user?.name || "Student"}</h1>
+            <p className="text-muted-foreground">Here's your academic and activity summary</p>
+          </div>
         </div>
       </div>
 
       {/* Low Attendance Warning */}
       {lowAttendance.length > 0 && (
-        <div className="warning-banner">
-          <MdWarning size={20} />
-          <span>
+        <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center gap-3">
+          <MdWarning size={20} className="shrink-0" />
+          <span className="text-sm font-medium">
             Low attendance in: {lowAttendance.map((s) => s.subject).join(", ")}. Minimum required is 75%.
           </span>
         </div>
       )}
 
-      {/* Overall Stats */}
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Overall Attendance</div>
-            <div
-              className="stat-value"
-              style={{
-                color:
-                  parseFloat(stats.percentage) >= 75
-                    ? "var(--success)"
-                    : "var(--danger)",
-              }}
-            >
-              {stats.percentage}%
-            </div>
-            <div className="stat-sub">Across all subjects</div>
-          </div>
-          <div
-            className="stat-icon"
-            style={{
-              background:
-                parseFloat(stats.percentage) >= 75
-                  ? "var(--success-light)"
-                  : "var(--danger-light)",
-              color:
-                parseFloat(stats.percentage) >= 75
-                  ? "var(--success)"
-                  : "var(--danger)",
-            }}
-          >
-            <MdPerson />
-          </div>
+      {/* Analytics Overview Grid */}
+      <DashboardSection title="Overview" className="mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <MetricCard
+            title="Overall Attendance"
+            value={`${stats.percentage}%`}
+            subtext="Across all subjects"
+            icon={MdPerson}
+            iconClassName={parseFloat(stats.percentage) >= 75 ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"}
+          />
+          <MetricCard
+            title="Classes Attended"
+            value={stats.present}
+            subtext="Present sessions"
+            icon={MdCheckCircle}
+            iconClassName="bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"
+          />
+          <MetricCard
+            title="Classes Missed"
+            value={stats.absent}
+            subtext="Absent sessions"
+            icon={MdCancel}
+            iconClassName="bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+          />
+          <MetricCard
+            title="Total Classes"
+            value={stats.total}
+            subtext="All subjects combined"
+            icon={MdCalendarToday}
+          />
         </div>
+      </DashboardSection>
 
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Classes Attended</div>
-            <div className="stat-value" style={{ color: "var(--success)" }}>{stats.present}</div>
-            <div className="stat-sub">Present sessions</div>
-          </div>
-          <div className="stat-icon green"><MdCheckCircle /></div>
-        </div>
+      {/* Charts & Analytics */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          <DashboardCard title="CGPA Progression" description="Your academic performance over time">
+            <CGPAProgressionChart data={MOCK_CGPA_DATA} />
+          </DashboardCard>
 
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Classes Missed</div>
-            <div className="stat-value" style={{ color: "var(--danger)" }}>{stats.absent}</div>
-            <div className="stat-sub">Absent sessions</div>
-          </div>
-          <div className="stat-icon red"><MdCancel /></div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Total Classes</div>
-            <div className="stat-value">{stats.total}</div>
-            <div className="stat-sub">All subjects combined</div>
-          </div>
-          <div className="stat-icon indigo"><MdCalendarToday /></div>
-        </div>
-      </div>
-
-      {/* Subject-wise Attendance */}
-      {subjectStats.length > 0 && (
-        <div className="card">
-          <div className="card-title">Subject-wise Attendance</div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-              gap: 16,
-            }}
-          >
-            {subjectStats.map((s, i) => {
-              const pct = parseFloat(s.percentage);
-              const color = getBarColor(pct);
-              return (
-                <div
-                  key={i}
-                  style={{
-                    background: "var(--bg-base)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "var(--radius-md)",
-                    padding: 16,
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: 8,
-                    }}
-                  >
-                    <span style={{ fontWeight: 600, fontSize: 14 }}>{s.subject}</span>
-                    <span
-                      className={`badge badge-${
-                        pct >= 75 ? "green" : pct >= 60 ? "amber" : "red"
-                      }`}
-                    >
-                      {s.percentage}%
-                    </span>
-                  </div>
-                  <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 8 }}>
-                    {s.present} / {s.total} classes attended
-                  </div>
-                  <div className="progress-bar-wrap">
-                    <div
-                      className={`progress-bar-fill ${color}`}
-                      style={{ width: `${Math.min(pct, 100)}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Recent Records */}
-      <div className="card">
-        <div className="card-title">Recent Attendance Records</div>
-        {attendanceData.length === 0 ? (
-          <div className="empty-state">
-            <p>No attendance records found</p>
-          </div>
-        ) : (
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Subject</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {attendanceData
-                  .slice(-10)
-                  .reverse()
-                  .map((record, i) => (
-                    <tr key={i}>
-                      <td>{record.date}</td>
-                      <td>{record.subject}</td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            record.attendance === "present"
-                              ? "badge-green"
-                              : "badge-red"
-                          }`}
-                        >
-                          {record.attendance === "present" ? (
-                            <MdCheckCircle size={12} />
-                          ) : (
-                            <MdCancel size={12} />
-                          )}
-                          {record.attendance || "Not Marked"}
+          {/* Subject-wise Attendance */}
+          {subjectStats.length > 0 && (
+            <DashboardCard title="Subject-wise Attendance" description="Detailed breakdown by course">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                {subjectStats.map((s, i) => {
+                  const pct = parseFloat(s.percentage);
+                  return (
+                    <div key={i} className="p-4 rounded-lg border border-border bg-slate-50 dark:bg-slate-900/50">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-semibold text-sm">{s.subject}</span>
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${pct >= 75 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : pct >= 60 ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}>
+                          {s.percentage}%
                         </span>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                      </div>
+                      <div className="text-xs text-muted-foreground mb-2">
+                        {s.present} / {s.total} classes attended
+                      </div>
+                      <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5">
+                        <div 
+                          className={`h-1.5 rounded-full ${pct >= 75 ? 'bg-emerald-500' : pct >= 60 ? 'bg-amber-500' : 'bg-red-500'}`}
+                          style={{ width: `${Math.min(pct, 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </DashboardCard>
+          )}
+        </div>
+
+        <div className="space-y-6">
+          <DashboardCard title="Upcoming Tasks" description="Due assignments and quizzes">
+            <UpcomingTasks tasks={MOCK_UPCOMING_TASKS} />
+          </DashboardCard>
+          
+          <DashboardCard title="Expenses" description="Monthly spending breakdown">
+            <ExpenseBreakdownChart data={MOCK_EXPENSE_DATA} />
+          </DashboardCard>
+        </div>
       </div>
     </div>
   );

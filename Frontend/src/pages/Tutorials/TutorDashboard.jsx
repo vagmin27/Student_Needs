@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTutorProfile } from "../../utils/Tutorials/api";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { DashboardSection } from "../../components/dashboard/shared/DashboardSection";
+import { DashboardCard } from "../../components/dashboard/shared/DashboardCard";
+import { BookingActivityTimeline } from "../../components/dashboard/tutor/BookingActivityTimeline";
+import { RecentRequestsFeed } from "../../components/dashboard/tutor/RecentRequestsFeed";
+import { MOCK_ACTIVITY_TIMELINE, MOCK_RECENT_REQUESTS } from "../../data/dashboard/tutorMockData";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, BookOpen, Inbox } from "lucide-react";
 
@@ -25,89 +29,89 @@ function TutorDashboard() {
     check();
   }, [navigate]);
 
+  const handleAcceptRequest = useCallback((id) => {
+    console.log("Accepted request", id);
+    // TODO: implement accept logic
+  }, []);
+
+  const handleDeclineRequest = useCallback((id) => {
+    console.log("Declined request", id);
+    // TODO: implement decline logic
+  }, []);
+
   return (
     <DashboardLayout pageTitle="Tutor Dashboard" role="tutor">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">👨‍🏫 Tutor Dashboard</h1>
           <p className="text-muted-foreground mt-1">Manage your teaching schedule and students</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="hover:border-primary/50 transition-colors">
-          <CardHeader>
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
-              <Calendar className="w-5 h-5" />
-            </div>
-            <CardTitle>Availability</CardTitle>
-            <CardDescription>Set your working hours and days</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button 
-              className="w-full" 
-              onClick={() => navigate("/tutorials/tutor/availability")}
-            >
-              Set Availability
-            </Button>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          <DashboardSection title="Quick Actions">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <DashboardCard className="border-l-4 border-l-primary" contentClassName="flex flex-col items-start p-6">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-lg mb-1">Availability</h3>
+                <p className="text-sm text-muted-foreground mb-4">Set your working hours and days</p>
+                <Button className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/availability")}>
+                  Set Availability
+                </Button>
+              </DashboardCard>
 
-        <Card className="hover:border-primary/50 transition-colors">
-          <CardHeader>
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
-              <User className="w-5 h-5" />
-            </div>
-            <CardTitle>Profile</CardTitle>
-            <CardDescription>View and update your public tutor profile</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button 
-              variant="outline"
-              className="w-full" 
-              onClick={() => navigate("/tutorials/tutor/editProfile")}
-            >
-              View Profile
-            </Button>
-          </CardContent>
-        </Card>
+              <DashboardCard className="border-l-4 border-l-blue-500" contentClassName="flex flex-col items-start p-6">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 mb-4">
+                  <User className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-lg mb-1">Profile</h3>
+                <p className="text-sm text-muted-foreground mb-4">View and update your public tutor profile</p>
+                <Button variant="outline" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/editProfile")}>
+                  View Profile
+                </Button>
+              </DashboardCard>
 
-        <Card className="hover:border-primary/50 transition-colors">
-          <CardHeader>
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <CardTitle>Schedule</CardTitle>
-            <CardDescription>Check your upcoming classes and bookings</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button 
-              variant="outline"
-              className="w-full" 
-              onClick={() => navigate("/tutorials/tutor/schedule")}
-            >
-              View Schedule
-            </Button>
-          </CardContent>
-        </Card>
+              <DashboardCard className="border-l-4 border-l-emerald-500" contentClassName="flex flex-col items-start p-6">
+                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-lg mb-1">Schedule</h3>
+                <p className="text-sm text-muted-foreground mb-4">Check your upcoming classes and bookings</p>
+                <Button variant="outline" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/schedule")}>
+                  View Schedule
+                </Button>
+              </DashboardCard>
 
-        <Card className="hover:border-primary/50 transition-colors">
-          <CardHeader>
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
-              <Inbox className="w-5 h-5" />
+              <DashboardCard className="border-l-4 border-l-amber-500" contentClassName="flex flex-col items-start p-6">
+                <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 mb-4">
+                  <Inbox className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-lg mb-1">Manage Requests</h3>
+                <p className="text-sm text-muted-foreground mb-4">Accept or decline new student requests</p>
+                <Button className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/accept")}>
+                  View All Requests
+                </Button>
+              </DashboardCard>
             </div>
-            <CardTitle>Booking Requests</CardTitle>
-            <CardDescription>Accept or decline new student requests</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button 
-              className="w-full" 
-              onClick={() => navigate("/tutorials/tutor/accept")}
-            >
-              Manage Requests
-            </Button>
-          </CardContent>
-        </Card>
+          </DashboardSection>
+        </div>
+
+        <div className="space-y-6">
+          <DashboardCard title="Pending Requests" description="Students waiting for your approval">
+            <RecentRequestsFeed 
+              requests={MOCK_RECENT_REQUESTS} 
+              onAccept={handleAcceptRequest} 
+              onDecline={handleDeclineRequest} 
+            />
+          </DashboardCard>
+
+          <DashboardCard title="Activity Timeline" description="Your recent booking activity">
+            <BookingActivityTimeline activities={MOCK_ACTIVITY_TIMELINE} />
+          </DashboardCard>
+        </div>
       </div>
     </DashboardLayout>
   );

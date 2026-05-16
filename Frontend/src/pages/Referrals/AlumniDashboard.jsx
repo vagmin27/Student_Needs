@@ -7,7 +7,7 @@ import { AlumniStats } from '@/components/Referrals/Alumni/AlumniStats.jsx';
 import { AlumniTabNavigation } from '@/components/Referrals/Alumni/AlumniTabNavigation.jsx';
 import { CreateJobModal } from '@/components/Referrals/Alumni/CreateJobModal.jsx';
 import { PostReferralModal } from '@/components/Referrals/Alumni/PostReferralModal.jsx';
-import { BackendOpportunitiesList } from '@/components/Referrals/Alumni/BackendOpportunitiesList.jsx';
+import { InteractiveJobsTable } from '@/components/dashboard/alumni/InteractiveJobsTable.jsx';
 import { EditOpportunityModal } from '@/components/Referrals/Alumni/EditOpportunityModal.jsx';
 import { StudentProfileModal } from '@/components/Referrals/Alumni/StudentProfileModal.jsx';
 import { ApplicationCard } from '@/components/Referrals/Alumni/ApplicationCard.jsx';
@@ -430,17 +430,20 @@ export function AlumniDashboard() {
         <div className="space-y-4 sm:space-y-6">
           {isAuthenticated && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <BackendOpportunitiesList
-                opportunities={backendOpportunities}
-                selectedOpportunity={selectedBackendOpportunity}
-                onSelectOpportunity={(opp) => {
-                  setSelectedBackendOpportunity(opp);
-                  loadApplicationsForOpportunity(opp._id);
-                }}
-                onCreateOpportunity={() => activeTab === 'jobs' ? setShowCreateJob(true) : setShowCreateReferral(true)}
-                onEditOpportunity={handleEditOpportunityClick}
-                onDeleteOpportunity={handleDeleteOpportunity}
-              />
+              <div className="bg-card rounded-xl border border-border/50 p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-foreground">My Opportunities</h3>
+                </div>
+                <InteractiveJobsTable 
+                  jobs={backendOpportunities}
+                  onRowClick={(opp) => {
+                    setSelectedBackendOpportunity(opp);
+                    loadApplicationsForOpportunity(opp._id);
+                  }}
+                  onActionClick={handleEditOpportunityClick}
+                  actionLabel="Edit"
+                />
+              </div>
               <div className="bg-card rounded-xl border border-border/50">
                 {selectedBackendOpportunity ? (
                   <div className="p-4 sm:p-6">
@@ -486,30 +489,20 @@ export function AlumniDashboard() {
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">
                 Candidates from Backend Opportunities
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-                {backendOpportunities.map((opportunity) => (
-                  <div key={opportunity._id} className="border border-border/50 rounded-lg p-3 sm:p-4">
-                    <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 mb-2 sm:mb-3">
-                      <h4 className="font-medium text-sm sm:text-base text-foreground truncate">{opportunity.jobTitle}</h4>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          setSelectedBackendOpportunity(opportunity);
-                          loadApplicationsForOpportunity(opportunity._id);
-                          setActiveTab('jobs');
-                        }}
-                        className="text-xs sm:text-sm whitespace-nowrap w-full xs:w-auto"
-                      >
-                        View Applications
-                      </Button>
-                    </div>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      {opportunity.referralsGiven || 0} / {opportunity.numberOfReferrals} referrals given
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <InteractiveJobsTable 
+                jobs={backendOpportunities}
+                onRowClick={(opp) => {
+                  setSelectedBackendOpportunity(opp);
+                  loadApplicationsForOpportunity(opp._id);
+                  setActiveTab('jobs');
+                }}
+                onActionClick={(opp) => {
+                  setSelectedBackendOpportunity(opp);
+                  loadApplicationsForOpportunity(opp._id);
+                  setActiveTab('jobs');
+                }}
+                actionLabel="View Applications"
+              />
             </div>
           )}
 
