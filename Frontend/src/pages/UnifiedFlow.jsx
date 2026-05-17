@@ -223,7 +223,7 @@ export function RoleAuthPage({ mode = "login" }) {
     return mode === "signup" ? <StudentSignupFlow /> : <StudentLoginFlow />;
   }
 
-  if (normalizedRole === "teacher") {
+  if (normalizedRole === "teacher" || normalizedRole === "tutor") {
     return mode === "signup" ? <TutorRegisterPage /> : <TutorLoginPage />;
   }
 

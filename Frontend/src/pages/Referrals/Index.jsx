@@ -40,9 +40,9 @@ function AppContent() {
       <Route path="/auth/verifier/signup" element={<VerifierSignupPage />} />
       <Route path="/landing" element={<LandingPage />} />
 
-      {/* Student Dashboard */}
+      {/* Explicit Student Referral Routes */}
       <Route
-        index
+        path="/student/referrals"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
             <DashboardLayout role="student" pageTitle="Student Referrals">
@@ -52,17 +52,7 @@ function AppContent() {
         }
       />
       <Route
-        path="referrals"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <DashboardLayout role="student" pageTitle="Student Referrals">
-              <StudentDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-      <Route
-        path="jobs"
+        path="/student/jobs"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
             <DashboardLayout role="student" pageTitle="Student Jobs">
@@ -72,7 +62,7 @@ function AppContent() {
         }
       />
       <Route
-        path="profile"
+        path="/student/profile"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
             <DashboardLayout role="student" pageTitle="Student Profile">
@@ -82,7 +72,7 @@ function AppContent() {
         }
       />
       <Route
-        path="qrcode"
+        path="/student/qrcode"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
             <DashboardLayout role="student" pageTitle="QR Code">
@@ -92,7 +82,7 @@ function AppContent() {
         }
       />
       <Route
-        path="applied"
+        path="/student/applied"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
             <DashboardLayout role="student" pageTitle="Applied Jobs">
@@ -101,10 +91,8 @@ function AppContent() {
           </GlobalProtectedRoute>
         }
       />
-
-      {/* Interview Page */}
       <Route
-        path="interview"
+        path="/student/interview"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
             <DashboardLayout role="student" pageTitle="Interviews">
@@ -116,7 +104,7 @@ function AppContent() {
 
       {/* Alumni Dashboard */}
       <Route
-        path="/alumni"
+        path="/alumni/dashboard"
         element={
           <GlobalProtectedRoute allowedRoles={["alumni"]}>
             <DashboardLayout role="alumni" pageTitle="Alumni Dashboard">
@@ -128,7 +116,7 @@ function AppContent() {
 
       {/* Verifier Dashboard */}
       <Route
-        path="/verifier"
+        path="/verifier/dashboard"
         element={
           <GlobalProtectedRoute allowedRoles={["verifier"]}>
             <DashboardLayout role="verifier" pageTitle="Verifier Dashboard">

@@ -166,7 +166,6 @@ const AttendanceRoutes = () => {
       <Route path="/auth/alumni/signup" element={<Navigate to="/signup/alumni" replace />} />
       <Route path="/auth/verifier/login" element={<Navigate to="/login/verifier" replace />} />
       <Route path="/auth/verifier/signup" element={<Navigate to="/signup/verifier" replace />} />
-      <Route path="/alumni/dashboard" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
       <Route path="/student/dashboard" element={
         <GlobalProtectedRoute allowedRoles={["student"]}>
           <WithLayout title="My Dashboard">
@@ -181,11 +180,17 @@ const AttendanceRoutes = () => {
                         REFERRALS ROUTES
       ====================================================== */}
 
-      <Route path="/referrals/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/student/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/alumni/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/verifier/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/student/referrals/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/student/jobs/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/student/profile/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/student/qrcode/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/student/applied/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/student/interview/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+
+      <Route path="/alumni/dashboard/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/verifier/dashboard/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
       <Route path="/auth/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+      <Route path="/landing" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
 
       {/* ======================================================
                         ATTENDANCE AUTH

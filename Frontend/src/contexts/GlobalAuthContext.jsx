@@ -155,7 +155,7 @@ export const AuthProvider = ({ children }) => {
     error,
     isAuthenticated: !!user,
     isInitialized: true,
-    isTeacher: user?.role?.toLowerCase() === 'teacher',
+    isTeacher: user?.role?.toLowerCase() === 'teacher' || user?.role?.toLowerCase() === 'tutor' || user?.accountType?.toLowerCase() === 'tutor',
     isStudent: user?.role?.toLowerCase() === 'student' || user?.accountType?.toLowerCase() === 'student',
     
     // Actions

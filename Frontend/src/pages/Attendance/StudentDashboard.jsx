@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import API from "../../services/Attendance/api";
 import { MdCheckCircle, MdCancel, MdWarning, MdCalendarToday, MdPerson } from "react-icons/md";
@@ -14,6 +15,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 
 const StudentDashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   
   // Required exact state from user prompt
   const [attendanceData, setAttendanceData] = useState([]);
@@ -212,11 +214,11 @@ const StudentDashboard = () => {
         </div>
 
         <div className="space-y-6">
-          <DashboardCard title="AI Recommended Opportunities" description="Based on your profile and skills">
+          <DashboardCard title="AI Recommended Opportunities" description="Based on your profile and skills" onClick={() => navigate('/student/referrals')}>
             <RecommendedOpportunities refreshTrigger={refreshTrigger} />
           </DashboardCard>
 
-          <DashboardCard title="Upcoming Classes" description="Due assignments and scheduled classes">
+          <DashboardCard title="Upcoming Classes" description="Due assignments and scheduled classes" onClick={() => navigate('/tutorials')}>
             {upcomingClasses?.length > 0 ? (
               <UpcomingTasks tasks={upcomingClasses} />
             ) : (
@@ -246,7 +248,7 @@ const StudentDashboard = () => {
             )}
           </DashboardCard>
           
-          <DashboardCard title="Expenses" description="Monthly spending breakdown">
+          <DashboardCard title="Expenses" description="Monthly spending breakdown" onClick={() => navigate('/expenses-tracker')}>
             {expenseData?.length > 0 ? (
               <ExpenseBreakdownChart data={expenseData} />
             ) : (

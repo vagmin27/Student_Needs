@@ -15,14 +15,12 @@ import {
 const Sidebar = ({ className, role = "student" }) => {
   const location = useLocation();
 
-  // We can dynamically render links based on role later.
-  // For now, these are standard module links.
   const links = [
     { name: "Dashboard", href: `/${role}/dashboard`, icon: LayoutDashboard },
-    { name: "Attendance", href: `/${role}/dashboard`, icon: CalendarDays }, // Merged into Dashboard
+    { name: "Attendance", href: role === "teacher" || role === "tutor" ? `/attendance/attendance` : `/student/dashboard`, icon: CalendarDays },
     { name: "Expenses", href: `/expenses-tracker`, icon: CreditCard },
     { name: "Tutorials", href: `/tutorials`, icon: BookOpen },
-    { name: "Referrals", href: `/student/referrals`, icon: Briefcase }, // Referrals specific route
+    { name: "Alumni", href: role === "alumni" ? `/alumni/dashboard` : `/student/referrals`, icon: Briefcase },
   ];
 
   return (

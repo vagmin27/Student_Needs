@@ -20,8 +20,12 @@ export const GlobalProtectedRoute = ({ children, allowedRoles = [], fallbackPath
   }
 
   if (allowedRoles.length > 0) {
-    const userRole = (user.role || user.accountType || "").toLowerCase();
-    const hasRole = allowedRoles.some(r => r.toLowerCase() === userRole);
+    const rawRole = (user.role || user.accountType || "").toLowerCase();
+    const userRole = rawRole === "tutor" ? "teacher" : rawRole;
+    const hasRole = allowedRoles.some(r => {
+      const targetRole = r.toLowerCase() === "tutor" ? "teacher" : r.toLowerCase();
+      return targetRole === userRole;
+    });
     if (!hasRole) {
       return <Navigate to="/" replace />;
     }
