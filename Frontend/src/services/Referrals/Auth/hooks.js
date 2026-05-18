@@ -554,8 +554,4 @@ export function useRoleBasedAuth(role) {
     login: alumniLogin,
   };
 }
-return {
-  signup: alumniSignup,
-  login: alumniLogin,
-};
-}
+
