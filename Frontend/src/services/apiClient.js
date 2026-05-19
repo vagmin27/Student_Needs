@@ -37,7 +37,7 @@ export const createApiClient = (prefix = "") => {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           localStorage.removeItem("User");
-          window.location.href = "/login/student";
+          window.location.href = "/role-selection";
         }
       }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "../../lib/utils";
+import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import {
   LayoutDashboard,
   Users,
@@ -14,6 +15,7 @@ import {
 
 const Sidebar = ({ className, role = "student" }) => {
   const location = useLocation();
+  const { logout } = useAuth();
 
   // We can dynamically render links based on role later.
   // For now, these are standard module links.
@@ -72,6 +74,7 @@ const Sidebar = ({ className, role = "student" }) => {
           Settings
         </Link>
         <button
+          onClick={logout}
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
         >
           <LogOut className="w-4 h-4" />

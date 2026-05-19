@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = '/login/student';
+    window.location.href = '/role-selection';
   }, []);
 
   // -----------------------------------------------------
