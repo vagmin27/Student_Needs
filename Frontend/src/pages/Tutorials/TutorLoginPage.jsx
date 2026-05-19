@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import API from "@/services/api/tutorialsApi.js";
+import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 
 import "../../styles/Tutorials/TutorLogin.css";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ function TutorLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +22,18 @@ function TutorLoginPage() {
       if (res.data.status === "ok") {
         alert("Login successful ✅");
 
-        navigate("/tutorials/tutor/schedule", { replace: true });
+        const tutorUser = {
+          ...res.data.tutor,
+          role: "tutor",
+        };
+        auth.setUser(tutorUser);
+
+        const header = btoa(JSON.stringify({ alg: "none", typ: "JWT" }));
+        const payload = btoa(JSON.stringify({ id: tutorUser._id || tutorUser.id, role: "tutor" }));
+        const dummyToken = `${header}.${payload}.dummy_signature`;
+        localStorage.setItem("token", dummyToken);
+
+        navigate("/tutorials/tutor/dashboard", { replace: true });
       } else {
         handleError(res.data.message);
       }
@@ -39,7 +52,7 @@ function TutorLoginPage() {
 
     if (message.toLowerCase().includes("not")) {
       alert("Tutor not found. Redirecting to Sign Up 🚀");
-      navigate("/signup/teacher");
+      navigate("/signup/tutor");
     } else {
       alert(message);
     }
@@ -95,7 +108,7 @@ function TutorLoginPage() {
                   cursor: "pointer",
                   fontWeight: "bold",
                 }}
-                onClick={() => navigate("/signup/teacher")}
+                onClick={() => navigate("/signup/tutor")}
               >
                 Sign Up
               </span>

@@ -17,13 +17,20 @@ const Sidebar = ({ className, role = "student" }) => {
 
   // We can dynamically render links based on role later.
   // For now, these are standard module links.
-  const links = [
-    { name: "Dashboard", href: `/${role}/dashboard`, icon: LayoutDashboard },
-    { name: "Attendance", href: `/${role}/dashboard`, icon: CalendarDays }, // Merged into Dashboard
-    { name: "Expenses", href: `/expenses-tracker`, icon: CreditCard },
-    { name: "Tutorials", href: `/tutorials`, icon: BookOpen },
-    { name: "Referrals", href: `/student/referrals`, icon: Briefcase }, // Referrals specific route
-  ];
+  const links = role === "tutor"
+    ? [
+        { name: "Dashboard", href: "/tutorials/tutor/dashboard", icon: LayoutDashboard },
+        { name: "Schedule",  href: "/tutorials/tutor/schedule",  icon: CalendarDays },
+        { name: "Requests",  href: "/tutorials/tutor/accept",    icon: BookOpen },
+        { name: "Profile",   href: "/tutorials/tutor/editProfile", icon: Users },
+      ]
+    : [
+        { name: "Dashboard", href: `/${role}/dashboard`, icon: LayoutDashboard },
+        { name: "Attendance", href: `/${role}/dashboard`, icon: CalendarDays }, // Merged into Dashboard
+        { name: "Expenses", href: `/expenses-tracker`, icon: CreditCard },
+        { name: "Tutorials", href: `/tutorials/searchTutor`, icon: BookOpen },
+        { name: "Referrals", href: `/student/referrals`, icon: Briefcase }, // Referrals specific route
+      ];
 
   return (
     <aside
@@ -72,6 +79,15 @@ const Sidebar = ({ className, role = "student" }) => {
           Settings
         </Link>
         <button
+          onClick={async () => {
+            try {
+              const { tutorsApiClient } = await import("@/services/apiClient.js");
+              await tutorsApiClient.post("/logout");
+            } catch (_) {}
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = '/role-selection';
+          }}
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
         >
           <LogOut className="w-4 h-4" />

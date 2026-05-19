@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTutorProfile } from "@/services/api/tutorialsApi.js";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
@@ -20,10 +20,10 @@ function TutorDashboard() {
         const res = await getTutorProfile();
 
         if (!res.data?.profile) {
-          navigate("/login/teacher");
+          navigate("/login/tutor");
         }
       } catch {
-        navigate("/login/teacher");
+        navigate("/login/tutor");
       }
     };
 

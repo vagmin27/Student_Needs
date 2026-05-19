@@ -147,7 +147,7 @@ function TutorEditProfilePage() {
 
       alert(res.data.msg || "Profile updated!");
 
-      navigate("/tutor/dashboard");
+      navigate("/tutorials/tutor/dashboard");
     } catch (err) {
       console.error("❌ Save error:", err);
     }

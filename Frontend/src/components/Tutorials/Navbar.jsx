@@ -26,8 +26,6 @@ function Navbar() {
 
   const handleLogout = () => {
     auth.logout();
-    localStorage.clear();
-    navigate("/");
   };
 
   const navClass = navColor

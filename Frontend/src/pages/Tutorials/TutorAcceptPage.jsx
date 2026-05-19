@@ -148,7 +148,7 @@ function TutorAcceptPage() {
         )}
 
         <button
-          onClick={() => navigate("/tutor/dashboard")}
+          onClick={() => navigate("/tutorials/tutor/dashboard")}
           style={{
             marginTop: "20px",
             cursor: "pointer",

@@ -38,7 +38,7 @@ function TutorRegisterPage() {
       });
       if (res.data.status === "ok") {
         alert("Registered successfully! Please log in 🎉");
-        navigate("/login/teacher");
+        navigate("/login/tutor");
       }
     } catch (err) {
       alert(err.response?.data?.message || "Invalid OTP ❌");
@@ -94,7 +94,7 @@ function TutorRegisterPage() {
                 Already have an account?{" "}
                 <span
                   style={{ color: "#ff7a2f", cursor: "pointer", fontWeight: "bold" }}
-                  onClick={() => navigate("/login/teacher")}
+                  onClick={() => navigate("/login/tutor")}
                 >
                   Login
                 </span>

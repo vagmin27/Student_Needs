@@ -56,12 +56,13 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('auth_data', JSON.stringify({ token: newToken, user: newUser }));
   };
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    try { await tutorsApiClient.post("/logout"); } catch (_) {}
     setToken(null);
     setUser(null);
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = '/login/student';
+    window.location.href = '/role-selection';
   }, []);
 
   // -----------------------------------------------------
@@ -157,6 +158,7 @@ export const AuthProvider = ({ children }) => {
     isInitialized: true,
     isTeacher: user?.role?.toLowerCase() === 'teacher',
     isStudent: user?.role?.toLowerCase() === 'student' || user?.accountType?.toLowerCase() === 'student',
+    isTutor: user?.role?.toLowerCase() === 'tutor',
     
     // Actions
     login,

@@ -21,12 +21,12 @@ function TutorAvailability() {
         const res = await getTutorProfile();
 
         if (!res.data?.profile) {
-          navigate("/login/teacher");
+          navigate("/login/tutor");
           return;
         }
       } catch (err) {
         console.error("Not authenticated");
-        navigate("/login/teacher");
+        navigate("/login/tutor");
       }
     };
 
@@ -88,7 +88,7 @@ function TutorAvailability() {
 
       alert("Availability saved ✅");
 
-      navigate("/tutor/schedule");
+      navigate("/tutorials/tutor/schedule");
     } catch (err) {
       console.error(err);
       alert("Error saving data ❌");

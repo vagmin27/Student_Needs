@@ -63,7 +63,7 @@ function TutorSchedulePage() {
           }}
         >
           <button
-            onClick={() => navigate("/tutor/dashboard")}
+            onClick={() => navigate("/tutorials/tutor/dashboard")}
             style={{
               background: "#ff7a2f",
               color: "#fff",

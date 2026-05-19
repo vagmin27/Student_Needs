@@ -8,25 +8,25 @@ import { BsFillGearFill } from "react-icons/bs";
 export const sidebarData = [
   {
     title: "Edit Profile",
-    path: "/profile/editProfile",
+    path: "/tutorials/profile/editProfile",
     icon: <FaEdit />,
     cName: "sidenav__list-item",
   },
   {
     title: "Manage Booking",
-    path: "/profile/manageBooking",
+    path: "/tutorials/profile/manageBooking",
     icon: <FaRegCalendarCheck />,
     cName: "sidenav__list-item",
   },
   {
     title: "Class History",
-    path: "/profile/classHistory",
+    path: "/tutorials/profile/classHistory",
     icon: <FaHistory />,
     cName: "sidenav__list-item",
   },
   {
     title: "Account Settings",
-    path: "/profile/accountSettings",
+    path: "/tutorials/profile/accountSettings",
     icon: <BsFillGearFill />,
     cName: "sidenav__list-item",
   },

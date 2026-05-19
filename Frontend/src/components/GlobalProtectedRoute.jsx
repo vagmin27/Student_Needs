@@ -20,7 +20,7 @@ export const GlobalProtectedRoute = ({ children, allowedRoles = [], fallbackPath
   }
 
   if (allowedRoles.length > 0) {
-    const userRole = (user.role || user.accountType || "").toLowerCase();
+    const userRole = (user.role || user.accountType || "student").toLowerCase();
     const hasRole = allowedRoles.some(r => r.toLowerCase() === userRole);
     if (!hasRole) {
       return <Navigate to="/" replace />;

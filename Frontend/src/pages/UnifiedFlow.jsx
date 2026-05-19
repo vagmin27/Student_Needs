@@ -235,6 +235,10 @@ export function RoleAuthPage({ mode = "login" }) {
     return mode === "signup" ? <VerifierSignupPage /> : <VerifierLoginPage />;
   }
 
+  if (normalizedRole === "tutor") {
+    return mode === "signup" ? <TutorRegisterPage /> : <TutorLoginPage />;
+  }
+
   return <Navigate to="/role-selection" replace />;
 }
 
