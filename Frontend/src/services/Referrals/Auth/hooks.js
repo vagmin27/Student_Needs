@@ -443,9 +443,15 @@ export function useVerifierSignup() {
     try {
       const response = await studentSignup({ ...form.data, accountType: 'verifier' });
       if (response.success && response.user) {
-        setUser(response.user);
+        // Clear global session since we want them to log in manually
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('auth_data');
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('auth_user');
+        setUser(null);
         form.resetForm();
-        navigate('/verifier');
+        navigate('/login/verifier');
       } else {
         form.setSubmitError(response.message);
       }
@@ -517,7 +523,7 @@ export function useVerifierLogin() {
         }
         setUser(response.user);
         form.resetForm();
-        navigate('/verifier');
+        navigate('/verifier/dashboard');
       } else {
         form.setSubmitError(response.message);
       }

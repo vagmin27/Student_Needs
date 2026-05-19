@@ -126,18 +126,6 @@ function AppContent() {
         }
       />
 
-      {/* Verifier Dashboard */}
-      <Route
-        path="/verifier"
-        element={
-          <GlobalProtectedRoute allowedRoles={["verifier"]}>
-            <DashboardLayout role="verifier" pageTitle="Verifier Dashboard">
-              <VerifierDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
       {/* 404 Page */}
       <Route path="*" element={<NotFound />} />
     </Routes>

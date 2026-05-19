@@ -62,6 +62,7 @@ const StudentDashboard = React.lazy(() => import("./pages/Attendance/StudentDash
 
 const Index = React.lazy(() => import("@/pages/Referrals/Index.jsx"));
 const AlumniDashboard = React.lazy(() => import("@/pages/Referrals/AlumniDashboard.jsx").then(m => ({ default: m.AlumniDashboard })));
+const VerifierDashboard = React.lazy(() => import("@/pages/Referrals/VerifierDashboard.jsx").then(m => ({ default: m.VerifierDashboard })));
 import {
   RoleAuthPage,
   RoleSelectionPage,
@@ -172,6 +173,15 @@ const AttendanceRoutes = () => {
           <WithLayout title="Alumni Dashboard">
             <Suspense fallback={<DashboardSkeleton />}>
               <AlumniDashboard />
+            </Suspense>
+          </WithLayout>
+        </GlobalProtectedRoute>
+      } />
+      <Route path="/verifier/dashboard/*" element={
+        <GlobalProtectedRoute allowedRoles={["verifier"]}>
+          <WithLayout title="Verifier Dashboard">
+            <Suspense fallback={<DashboardSkeleton />}>
+              <VerifierDashboard />
             </Suspense>
           </WithLayout>
         </GlobalProtectedRoute>

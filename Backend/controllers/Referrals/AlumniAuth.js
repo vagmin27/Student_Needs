@@ -10,7 +10,7 @@ dotenv.config();
 // ================= VALIDATION =================
 function validateEmail(email, res) {
   if (!validator.isEmail(email)) {
-    res.status(403).json({
+    res.status(200).json({
       success: false,
       message: "Invalid Email",
     });
@@ -33,7 +33,7 @@ export const signup = async (req, res) => {
     } = req.body;
 
     if (!firstName || !lastName || !email || !password || !collegeName) {
-      return res.status(403).json({
+      return res.status(200).json({
         success: false,
         message: "All required fields are required",
       });
@@ -43,7 +43,7 @@ export const signup = async (req, res) => {
 
     const existingAlumni = await Alumni.findOne({ email });
     if (existingAlumni) {
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
         message: "Alumni already exists. Please login.",
       });
@@ -98,7 +98,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
         message: "Please fill all required fields",
       });
@@ -112,7 +112,7 @@ export const login = async (req, res) => {
     );
 
     if (!alumni) {
-      return res.status(401).json({
+      return res.status(200).json({
         success: false,
         message: "Alumni not registered",
       });
@@ -123,7 +123,7 @@ export const login = async (req, res) => {
     if (isPasswordMatch) {
       return handleAuthSuccess(alumni, res, "Alumni logged in successfully");
     } else {
-      return res.status(401).json({
+      return res.status(200).json({
         success: false,
         message: "Incorrect password",
       });
