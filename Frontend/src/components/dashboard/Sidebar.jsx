@@ -15,6 +15,10 @@ import {
 
 const Sidebar = ({ className, role = "student" }) => {
   const location = useLocation();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/components/dashboard/Sidebar.jsx
+>>>>>>> c76ab2ceee41537cccbf90f6b2bf341c324d893d
   const { logout, user } = useAuth();
 
   const currentRole = (user?.role || user?.accountType || role || "student").toLowerCase();
@@ -53,6 +57,27 @@ const Sidebar = ({ className, role = "student" }) => {
       { name: "Referrals", href: "/student/referrals", icon: Briefcase },
     ];
   }
+<<<<<<< HEAD
+=======
+=======
+  const { logout } = useAuth();
+
+  const links = role === "tutor"
+    ? [
+        { name: "Dashboard", href: "/tutorials/tutor/dashboard", icon: LayoutDashboard },
+        { name: "Schedule",  href: "/tutorials/tutor/schedule",  icon: CalendarDays },
+        { name: "Requests",  href: "/tutorials/tutor/accept",    icon: BookOpen },
+        { name: "Profile",   href: "/tutorials/tutor/editProfile", icon: Users },
+      ]
+    : [
+        { name: "Dashboard", href: `/${role}/dashboard`, icon: LayoutDashboard },
+        { name: "Attendance", href: `/${role}/dashboard`, icon: CalendarDays }, // Merged into Dashboard
+        { name: "Expenses", href: `/expenses-tracker`, icon: CreditCard },
+        { name: "Tutorials", href: `/tutorials/searchTutor`, icon: BookOpen },
+        { name: "Referrals", href: `/student/referrals`, icon: Briefcase }, // Referrals specific route
+      ];
+>>>>>>> 94d51442ed970eef37ac0ae78cd897ae8839d68c:Frontend/src/components/dashboard/Sidebar.jsx
+>>>>>>> c76ab2ceee41537cccbf90f6b2bf341c324d893d
 
   return (
     <aside
@@ -101,7 +126,23 @@ const Sidebar = ({ className, role = "student" }) => {
           Settings
         </Link>
         <button
+<<<<<<< HEAD
           onClick={logout}
+=======
+<<<<<<< HEAD:src/components/dashboard/Sidebar.jsx
+          onClick={logout}
+=======
+          onClick={async () => {
+            try {
+              const { tutorsApiClient } = await import("@/services/apiClient.js");
+              await tutorsApiClient.post("/logout");
+            } catch (_) {}
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = '/role-selection';
+          }}
+>>>>>>> 94d51442ed970eef37ac0ae78cd897ae8839d68c:Frontend/src/components/dashboard/Sidebar.jsx
+>>>>>>> c76ab2ceee41537cccbf90f6b2bf341c324d893d
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
         >
           <LogOut className="w-4 h-4" />
