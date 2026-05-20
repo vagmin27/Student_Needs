@@ -102,29 +102,7 @@ function AppContent() {
         }
       />
 
-      {/* Alumni Dashboard */}
-      <Route
-        path="/alumni/dashboard"
-        element={
-          <GlobalProtectedRoute allowedRoles={["alumni"]}>
-            <DashboardLayout role="alumni" pageTitle="Alumni Dashboard">
-              <AlumniDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
 
-      {/* Verifier Dashboard */}
-      <Route
-        path="/verifier/dashboard"
-        element={
-          <GlobalProtectedRoute allowedRoles={["verifier"]}>
-            <DashboardLayout role="verifier" pageTitle="Verifier Dashboard">
-              <VerifierDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
 
       {/* 404 Page */}
       <Route path="*" element={<NotFound />} />

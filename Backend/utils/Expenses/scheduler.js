@@ -8,6 +8,9 @@ import sendEmailWithAttachment from "./emailSend.js";
 
 // ⏰ Smart reminder scheduler
 export const smartReminderScheduler = () => {
+  if (process.env.NODE_ENV !== "production" && process.env.ENABLE_SCHEDULERS !== "true") {
+    return;
+  }
   cron.schedule("* * * * *", async () => {
     try {
       const users = await userModel.find();
@@ -33,8 +36,6 @@ export const smartReminderScheduler = () => {
           `Hi ${user.username || "User"}, don't forget to update today's expenses 💸`,
         );
       }
-
-      console.log("⏰ Reminder scheduler checked");
     } catch (err) {
       console.log("Reminder scheduler error:", err.message);
     }
@@ -43,6 +44,9 @@ export const smartReminderScheduler = () => {
 
 // 📅 Monthly analysis email scheduler
 export const monthlyAnalysisScheduler = () => {
+  if (process.env.NODE_ENV !== "production" && process.env.ENABLE_SCHEDULERS !== "true") {
+    return;
+  }
   cron.schedule("59 23 28-31 * *", async () => {
     try {
       const today = new Date();
@@ -102,6 +106,9 @@ Keep tracking and save smarter 💸
 };
 
 export const recurringTransactionScheduler = () => {
+  if (process.env.NODE_ENV !== "production" && process.env.ENABLE_SCHEDULERS !== "true") {
+    return;
+  }
   cron.schedule("0 0 * * *", async () => {
     try {
       const today = new Date();

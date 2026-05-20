@@ -29,59 +29,19 @@ const Sidebar = ({ className, role = "student" }) => {
 
   if (currentRole === "tutor") {
     links = [
-      {
-        name: "Dashboard",
-        href: "/tutorials/tutor/dashboard",
-        icon: LayoutDashboard,
-      },
-      {
-        name: "Schedule",
-        href: "/tutorials/tutor/schedule",
-        icon: CalendarDays,
-      },
-      {
-        name: "Requests",
-        href: "/tutorials/tutor/accept",
-        icon: BookOpen,
-      },
-      {
-        name: "Profile",
-        href: "/tutorials/tutor/editProfile",
-        icon: Users,
-      },
+      { name: "Dashboard", href: "/tutorials/tutor/dashboard", icon: LayoutDashboard },
+      { name: "Schedule", href: "/tutorials/tutor/schedule", icon: CalendarDays },
+      { name: "Requests", href: "/tutorials/tutor/accept", icon: BookOpen },
+      { name: "Profile", href: "/tutorials/tutor/editProfile", icon: Users },
     ];
   } else if (currentRole === "teacher") {
     links = [
-      {
-        name: "Dashboard",
-        href: "/attendance/dashboard",
-        icon: LayoutDashboard,
-      },
-      {
-        name: "Attendance",
-        href: "/attendance/attendance",
-        icon: CalendarDays,
-      },
-      {
-        name: "Add Student",
-        href: "/attendance/add-student",
-        icon: Users,
-      },
-      {
-        name: "Remove Student",
-        href: "/attendance/remove-student",
-        icon: Users,
-      },
-      {
-        name: "Add Subject",
-        href: "/attendance/add-subject",
-        icon: BookOpen,
-      },
-      {
-        name: "Reports",
-        href: "/attendance/reports",
-        icon: CreditCard,
-      },
+      { name: "Dashboard", href: "/attendance/dashboard", icon: LayoutDashboard },
+      { name: "Attendance", href: "/attendance/attendance", icon: CalendarDays },
+      { name: "Add Student", href: "/attendance/add-student", icon: Users },
+      { name: "Remove Student", href: "/attendance/remove-student", icon: Users },
+      { name: "Add Subject", href: "/attendance/add-subject", icon: BookOpen },
+      { name: "Reports", href: "/attendance/reports", icon: CreditCard },
     ];
   } else if (currentRole === "alumni") {
     links = [
@@ -125,30 +85,10 @@ const Sidebar = ({ className, role = "student" }) => {
     ];
   }
 
-  const handleLogout = async () => {
-    try {
-      // Call backend logout API if available
-      const { tutorsApiClient } = await import("@/services/apiClient.js");
 
-      try {
-        await tutorsApiClient.post("/logout");
-      } catch (_) {
-        // Ignore API logout errors
-      }
 
-      // Call auth context logout if exists
-      if (logout) {
-        await logout();
-      }
-    } catch (_) {
-      // Ignore import errors
-    } finally {
-      // Clear storage and redirect
-      localStorage.clear();
-      sessionStorage.clear();
-      window.location.href = "/role-selection";
-    }
-  };
+
+
 
   return (
     <aside
@@ -205,7 +145,9 @@ const Sidebar = ({ className, role = "student" }) => {
         </Link>
 
         <button
-          onClick={handleLogout}
+
+          onClick={logout}
+
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
         >
           <LogOut className="w-4 h-4" />

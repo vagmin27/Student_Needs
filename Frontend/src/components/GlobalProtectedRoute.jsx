@@ -30,13 +30,7 @@ export const GlobalProtectedRoute = ({
   }
 
   if (allowedRoles.length > 0) {
-    const rawRole = (
-      user.role ||
-      user.accountType ||
-      "student"
-    ).toLowerCase();
-
-    // Treat tutor and teacher as same role
+    const rawRole = (user.role || user.accountType || "student").toLowerCase();
     const userRole = rawRole === "tutor" ? "teacher" : rawRole;
 
     const hasRole = allowedRoles.some((r) => {
@@ -47,7 +41,6 @@ export const GlobalProtectedRoute = ({
 
       return targetRole === userRole;
     });
-
     if (!hasRole) {
       return <Navigate to="/" replace />;
     }
