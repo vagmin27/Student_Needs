@@ -1,0 +1,128 @@
+/* 🌍 Page */
+.tutor-page {
+  font-family: Arial, sans-serif;
+  background: #f5f6f8;
+  min-height: 100vh;
+}
+
+/* 🔝 Navbar */
+.tutor-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: #8fa79a;
+  color: white;
+}
+
+.tutor-navbar button {
+  padding: 8px 16px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 🔥 Layout */
+.tutor-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 50px;
+  flex-wrap: wrap;
+}
+
+/* 📌 Left Section */
+.tutor-left {
+  flex: 1;
+  min-width: 300px;
+  text-align: center;
+}
+
+.tutor-left h2 {
+  margin-bottom: 10px;
+}
+
+.tutor-left img {
+  width: 300px;
+  margin-top: 20px;
+  transform: rotate(-5deg);
+}
+
+/* 📌 Right Card */
+.tutor-right {
+  flex: 1;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* 🧾 Form */
+.tutor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tutor-form label {
+  font-weight: 500;
+}
+
+/* ✏️ Inputs */
+.tutor-form input,
+.tutor-form select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.2s;
+}
+
+.tutor-form input:focus,
+.tutor-form select:focus {
+  border-color: #ff7a2f;
+}
+
+/* 🔘 Button */
+.tutor-form button {
+  margin-top: 15px;
+  padding: 12px;
+  background: #ff7a2f;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.tutor-form button:hover {
+  background: #e66a20;
+}
+
+/* 🔗 Links */
+.tutor-form span {
+  color: #ff7a2f;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .tutor-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .tutor-right {
+    width: 100%;
+  }
+
+  .tutor-left img {
+    width: 220px;
+  }
+}

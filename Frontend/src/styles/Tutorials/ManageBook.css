@@ -1,0 +1,153 @@
+/* MAIN WRAPPER */
+.mainDivBook {
+width: 100%;
+padding: 2rem;
+display: flex;
+justify-content: center;
+}
+
+/* CONTAINER */
+.innerDivBook {
+width: 100%;
+max-width: 1000px;
+background: #f8faf7;
+border-radius: 16px;
+padding: 2rem;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* TITLE */
+.titleBook {
+text-align: center;
+font-size: 2rem;
+font-weight: 600;
+color: #c3591c;
+margin-bottom: 1.5rem;
+}
+
+/* EACH CARD */
+.line1 {
+margin-bottom: 1rem;
+}
+
+/* SCHEDULE CARD */
+.scheduleDivBook {
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+background: white;
+padding: 1rem 1.2rem;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+transition: all 0.2s ease;
+}
+
+/* 🔥 UPCOMING HIGHLIGHT */
+.scheduleDivBook.upcoming {
+border-left: 5px solid #2ecc71;
+background: #f6fff7;
+}
+
+/* HOVER EFFECT */
+.scheduleDivBook:hover {
+transform: translateY(-3px);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* TEXT */
+.datep,
+.timep,
+.tutorp,
+.subjectp {
+color: #444;
+font-weight: 500;
+margin-right: 1rem;
+margin-bottom: 0.5rem;
+}
+
+/* 🔥 STATUS BADGE */
+.statusBadge {
+padding: 4px 10px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 600;
+}
+
+/* STATUS COLORS */
+.status-booked {
+background: #e6f9f0;
+color: #2ecc71;
+}
+
+.status-completed {
+background: #e6f0ff;
+color: #3b82f6;
+}
+
+.status-cancelled {
+background: #ffe6e6;
+color: #e63946;
+}
+
+/* BUTTON GROUP */
+.actionButtons {
+display: flex;
+gap: 0.5rem;
+margin-left: auto;
+}
+
+/* BUTTON BASE */
+.checkClassBtn,
+.deleteBtnBook {
+padding: 0.45rem 0.9rem;
+border-radius: 8px;
+border: none;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+/* DETAILS BUTTON */
+.checkClassBtn {
+background: #4c6ef5;
+color: white;
+}
+
+.checkClassBtn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 15px rgba(76, 110, 245, 0.3);
+}
+
+/* DELETE BUTTON */
+.deleteBtnBook {
+background: #e63946;
+color: white;
+}
+
+.deleteBtnBook:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 15px rgba(230, 57, 70, 0.3);
+}
+
+/* EMPTY STATE */
+.emptyState {
+text-align: center;
+color: #888;
+margin-top: 2rem;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+.scheduleDivBook {
+flex-direction: column;
+align-items: flex-start;
+gap: 0.5rem;
+}
+
+.actionButtons {
+width: 100%;
+display: flex;
+justify-content: flex-end;
+}
+}

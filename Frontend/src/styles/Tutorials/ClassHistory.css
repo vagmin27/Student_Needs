@@ -1,0 +1,104 @@
+/* MAIN WRAPPER */
+.mainDivHistory {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* CARD CONTAINER */
+.innerDivHistory {
+  width: 100%;
+  max-width: 1000px;
+  background: #f8faf7;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* TITLE */
+.titleHistory {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #c3591c;
+  margin-bottom: 1.5rem;
+}
+
+/* EACH HISTORY CARD */
+.line1 {
+  margin-bottom: 1rem;
+}
+
+/* CARD STYLE */
+.scheduleDivHistory {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background: white;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.scheduleDivHistory:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* TEXT STYLING */
+.datep,
+.timep,
+.tutorp,
+.subjectp {
+  color: #444;
+  font-weight: 500;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* GROUP TEXT */
+.scheduleDivHistory p {
+  margin: 0;
+}
+
+/* BUTTON CONTAINER */
+.commentBtnSpanHistory {
+  margin-left: auto;
+}
+
+/* BUTTON */
+.commentBtnHistory {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #4c6ef5, #5c7cfa);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* BUTTON HOVER */
+.commentBtnHistory:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(76, 110, 245, 0.3);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .scheduleDivHistory {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .commentBtnSpanHistory {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

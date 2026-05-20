@@ -1,0 +1,130 @@
+/* MODAL CONTAINER */
+.modalContainerReview {
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CLOSE BUTTON */
+.closeBtnReview {
+  align-self: flex-end;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  transition: 0.2s;
+}
+
+.closeBtnReview:hover {
+  color: #000;
+}
+
+/* CONTENT */
+.contentReview {
+  margin-top: 0.5rem;
+  overflow-y: auto;
+}
+
+/* TITLE */
+.titleReview {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* STAR SECTION */
+.StarDiv {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* LABEL */
+.textTitle {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* TEXTAREA */
+.form-control {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #f5a440;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245, 164, 64, 0.2);
+}
+
+/* REMOVE FIXED WIDTH */
+#exampleFormControlTextarea1 {
+  width: 100%;
+}
+
+/* BUTTON CONTAINER */
+.submitBtnSpan {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* BUTTON */
+.reviewBtn {
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* HOVER */
+.reviewBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 122, 24, 0.3);
+}
+
+/* REMOVE OLD STYLES */
+.form-group {
+  padding-bottom: 0;
+}
+
+textarea {
+  margin-bottom: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .modalContainerReview {
+    padding: 1rem;
+  }
+}

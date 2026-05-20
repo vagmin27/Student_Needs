@@ -1,0 +1,450 @@
+import React, { useState, useEffect } from "react";
+import Modal from "../../components/Expenses/ui/Modal";
+import { AiOutlineEdit, AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+
+const RecurringTransactions = () => {
+  // NEW: get userId
+  const user = JSON.parse(localStorage.getItem("User"));
+  const userId = user?._id;
+
+  const [recurringData, setRecurringData] = useState(() => {
+    const saved = localStorage.getItem(`recurring_tx_${userId}`);
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    amount: "",
+    frequency: "Monthly",
+    category: "Other",
+    nextDate: new Date().toISOString().substring(0, 10),
+  });
+
+  // UPDATED: save per user
+  useEffect(() => {
+    localStorage.setItem(
+      `recurring_tx_${userId}`,
+      JSON.stringify(recurringData),
+    );
+  }, [recurringData, userId]);
+
+  const handleToggle = (id) => {
+    setRecurringData((prev) =>
+      prev?.map((tx) => (tx.id === id ? { ...tx, isActive: !tx.isActive } : tx)),
+    );
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Delete this recurring rule?")) {
+      setRecurringData((prev) => prev?.filter((tx) => tx.id !== id));
+    }
+  };
+
+  const openForm = (tx = null) => {
+    if (tx) {
+      setEditingId(tx.id);
+      setFormData({
+        title: tx.title,
+        amount: tx.amount,
+        frequency: tx.frequency,
+        category: tx.category,
+        nextDate: new Date(tx.nextDate).toISOString().substring(0, 10),
+      });
+    } else {
+      setEditingId(null);
+      setFormData({
+        title: "",
+        amount: "",
+        frequency: "Monthly",
+        category: "Other",
+        nextDate: new Date().toISOString().substring(0, 10),
+      });
+    }
+    setIsModalOpen(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (editingId) {
+      setRecurringData((prev) =>
+        prev?.map((tx) =>
+          tx.id === editingId
+            ? {
+                ...tx,
+                ...formData,
+                amount: Number(formData.amount),
+                nextDate: new Date(formData.nextDate).toISOString(),
+              }
+            : tx,
+        ),
+      );
+    } else {
+      const newTx = {
+        ...formData,
+        id: Date.now().toString(),
+        amount: Number(formData.amount),
+        nextDate: new Date(formData.nextDate).toISOString(),
+        isActive: true,
+      };
+      setRecurringData([...recurringData, newTx]);
+    }
+    setIsModalOpen(false);
+  };
+
+  const getStatus = (nextDateStr, isActive) => {
+    if (!isActive)
+      return {
+        label: "Paused",
+        color: "bg-slate-500/20 text-slate-400 border-slate-500/30",
+      };
+    const diff = new Date(nextDateStr) - new Date();
+    if (diff < 0)
+      return {
+        label: "Overdue",
+        color: "bg-rose-500/20 text-rose-400 border-rose-500/30",
+        glow: "shadow-[0_0_15px_rgba(244,63,94,0.5)]",
+      };
+    if (diff < 86400000 * 3)
+      return {
+        label: "Upcoming",
+        color: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+      };
+    return {
+      label: "Active",
+      color: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    };
+  };
+
+  const upcomingCards = [...recurringData]
+    .filter((tx) => tx.isActive)
+    .sort((a, b) => new Date(a.nextDate) - new Date(b.nextDate))
+    .slice(0, 3);
+
+  return (
+    <div className="w-full space-y-8 animate-fade-in-up">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 className="text-3xl font-bold font-mont text-white tracking-tight flex items-center gap-3">
+            <span className="text-brand-primary">Automated</span> Payments
+          </h2>
+          <p className="text-slate-400 text-sm mt-1">
+            Manage your subscriptions and recurring bills effortlessly.
+          </p>
+        </div>
+        <button
+          onClick={() => openForm()}
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
+        >
+          <AiOutlinePlus size={20} /> New Rule
+        </button>
+      </div>
+
+      {/* Auto Debit Cards UI (Premium Standout) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {upcomingCards?.map((card, idx) => {
+          const isOverdue = new Date(card.nextDate) < new Date();
+          const gradients = [
+            "from-purple-600 to-brand-primary",
+            "from-emerald-600 to-teal-500",
+            "from-orange-500 to-rose-500",
+          ];
+          const bgGradient = gradients[idx % gradients.length];
+
+          return (
+            <div
+              key={card.id}
+              className={`relative overflow-hidden rounded-2xl p-6 transition-transform hover:-translate-y-2 group ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-white/10"}`}
+            >
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${bgGradient} opacity-20 group-hover:opacity-30 transition-opacity`}
+              ></div>
+
+              {/* Glass reflection effect */}
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/10 blur-2xl rounded-full"></div>
+
+              <div className="relative z-10 flex flex-col h-full justify-between">
+                <div className="flex justify-between items-start mb-8">
+                  <div>
+                    <h4 className="text-white font-bold text-lg">
+                      {card.title}
+                    </h4>
+                    <p className="text-white/60 text-xs font-medium uppercase tracking-wider">
+                      {card.category}
+                    </p>
+                  </div>
+                  <div className="bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-xs font-bold text-white">
+                    {card.frequency}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-white/60 text-sm mb-1">
+                    Auto Debit Amount
+                  </p>
+                  <div className="flex justify-between items-end">
+                    <p className="text-3xl font-handjet font-bold text-white tracking-widest">
+                      ₹ {card.amount.toLocaleString()}
+                    </p>
+                    <p
+                      className={`text-sm font-bold ${isOverdue ? "text-rose-400 animate-pulse" : "text-white"}`}
+                    >
+                      {isOverdue
+                        ? "OVERDUE"
+                        : new Date(card.nextDate).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        {upcomingCards.length === 0 && (
+          <div className="col-span-full py-8 text-center text-slate-500 border border-dashed border-white/10 rounded-2xl">
+            No active subscriptions upcoming.
+          </div>
+        )}
+      </div>
+
+      {/* Main Recurring List Table */}
+      <div className="glass-panel overflow-hidden w-full">
+        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-brand-800/80">
+          <h3 className="text-xl font-bold text-white">Active Rules</h3>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse whitespace-nowrap">
+            <thead>
+              <tr className="bg-black/20 text-slate-400 text-xs uppercase tracking-widest">
+                <th className="px-6 py-4 font-semibold">Subscription / Bill</th>
+                <th className="px-6 py-4 font-semibold">Amount</th>
+                <th className="px-6 py-4 font-semibold text-center">
+                  Frequency
+                </th>
+                <th className="px-6 py-4 font-semibold text-center">
+                  Next Date
+                </th>
+                <th className="px-6 py-4 font-semibold text-center">Status</th>
+                <th className="px-6 py-4 font-semibold text-center">Toggle</th>
+                <th className="px-6 py-4 font-semibold text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recurringData?.map((tx) => {
+                const status = getStatus(tx.nextDate, tx.isActive);
+                return (
+                  <tr
+                    key={tx.id}
+                    className="border-b border-white/5 hover:bg-white/5 transition-colors group"
+                  >
+                    <td className="px-6 py-4">
+                      <p className="text-white font-medium">{tx.title}</p>
+                      <p className="text-slate-500 text-xs">{tx.category}</p>
+                    </td>
+                    <td className="px-6 py-4 font-handjet text-xl text-white tracking-wider">
+                      ₹ {tx.amount.toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-slate-300 text-sm">
+                        {tx.frequency}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-center text-slate-300 text-sm">
+                      {new Date(tx.nextDate).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <span
+                        className={`px-3 py-1 text-xs font-bold rounded-full border ${status.color} ${status.glow || ""}`}
+                      >
+                        {status.label}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      {/* Premium Toggle Switch */}
+                      <button
+                        onClick={() => handleToggle(tx.id)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${tx.isActive ? "bg-brand-primary" : "bg-slate-600"}`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${tx.isActive ? "translate-x-6" : "translate-x-1"}`}
+                        />
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex justify-end gap-2">
+                        <button
+                          onClick={() => openForm(tx)}
+                          className="p-2 text-slate-500 hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
+                        >
+                          <AiOutlineEdit size={20} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(tx.id)}
+                          className="p-2 text-slate-500 hover:text-brand-danger hover:bg-brand-danger/10 rounded-lg transition-colors"
+                        >
+                          <AiOutlineDelete size={20} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+              {recurringData.length === 0 && (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="px-6 py-8 text-center text-slate-500"
+                  >
+                    No recurring rules configured.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Editing / Creating Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={editingId ? "Edit Recurring Rule" : "New Recurring Rule"}
+      >
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-300">
+              Rule Name / Title
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.title}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
+              className="premium-input"
+              placeholder="Spotify Subs"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-300">
+                Amount (₹)
+              </label>
+              <input
+                type="number"
+                required
+                value={formData.amount}
+                onChange={(e) =>
+                  setFormData({ ...formData, amount: e.target.value })
+                }
+                className="premium-input font-handjet tracking-wider text-xl"
+                placeholder="119"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-300">
+                Frequency
+              </label>
+              <select
+                required
+                value={formData.frequency}
+                onChange={(e) =>
+                  setFormData({ ...formData, frequency: e.target.value })
+                }
+                className="premium-input text-slate-300"
+              >
+                <option className="bg-brand-900" value="Daily">
+                  Daily
+                </option>
+                <option className="bg-brand-900" value="Weekly">
+                  Weekly
+                </option>
+                <option className="bg-brand-900" value="Monthly">
+                  Monthly
+                </option>
+                <option className="bg-brand-900" value="Yearly">
+                  Yearly
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 z-50 relative">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-300">
+                Next Execution
+              </label>
+              <input
+                type="date"
+                required
+                value={formData.nextDate}
+                onChange={(e) =>
+                  setFormData({ ...formData, nextDate: e.target.value })
+                }
+                className="premium-input w-full"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-300">
+                Category
+              </label>
+              <select
+                required
+                value={formData.category}
+                onChange={(e) =>
+                  setFormData({ ...formData, category: e.target.value })
+                }
+                className="premium-input text-slate-300"
+              >
+                {[
+                  "Grocery",
+                  "Vehicle",
+                  "Shopping",
+                  "Travel",
+                  "Food",
+                  "Fun",
+                  "Other",
+                ]?.map((c) => (
+                  <option key={c} value={c} className="bg-brand-900">
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="flex gap-4 justify-end mt-8">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="px-6 py-2.5 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
+            >
+              Save Rule
+            </button>
+          </div>
+        </form>
+      </Modal>
+    </div>
+  );
+};
+
+export default RecurringTransactions;

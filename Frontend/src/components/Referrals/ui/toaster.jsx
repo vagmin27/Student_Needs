@@ -1,0 +1,38 @@
+import { useToast } from "@/hooks/Referrals/use-toast.js";
+import { 
+  Toast, 
+  ToastClose, 
+  ToastDescription, 
+  ToastProvider, 
+  ToastTitle, 
+  ToastViewport 
+} from "@/components/Referrals/ui/toast.jsx";
+
+/**
+ * Toaster Component
+ * Renders the active queue of toasts using the custom useToast hook.
+ * This should typically be placed at the root of your application (e.g., in App.jsx or Layout.jsx).
+ */
+export function Toaster() {
+  const { toasts } = useToast();
+
+  return (
+    <ToastProvider>
+      {toasts?.map(function ({ id, title, description, action, ...props }) {
+        return (
+          <Toast key={id} {...props}>
+            <div className="grid gap-1">
+              {title && <ToastTitle>{title}</ToastTitle>}
+              {description && (
+                <ToastDescription>{description}</ToastDescription>
+              )}
+            </div>
+            {action}
+            <ToastClose />
+          </Toast>
+        );
+      })}
+      <ToastViewport />
+    </ToastProvider>
+  );
+}

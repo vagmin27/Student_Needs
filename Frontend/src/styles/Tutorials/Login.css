@@ -1,0 +1,119 @@
+/* 🔥 FULL PAGE CENTER */
+/* body {
+  background: red !important;
+} */
+
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: Arial, sans-serif;
+}
+
+/* 🧱 ROW + COL FIX */
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.col {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 📦 CARD */
+#loginCard {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* 🏷️ TITLE */
+.card-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 📝 FORM BODY */
+.log-reg-body {
+  width: 100%;
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔤 LABEL */
+.form-label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+/* 🔲 INPUT */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #667eea;
+}
+
+/* ℹ️ TEXT */
+.form-text {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* 🔘 BUTTON */
+.btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #667eea;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background: #5a67d8;
+}
+
+/* 🔗 REGISTER */
+.alternate-text {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+#reg-link {
+  color: #667eea;
+  text-decoration: none;
+}
+
+#reg-link:hover {
+  text-decoration: underline;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 480px) {
+  #loginCard {
+    padding: 1.5rem;
+  }
+}

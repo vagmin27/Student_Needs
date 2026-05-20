@@ -1,0 +1,35 @@
+/* HIDE RADIO */
+input[type="radio"] {
+  display: none;
+}
+
+/* STAR BASE */
+.star {
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+  margin: 0 4px;
+}
+
+/* HOVER EFFECT */
+.star:hover {
+  transform: scale(1.2);
+}
+
+/* OPTIONAL: SMOOTH CONTAINER ALIGNMENT */
+.rateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
+/* ACTIVE FEEL (when clicked) */
+.star:active {
+  transform: scale(0.95);
+}
+
+/* OPTIONAL GLOW EFFECT */
+.star:hover {
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+}
