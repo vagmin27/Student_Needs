@@ -5,12 +5,16 @@ import { HiOutlineMenuAlt2, HiOutlineSearch } from 'react-icons/hi';
 import { FiLogOut } from 'react-icons/fi';
 import LoadingBar from 'react-top-loading-bar';
 import { NotificationCenter } from '../../ui/NotificationCenter.jsx';
+import { useAuth } from '@/contexts/GlobalAuthContext.jsx';
 
 const TopNavbar = ({ setIsSidebarOpen }) => {
   const navigate = useNavigate();
   const ref = useRef(null);
+  const { user, logout } = useAuth();
 
-  const user = JSON.parse(localStorage.getItem('User')) || { username: 'User' };
+  const logoutHandle = () => {
+    logout();
+  };
 
   return (
     <div className="sticky top-0 z-30 flex items-center justify-between h-20 px-4 md:px-8 bg-brand-900/80 backdrop-blur-md border-b border-white/5">
@@ -45,12 +49,12 @@ const TopNavbar = ({ setIsSidebarOpen }) => {
         {/* User Profile */}
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right">
-            <p className="text-sm font-semibold text-white">{user.username}</p>
+            <p className="text-sm font-semibold text-white">{user?.username || user?.name || "User"}</p>
             <Link to="/settings" className="text-xs text-brand-primary hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
           </div>
           
           <Link to="/settings" className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-primary/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
-            {user.username?.charAt(0).toUpperCase() || 'U'}
+            {(user?.username?.charAt(0) || user?.name?.charAt(0) || user?.fullName?.charAt(0) || 'U').toUpperCase()}
           </Link>
 
           <button 

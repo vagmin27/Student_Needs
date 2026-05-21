@@ -1,8 +1,32 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { attendanceApiClient, referralsApiClient, tutorsApiClient } from '@/services/apiClient.js';
 import { AUTH_ENDPOINTS } from '@/services/Referrals/Auth/config.js';
 
 const GlobalAuthContext = createContext();
+
+const persistAuth = (token, userData) => {
+  if (token) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("auth_token", token);
+  }
+
+  if (userData) {
+    const serialized = JSON.stringify(userData);
+
+    localStorage.setItem("user", serialized);
+    localStorage.setItem("User", serialized);
+    localStorage.setItem("auth_user", serialized);
+    localStorage.setItem("auth_data", serialized);
+  }
+};
+
+const jwtDecode = (token) => {
+  if (!token) return null;
+  const parts = token.split('.');
+  if (parts.length < 2) throw new Error("Invalid token format");
+  const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+  return payload;
+};
 
 export const useAuth = () => {
   const context = useContext(GlobalAuthContext);
@@ -18,13 +42,43 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
   const [error, setError] = useState(null);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
     const initializeAuth = async () => {
       try {
         const storedToken = localStorage.getItem('token') || localStorage.getItem('auth_token');
-        const storedUser = localStorage.getItem('user') || localStorage.getItem('User') || localStorage.getItem('auth_user');
+        let storedUser = localStorage.getItem('user') || localStorage.getItem('User') || localStorage.getItem('auth_user');
         
+        if (storedToken && !storedUser) {
+          const referralAuth = localStorage.getItem('auth_data');
+          if (referralAuth) {
+             try {
+                const parsed = JSON.parse(referralAuth);
+                if (parsed.user) storedUser = JSON.stringify(parsed.user);
+                else storedUser = JSON.stringify(parsed);
+             } catch (e) {}
+          }
+        }
+
+        if (storedToken && !storedUser) {
+          try {
+            const decoded = jwtDecode(storedToken);
+            if (decoded) {
+              const restoredUser = {
+                id: decoded.id || decoded.userId || decoded._id,
+                role: decoded.role || decoded.accountType || 'student',
+                accountType: decoded.accountType || decoded.role || 'student'
+              };
+              storedUser = JSON.stringify(restoredUser);
+            }
+          } catch (err) {
+            console.error("Invalid token on restoration", err);
+            logout();
+            return;
+          }
+        }
+
         let resolvedRole = null;
         if (storedToken && storedUser) {
           const parsedUser = JSON.parse(storedUser);
@@ -36,37 +90,10 @@ export const AuthProvider = ({ children }) => {
           };
           setToken(storedToken);
           setUser(normalizedUser);
-          // Sync keys to ensure all sub-modules (like Expenses) read correctly
-          localStorage.setItem('token', storedToken);
-          localStorage.setItem('auth_token', storedToken);
-          localStorage.setItem('user', JSON.stringify(normalizedUser));
-          localStorage.setItem('User', JSON.stringify(normalizedUser));
-          localStorage.setItem('auth_user', JSON.stringify(normalizedUser));
-          localStorage.setItem('auth_data', JSON.stringify({ token: storedToken, user: normalizedUser }));
-        } else {
-          // Check Referrals fallback
-          const referralAuth = localStorage.getItem('auth_data');
-          if (referralAuth) {
-             const parsed = JSON.parse(referralAuth);
-             if (parsed.token && parsed.user) {
-                resolvedRole = (parsed.user.role || parsed.user.accountType || "student").toLowerCase();
-                const normalizedUser = {
-                  ...parsed.user,
-                  role: resolvedRole,
-                  accountType: resolvedRole
-                };
-                setToken(parsed.token);
-                setUser(normalizedUser);
-                localStorage.setItem('token', parsed.token);
-                localStorage.setItem('auth_token', parsed.token);
-                localStorage.setItem('user', JSON.stringify(normalizedUser));
-                localStorage.setItem('User', JSON.stringify(normalizedUser));
-                localStorage.setItem('auth_user', JSON.stringify(normalizedUser));
-                localStorage.setItem('auth_data', JSON.stringify({ token: parsed.token, user: normalizedUser }));
-             }
-          }
+          persistAuth(storedToken, normalizedUser);
         }
-        if (resolvedRole && ['student', 'tutor', 'teacher'].includes(resolvedRole)) {
+
+        if (resolvedRole && ['student', 'tutor', 'teacher', 'alumni', 'verifier', 'admin'].includes(resolvedRole)) {
           await fetchUser();
         }
       } catch (err) {
@@ -76,6 +103,9 @@ export const AuthProvider = ({ children }) => {
         setIsInitialized(true);
       }
     };
+
+    if (initializedRef.current) return;
+    initializedRef.current = true;
     initializeAuth();
   }, []);
 
@@ -88,18 +118,21 @@ export const AuthProvider = ({ children }) => {
     };
     setToken(newToken);
     setUser(normalizedUser);
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('auth_token', newToken);
-    localStorage.setItem('user', JSON.stringify(normalizedUser));
-    localStorage.setItem('User', JSON.stringify(normalizedUser));
-    localStorage.setItem('auth_user', JSON.stringify(normalizedUser));
-    localStorage.setItem('auth_data', JSON.stringify({ token: newToken, user: normalizedUser }));
+    persistAuth(newToken, normalizedUser);
   };
 
   const logout = useCallback(async () => {
     try { await tutorsApiClient.post("/logout"); } catch (_) {}
     setToken(null);
     setUser(null);
+    [
+      "token",
+      "auth_token",
+      "user",
+      "User",
+      "auth_user",
+      "auth_data"
+    ].forEach((key) => localStorage.removeItem(key));
     localStorage.clear();
     sessionStorage.clear();
     window.location.href = '/role-selection';
@@ -192,20 +225,15 @@ export const AuthProvider = ({ children }) => {
           ).toLowerCase(),
         };
         setUser(normalizedUser);
-        localStorage.setItem('user', JSON.stringify(normalizedUser));
-        localStorage.setItem('User', JSON.stringify(normalizedUser));
-        localStorage.setItem('auth_user', JSON.stringify(normalizedUser));
         
         let storedToken = localStorage.getItem('token') || localStorage.getItem('auth_token');
         if (!storedToken) {
           const header = btoa(JSON.stringify({ alg: "none", typ: "JWT" }));
           const payload = btoa(JSON.stringify({ id: normalizedUser._id || normalizedUser.id, role: normalizedUser.role }));
           storedToken = `${header}.${payload}.dummy_signature`;
-          localStorage.setItem('token', storedToken);
-          localStorage.setItem('auth_token', storedToken);
         }
         setToken(storedToken);
-        localStorage.setItem('auth_data', JSON.stringify({ token: storedToken, user: normalizedUser }));
+        persistAuth(storedToken, normalizedUser);
       }
     } catch (err) {
       console.error(err);
@@ -251,22 +279,19 @@ export const AuthProvider = ({ children }) => {
         const currentToken = localStorage.getItem('token') || localStorage.getItem('auth_token') || u.token;
         if (currentToken) {
           setToken(currentToken);
-          localStorage.setItem('token', currentToken);
-          localStorage.setItem('auth_token', currentToken);
         }
-        localStorage.setItem('user', JSON.stringify(normalized));
-        localStorage.setItem('User', JSON.stringify(normalized));
-        localStorage.setItem('auth_user', JSON.stringify(normalized));
-        localStorage.setItem('auth_data', JSON.stringify({ token: currentToken, user: normalized }));
+        persistAuth(currentToken, normalized);
       } else {
         setUser(null);
         setToken(null);
-        localStorage.removeItem('user');
-        localStorage.removeItem('User');
-        localStorage.removeItem('auth_user');
-        localStorage.removeItem('token');
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('auth_data');
+        [
+          "token",
+          "auth_token",
+          "user",
+          "User",
+          "auth_user",
+          "auth_data"
+        ].forEach((key) => localStorage.removeItem(key));
       }
     }
   };

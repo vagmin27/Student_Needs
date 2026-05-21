@@ -41,7 +41,7 @@ const Navbar = ({ onMenuClick, pageTitle = "Dashboard" }) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="text-xs uppercase">{user?.name ? user.name[0] : "U"}</span>
+            <span className="text-xs uppercase">{(user?.name || user?.username || user?.fullName || "U")[0].toUpperCase()}</span>
           )}
         </div>
       </div>

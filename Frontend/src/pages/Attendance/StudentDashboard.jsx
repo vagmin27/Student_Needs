@@ -97,9 +97,16 @@ const StudentDashboard = () => {
     subjectStats?.filter((s) => parseFloat(s.percentage) < 75) || [], 
   [subjectStats]);
 
-  const initials = user?.name
-    ? user.name.split(" ")?.map((n) => n[0]).join("").toUpperCase().slice(0, 2)
-    : "S";
+  const initials = React.useMemo(() => {
+    const rawName = user?.name || user?.username || user?.fullName || "Student";
+    try {
+      const parts = rawName.trim().split(/\s+/);
+      const chars = parts.map((n) => n?.charAt?.(0) || "").join("");
+      return chars ? chars.toUpperCase().slice(0, 2) : "S";
+    } catch (_) {
+      return "S";
+    }
+  }, [user]);
 
   if (loading) {
     return (
@@ -118,7 +125,7 @@ const StudentDashboard = () => {
             {initials}
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Welcome, {user?.name || "Student"}</h1>
+            <h1 className="text-2xl font-bold tracking-tight">Welcome, {user?.name || user?.username || user?.fullName || "Student"}</h1>
             <p className="text-muted-foreground">Here's your academic and activity summary</p>
           </div>
         </div>

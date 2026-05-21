@@ -27,33 +27,47 @@ const protect = async (req, res, next) => {
       );
 
       // GET USER WITHOUT PASSWORD
-      let user = await User.findById(decoded.id).select("-password");
-      if (!user) {
-        user = await ReferralStudent.findById(decoded.id).select("-password");
-      }
-      if (!user) {
-        user = await Alumni.findById(decoded.id).select("-password");
-      }
-      if (!user) {
-        user = await Tutor.findById(decoded.id).select("-password");
+      let user = null;
+      try {
+        user = await User.findById(decoded.id).select("-password");
+        if (!user) {
+          user = await ReferralStudent.findById(decoded.id).select("-password");
+        }
+        if (!user) {
+          user = await Alumni.findById(decoded.id).select("-password");
+        }
+        if (!user) {
+          user = await Tutor.findById(decoded.id).select("-password");
+        }
+      } catch (err) {
+        console.error("DB lookup failed in authMiddleware", err);
       }
 
-      if (!user) {
-        return res.status(401).json({
-          message: "User not found",
-        });
+      console.log("Decoded Token Info:", decoded);
+      console.log("Resolved DB User:", user);
+
+      if (user) {
+        const userObj = user.toObject ? user.toObject() : user;
+        const rawRole = (userObj.role || userObj.accountType || "student").toLowerCase();
+        
+        req.user = {
+          ...userObj,
+          id: userObj._id || userObj.id,
+          role: rawRole,
+          accountType: rawRole,
+        };
       }
 
-      const userObj = user.toObject ? user.toObject() : user;
-      const rawRole = (userObj.role || userObj.accountType || "student").toLowerCase();
-      
-      req.user = {
-        ...userObj,
-        id: userObj._id,
-        role: rawRole,
-        accountType: rawRole,
-      };
+      if (!req.user) {
+        const rawRole = (decoded.role || decoded.accountType || "student").toLowerCase();
+        req.user = {
+          ...decoded,
+          role: rawRole,
+          accountType: rawRole,
+        };
+      }
 
+      console.log("Resolved req.user structure:", req.user);
       next();
 
     } else {

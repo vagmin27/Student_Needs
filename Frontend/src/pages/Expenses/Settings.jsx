@@ -67,12 +67,12 @@ const Settings = () => {
           <div className="glass-panel p-6 flex flex-col items-center text-center">
             <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-brand-primary to-emerald-500 p-1 mb-4 shadow-lg shadow-brand-primary/30">
               <div className="w-full h-full bg-brand-900 rounded-full flex items-center justify-center text-3xl font-bold text-white border-2 border-brand-900">
-                {user.username.charAt(0).toUpperCase()}
+                {(user?.username?.charAt(0) || user?.name?.charAt(0) || user?.fullName?.charAt(0) || "U").toUpperCase()}
               </div>
             </div>
-            <h3 className="text-xl font-bold text-white">{user.username}</h3>
+            <h3 className="text-xl font-bold text-white">{user?.username || user?.name || "User"}</h3>
             <p className="text-slate-400 text-sm">
-              {user.email || "user@example.com"}
+              {user?.email || "user@example.com"}
             </p>
             <span className="mt-4 px-4 py-1 bg-brand-primary/20 text-brand-primary border border-brand-primary/30 rounded-full text-xs font-bold tracking-wider uppercase">
               Pro Plan

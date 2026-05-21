@@ -13,7 +13,7 @@ class ErrorBoundary extends React.Component {
   }
   
   componentDidCatch(err, info) {
-    console.error("Global Error Caught by Boundary:", err, info);
+    console.error("Global Error Caught by Boundary:", err, info?.componentStack);
     analytics.trackError(err, info);
   }
   
@@ -29,7 +29,7 @@ class ErrorBoundary extends React.Component {
               <code>{this.state.error?.message || "Unknown error"}</code>
             </div>
             <button 
-              onClick={() => window.location.href = '/'}
+              onClick={() => window.location.reload()}
               style={styles.button}
             >
               Reboot System

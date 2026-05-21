@@ -70,8 +70,12 @@ export const RecommendedOpportunities = ({ refreshTrigger }) => {
 
   return (
     <div className="space-y-4">
-      {recommendations.slice(0, 3).map((rec, index) => {
-        const { opportunity, similarityScore, matchedSkills } = rec;
+      {recommendations?.filter(Boolean)?.slice(0, 3).map((rec, index) => {
+        const opportunity = rec?.opportunity;
+        const similarityScore = rec?.similarityScore || 0;
+        const matchedSkills = rec?.matchedSkills || [];
+        
+        if (!opportunity) return null;
         
         return (
           <div 
@@ -86,14 +90,14 @@ export const RecommendedOpportunities = ({ refreshTrigger }) => {
 
             <div className="pr-20">
               <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                {opportunity.jobTitle}
+                {opportunity.jobTitle || "Untitled Opportunity"}
               </h4>
               <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
                 <MdWorkOutline className="shrink-0" />
                 <span className="line-clamp-1">{opportunity.postedBy?.company || 'Confidential'}</span>
                 <span className="mx-1">•</span>
                 <span className="text-xs font-medium text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
-                  {opportunity.experienceLevel}
+                  {opportunity.experienceLevel || "Entry Level"}
                 </span>
               </p>
             </div>

@@ -29,19 +29,22 @@ export const GlobalProtectedRoute = ({
     );
   }
 
+  if (!user || !user.role) {
+    return <Navigate to="/role-selection" replace />;
+  }
+
   if (allowedRoles.length > 0) {
-    const userRole = (
-      user?.role ||
-      user?.accountType ||
-      ""
-    ).toLowerCase();
+    const normalizedRole =
+      user?.role?.toLowerCase?.() ||
+      user?.accountType?.toLowerCase?.() ||
+      "";
 
     console.log("USER:", user);
     console.log("ROLE:", user?.role);
     console.log("ACCOUNT TYPE:", user?.accountType);
     console.log("ALLOWED ROLES:", allowedRoles);
 
-    const hasAccess = allowedRoles.map((r) => r.toLowerCase()).includes(userRole);
+    const hasAccess = allowedRoles.map((r) => r.toLowerCase()).includes(normalizedRole);
     if (!hasAccess) {
       return <Navigate to="/" replace />;
     }

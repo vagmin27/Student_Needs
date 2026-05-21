@@ -18,6 +18,8 @@ const Sidebar = ({ className, role = "student" }) => {
 
   const { logout, user } = useAuth();
 
+  if (!user) return null;
+
   const currentRole = (
     user?.role ||
     user?.accountType ||

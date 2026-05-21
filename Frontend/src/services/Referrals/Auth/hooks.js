@@ -482,7 +482,7 @@ export function useAlumniSignup() {
 // ============================================
 
 export function useAlumniLogin() {
-  const { alumniLogin } = useAuth();
+  const { alumniLogin, setUser } = useAuth();
   const navigate = useNavigate();
   const form = useAuthForm(initialLogin);
 
@@ -514,22 +514,44 @@ export function useAlumniLogin() {
     try {
       const response = await alumniLogin(form.data);
       if (response.success) {
+        const token = response.token || response.data?.token || localStorage.getItem('token') || localStorage.getItem('auth_token');
+        const user = response.user || response.data?.user;
+        
+        if (user) {
+          const normalizedUser = {
+            ...user,
+            role: "alumni",
+            accountType: "alumni",
+          };
+
+          if (token) {
+            localStorage.setItem("token", token);
+            localStorage.setItem("auth_token", token);
+          }
+          localStorage.setItem("user", JSON.stringify(normalizedUser));
+          localStorage.setItem("User", JSON.stringify(normalizedUser));
+          localStorage.setItem("auth_user", JSON.stringify(normalizedUser));
+          localStorage.setItem("auth_data", JSON.stringify({ token, user: normalizedUser }));
+
+          setUser(normalizedUser);
+        }
+
         form.resetForm();
         setTimeout(() => {
           navigate('/alumni/dashboard');
         }, 100);
       } else {
-        form.setSubmitError(response.message);
+        form.setSubmitError(response.message || 'Login failed');
       }
       return response;
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Login failed';
+      const message = error?.response?.data?.message || error?.message || 'Login failed';
       form.setSubmitError(message);
       return { success: false, message };
     } finally {
       form.setSubmitting(false);
     }
-  }, [form, alumniLogin, navigate, validate]);
+  }, [form, alumniLogin, setUser, navigate, validate]);
 
   return {
     ...form,
