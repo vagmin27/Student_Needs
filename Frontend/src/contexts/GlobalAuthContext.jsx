@@ -19,10 +19,10 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
       try {
         const storedToken = localStorage.getItem('token') || localStorage.getItem('auth_token');
-        const storedUser = localStorage.getItem('user');
+        const storedUser = localStorage.getItem('user') || localStorage.getItem('User') || localStorage.getItem('auth_user');
         
         if (storedToken && storedUser) {
           const parsedUser = JSON.parse(storedUser);
@@ -34,6 +34,13 @@ export const AuthProvider = ({ children }) => {
           };
           setToken(storedToken);
           setUser(normalizedUser);
+          // Sync keys to ensure all sub-modules (like Expenses) read correctly
+          localStorage.setItem('token', storedToken);
+          localStorage.setItem('auth_token', storedToken);
+          localStorage.setItem('user', JSON.stringify(normalizedUser));
+          localStorage.setItem('User', JSON.stringify(normalizedUser));
+          localStorage.setItem('auth_user', JSON.stringify(normalizedUser));
+          localStorage.setItem('auth_data', JSON.stringify({ token: storedToken, user: normalizedUser }));
         } else {
           // Check Referrals fallback
           const referralAuth = localStorage.getItem('auth_data');
@@ -48,12 +55,18 @@ export const AuthProvider = ({ children }) => {
                 };
                 setToken(parsed.token);
                 setUser(normalizedUser);
+                localStorage.setItem('token', parsed.token);
+                localStorage.setItem('auth_token', parsed.token);
+                localStorage.setItem('user', JSON.stringify(normalizedUser));
+                localStorage.setItem('User', JSON.stringify(normalizedUser));
+                localStorage.setItem('auth_user', JSON.stringify(normalizedUser));
+                localStorage.setItem('auth_data', JSON.stringify({ token: parsed.token, user: normalizedUser }));
              }
           }
         }
+        await fetchUser();
       } catch (err) {
         console.error("Failed to parse user data", err);
-        localStorage.clear();
       } finally {
         setLoading(false);
       }
@@ -71,7 +84,10 @@ export const AuthProvider = ({ children }) => {
     setToken(newToken);
     setUser(normalizedUser);
     localStorage.setItem('token', newToken);
+    localStorage.setItem('auth_token', newToken);
     localStorage.setItem('user', JSON.stringify(normalizedUser));
+    localStorage.setItem('User', JSON.stringify(normalizedUser));
+    localStorage.setItem('auth_user', JSON.stringify(normalizedUser));
     localStorage.setItem('auth_data', JSON.stringify({ token: newToken, user: normalizedUser }));
   };
 
@@ -165,6 +181,18 @@ export const AuthProvider = ({ children }) => {
         };
         setUser(normalizedUser);
         localStorage.setItem('user', JSON.stringify(normalizedUser));
+        localStorage.setItem('User', JSON.stringify(normalizedUser));
+        
+        let storedToken = localStorage.getItem('token') || localStorage.getItem('auth_token');
+        if (!storedToken) {
+          const header = btoa(JSON.stringify({ alg: "none", typ: "JWT" }));
+          const payload = btoa(JSON.stringify({ id: normalizedUser._id || normalizedUser.id, role: resolvedRole }));
+          storedToken = `${header}.${payload}.dummy_signature`;
+          localStorage.setItem('token', storedToken);
+          localStorage.setItem('auth_token', storedToken);
+        }
+        setToken(storedToken);
+        localStorage.setItem('auth_data', JSON.stringify({ token: storedToken, user: normalizedUser }));
       }
     } catch (err) {
       console.error(err);
@@ -205,11 +233,24 @@ export const AuthProvider = ({ children }) => {
           accountType: resolvedRole
         };
         setUser(normalized);
+        const currentToken = localStorage.getItem('token') || localStorage.getItem('auth_token') || u.token;
+        if (currentToken) {
+          setToken(currentToken);
+          localStorage.setItem('token', currentToken);
+          localStorage.setItem('auth_token', currentToken);
+        }
         localStorage.setItem('user', JSON.stringify(normalized));
-        localStorage.setItem('auth_data', JSON.stringify({ token: localStorage.getItem('token'), user: normalized }));
+        localStorage.setItem('User', JSON.stringify(normalized));
+        localStorage.setItem('auth_user', JSON.stringify(normalized));
+        localStorage.setItem('auth_data', JSON.stringify({ token: currentToken, user: normalized }));
       } else {
         setUser(null);
+        setToken(null);
         localStorage.removeItem('user');
+        localStorage.removeItem('User');
+        localStorage.removeItem('auth_user');
+        localStorage.removeItem('token');
+        localStorage.removeItem('auth_token');
         localStorage.removeItem('auth_data');
       }
     }

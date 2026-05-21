@@ -168,26 +168,63 @@ const AttendanceRoutes = () => {
       <Route path="/auth/alumni/signup" element={<Navigate to="/signup/alumni" replace />} />
       <Route path="/auth/verifier/login" element={<Navigate to="/login/verifier" replace />} />
       <Route path="/auth/verifier/signup" element={<Navigate to="/signup/verifier" replace />} />
-      <Route path="/student/dashboard" element={
-        <GlobalProtectedRoute allowedRoles={["student"]}>
-          <WithLayout title="My Dashboard">
+
+      {/* ======================================================
+                      UNIFIED STUDENT FLOW (SINGLE PERSISTENT LAYOUT)
+      ====================================================== */}
+      <Route
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <DashboardLayout role="student" />
+          </GlobalProtectedRoute>
+        }
+      >
+        {/* Student Dashboard / Attendance */}
+        <Route
+          path="/student/dashboard"
+          element={
             <Suspense fallback={<DashboardSkeleton />}>
               <StudentDashboard />
             </Suspense>
-          </WithLayout>
-        </GlobalProtectedRoute>
-      } />
+          }
+        />
+
+        {/* Referrals Routes */}
+        <Route path="/student/referrals/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+        <Route path="/student/jobs/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+        <Route path="/student/profile/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+        <Route path="/student/qrcode/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+        <Route path="/student/applied/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+        <Route path="/student/interview/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
+
+        {/* Tutorials Student Routes */}
+        <Route path="/tutorials/searchTutor" element={<Suspense fallback={<DashboardSkeleton />}><BookClass /></Suspense>} />
+        <Route path="/tutorials/book" element={<Suspense fallback={<DashboardSkeleton />}><BookClass /></Suspense>} />
+        <Route path="/tutorials/profile" element={<Suspense fallback={<DashboardSkeleton />}><Profile /></Suspense>} />
+        <Route path="/tutorials/profile/editProfile" element={<Suspense fallback={<DashboardSkeleton />}><EditProfilePage /></Suspense>} />
+        <Route path="/tutorials/profile/manageBooking" element={<Suspense fallback={<DashboardSkeleton />}><ManageBookingPage /></Suspense>} />
+        <Route path="/tutorials/profile/classHistory" element={<Suspense fallback={<DashboardSkeleton />}><ClassHistoryPage /></Suspense>} />
+        <Route path="/tutorials/profile/accountSettings" element={<Suspense fallback={<DashboardSkeleton />}><AccountSettingPage /></Suspense>} />
+
+        {/* Expense Tracker Routes */}
+        <Route path="/expenses-tracker" element={<Suspense fallback={<DashboardSkeleton />}><Home /></Suspense>} />
+        <Route
+          path="/expenses-tracker/recurring"
+          element={<Suspense fallback={<DashboardSkeleton />}><RecurringTransactions /></Suspense>}
+        />
+        <Route
+          path="/expenses-tracker/analytics"
+          element={<Suspense fallback={<DashboardSkeleton />}><Analytics /></Suspense>}
+        />
+        <Route
+          path="/expenses-tracker/settings"
+          element={<Suspense fallback={<DashboardSkeleton />}><Settings /></Suspense>}
+        />
+      </Route>
 
       {/* ======================================================
-                        REFERRALS ROUTES
+                        NON-STUDENT SECURE DASHBOARDS
       ====================================================== */}
-
-      <Route path="/student/referrals/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/student/jobs/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/student/profile/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/student/qrcode/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/student/applied/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
-      <Route path="/student/interview/*" element={<Suspense fallback={<DashboardSkeleton />}><Index /></Suspense>} />
       <Route path="/alumni/dashboard" element={
         <GlobalProtectedRoute allowedRoles={["alumni"]}>
           <Suspense fallback={<DashboardSkeleton />}>
@@ -218,7 +255,7 @@ const AttendanceRoutes = () => {
         element={
           isAuthenticated ? (
             <Navigate
-              to={isTeacher ? "/attendance/dashboard" : "/student-dashboard"}
+              to={isTeacher ? "/attendance/dashboard" : "/student/dashboard"}
             />
           ) : (
             <Login />
@@ -231,7 +268,7 @@ const AttendanceRoutes = () => {
         element={
           isAuthenticated ? (
             <Navigate
-              to={isTeacher ? "/attendance/dashboard" : "/student-dashboard"}
+              to={isTeacher ? "/attendance/dashboard" : "/student/dashboard"}
             />
           ) : (
             <Register />
@@ -240,7 +277,7 @@ const AttendanceRoutes = () => {
       />
 
       {/* ======================================================
-                        ATTENDANCE ROUTES
+                        ATTENDANCE TEACHER ROUTES
       ====================================================== */}
 
       <Route
@@ -321,8 +358,6 @@ const AttendanceRoutes = () => {
         }
       />
 
-      {/* Duplicate /student-dashboard removed as per user request */}
-
       {/* ======================================================
                         TUTORIAL AUTH
       ====================================================== */}
@@ -379,91 +414,6 @@ const AttendanceRoutes = () => {
       />
 
       {/* ======================================================
-                        BOOKING
-      ====================================================== */}
-
-      <Route
-        path="/tutorials/book"
-        element={
-          <DashboardLayout pageTitle="Book Class">
-            <BookClass />
-          </DashboardLayout>
-        }
-      />
-
-      {/* ======================================================
-                        STUDENT PROFILE
-      ====================================================== */}
-
-      <Route
-        path="/tutorials/profile"
-        element={
-          <GlobalProtectedRoute>
-            <DashboardLayout pageTitle="Tutorial Profile">
-              <Profile />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/tutorials/profile/editProfile"
-        element={
-          <GlobalProtectedRoute>
-            <DashboardLayout pageTitle="Edit Profile">
-              <EditProfilePage />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/tutorials/profile/manageBooking"
-        element={
-          <GlobalProtectedRoute>
-            <DashboardLayout pageTitle="Manage Bookings">
-              <ManageBookingPage />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/tutorials/profile/classHistory"
-        element={
-          <GlobalProtectedRoute>
-            <DashboardLayout pageTitle="Class History">
-              <ClassHistoryPage />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/tutorials/profile/accountSettings"
-        element={
-          <GlobalProtectedRoute>
-            <DashboardLayout pageTitle="Account Settings">
-              <AccountSettingPage />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      {/* ======================================================
-                        SEARCH
-      ====================================================== */}
-
-      <Route
-        path="/tutorials/searchTutor"
-        element={
-          <Suspense fallback="Searching...">
-            <LazySearch />
-          </Suspense>
-        }
-      />
-
-      {/* ======================================================
                         TUTORIAL LANDING
       ====================================================== */}
 
@@ -473,31 +423,8 @@ const AttendanceRoutes = () => {
       />
 
       {/* ======================================================
-                        FALLBACK
+                        EXPENSE AUTH
       ====================================================== */}
-
-      {/* ======================================================
-                        EXPENSE TRACKER
-      ====================================================== */}
-
-      <Route element={<DashboardLayout pageTitle="Expenses" role="student"><Outlet /></DashboardLayout>}>
-        <Route path="/expenses-tracker" element={<Suspense fallback={<DashboardSkeleton />}><Home /></Suspense>} />
-
-        <Route
-          path="/expenses-tracker/recurring"
-          element={<Suspense fallback={<DashboardSkeleton />}><RecurringTransactions /></Suspense>}
-        />
-
-        <Route
-          path="/expenses-tracker/analytics"
-          element={<Suspense fallback={<DashboardSkeleton />}><Analytics /></Suspense>}
-        />
-
-        <Route
-          path="/expenses-tracker/settings"
-          element={<Suspense fallback={<DashboardSkeleton />}><Settings /></Suspense>}
-        />
-      </Route>
 
       <Route
         path="/expenses-tracker/login"

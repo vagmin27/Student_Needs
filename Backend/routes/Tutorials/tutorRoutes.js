@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
+import jwt from "jsonwebtoken";
 import Tutor from "../../models/Tutorials/Tutor.js";
 import Booking from "../../models/Tutorials/Booking.js";
 import upload from "../../utils/Tutorials/multer.js";
@@ -28,15 +29,18 @@ const requireTutorSession = (req, res) => {
 
 // STEP 1 — Request OTP
 router.post("/register/request-otp", async (req, res) => {
+  console.log(`[Tutor OTP] Request received for email: ${req.body?.email}`);
   try {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
+      console.warn("[Tutor OTP] Validation failed: missing fields");
       return res.status(400).json({ message: "All fields are required" });
     }
 
     const existing = await Tutor.findOne({ email });
     if (existing) {
+      console.warn(`[Tutor OTP] Registration failed: email ${email} is already registered`);
       return res.status(400).json({ message: "Email already registered" });
     }
 
@@ -44,6 +48,7 @@ router.post("/register/request-otp", async (req, res) => {
     const expires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     otpStore[email] = { otp, expires, name, password };
+    console.log(`[Tutor OTP] Generated OTP: ${otp} for ${email}, expires at: ${new Date(expires).toISOString()}`);
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -51,8 +56,12 @@ router.post("/register/request-otp", async (req, res) => {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
+    console.log(`[Tutor OTP] Attempting to send email via SMTP to: ${email}`);
     await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: email,
@@ -60,34 +69,40 @@ router.post("/register/request-otp", async (req, res) => {
       html: `<h2>Your OTP is: <strong>${otp}</strong></h2>
              <p>Valid for 10 minutes.</p>`,
     });
+    console.log(`[Tutor OTP] OTP email successfully sent to: ${email}`);
 
     res.json({ message: "OTP sent to your email" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error sending OTP" });
+    console.error("[Tutor OTP] Error during OTP request flow:", err);
+    res.status(500).json({ message: "Error sending OTP", error: err.message });
   }
 });
 
 // STEP 2 — Verify OTP and Register
 router.post("/register/verify-otp", async (req, res) => {
+  console.log(`[Tutor OTP] Verify OTP request received for email: ${req.body?.email}`);
   try {
     const { email, otp } = req.body;
 
     const record = otpStore[email];
 
     if (!record) {
+      console.warn(`[Tutor OTP] Verification failed: No pending OTP record found for email: ${email}`);
       return res.status(400).json({ message: "No OTP found. Please request again." });
     }
 
     if (Date.now() > record.expires) {
+      console.warn(`[Tutor OTP] Verification failed: OTP expired for email: ${email}`);
       delete otpStore[email];
       return res.status(400).json({ message: "OTP expired. Please request again." });
     }
 
     if (record.otp !== otp) {
+      console.warn(`[Tutor OTP] Verification failed: Invalid OTP entered for email: ${email}. Expected: ${record.otp}, Entered: ${otp}`);
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
+    console.log(`[Tutor OTP] OTP successfully verified for email: ${email}. Creating tutor database record.`);
     const hashedPassword = await bcrypt.hash(record.password, 10);
 
     const tutor = await Tutor.create({
@@ -95,13 +110,14 @@ router.post("/register/verify-otp", async (req, res) => {
       email,
       password: hashedPassword,
     });
+    console.log(`[Tutor OTP] Tutor record created successfully. ID: ${tutor._id}`);
 
     delete otpStore[email];
 
     res.json({ status: "ok", message: "Tutor registered successfully", tutor });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Registration failed" });
+    console.error("[Tutor OTP] Error during verification or registration:", err);
+    res.status(500).json({ message: "Registration failed", error: err.message });
   }
 });
 
@@ -140,13 +156,13 @@ router.post("/login", async (req, res) => {
     const tutor = await Tutor.findOne({ email });
 
     if (!tutor) {
-      return res.status(404).json({ message: "Tutor not found" });
+      return res.status(401).json({ message: "Tutor not found" });
     }
 
     const isMatch = await bcrypt.compare(password, tutor.password);
 
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // ✅ SESSION FIX
@@ -155,7 +171,13 @@ router.post("/login", async (req, res) => {
       role: "tutor",
     };
 
-    res.json({ status: "ok", tutor });
+    const token = jwt.sign(
+      { id: tutor._id, role: "tutor" },
+      process.env.JWT_SECRET || "mySuperSecretKey123",
+      { expiresIn: "7d" }
+    );
+
+    res.json({ status: "ok", token, tutor });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Login error" });

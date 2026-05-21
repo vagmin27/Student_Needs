@@ -36,8 +36,10 @@ function Login() {
       const userData = response.data.message;
       localStorage.setItem('user', JSON.stringify(userData));
       localStorage.setItem('User', JSON.stringify(userData)); // Legacy fallback
+      localStorage.setItem('auth_user', JSON.stringify(userData));
       localStorage.setItem('token', userData.token);
       localStorage.setItem('auth_token', userData.token);
+      localStorage.setItem('auth_data', JSON.stringify({ token: userData.token, user: userData }));
       
       // Update global context if available
       window.dispatchEvent(new Event('storage'));

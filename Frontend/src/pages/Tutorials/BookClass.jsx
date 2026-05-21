@@ -26,8 +26,22 @@ function BookClass() {
   const [notFound, setNotFound] = useState(false);
   const [searchSize, setSearchSize] = useState(0);
   const [availability, setAvailability] = useState([]);
+  // const auth = useAuth();
   const auth = useAuth();
+  const {
+    user,
+    isAuthenticated,
+    isLoading,
+    isInitialized,
+  } = auth;
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!isInitialized || isLoading) return;
+
+    if (!isAuthenticated) {
+      navigate("/login/student", { replace: true });
+    }
+  }, [isAuthenticated, isLoading, isInitialized, navigate]);
 
   const handleQuery = (val, data, size) => {
     setQuery(val);
@@ -169,8 +183,9 @@ function BookClass() {
       }
     };
 
-    if (auth.user) fetchSchedule();
-  }, [auth.user]);
+    // if (auth.user) fetchSchedule();
+    if (user && isAuthenticated) fetchSchedule();
+  }, [user, isAuthenticated]);
 
   // ================= ADD CLASS =================
   const addClass = (date, time) => {
@@ -201,7 +216,7 @@ function BookClass() {
 
   // ================= CONFIRM BOOKING =================
   const confirmClasses = async (selectedSlot) => {
-    if (!auth.user) {
+    if (!user) {
       return alert("Login required ❌");
     }
 
@@ -300,6 +315,10 @@ function BookClass() {
         return null;
     }
   };
+
+  if (!isInitialized || isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="BookClassMain">

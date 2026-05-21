@@ -7,7 +7,7 @@ import { MdOutlineSchool } from "react-icons/md";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { studentLogin } = useAuth();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -26,22 +26,59 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
+
     const validationErrors = validate();
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
+
     setLoading(true);
-    const result = await login(formData.email, formData.password);
-    if (result.success) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      toast.success(`Welcome back, ${user.name}!`);
-      navigate(user.role === "teacher" ? "/dashboard" : "/student-dashboard");
-    } else {
-      toast.error(result.message || "Invalid credentials");
+
+    try {
+
+      const result = await studentLogin({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      console.log("LOGIN RESULT:", result);
+
+      if (result.success) {
+
+        const user = JSON.parse(
+          localStorage.getItem("user")
+        );
+
+        toast.success(
+          `Welcome back, ${user.firstName ||
+          user.name ||
+          "User"
+          }!`
+        );
+
+        navigate("/student/dashboard");
+
+      } else {
+
+        toast.error(
+          result.message || "Invalid credentials"
+        );
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      toast.error("Login failed");
+
+    } finally {
+
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

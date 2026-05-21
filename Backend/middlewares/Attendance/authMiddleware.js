@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 import User from "../../models/Attendance/User.js";
+import ReferralStudent from "../../models/Referrals/StudentModel.js";
+import Alumni from "../../models/Referrals/AlumniModel.js";
+import Tutor from "../../models/Tutorials/Tutor.js";
 
 
 // ✅ PROTECT ROUTES MIDDLEWARE
@@ -24,7 +27,17 @@ const protect = async (req, res, next) => {
       );
 
       // GET USER WITHOUT PASSWORD
-      const user = await User.findById(decoded.id).select("-password");
+      let user = await User.findById(decoded.id).select("-password");
+      if (!user) {
+        user = await ReferralStudent.findById(decoded.id).select("-password");
+      }
+      if (!user) {
+        user = await Alumni.findById(decoded.id).select("-password");
+      }
+      if (!user) {
+        user = await Tutor.findById(decoded.id).select("-password");
+      }
+
       if (!user) {
         return res.status(401).json({
           message: "User not found",

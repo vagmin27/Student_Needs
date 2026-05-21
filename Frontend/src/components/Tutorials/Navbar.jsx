@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../../styles/Tutorials/Navbar.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import bulb2 from "../../assets/images/bulb2.png";
+import { LayoutContext } from "../layouts/DashboardLayout";
 
 function Navbar() {
+  const isNested = useContext(LayoutContext);
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  if (isNested) {
+    return null;
+  }
 
   const [navColor, setNavColor] = useState(false);
 

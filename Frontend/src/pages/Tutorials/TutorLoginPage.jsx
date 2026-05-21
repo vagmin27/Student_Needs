@@ -26,14 +26,18 @@ function TutorLoginPage() {
           ...res.data.tutor,
           role: "tutor",
         };
-        auth.setUser(tutorUser);
 
         const header = btoa(JSON.stringify({ alg: "none", typ: "JWT" }));
         const payload = btoa(JSON.stringify({ id: tutorUser._id || tutorUser.id, role: "tutor" }));
         const dummyToken = `${header}.${payload}.dummy_signature`;
         localStorage.setItem("token", dummyToken);
+        localStorage.setItem("auth_token", dummyToken);
 
-        navigate("/tutorials/tutor/dashboard", { replace: true });
+        auth.setUser(tutorUser);
+
+        setTimeout(() => {
+          navigate("/tutorials/tutor/dashboard", { replace: true });
+        }, 100);
       } else {
         handleError(res.data.message);
       }

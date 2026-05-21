@@ -41,7 +41,7 @@ function AppContent() {
       <Route path="/landing" element={<LandingPage />} />
 
       {/* Explicit Student Referral Routes */}
-      <Route
+      {/* <Route
         path="/student/referrals"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
@@ -100,9 +100,61 @@ function AppContent() {
             </DashboardLayout>
           </GlobalProtectedRoute>
         }
+      /> */}
+
+      <Route
+        index
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <StudentDashboard />
+          </GlobalProtectedRoute>
+        }
       />
 
+      <Route
+        path="jobs"
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <StudentDashboard />
+          </GlobalProtectedRoute>
+        }
+      />
 
+      <Route
+        path="profile"
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <StudentDashboard />
+          </GlobalProtectedRoute>
+        }
+      />
+
+      <Route
+        path="qrcode"
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <StudentDashboard />
+          </GlobalProtectedRoute>
+        }
+      />
+
+      <Route
+        path="applied"
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <StudentDashboard />
+          </GlobalProtectedRoute>
+        }
+      />
+
+      <Route
+        path="interview"
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <InterviewPage />
+          </GlobalProtectedRoute>
+        }
+      />
 
       {/* 404 Page */}
       <Route path="*" element={<NotFound />} />

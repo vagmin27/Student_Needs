@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import AttendanceModel from "../models/Attendance/Attendance.js";
 import StudentModel from "../models/Attendance/Student.js";
 import { AppError } from "../utils/AppError.js";
@@ -9,7 +10,15 @@ export class AttendanceService {
   }
 
   static async getStudentAttendance(studentId) {
-    const student = await StudentModel.findOne({ userId: studentId });
+    let student = await StudentModel.findOne({ userId: studentId });
+    if (!student) {
+      // Fallback to finding the student by email from the ReferralStudent record
+      const ReferralStudent = mongoose.models.ReferralStudent || mongoose.model("ReferralStudent");
+      const refStudent = await ReferralStudent.findById(studentId);
+      if (refStudent) {
+        student = await StudentModel.findOne({ Email_id: refStudent.email });
+      }
+    }
     if (!student) {
       throw new AppError("Student not found", 404);
     }

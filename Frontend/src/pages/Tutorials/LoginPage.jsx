@@ -30,7 +30,9 @@ function Login() {
           await auth.fetchUser();
         }
 
-        navigate("/tutorials/profile", { replace: true });
+        setTimeout(() => {
+          navigate("/tutorials/profile", { replace: true });
+        }, 100);
       } else {
         alert(res.data.message || "Login failed ❌");
       }

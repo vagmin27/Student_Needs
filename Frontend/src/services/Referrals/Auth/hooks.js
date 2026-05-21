@@ -112,28 +112,87 @@ export function useStudentSignup() {
     return isValid;
   }, [form]);
 
+  // const handleSubmit = useCallback(async () => {
+  //   if (!validate()) {
+  //     return { success: false, message: 'Please fix form errors' };
+  //   }
+
+  //   form.setSubmitting(true);
+  //   try {
+  //     const response = await studentSignup(form.data);
+  //     if (response.success) {
+  //       form.resetForm();
+  //       navigate('/student/dashboard');
+  //     } else {
+  //       form.setSubmitError(response.message);
+  //     }
+  //     return response;
+  //   } catch (error) {
+  //     const message = error instanceof Error ? error.message : 'Signup failed';
+  //     form.setSubmitError(message);
+  //     return { success: false, message };
+  //   } finally {
+  //     form.setSubmitting(false);
+  //   }
+  // }, [form, studentSignup, navigate, validate]);
+
   const handleSubmit = useCallback(async () => {
+
     if (!validate()) {
-      return { success: false, message: 'Please fix form errors' };
+      return {
+        success: false,
+        message: 'Please fix form errors'
+      };
     }
 
     form.setSubmitting(true);
+
     try {
+
+      console.log("SIGNUP FORM DATA:", form.data);
+
       const response = await studentSignup(form.data);
+
+      console.log("SIGNUP RESPONSE:", response);
+
       if (response.success) {
+
         form.resetForm();
-        navigate('/student/dashboard');
+
+        // Delay avoids auth timing issues
+        setTimeout(() => {
+          navigate('/student/dashboard');
+        }, 100);
+
       } else {
-        form.setSubmitError(response.message);
+
+        form.setSubmitError(
+          response.message || 'Signup failed'
+        );
       }
+
       return response;
+
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Signup failed';
+
+      console.log("SIGNUP HOOK ERROR:", error);
+
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        'Signup failed';
+
       form.setSubmitError(message);
-      return { success: false, message };
+
+      return {
+        success: false,
+        message
+      };
+
     } finally {
       form.setSubmitting(false);
     }
+
   }, [form, studentSignup, navigate, validate]);
 
   return {
@@ -176,20 +235,83 @@ export function useStudentLogin() {
     return isValid;
   }, [form]);
 
+  // const handleSubmit = useCallback(async () => {
+  //   if (!validate()) {
+  //     return { success: false, message: 'Please fix form errors' };
+  //   }
+
+  //   form.setSubmitting(true);
+
+  //   try {
+  //     const response = await studentLogin(form.data);
+
+
+  //     if (response.success) {
+
+  //       // ✅ Persist auth
+  //       const token =
+  //         response.token ||
+  //         response.data?.token;
+
+  //       const user =
+  //         response.user ||
+  //         response.data?.user;
+
+  //       if (token) {
+  //         localStorage.setItem("auth_token", token);
+  //         localStorage.setItem("token", token);
+  //       }
+
+  //       if (user) {
+  //         localStorage.setItem("auth_user", JSON.stringify(user));
+  //         localStorage.setItem("user", JSON.stringify(user));
+  //       }
+
+  //       form.resetForm();
+
+  //       navigate('/student/dashboard');
+
+  //     } else {
+  //       form.setSubmitError(response.message);
+  //     }
+
+  //     return response;
+
+  //   } catch (error) {
+  //     const message =
+  //       error instanceof Error ? error.message : 'Login failed';
+
+  //     form.setSubmitError(message);
+
+  //     return { success: false, message };
+
+  //   } finally {
+  //     form.setSubmitting(false);
+  //   }
+
+  // }, [form, studentLogin, navigate, validate]);
+
   const handleSubmit = useCallback(async () => {
+
     if (!validate()) {
-      return { success: false, message: 'Please fix form errors' };
+      return {
+        success: false,
+        message: 'Please fix form errors'
+      };
     }
 
     form.setSubmitting(true);
 
     try {
+
+      console.log("LOGIN FORM DATA:", form.data);
+
       const response = await studentLogin(form.data);
 
+      console.log("LOGIN RESPONSE:", response);
 
       if (response.success) {
 
-        // ✅ Persist auth
         const token =
           response.token ||
           response.data?.token;
@@ -204,30 +326,54 @@ export function useStudentLogin() {
         }
 
         if (user) {
-          localStorage.setItem("auth_user", JSON.stringify(user));
-          localStorage.setItem("user", JSON.stringify(user));
+
+          localStorage.setItem(
+            "auth_user",
+            JSON.stringify(user)
+          );
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify(user)
+          );
         }
 
         form.resetForm();
 
-        navigate('/student/dashboard');
+        // Delay avoids protected route timing issue
+        setTimeout(() => {
+          navigate('/student/dashboard');
+        }, 100);
 
       } else {
-        form.setSubmitError(response.message);
+
+        form.setSubmitError(
+          response.message || 'Login failed'
+        );
       }
 
       return response;
 
     } catch (error) {
+
+      console.log("LOGIN HOOK ERROR:", error);
+
       const message =
-        error instanceof Error ? error.message : 'Login failed';
+        error?.response?.data?.message ||
+        error?.message ||
+        'Login failed';
 
       form.setSubmitError(message);
 
-      return { success: false, message };
+      return {
+        success: false,
+        message
+      };
 
     } finally {
+
       form.setSubmitting(false);
+
     }
 
   }, [form, studentLogin, navigate, validate]);
@@ -364,7 +510,9 @@ export function useAlumniLogin() {
       const response = await alumniLogin(form.data);
       if (response.success) {
         form.resetForm();
-        navigate('/alumni/dashboard');
+        setTimeout(() => {
+          navigate('/alumni/dashboard');
+        }, 100);
       } else {
         form.setSubmitError(response.message);
       }
@@ -523,7 +671,9 @@ export function useVerifierLogin() {
         }
         setUser(response.user);
         form.resetForm();
-        navigate('/verifier/dashboard');
+        setTimeout(() => {
+          navigate('/verifier/dashboard');
+        }, 100);
       } else {
         form.setSubmitError(response.message);
       }
