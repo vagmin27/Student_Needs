@@ -23,13 +23,7 @@ export const createApiClient = (prefix = "") => {
 
   client.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if (error?.response?.status === 401) {
-        console.warn("Session expired");
-      }
-
-      return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
   );
 
   return client;

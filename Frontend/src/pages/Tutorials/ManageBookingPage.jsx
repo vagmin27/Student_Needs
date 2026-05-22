@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import API from "@/services/api/tutorialsApi.js";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import API, { getBookings } from "@/services/api/tutorialsApi.js";
 import "../../styles/Tutorials/ManageBook.css";
 import Navbar from "../../components/Tutorials/Navbar";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
@@ -10,18 +10,21 @@ function ManageBookingPage() {
   const [bookings, setBookings] = useState([]);
 
   // ✅ FETCH BOOKINGS
+  const fetchedRef = useRef(false);
+
   useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
+
     const fetchBookings = async () => {
       try {
-        const res = await API.get("/booking");
-
-        const sorted = res.data.sort(
+        const list = await getBookings();
+        const sorted = [...list].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-
         setBookings(sorted);
-      } catch (err) {
-        console.error("❌ Error fetching bookings:", err);
+      } catch {
+        setBookings([]);
       }
     };
 

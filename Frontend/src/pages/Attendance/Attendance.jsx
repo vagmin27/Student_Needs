@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import API from "../../services/Attendance/api";
+import API, { ATTENDANCE_PATHS } from "../../services/Attendance/api";
 import { MdSearch } from "react-icons/md";
 
 function Attendance() {
@@ -12,7 +12,11 @@ function Attendance() {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [loading, setLoading] = useState(false);
 
+  const fetchedRef = useRef(false);
+
   useEffect(() => {
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
     fetchStudents();
     fetchSubjects();
   }, []);
@@ -46,7 +50,7 @@ function Attendance() {
     setLoading(true);
     try {
       const attendanceArray = Object.entries(attendanceData).map(([studentId, attendance]) => ({ studentId, attendance }));
-      await API.post("/attendance/attendance", { subject, date, attendanceData: attendanceArray });
+      await API.post(ATTENDANCE_PATHS.root, { subject, date, attendanceData: attendanceArray });
       toast.success("Attendance submitted successfully!");
       setAttendanceData({});
     } catch (error) {

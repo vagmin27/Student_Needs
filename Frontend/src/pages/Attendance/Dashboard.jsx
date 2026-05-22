@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import API from "../../services/Attendance/api";
+import API, { ATTENDANCE_PATHS } from "../../services/Attendance/api";
 import Charts from "../../components/Attendance/Charts";
 import {
   MdPeople, MdCheckCircle, MdCancel, MdCalendarToday, MdTrendingUp, MdBarChart,
@@ -18,32 +18,45 @@ function Dashboard() {
   );
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [studentsRes, attendanceRes] = await Promise.all([
+          API.get("/students/read"),
+          API.get(ATTENDANCE_PATHS.root),
+        ]);
+        if (cancelled) return;
+
+        const studentsData = studentsRes.data;
+        const attendanceData = attendanceRes.data || [];
+        setStudents(studentsData);
+        setAttendance(attendanceData);
+        calculateSubjectStats(attendanceData);
+        calculateLatestAttendance(attendanceData);
+        calculateSelectedDateAttendance(attendanceData, studentsData, selectedDate);
+      } catch {
+        if (!cancelled) {
+          setStudents([]);
+          setAttendance([]);
+          setAttendanceStats([]);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchData();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     calculateSelectedDateAttendance(attendance, students, selectedDate);
   }, [selectedDate, attendance, students]);
-
-  const fetchData = async () => {
-    try {
-      const [studentsRes, attendanceRes] = await Promise.all([
-        API.get("/students/read"),
-        API.get("/attendance/attendance"),
-      ]);
-      const studentsData = studentsRes.data;
-      const attendanceData = attendanceRes.data || [];
-      setStudents(studentsData);
-      setAttendance(attendanceData);
-      calculateSubjectStats(attendanceData);
-      calculateLatestAttendance(attendanceData);
-      calculateSelectedDateAttendance(attendanceData, studentsData, selectedDate);
-    } catch {
-      setStudents([]);
-      setAttendance([]);
-      setAttendanceStats([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const calculateSubjectStats = (data) => {
     const map = {};

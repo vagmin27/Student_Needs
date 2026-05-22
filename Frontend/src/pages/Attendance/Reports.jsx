@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import API from "../../services/Attendance/api";
+import API, { ATTENDANCE_PATHS } from "../../services/Attendance/api";
 import { MdDownload, MdCalendarToday } from "react-icons/md";
 
 function Reports() {
@@ -15,7 +15,7 @@ function Reports() {
 
     setLoading(true);
     try {
-      const response = await API.get(`/attendance/data/download?start=${start}&end=${end}`, {
+      const response = await API.get(ATTENDANCE_PATHS.download(start, end), {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));

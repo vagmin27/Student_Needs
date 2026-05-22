@@ -21,8 +21,6 @@ export const initSocket = (server) => {
   io.use(socketAuthMiddleware);
 
   io.on("connection", (socket) => {
-    console.log(`🔌 Socket Connected: ${socket.id} (User: ${socket.user.id || socket.user._id})`);
-
     // Automatically join a room for this specific user
     const userId = socket.user.id || socket.user._id;
     if (userId) {
@@ -35,9 +33,6 @@ export const initSocket = (server) => {
       socket.join(`role:${role}`);
     }
 
-    socket.on("disconnect", () => {
-      console.log(`🔴 Socket Disconnected: ${socket.id}`);
-    });
   });
 
   console.log("✅ WebSocket Server Initialized");

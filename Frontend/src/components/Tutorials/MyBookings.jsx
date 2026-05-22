@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "@/services/api/tutorialsApi.js";
+import API, { getBookings } from "@/services/api/tutorialsApi.js";
 
 function MyBookings() {
 const [bookings, setBookings] = useState([]);
 const navigate = useNavigate();
 
 // ✅ FETCH BOOKINGS
+const fetchedRef = useRef(false);
+
 useEffect(() => {
-const fetchBookings = async () => {
-try {
-const res = await API.get("/booking");
-    setBookings(res.data);
-  } catch (err) {
-    console.error("❌ Error fetching bookings:", err);
-  }
-};
+  if (fetchedRef.current) return;
+  fetchedRef.current = true;
 
-fetchBookings();
+  const fetchBookings = async () => {
+    try {
+      setBookings(await getBookings());
+    } catch {
+      setBookings([]);
+    }
+  };
 
+  fetchBookings();
 }, []);
 
 // ✅ DELETE BOOKING

@@ -42,4 +42,15 @@ export const getTutorAvailability = (id) =>
 export const saveTutorAvailability = (data) =>
   API.post("/tutor/availability", data);
 
+/** Returns tutorials bookings, or [] when no passport session (avoids 401 noise). */
+export const getBookings = async () => {
+  try {
+    const { data } = await API.get("/booking");
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    if (err?.response?.status === 401) return [];
+    throw err;
+  }
+};
+
 export default API;

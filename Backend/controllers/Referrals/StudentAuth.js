@@ -21,8 +21,6 @@ export const signup = async (req, res) => {
   try {
 
 
-    console.log("REQ BODY:", req.body);
-
     let {
       firstName,
       lastName,
@@ -68,8 +66,6 @@ export const signup = async (req, res) => {
 
     const existingStudent = await Student.findOne({ email });
 
-    console.log("EXISTING STUDENT:", existingStudent);
-
     if (existingStudent) {
       return res.status(409).json({
         success: false,
@@ -98,8 +94,6 @@ export const signup = async (req, res) => {
       calculateProfileCompleteness(student);
 
     await student.save();
-
-    console.log("STUDENT CREATED:", student._id);
 
     // ================= SUCCESS RESPONSE =================
 
@@ -134,8 +128,6 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
 
-    console.log("LOGIN BODY:", req.body);
-
     let { email, password } = req.body;
 
     // ================= VALIDATION =================
@@ -160,8 +152,6 @@ export const login = async (req, res) => {
 
     const student = await Student.findOne({ email });
 
-    console.log("FOUND STUDENT:", student);
-
     if (!student) {
       return res.status(401).json({
         success: false,
@@ -182,8 +172,6 @@ export const login = async (req, res) => {
         message: "Incorrect password",
       });
     }
-
-    console.log("LOGIN SUCCESS:", student._id);
 
     // ================= SUCCESS =================
 
@@ -211,8 +199,6 @@ export const getStudentData = async (req, res) => {
   try {
 
     const studentId = req.user.id;
-
-    console.log("FETCHING STUDENT:", studentId);
 
     const student = await Student.findById(studentId)
       .select("-password")

@@ -34,8 +34,6 @@ router.post("/", async (req, res) => {
 
     await booking.save();
 
-    console.log("✅ Booking Saved:", booking);
-
     if (tutorId) {
       await User.updateOne(
         {
@@ -81,7 +79,7 @@ router.get("/", async (req, res) => {
     const userId = req.session?.passport?.user;
 
     if (!userId) {
-      return res.status(401).json({ msg: "Unauthorized" });
+      return res.json([]);
     }
 
     const bookings = await Booking.find({ userId });
@@ -120,9 +118,6 @@ router.get("/for-tutor", async (req, res) => {
     const bookings = await Booking.find({
       tutorId: tutorId.toString(),
     });
-
-    console.log("Tutor ID:", tutorId);
-    console.log("Bookings found:", bookings.length);
 
     res.json({ bookings });
   } catch (err) {

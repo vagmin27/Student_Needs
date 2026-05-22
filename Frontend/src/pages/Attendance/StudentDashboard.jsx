@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboard";
 import { useAuth } from "../../contexts/GlobalAuthContext";
-import API from "../../services/Attendance/api";
+import API, { ATTENDANCE_PATHS } from "../../services/Attendance/api";
 import { MdCheckCircle, MdCancel, MdWarning, MdCalendarToday, MdPerson } from "react-icons/md";
 import { DashboardSection } from "../../components/dashboard/shared/DashboardSection";
 import { DashboardCard } from "../../components/dashboard/shared/DashboardCard";
@@ -16,18 +16,26 @@ const StudentDashboard = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { fetchAttendance(); }, []);
+  useEffect(() => {
+    let cancelled = false;
 
-  const fetchAttendance = async () => {
-    try {
-      const { data } = await API.get("/attendance/attendance/student");
-      setAttendanceData(data);
-    } catch {
-      setAttendanceData([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchAttendance = async () => {
+      setLoading(true);
+      try {
+        const { data } = await API.get(ATTENDANCE_PATHS.student);
+        if (!cancelled) setAttendanceData(data);
+      } catch {
+        if (!cancelled) setAttendanceData([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchAttendance();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const stats = React.useMemo(() => {
     const total = attendanceData.length;

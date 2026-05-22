@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import myDB from "../../db/Tutorials/myDB.js";
+import User from "../../models/Tutorials/user.js";
 import { comparePassword } from "../../utils/Tutorials/passwordUtilities.js";
 
 // 🔐 LOCAL STRATEGY
@@ -31,18 +32,13 @@ passport.use(
 
 // ✅ SAVE USER ID IN SESSION
 passport.serializeUser((user, done) => {
-  console.log("💾 Serializing:", user._id);
   done(null, user._id);
 });
 
 // ✅ GET USER FROM DB
 passport.deserializeUser(async (id, done) => {
   try {
-    console.log("🔍 Deserializing:", id);
-
-    const user = await myDB.getUsersById(id);
-
-    console.log("👤 Found user:", user);
+    const user = await User.findById(id).lean();
 
     if (!user) return done(null, false);
 

@@ -1,5 +1,5 @@
 // Custom Authentication Hooks
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/GlobalAuthContext.jsx';
 import { referralsApiClient } from '@/services/apiClient.js';
@@ -218,6 +218,7 @@ export function useStudentLogin() {
   const { studentLogin, setUser } = useAuth();
   const navigate = useNavigate();
   const form = useAuthForm(initialLogin);
+  const submitLockRef = useRef(false);
 
   const validate = useCallback(() => {
     let isValid = true;
@@ -236,7 +237,7 @@ export function useStudentLogin() {
     }
 
     return isValid;
-  }, [form]);
+  }, [form.data.email, form.data.password, form.setError]);
 
   // const handleSubmit = useCallback(async () => {
   //   if (!validate()) {
@@ -295,6 +296,9 @@ export function useStudentLogin() {
   // }, [form, studentLogin, navigate, validate]);
 
   const handleSubmit = useCallback(async () => {
+    if (submitLockRef.current) {
+      return { success: false, message: 'Login already in progress' };
+    }
 
     if (!validate()) {
       return {
@@ -303,15 +307,11 @@ export function useStudentLogin() {
       };
     }
 
+    submitLockRef.current = true;
     form.setSubmitting(true);
 
     try {
-
-      console.log("LOGIN FORM DATA:", form.data);
-
       const response = await studentLogin(form.data);
-
-      console.log("LOGIN RESPONSE:", response);
 
       if (response.success) {
 
@@ -360,9 +360,6 @@ export function useStudentLogin() {
       return response;
 
     } catch (error) {
-
-      console.log("LOGIN HOOK ERROR:", error);
-
       const message =
         error?.response?.data?.message ||
         error?.message ||
@@ -376,12 +373,11 @@ export function useStudentLogin() {
       };
 
     } finally {
-
+      submitLockRef.current = false;
       form.setSubmitting(false);
-
     }
 
-  }, [form, studentLogin, navigate, validate]);
+  }, [form.data, form.setSubmitting, form.setSubmitError, form.resetForm, studentLogin, navigate, validate, setUser]);
 
   return {
     ...form,
@@ -670,6 +666,7 @@ export function useVerifierLogin() {
   const { studentLogin, setUser } = useAuth();
   const navigate = useNavigate();
   const form = useAuthForm(initialLogin);
+  const submitLockRef = useRef(false);
 
   const validate = useCallback(() => {
     let isValid = true;
@@ -691,10 +688,15 @@ export function useVerifierLogin() {
   }, [form]);
 
   const handleSubmit = useCallback(async () => {
+    if (submitLockRef.current) {
+      return { success: false, message: 'Login already in progress' };
+    }
+
     if (!validate()) {
       return { success: false, message: 'Please fix form errors' };
     }
 
+    submitLockRef.current = true;
     form.setSubmitting(true);
     try {
       const response = await studentLogin(form.data);
@@ -757,9 +759,10 @@ export function useVerifierLogin() {
       form.setSubmitError(message);
       return { success: false, message };
     } finally {
+      submitLockRef.current = false;
       form.setSubmitting(false);
     }
-  }, [form, studentLogin, setUser, navigate, validate]);
+  }, [form.data, form.setSubmitting, form.setSubmitError, form.resetForm, studentLogin, setUser, navigate, validate]);
 
   return {
     ...form,

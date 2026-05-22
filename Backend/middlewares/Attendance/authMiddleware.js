@@ -71,9 +71,6 @@ const protect = async (req, res, next) => {
         console.error("DB lookup failed in authMiddleware", err);
       }
 
-      console.log("Decoded Token Info:", decoded);
-      console.log("Resolved DB User:", user);
-
       if (user) {
         const userObj = user.toObject ? user.toObject() : user;
         const rawRole = (userObj.role || userObj.accountType || "student").toLowerCase();
@@ -95,7 +92,6 @@ const protect = async (req, res, next) => {
         };
       }
 
-      console.log("Resolved req.user structure:", req.user);
       next();
 
     } else {

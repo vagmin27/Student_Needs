@@ -39,12 +39,10 @@ export const GlobalProtectedRoute = ({
       user?.accountType?.toLowerCase?.() ||
       "";
 
-    console.log("USER:", user);
-    console.log("ROLE:", user?.role);
-    console.log("ACCOUNT TYPE:", user?.accountType);
-    console.log("ALLOWED ROLES:", allowedRoles);
+    const hasAccess = allowedRoles
+      .map((r) => r.toLowerCase())
+      .includes(normalizedRole);
 
-    const hasAccess = allowedRoles.map((r) => r.toLowerCase()).includes(normalizedRole);
     if (!hasAccess) {
       return <Navigate to="/" replace />;
     }

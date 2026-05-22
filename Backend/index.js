@@ -138,19 +138,6 @@ app.use(
 app.options(/.*/, cors());
 
 // =====================================================
-//                DEBUG ORIGIN LOGGER
-// =====================================================
-
-if (process.env.NODE_ENV !== 'production') {
-  app.use((req, res, next) => {
-    if (req.headers.origin) {
-      console.log("Origin:", req.headers.origin);
-    }
-    next();
-  });
-}
-
-// =====================================================
 //                    MIDDLEWARE
 // =====================================================
 
@@ -182,7 +169,15 @@ morgan.token('id', function getId (req) { return req.id });
 
 // Disable verbose request logging in production mode
 if (process.env.NODE_ENV !== 'production') {
-  app.use(morgan(':id :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', { stream: winstonLogger.stream }));
+  app.use(
+    morgan(
+      ':id :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
+      {
+        stream: winstonLogger.stream,
+        skip: (req, res) => res.statusCode < 400,
+      }
+    )
+  );
 }
 
 // =====================================================
@@ -196,9 +191,6 @@ app.use((req, res, next) => {
     const time = (diff[0] * 1e3 + diff[1] * 1e-6).toFixed(2);
     if (time > 500) {
       winstonLogger.warn(`SLOW REQUEST: ${req.method} ${req.originalUrl} - ${time}ms`);
-    } else if (process.env.NODE_ENV !== 'production') {
-      // Only log fast requests in development to prevent noisy logs in production
-      winstonLogger.info(`Performance: ${req.method} ${req.originalUrl} - ${time}ms`);
     }
   });
   next();
