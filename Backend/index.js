@@ -426,7 +426,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   winstonLogger.error(`🔥 Error: ${err.message}`, { stack: err.stack });
 
-  res.status(err.status || 500).json({
+  res.status(err.statusCode || err.status || 500).json({
     success: false,
     message: process.env.NODE_ENV === 'production' 
       ? "Internal Server Error" 
@@ -446,6 +446,12 @@ const initializeServer = async () => {
     // Tutorials DB
     await connectDB();
     console.log("✅ Tutorials Database Connected");
+
+    const { syncAttendanceIndexes } = await import(
+      "./models/Attendance/Attendance.js"
+    );
+    await syncAttendanceIndexes();
+    console.log("✅ Attendance indexes synced (userId + subjectId + date)");
 
     // Referral DB
     await dbconnect();

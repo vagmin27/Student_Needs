@@ -229,6 +229,24 @@ const AttendanceRoutes = () => {
       {/* ======================================================
                       UNIFIED STUDENT FLOW (SINGLE PERSISTENT LAYOUT)
       ====================================================== */}
+      {/* Personal attendance — students and legacy teacher accounts */}
+      <Route
+        element={
+          <GlobalProtectedRoute allowedRoles={["student", "teacher"]}>
+            <DashboardLayout role="student" />
+          </GlobalProtectedRoute>
+        }
+      >
+        <Route
+          path="/student/attendance"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <StudentDashboard />
+            </Suspense>
+          }
+        />
+      </Route>
+
       <Route
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
@@ -242,16 +260,6 @@ const AttendanceRoutes = () => {
           element={
             <Suspense fallback={<DashboardSkeleton />}>
               <UnifiedDashboard />
-            </Suspense>
-          }
-        />
-
-        {/* Student attendance (not teacher /attendance/dashboard) */}
-        <Route
-          path="/student/attendance"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <StudentDashboard />
             </Suspense>
           }
         />
@@ -497,9 +505,7 @@ const AttendanceRoutes = () => {
         path="/attendance/login"
         element={
           isAuthenticated ? (
-            <Navigate
-              to={isTeacher ? "/attendance/dashboard" : "/student/dashboard"}
-            />
+            <Navigate to="/student/dashboard" />
           ) : (
             <Login />
           )
@@ -510,96 +516,20 @@ const AttendanceRoutes = () => {
         path="/attendance/register"
         element={
           isAuthenticated ? (
-            <Navigate
-              to={isTeacher ? "/attendance/dashboard" : "/student/dashboard"}
-            />
+            <Navigate to="/student/dashboard" />
           ) : (
             <Register />
           )
         }
       />
 
-      {/* ======================================================
-                        ATTENDANCE TEACHER ROUTES
-      ====================================================== */}
-
-      <Route
-        path="/attendance/dashboard"
-        element={
-          <GlobalProtectedRoute allowedRoles={["teacher"]}>
-            <WithLayout title="Dashboard">
-              <Suspense fallback={<DashboardSkeleton />}>
-                <Dashboard />
-              </Suspense>
-            </WithLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/attendance/attendance"
-        element={
-          <GlobalProtectedRoute allowedRoles={["teacher"]}>
-            <WithLayout title="Attendance">
-              <Suspense fallback={<DashboardSkeleton />}>
-                <Attendance />
-              </Suspense>
-            </WithLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/attendance/add-student"
-        element={
-          <GlobalProtectedRoute allowedRoles={["teacher"]}>
-            <WithLayout title="Add Student">
-              <Suspense fallback={<DashboardSkeleton />}>
-                <AddStudent />
-              </Suspense>
-            </WithLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/attendance/remove-student"
-        element={
-          <GlobalProtectedRoute allowedRoles={["teacher"]}>
-            <WithLayout title="Remove Student">
-              <Suspense fallback={<DashboardSkeleton />}>
-                <RemoveStudent />
-              </Suspense>
-            </WithLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/attendance/add-subject"
-        element={
-          <GlobalProtectedRoute allowedRoles={["teacher"]}>
-            <WithLayout title="Add Subject">
-              <Suspense fallback={<DashboardSkeleton />}>
-                <AddSubject />
-              </Suspense>
-            </WithLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/attendance/reports"
-        element={
-          <GlobalProtectedRoute allowedRoles={["teacher"]}>
-            <WithLayout title="Reports">
-              <Suspense fallback={<DashboardSkeleton />}>
-                <Reports />
-              </Suspense>
-            </WithLayout>
-          </GlobalProtectedRoute>
-        }
-      />
+      {/* Legacy teacher attendance routes → personal tracker */}
+      <Route path="/attendance/dashboard" element={<Navigate to="/student/attendance" replace />} />
+      <Route path="/attendance/attendance" element={<Navigate to="/student/attendance" replace />} />
+      <Route path="/attendance/add-student" element={<Navigate to="/student/attendance" replace />} />
+      <Route path="/attendance/remove-student" element={<Navigate to="/student/attendance" replace />} />
+      <Route path="/attendance/add-subject" element={<Navigate to="/student/attendance" replace />} />
+      <Route path="/attendance/reports" element={<Navigate to="/student/attendance" replace />} />
 
       {/* ======================================================
                         TUTORIAL AUTH

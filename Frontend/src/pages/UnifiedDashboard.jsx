@@ -133,7 +133,9 @@ const UnifiedDashboard = () => {
 
   const attendanceStats = useMemo(() => {
     const total = attendanceData.length;
-    const present = attendanceData.filter((a) => a.attendance === "present").length;
+    const present = attendanceData.filter(
+      (a) => (a.attendance || a.status) === "present",
+    ).length;
     const percentage = total > 0 ? ((present / total) * 100).toFixed(1) : "0";
     return { total, present, percentage };
   }, [attendanceData]);
@@ -190,7 +192,7 @@ const UnifiedDashboard = () => {
     attendanceData.forEach((r, i) => {
       items.push({
         id: `att-${i}-${r._id || i}`,
-        label: `${r.subject || "Class"} — ${r.attendance || "recorded"}`,
+        label: `${r.subject || r.subjectName || "Class"} — ${r.attendance || r.status || "recorded"}`,
         meta: r.date ? new Date(r.date).toLocaleDateString() : "Attendance",
         module: "Attendance",
         time: parseTime(r.date),

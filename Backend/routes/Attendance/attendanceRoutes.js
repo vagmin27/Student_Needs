@@ -1,76 +1,24 @@
 import express from "express";
 import protect from "../../middlewares/Attendance/authMiddleware.js";
-import { allowTeacher, allowStudent } from "../../middlewares/Attendance/roleMiddleware.js";
-
+import { allowAuthenticated } from "../../middlewares/Attendance/roleMiddleware.js";
 import {
-  markAttendance,
-  downloadAttendance,
-  downloadTodayAttendance,
-  getAttendance,
+  getAttendanceStats,
+  getAttendanceRecords,
+  markAttendanceRecord,
+  updateAttendanceRecord,
+  deleteAttendanceRecord,
   getStudentAttendance,
-  deleteStudentAttendance,
-} from "../../controllers/Attendance/attendanceController.js";
+} from "../../controllers/Attendance/personalAttendanceController.js";
 
 const router = express.Router();
 
+router.get("/stats", protect, allowAuthenticated, getAttendanceStats);
+router.get("/records", protect, allowAuthenticated, getAttendanceRecords);
+router.post("/records", protect, allowAuthenticated, markAttendanceRecord);
+router.put("/records/:id", protect, allowAuthenticated, updateAttendanceRecord);
+router.delete("/records/:id", protect, allowAuthenticated, deleteAttendanceRecord);
 
-// ✅ GET ATTENDANCE
-router.get(
-  "/",
-  protect,
-  allowTeacher,
-  getAttendance
-);
-
-// ✅ GET STUDENT ATTENDANCE
-router.get(
-  "/student",
-  protect,
-  allowStudent,
-  getStudentAttendance
-);
-
-
-// ✅ MARK ATTENDANCE
-router.post(
-  "/",
-  protect,
-  allowTeacher,
-  markAttendance
-);
-
-
-// ✅ DOWNLOAD CSV
-router.get(
-  "/data/download",
-  protect,
-  allowTeacher,
-  downloadAttendance
-);
-
-
-// ✅ DOWNLOAD TODAY DOCX
-router.get(
-  "/today/:date",
-  protect,
-  allowTeacher,
-  downloadTodayAttendance
-);
-
-// ✅ DELETE STUDENT ATTENDANCE
-router.delete(
-  "/:studentId",
-  protect,
-  allowTeacher,
-  deleteStudentAttendance
-);
-
-// ✅ DELETE ATTENDANCE USING REGISTER NUMBER
-router.delete(
-  "/student/:register",
-  protect,
-  allowTeacher,
-  deleteStudentAttendance
-);
+/** Legacy path used by UnifiedDashboard */
+router.get("/student", protect, allowAuthenticated, getStudentAttendance);
 
 export default router;

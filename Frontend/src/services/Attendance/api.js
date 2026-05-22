@@ -1,11 +1,13 @@
 import { attendanceApiClient as API } from "@/services/apiClient.js";
 
-/** Paths relative to /api (attendance router is mounted at /api/attendance). */
+/** Paths relative to /api */
 export const ATTENDANCE_PATHS = {
-  root: "/attendance",
+  subjects: "/subjects/subjects",
+  subject: (id) => `/subjects/subjects/${id}`,
+  stats: "/attendance/stats",
+  records: "/attendance/records",
+  record: (id) => `/attendance/records/${id}`,
   student: "/attendance/student",
-  studentByRegister: (register) => `/attendance/student/${register}`,
-  download: (start, end) => `/attendance/data/download?start=${start}&end=${end}`,
 };
 
 export default API;

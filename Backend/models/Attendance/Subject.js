@@ -2,28 +2,20 @@ import mongoose from "mongoose";
 
 const subjectSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
     subjectName: {
       type: String,
       required: true,
-      unique: true,
-    },
-
-    subjectCode: {
-      type: String,
-    },
-
-    department: {
-      type: String,
-    },
-
-    year: {
-      type: String,
+      trim: true,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model(
-  "Subject",
-  subjectSchema
-);
+subjectSchema.index({ userId: 1, subjectName: 1 }, { unique: true });
+
+export default mongoose.model("Subject", subjectSchema);
