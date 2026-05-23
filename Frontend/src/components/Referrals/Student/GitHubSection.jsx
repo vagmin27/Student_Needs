@@ -23,54 +23,45 @@ import { githubApi } from "@/services/Referrals/studentProfile.js";
 import {
   showTransactionToast,
   dismissToast,
-} from "@/components/Referrals/TransactionToast";
+} from "@/components/Referrals/TransactionToast.jsx";
 
 /**
- * CodeSection Component
- * Handles Code URL add, update, and deletion
- * * @param {Object} props
- * @param {string} [props.githubUrl] - Code URL from profile
- * @param {Function} props.onCodeChange - Callback to refresh profile data after changes
+ * @param {Object} props
+ * @param {string} [props.githubUrl] - GitHub URL from profile
+ * @param {Function} props.onGitHubChange - Callback to refresh profile data after changes
  */
 export function GitHubSection({ githubUrl: initialGithubUrl, onGitHubChange }) {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [githubUrl, setgithubUrl] = useState(initialgithubUrl || "");
+  const [githubUrl, setGithubUrl] = useState(initialGithubUrl || "");
 
-  // Check if Code URL exists
-  const hasgithubUrl = !!initialgithubUrl;
+  const hasGithubUrl = !!initialGithubUrl;
 
-  // Update local state when prop changes
   useEffect(() => {
-    setgithubUrl(initialgithubUrl || "");
-  }, [initialgithubUrl]);
+    setGithubUrl(initialGithubUrl || "");
+  }, [initialGithubUrl]);
 
-  /**
-   * Validate Code URL format
-   */
-  const validategithubUrl = (url) => {
-    const CodePattern = /^(https?:\/\/)?(www\.)?Code\.com\/[a-zA-Z0-9_-]+\/?$/;
-    return CodePattern.test(url.trim());
+  const validateGithubUrl = (url) => {
+    const githubPattern =
+      /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/i;
+    return githubPattern.test(url.trim());
   };
 
-  /**
-   * Save Code URL (add or update)
-   */
   const handleSave = async () => {
     if (!githubUrl.trim()) {
       showTransactionToast({
         type: "error",
-        message: "Please enter a Code URL",
+        message: "Please enter a GitHub URL",
       });
       return;
     }
 
-    if (!validategithubUrl(githubUrl)) {
+    if (!validateGithubUrl(githubUrl)) {
       showTransactionToast({
         type: "error",
         message:
-          "Please enter a valid Code profile URL (e.g., Code.com/username)",
+          "Please enter a valid GitHub profile URL (e.g. github.com/username)",
       });
       return;
     }
@@ -78,94 +69,79 @@ export function GitHubSection({ githubUrl: initialGithubUrl, onGitHubChange }) {
     setSaving(true);
     const toastId = showTransactionToast({
       type: "pending",
-      message: hasgithubUrl ? "Updating Code URL..." : "Adding Code URL...",
+      message: hasGithubUrl ? "Updating GitHub URL..." : "Adding GitHub URL...",
     });
 
     try {
-      // Use update API if URL exists, otherwise use add API
-      if (hasgithubUrl) {
-        await githubApi.updategithubUrl(githubUrl.trim());
+      if (hasGithubUrl) {
+        await githubApi.updateGithubUrl(githubUrl.trim());
       } else {
-        await githubApi.addgithubUrl(githubUrl.trim());
+        await githubApi.addGithubUrl(githubUrl.trim());
       }
 
       dismissToast(toastId);
       showTransactionToast({
         type: "success",
-        message: hasgithubUrl ? "Code URL updated!" : "Code URL added!",
+        message: hasGithubUrl ? "GitHub URL updated!" : "GitHub URL added!",
       });
 
       setIsEditing(false);
-      // Refresh profile data
-      onCodeChange();
+      onGitHubChange();
     } catch (error) {
       dismissToast(toastId);
       showTransactionToast({
         type: "error",
-        message: error.response?.data?.message || "Failed to save Code URL",
+        message: error.response?.data?.message || "Failed to save GitHub URL",
       });
     } finally {
       setSaving(false);
     }
   };
 
-  /**
-   * Delete Code URL
-   */
   const handleDelete = async () => {
-    if (!hasgithubUrl) return;
+    if (!hasGithubUrl) return;
 
-    // Confirm deletion
-    if (!window.confirm("Are you sure you want to remove your Code URL?")) {
+    if (!window.confirm("Are you sure you want to remove your GitHub URL?")) {
       return;
     }
 
     setDeleting(true);
     const toastId = showTransactionToast({
       type: "pending",
-      message: "Removing Code URL...",
+      message: "Removing GitHub URL...",
     });
 
     try {
-      await githubApi.deletegithubUrl();
+      await githubApi.deleteGithubUrl();
 
       dismissToast(toastId);
       showTransactionToast({
         type: "success",
-        message: "Code URL removed!",
+        message: "GitHub URL removed!",
       });
 
-      // Reset local state
-      setgithubUrl("");
+      setGithubUrl("");
       setIsEditing(false);
-
-      // Refresh profile data
-      onCodeChange();
+      onGitHubChange();
     } catch (error) {
       dismissToast(toastId);
       showTransactionToast({
         type: "error",
-        message: error.response?.data?.message || "Failed to remove Code URL",
+        message: error.response?.data?.message || "Failed to remove GitHub URL",
       });
     } finally {
       setDeleting(false);
     }
   };
 
-  /**
-   * Cancel editing
-   */
   const handleCancel = () => {
-    setgithubUrl(initialgithubUrl || "");
+    setGithubUrl(initialGithubUrl || "");
     setIsEditing(false);
   };
 
-  /**
-   * Extract username from Code URL
-   */
   const extractUsername = (url) => {
     if (!url) return "";
-    const match = url.match(/Code\.com\/([a-zA-Z0-9_-]+)/);
+    const match = url.match(/github\.com\/([a-zA-Z0-9_-]+)/i);
     return match ? match[1] : url;
   };
 
@@ -176,13 +152,13 @@ export function GitHubSection({ githubUrl: initialGithubUrl, onGitHubChange }) {
           <div className="flex items-center gap-2">
             <Code className="w-5 h-5" />
             <div>
-              <CardTitle>Code</CardTitle>
+              <CardTitle>GitHub</CardTitle>
               <CardDescription>
-                Add your Code profile for recruiters
+                Add your GitHub profile for recruiters
               </CardDescription>
             </div>
           </div>
-          {hasgithubUrl && (
+          {hasGithubUrl && (
             <Badge variant="default" className="gap-1">
               <CheckCircle2 className="w-3 h-3" />
               Added
@@ -191,44 +167,41 @@ export function GitHubSection({ githubUrl: initialGithubUrl, onGitHubChange }) {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {hasgithubUrl && !isEditing ? (
-          // Code URL exists - show URL and actions
+        {hasGithubUrl && !isEditing ? (
           <div className="space-y-4">
-            {/* URL display */}
             <div className="p-4 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-3">
                 <Code className="w-8 h-8 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="font-medium">
-                    @{extractUsername(initialgithubUrl)}
+                    @{extractUsername(initialGithubUrl)}
                   </p>
                   <a
                     href={
-                      initialgithubUrl.startsWith("http")
-                        ? initialgithubUrl
-                        : `https://${initialgithubUrl}`
+                      initialGithubUrl.startsWith("http")
+                        ? initialGithubUrl
+                        : `https://${initialGithubUrl}`
                     }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 truncate"
                   >
-                    {initialgithubUrl}
+                    {initialGithubUrl}
                     <ExternalLink className="w-3 h-3 flex-shrink-0" />
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Action buttons */}
             <div className="flex flex-wrap gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() =>
                   window.open(
-                    initialgithubUrl.startsWith("http")
-                      ? initialgithubUrl
-                      : `https://${initialgithubUrl}`,
+                    initialGithubUrl.startsWith("http")
+                      ? initialGithubUrl
+                      : `https://${initialGithubUrl}`,
                     "_blank",
                   )
                 }
@@ -262,14 +235,13 @@ export function GitHubSection({ githubUrl: initialGithubUrl, onGitHubChange }) {
             </div>
           </div>
         ) : (
-          // No Code URL or editing - show input form
           <div className="space-y-4">
             <div className="flex gap-2">
               <Input
                 type="url"
                 value={githubUrl}
-                onChange={(e) => setgithubUrl(e.target.value)}
-                placeholder="https://Code.com/yourusername"
+                onChange={(e) => setGithubUrl(e.target.value)}
+                placeholder="https://github.com/yourusername"
                 className="flex-1"
                 onKeyPress={(e) => e.key === "Enter" && handleSave()}
               />
@@ -291,11 +263,10 @@ export function GitHubSection({ githubUrl: initialGithubUrl, onGitHubChange }) {
               )}
             </div>
 
-            {/* Info message */}
             <div className="flex items-start gap-2 text-sm text-muted-foreground">
               <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
               <p>
-                Adding your Code profile helps recruiters see your projects,
+                Adding your GitHub profile helps recruiters see your projects,
                 contributions, and coding activity.
               </p>
             </div>

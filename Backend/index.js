@@ -450,6 +450,11 @@ const initializeServer = async () => {
     const { syncAttendanceIndexes } = await import(
       "./models/Attendance/Attendance.js"
     );
+    const { syncSubjectIndexes } = await import(
+      "./models/Attendance/Subject.js"
+    );
+    await syncSubjectIndexes();
+    console.log("✅ Subject indexes synced (userId + subjectName)");
     await syncAttendanceIndexes();
     console.log("✅ Attendance indexes synced (userId + subjectId + date)");
 

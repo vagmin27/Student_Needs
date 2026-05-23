@@ -8,11 +8,9 @@ import {
 } from "@/components/Referrals/ui/card.jsx";
 import { Button } from "@/components/Referrals/ui/button.jsx";
 import { Input } from "@/components/Referrals/ui/input.jsx";
-import { Label } from "@/components/Referrals/ui/label.jsx";
 import { Badge } from "@/components/Referrals/ui/badge.jsx";
-
 import {
-  Link,
+  Globe,
   Upload,
   Download,
   Trash2,
@@ -20,32 +18,41 @@ import {
   CheckCircle2,
   AlertCircle,
   RefreshCw,
-  Link as LinkIcon,
   ExternalLink,
   Save,
 } from "lucide-react";
-
 import { linkedInApi } from "@/services/Referrals/studentProfile.js";
 import {
   showTransactionToast,
   dismissToast,
-} from "@/components/Referrals/TransactionToast";
+} from "@/components/Referrals/TransactionToast.jsx";
 
-export function LinkedInSection({ Link, onLinkChange }) {
+/**
+ * @param {Object} props
+ * @param {Object} [props.linkedIn] - LinkedIn data from profile
+ * @param {Function} props.onLinkedInChange - Refresh profile after changes
+ */
+export function LinkedInSection({ linkedIn, onLinkedInChange }) {
   const [uploading, setUploading] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [updatingUrl, setUpdatingUrl] = useState(false);
-  const [LinkUrl, setLinkUrl] = useState(Link?.LinkUrl || "");
+  const [linkedInUrl, setLinkedInUrl] = useState(linkedIn?.linkedInUrl || "");
 
   const fileInputRef = useRef(null);
 
-  const hasLinkPdf = Link?.fileName && Link?.fileSize;
-  const hasLinkUrl = !!Link?.LinkUrl;
+  const hasLinkedInPdf = linkedIn?.fileName && linkedIn?.fileSize;
+  const hasLinkedInUrl = !!linkedIn?.linkedInUrl;
 
   useEffect(() => {
-    setLinkUrl(Link?.LinkUrl || "");
-  }, [Link]);
+    setLinkedInUrl(linkedIn?.linkedInUrl || "");
+  }, [linkedIn]);
+
+  const validateLinkedInUrl = (url) => {
+    const pattern =
+      /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/i;
+    return pattern.test(url.trim());
+  };
 
   const handleFileSelect = async (event) => {
     const file = event.target.files?.[0];
@@ -68,82 +75,87 @@ export function LinkedInSection({ Link, onLinkChange }) {
     }
 
     setUploading(true);
-
     const toastId = showTransactionToast({
       type: "pending",
-      message: hasLinkPdf ? "Updating Link PDF..." : "Uploading Link PDF...",
+      message: hasLinkedInPdf
+        ? "Updating LinkedIn PDF..."
+        : "Uploading LinkedIn PDF...",
     });
 
     try {
-      if (hasLinkPdf) {
-        await linkedInApi.updateLinkPdf(file);
+      if (hasLinkedInPdf) {
+        await linkedInApi.updateLinkedInPdf(file);
       } else {
-        await linkedInApi.uploadLink(file, LinkUrl || undefined);
+        await linkedInApi.uploadLinkedIn(
+          file,
+          linkedInUrl.trim() || undefined,
+        );
       }
 
       dismissToast(toastId);
-
       showTransactionToast({
         type: "success",
-        message: hasLinkPdf ? "Link PDF updated!" : "Link PDF uploaded!",
+        message: hasLinkedInPdf
+          ? "LinkedIn PDF updated!"
+          : "LinkedIn PDF uploaded!",
       });
 
-      onLinkChange();
+      onLinkedInChange();
     } catch (error) {
       dismissToast(toastId);
-
       showTransactionToast({
         type: "error",
-        message: error.response?.data?.message || "Failed to upload Link PDF",
+        message:
+          error.response?.data?.message || "Failed to upload LinkedIn PDF",
       });
     } finally {
       setUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
   const handleUpdateUrl = async () => {
-    if (!LinkUrl.trim()) {
+    if (!linkedInUrl.trim()) {
       showTransactionToast({
         type: "error",
-        message: "Please enter a Link URL",
+        message: "Please enter a LinkedIn profile URL",
       });
       return;
     }
 
-    const pattern = /^(https?:\/\/)?(www\.)?Link\.com\/in\/[a-zA-Z0-9_-]+\/?$/i;
-
-    if (!pattern.test(LinkUrl.trim())) {
+    if (!validateLinkedInUrl(linkedInUrl)) {
       showTransactionToast({
         type: "error",
-        message: "Enter a valid Link profile URL",
+        message:
+          "Enter a valid LinkedIn URL (e.g. linkedin.com/in/username)",
       });
       return;
     }
 
     setUpdatingUrl(true);
-
     const toastId = showTransactionToast({
       type: "pending",
-      message: "Updating Link URL...",
+      message: "Updating LinkedIn URL...",
     });
 
     try {
-      await linkedInApi.updateLinkUrl(LinkUrl.trim());
+      await linkedInApi.updateLinkedInUrl(linkedInUrl.trim());
 
       dismissToast(toastId);
-
       showTransactionToast({
         type: "success",
-        message: "Link URL updated successfully!",
+        message: "LinkedIn URL updated successfully!",
       });
 
-      onLinkChange();
+      onLinkedInChange();
     } catch (error) {
       dismissToast(toastId);
-
       showTransactionToast({
         type: "error",
-        message: error.response?.data?.message || "Failed to update Link URL",
+        message:
+          error.response?.data?.message || "Failed to update LinkedIn URL",
       });
     } finally {
       setUpdatingUrl(false);
@@ -151,86 +163,133 @@ export function LinkedInSection({ Link, onLinkChange }) {
   };
 
   const handleDownload = async () => {
-    if (!hasLinkPdf) return;
+    if (!hasLinkedInPdf) return;
 
     setDownloading(true);
+    const toastId = showTransactionToast({
+      type: "pending",
+      message: "Downloading LinkedIn PDF...",
+    });
 
-    const blob = await linkedInApi.getLink();
+    try {
+      const blob = await linkedInApi.getLinkedIn();
+      const url = window.URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = linkedIn?.fileName || "linkedin-profile.pdf";
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      window.URL.revokeObjectURL(url);
 
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = Link?.fileName || "Link.pdf";
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    window.URL.revokeObjectURL(url);
-
-    setDownloading(false);
+      dismissToast(toastId);
+      showTransactionToast({
+        type: "success",
+        message: "LinkedIn PDF downloaded!",
+      });
+    } catch (error) {
+      dismissToast(toastId);
+      showTransactionToast({
+        type: "error",
+        message:
+          error.response?.data?.message || "Failed to download LinkedIn PDF",
+      });
+    } finally {
+      setDownloading(false);
+    }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Delete Link PDF?")) return;
+    if (!hasLinkedInPdf) return;
+    if (!window.confirm("Delete your LinkedIn PDF?")) return;
 
     setDeleting(true);
+    const toastId = showTransactionToast({
+      type: "pending",
+      message: "Deleting LinkedIn PDF...",
+    });
 
-    await linkedInApi.deleteLink();
-
-    setLinkUrl("");
-
-    onLinkChange();
-
-    setDeleting(false);
+    try {
+      await linkedInApi.deleteLinkedIn();
+      dismissToast(toastId);
+      showTransactionToast({
+        type: "success",
+        message: "LinkedIn PDF deleted!",
+      });
+      onLinkedInChange();
+    } catch (error) {
+      dismissToast(toastId);
+      showTransactionToast({
+        type: "error",
+        message:
+          error.response?.data?.message || "Failed to delete LinkedIn PDF",
+      });
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const formatFileSize = (bytes) => {
     if (!bytes) return "0 B";
     const units = ["B", "KB", "MB", "GB"];
     let i = 0;
+    let size = bytes;
 
-    while (bytes >= 1024 && i < units.length - 1) {
-      bytes /= 1024;
+    while (size >= 1024 && i < units.length - 1) {
+      size /= 1024;
       i++;
     }
 
-    return `${bytes.toFixed(1)} ${units[i]}`;
+    return `${size.toFixed(1)} ${units[i]}`;
   };
 
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-2">
-          <Link className="w-5 h-5 text-[#0A66C2]" />
-          <CardTitle>Link</CardTitle>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Globe className="w-5 h-5 text-[#0A66C2]" />
+            <div>
+              <CardTitle>LinkedIn</CardTitle>
+              <CardDescription>
+                Upload LinkedIn PDF and add profile URL
+              </CardDescription>
+            </div>
+          </div>
+          {(hasLinkedInPdf || hasLinkedInUrl) && (
+            <Badge variant="default" className="gap-1">
+              <CheckCircle2 className="w-3 h-3" />
+              {hasLinkedInPdf && hasLinkedInUrl
+                ? "Complete"
+                : hasLinkedInPdf
+                  ? "PDF"
+                  : "URL"}
+            </Badge>
+          )}
         </div>
-
-        <CardDescription>Upload Link PDF and add profile URL</CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4">
         <input
           ref={fileInputRef}
           type="file"
-          accept=".pdf"
+          accept=".pdf,application/pdf"
           onChange={handleFileSelect}
           className="hidden"
         />
 
         <div className="flex gap-2">
           <Input
-            value={LinkUrl}
-            onChange={(e) => setLinkUrl(e.target.value)}
-            placeholder="https://Link.com/in/username"
+            value={linkedInUrl}
+            onChange={(e) => setLinkedInUrl(e.target.value)}
+            placeholder="https://linkedin.com/in/username"
           />
-
           <Button
             variant="outline"
             size="icon"
             onClick={handleUpdateUrl}
             disabled={updatingUrl}
+            aria-label="Save LinkedIn URL"
           >
             {updatingUrl ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -238,46 +297,99 @@ export function LinkedInSection({ Link, onLinkChange }) {
               <Save className="w-4 h-4" />
             )}
           </Button>
+          {hasLinkedInUrl && (
+            <Button variant="outline" size="icon" asChild>
+              <a
+                href={linkedInUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open LinkedIn profile"
+              >
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </Button>
+          )}
         </div>
 
-        {hasLinkPdf && (
-          <div className="flex items-center justify-between border rounded-lg p-3">
-            <div>
-              <p className="font-medium">{Link.fileName}</p>
+        {hasLinkedInPdf ? (
+          <div className="space-y-4">
+            <div className="p-4 rounded-lg bg-muted/50 border">
+              <p className="font-medium truncate">{linkedIn.fileName}</p>
               <p className="text-sm text-muted-foreground">
-                {formatFileSize(Link.fileSize)}
+                {formatFileSize(linkedIn.fileSize)}
               </p>
             </div>
 
-            <div className="flex gap-2">
-              <Button size="icon" onClick={handleDownload}>
-                <Download className="w-4 h-4" />
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleDownload}
+                disabled={downloading}
+              >
+                {downloading ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Download className="w-4 h-4 mr-2" />
+                )}
+                Download
               </Button>
 
-              <Button size="icon" onClick={() => fileInputRef.current.click()}>
-                <RefreshCw className="w-4 h-4" />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+              >
+                {uploading ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                )}
+                Replace
               </Button>
 
-              <Button size="icon" variant="destructive" onClick={handleDelete}>
-                <Trash2 className="w-4 h-4" />
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Trash2 className="w-4 h-4 mr-2" />
+                )}
+                Delete
               </Button>
             </div>
           </div>
-        )}
-
-        {!hasLinkPdf && (
+        ) : (
           <Button
             className="w-full"
-            onClick={() => fileInputRef.current.click()}
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
           >
-            <Upload className="w-4 h-4 mr-2" />
-            Upload Link PDF
+            {uploading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Uploading...
+              </>
+            ) : (
+              <>
+                <Upload className="w-4 h-4 mr-2" />
+                Upload LinkedIn PDF
+              </>
+            )}
           </Button>
         )}
 
-        <div className="flex gap-2 text-sm text-muted-foreground">
-          <AlertCircle className="w-4 h-4" />
-          Export Link profile as PDF from Link settings.
+        <div className="flex items-start gap-2 text-sm text-muted-foreground">
+          <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+          <p>
+            Export your LinkedIn profile as PDF from LinkedIn settings, then
+            upload it here.
+          </p>
         </div>
       </CardContent>
     </Card>

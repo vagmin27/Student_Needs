@@ -1,12 +1,36 @@
 import mongoose from "mongoose";
 import AttendanceModel from "../models/Attendance/Attendance.js";
 import SubjectModel from "../models/Attendance/Subject.js";
+import AttendanceUser from "../models/Attendance/User.js";
 import { AppError } from "../utils/AppError.js";
 
-const resolveUserId = (user) => {
-  const id = user?._id || user?.id;
-  if (!id) throw new AppError("User not authenticated", 401);
-  return new mongoose.Types.ObjectId(id);
+/** Stable owner id for subjects/attendance (handles referral vs attendance login, same email) */
+const resolveOwnerUserId = async (user) => {
+  const directId = user?._id || user?.id;
+  if (!directId) throw new AppError("User not authenticated", 401);
+
+  const directOid = new mongoose.Types.ObjectId(directId);
+  const email =
+    typeof user?.email === "string" ? user.email.trim().toLowerCase() : "";
+
+  if (!email) return directOid;
+
+  const attendanceAccount = await AttendanceUser.findOne({ email })
+    .select("_id")
+    .lean();
+  if (!attendanceAccount) return directOid;
+
+  const attendanceOid = new mongoose.Types.ObjectId(attendanceAccount._id);
+  if (attendanceOid.equals(directOid)) return directOid;
+
+  const [directCount, linkedCount] = await Promise.all([
+    SubjectModel.countDocuments({ userId: directOid }),
+    SubjectModel.countDocuments({ userId: attendanceOid }),
+  ]);
+
+  if (linkedCount > 0 && directCount === 0) return attendanceOid;
+  if (directCount > 0 && linkedCount === 0) return directOid;
+  return directOid;
 };
 
 /** Normalize subjectId whether populated doc, ObjectId, or string */
@@ -19,23 +43,30 @@ const normalizeSubjectId = (subjectIdField) => {
 
 export class PersonalAttendanceService {
   static async getSubjects(user) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     return SubjectModel.find({ userId }).sort({ subjectName: 1 });
   }
 
   static async createSubject(user, { subjectName }) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const trimmed = subjectName?.trim();
     if (!trimmed) throw new AppError("Subject name is required", 400);
 
     const existing = await SubjectModel.findOne({ userId, subjectName: trimmed });
     if (existing) throw new AppError("Subject already exists", 409);
 
-    return SubjectModel.create({ userId, subjectName: trimmed });
+    try {
+      return await SubjectModel.create({ userId, subjectName: trimmed });
+    } catch (err) {
+      if (err.code === 11000) {
+        throw new AppError("Subject already exists", 409);
+      }
+      throw err;
+    }
   }
 
   static async updateSubject(user, subjectId, { subjectName }) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const trimmed = subjectName?.trim();
     if (!trimmed) throw new AppError("Subject name is required", 400);
 
@@ -50,12 +81,19 @@ export class PersonalAttendanceService {
     if (duplicate) throw new AppError("Subject already exists", 409);
 
     subject.subjectName = trimmed;
-    await subject.save();
-    return subject;
+    try {
+      await subject.save();
+      return subject;
+    } catch (err) {
+      if (err.code === 11000) {
+        throw new AppError("Subject already exists", 409);
+      }
+      throw err;
+    }
   }
 
   static async deleteSubject(user, subjectId) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const subject = await SubjectModel.findOne({ _id: subjectId, userId });
     if (!subject) throw new AppError("Subject not found", 404);
 
@@ -65,7 +103,7 @@ export class PersonalAttendanceService {
   }
 
   static async markRecord(user, { subjectId, date, status }) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const subjectOid = new mongoose.Types.ObjectId(subjectId);
     const normalizedDate = String(date).trim();
 
@@ -110,7 +148,7 @@ export class PersonalAttendanceService {
   }
 
   static async getRecords(user, filters = {}) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const query = { userId };
 
     if (filters.subjectId) {
@@ -150,7 +188,7 @@ export class PersonalAttendanceService {
   }
 
   static async updateRecord(user, recordId, { status, date, subjectId }) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const record = await AttendanceModel.findOne({ _id: recordId, userId });
     if (!record) throw new AppError("Attendance record not found", 404);
 
@@ -200,14 +238,14 @@ export class PersonalAttendanceService {
   }
 
   static async deleteRecord(user, recordId) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const record = await AttendanceModel.findOneAndDelete({ _id: recordId, userId });
     if (!record) throw new AppError("Attendance record not found", 404);
     return { message: "Attendance record deleted" };
   }
 
   static async getStats(user, filters = {}) {
-    const userId = resolveUserId(user);
+    const userId = await resolveOwnerUserId(user);
     const subjects = await SubjectModel.find({ userId }).sort({ subjectName: 1 }).lean();
 
     const recordQuery = { userId };
