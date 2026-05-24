@@ -34,8 +34,9 @@ const getErrorMessage = (err) =>
   err?.response?.data?.message || err?.message || "Something went wrong";
 
 const StudentDashboard = () => {
-  const { user } = useAuth();
+  const { user, isInitialized } = useAuth();
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [stats, setStats] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [records, setRecords] = useState([]);
@@ -60,7 +61,10 @@ const StudentDashboard = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const loadData = useCallback(async () => {
+    if (!isInitialized || !user) return;
+
     setLoading(true);
+    setLoadError(null);
     try {
       const params = {};
       if (filterSubject) params.subjectId = filterSubject;
@@ -79,14 +83,16 @@ const StudentDashboard = () => {
       setSubjects(subjectsRes.data || []);
       setRecords(recordsRes.data || []);
     } catch (err) {
-      toast.error(getErrorMessage(err));
+      const message = getErrorMessage(err);
+      setLoadError(message);
+      toast.error(message);
       setStats(null);
       setSubjects([]);
       setRecords([]);
     } finally {
       setLoading(false);
     }
-  }, [filterSubject, filterFrom, filterTo]);
+  }, [filterSubject, filterFrom, filterTo, isInitialized, user]);
 
   useEffect(() => {
     loadData();
@@ -226,7 +232,7 @@ const StudentDashboard = () => {
     }
   };
 
-  if (loading && !stats) {
+  if (!isInitialized || (loading && !stats && !loadError)) {
     return (
       <div className="flex justify-center pt-20">
         <span className="spinner spinner-lg" />
@@ -237,6 +243,15 @@ const StudentDashboard = () => {
   return (
     <div className="space-y-6 pb-8">
       <BackToStudentDashboard />
+
+      {loadError && (
+        <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center justify-between gap-3">
+          <span className="text-sm">{loadError}</span>
+          <Button variant="outline" size="sm" onClick={loadData}>
+            Retry
+          </Button>
+        </div>
+      )}
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">

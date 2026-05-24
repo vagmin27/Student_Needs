@@ -63,7 +63,7 @@ const parseTime = (value) => {
 };
 
 const UnifiedDashboard = () => {
-  const { user } = useAuth();
+  const { user, isInitialized } = useAuth();
   const [loading, setLoading] = useState(true);
   const [attendanceData, setAttendanceData] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -72,6 +72,8 @@ const UnifiedDashboard = () => {
   const [profileCompleteness, setProfileCompleteness] = useState(null);
 
   useEffect(() => {
+    if (!isInitialized || !user) return;
+
     let cancelled = false;
 
     const load = async () => {
@@ -129,7 +131,7 @@ const UnifiedDashboard = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [isInitialized, user]);
 
   const attendanceStats = useMemo(() => {
     const total = attendanceData.length;
