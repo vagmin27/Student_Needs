@@ -35,15 +35,13 @@ const Sidebar = ({ className, role = "student" }) => {
       { name: "Schedule", href: "/tutorials/tutor/schedule", icon: CalendarDays },
       { name: "Requests", href: "/tutorials/tutor/accept", icon: BookOpen },
       { name: "Profile", href: "/tutorials/tutor/editProfile", icon: Users },
+      { name: "Attendance", href: "/tutorials/attendance", icon: BookOpen },
     ];
   } else if (currentRole === "teacher") {
     links = [
-      { name: "Dashboard", href: "/attendance/dashboard", icon: LayoutDashboard },
-      { name: "Attendance", href: "/attendance/attendance", icon: CalendarDays },
-      { name: "Add Student", href: "/attendance/add-student", icon: Users },
-      { name: "Remove Student", href: "/attendance/remove-student", icon: Users },
-      { name: "Add Subject", href: "/attendance/add-subject", icon: BookOpen },
-      { name: "Reports", href: "/attendance/reports", icon: CreditCard },
+      { name: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
+      { name: "Attendance", href: "/student/attendance", icon: CalendarDays },
+      { name: "Tutorials", href: "/tutorials/home", icon: BookOpen },
     ];
   } else if (currentRole === "alumni") {
     links = [

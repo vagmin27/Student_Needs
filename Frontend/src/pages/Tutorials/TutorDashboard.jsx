@@ -100,6 +100,17 @@ function TutorDashboard() {
                   View All Requests
                 </Button>
               </DashboardCard>
+
+              <DashboardCard className="border-l-4 border-l-purple-500" contentClassName="flex flex-col items-start p-6">
+                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 mb-4">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-lg mb-1">Attendance Management</h3>
+                <p className="text-sm text-muted-foreground mb-4">Manage students, subjects, and attendance</p>
+                <Button variant="outline" className="w-full mt-auto" onClick={() => navigate("/tutorials/attendance")}>
+                  Open Attendance Hub
+                </Button>
+              </DashboardCard>
             </div>
           </DashboardSection>
         </div>
