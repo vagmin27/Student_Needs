@@ -9,6 +9,7 @@ function DashboardCardComponent({
   title,
   description,
   contentClassName,
+  action,
   ...props
 }) {
   return (
@@ -35,10 +36,13 @@ function DashboardCardComponent({
       }}
       {...props}
     >
-      {(title || description) && (
-        <CardHeader className="pb-4">
-          {title && <CardTitle className="text-lg">{title}</CardTitle>}
-          {description && <CardDescription>{description}</CardDescription>}
+      {(title || description || action) && (
+        <CardHeader className="pb-4 flex flex-row items-center justify-between space-y-0">
+          <div>
+            {title && <CardTitle className="text-lg">{title}</CardTitle>}
+            {description && <CardDescription>{description}</CardDescription>}
+          </div>
+          {action && <div>{action}</div>}
         </CardHeader>
       )}
       <CardContent className={cn("flex-1", contentClassName)}>

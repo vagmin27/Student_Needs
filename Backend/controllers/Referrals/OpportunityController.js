@@ -240,9 +240,11 @@ export const getOpportunities = async (req, res) => {
             }
             userCollege = alumni.college;
         } else {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid account type",
+            return res.status(200).json({
+                success: true,
+                count: 0,
+                data: [],
+                message: "No opportunities available for this account type",
             });
         }
 

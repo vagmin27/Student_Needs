@@ -1,6 +1,7 @@
 import Student from "../../models/Referrals/StudentModel.js";
 import { embeddingService } from "../../services/ai/EmbeddingService.js";
 import { calculateProfileCompleteness } from "../../utils/Referrals/calculateProfileScore.js";
+import mongoose from "mongoose";
 
 // Create / Update Profile
 export const updateProfile = async (req, res) => {
@@ -85,6 +86,10 @@ export const getProfile = async (req, res) => {
     try {
         const studentId = req.user.id;
 
+        if (!mongoose.Types.ObjectId.isValid(studentId)) {
+             return res.status(400).json({ success: false, message: "Invalid student ID: " + studentId });
+        }
+
         // Find student and populate college
         const student = await Student.findById(studentId)
             .select("-password")
@@ -104,10 +109,10 @@ export const getProfile = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("GET PROFILE ERROR:", error);
         return res.status(500).json({
             success: false,
-            message: "Failed to fetch profile. Please try again.",
+            message: "Failed to fetch profile. Please try again. Error: " + error.message,
         });
     }
 };
@@ -116,6 +121,10 @@ export const getProfile = async (req, res) => {
 export const getProfileStatus = async (req, res) => {
     try {
         const studentId = req.user.id;
+
+        if (!mongoose.Types.ObjectId.isValid(studentId)) {
+             return res.status(400).json({ success: false, message: "Invalid student ID" });
+        }
 
         // Find student
         const student = await Student.findById(studentId);
