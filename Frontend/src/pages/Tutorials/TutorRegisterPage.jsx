@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import API from "@/services/api/tutorialsApi.js";
-import "../../styles/Tutorials/TutorLogin.css";
-import "../../styles/Tutorials/TutorRegistration.css";
-import { useNavigate } from "react-router-dom";
-import blackboard from "../../assets/images/blackboard.png";
+import { useNavigate, Link } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 
 function TutorRegisterPage() {
   const [step, setStep] = useState("form"); // "form" | "otp"
@@ -46,82 +44,93 @@ function TutorRegisterPage() {
   };
 
   return (
-    <div className="tutor-page">
-      <div className="tutor-navbar">
-        <h2>💡 Tutor Match</h2>
-      </div>
+    <div className="uc-login-page">
+      <div className="uc-login-card">
+        <Link to="/role-selection" className="uc-back-link">
+          <span>{"<- "}</span>
+          Back to role selection
+        </Link>
 
-      <div className="tutor-container">
-        <div className="tutor-left">
-          <h2>Start Teaching Today 🚀</h2>
-          <img src={blackboard} alt="illustration" />
-        </div>
-
-        <div className="tutor-right">
+        <section className="uc-login-panel">
+          <div className="uc-login-icon">
+            <BookOpen />
+          </div>
           <h1>Tutor Sign Up</h1>
+          <p>Register as a tutor to start teaching on UniConnect.</p>
 
           {step === "form" ? (
-            <form onSubmit={handleRequestOtp} className="tutor-form">
-              <label>Name</label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your name"
-                value={tutor.name}
-                onChange={handleChange}
-                required
-              />
-              <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={tutor.email}
-                onChange={handleChange}
-                required
-              />
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Create a password"
-                value={tutor.password}
-                onChange={handleChange}
-                required
-              />
-              <button type="submit">SEND OTP</button>
-              <p style={{ marginTop: "10px" }}>
-                Already have an account?{" "}
-                <span
-                  style={{ color: "#ff7a2f", cursor: "pointer", fontWeight: "bold" }}
-                  onClick={() => navigate("/login/tutor")}
-                >
-                  Login
-                </span>
+            <form onSubmit={handleRequestOtp} className="uc-login-form">
+              <label className="uc-field">
+                <span>Name</span>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Enter your name"
+                  value={tutor.name}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+
+              <label className="uc-field">
+                <span>Email address</span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={tutor.email}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+
+              <label className="uc-field">
+                <span>Password</span>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Create a password"
+                  value={tutor.password}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+
+              <button type="submit" className="uc-login-submit">
+                SEND OTP
+              </button>
+
+              <p className="uc-login-switch">
+                Already have an account? <Link to="/login/tutor">Login</Link>
               </p>
             </form>
           ) : (
-            <form onSubmit={handleVerifyOtp} className="tutor-form">
+            <form onSubmit={handleVerifyOtp} className="uc-login-form">
               <p style={{ color: "green", marginBottom: "12px" }}>{message}</p>
-              <label>Enter OTP sent to {tutor.email}</label>
-              <input
-                type="text"
-                placeholder="6-digit OTP"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                maxLength={6}
-                required
-              />
-              <button type="submit">VERIFY & REGISTER</button>
-              <p
-                style={{ marginTop: "10px", color: "#ff7a2f", cursor: "pointer" }}
-                onClick={() => setStep("form")}
-              >
-                ← Back
+              <label className="uc-field">
+                <span>Enter OTP sent to {tutor.email}</span>
+                <input
+                  type="text"
+                  placeholder="6-digit OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  maxLength={6}
+                  required
+                />
+              </label>
+
+              <button type="submit" className="uc-login-submit">
+                VERIFY & REGISTER
+              </button>
+
+              <p className="uc-login-switch">
+                <span onClick={() => setStep("form")} style={{ cursor: "pointer", fontWeight: "bold" }}>
+                  ← Back to form
+                </span>
               </p>
             </form>
           )}
-        </div>
+        </section>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 /* 🌍 PAGE */
 .schedule-page {
   font-family: Arial, sans-serif;
-  background: #f5f6f8;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
@@ -11,8 +12,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: #7d9184;
-  color: white;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .logo {
@@ -35,17 +37,18 @@
 
 .logout-btn {
   padding: 8px 15px;
-  border: 1px solid white;
+  border: 1px solid var(--border-color);
   background: transparent;
-  color: white;
+  color: var(--text-primary);
   border-radius: 5px;
   cursor: pointer;
 }
 
 /* 📅 TITLE BAR */
 .schedule-navbar {
-  background: #8fa79a;
-  color: white;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
   padding: 15px 40px;
 }
 
@@ -81,11 +84,13 @@
 
 /* 📦 CARD */
 .schedule-card {
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-primary);
   padding: 20px;
   border-radius: 12px;
   width: 320px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft, 0 5px 20px rgba(0,0,0,0.1));
   transition: transform 0.2s ease;
 }
 
@@ -99,7 +104,9 @@
   padding: 8px;
   margin-top: 5px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 /* 💾 BUTTON */

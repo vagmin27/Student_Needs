@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../../styles/Tutorials/LoginRegister.css";
+import { GraduationCap } from "lucide-react";
 import API from "@/services/api/tutorialsApi.js";
 
-/**
- * Amanda Au-Yeung
- * registers user with the email and pw to passport, session
- * @returns jsx of registration form
- */
 function Register() {
   const [step, setStep] = useState("form"); // 'form', 'otp', 'success'
   const [user, setUser] = useState({
@@ -93,121 +88,120 @@ function Register() {
 
   if (step === "success") {
     return (
-      <main className="card" id="signupCard">
-        <div className="signUp-title">
-          <h1 className="card-title" id="signUp">
-            Registration Successful
-          </h1>
+      <div className="uc-login-page">
+        <div className="uc-login-card">
+          <section className="uc-login-panel">
+            <div className="uc-login-icon">
+              <GraduationCap />
+            </div>
+            <h1>Registration Successful</h1>
+            <p>{message}</p>
+          </section>
         </div>
-        <div className="log-reg-body">
-          <p>{message}</p>
-        </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="card" id="signupCard">
-      <div className="alternate-text">
-        <Link id="sign-in" to="/login">
-          <div>Already have an account?</div>
-          <div>Sign In</div>
+    <div className="uc-login-page">
+      <div className="uc-login-card">
+        <Link to="/role-selection" className="uc-back-link">
+          <span>{"<- "}</span>
+          Back to role selection
         </Link>
-      </div>
-      <div className="signUp-title">
-        <h1 className="card-title" id="signUp">
-          Sign Up
-        </h1>
-      </div>
-      <div className="log-reg-body">
-        {step === "form" && (
-          <form className="form-body" onSubmit={requestOtp}>
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                Email address
+
+        <section className="uc-login-panel">
+          <div className="uc-login-icon">
+            <GraduationCap />
+          </div>
+          <h1>Student Sign Up</h1>
+          <p>Create your account to start matching with expert tutors.</p>
+
+          {step === "form" && (
+            <form className="uc-login-form" onSubmit={requestOtp}>
+              <label className="uc-field">
+                <span>Email address</span>
+                <input
+                  type="email"
+                  placeholder="Enter Email"
+                  value={user.email}
+                  onChange={onInputChange}
+                  name="email"
+                  required
+                />
               </label>
-              <input
-                type="email"
-                className="form-control"
-                id="exampleInputEmail1"
-                placeholder="Enter Email"
-                value={user.email}
-                onChange={onInputChange}
-                name="email"
-                required
-              />
-              <div id="emailHelp" className="form-text">
-                We will never share your email with anyone else.
-              </div>
-              {error.email && <span className="err">{error.email}</span>}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="inputPassword5">Password</label>
-              <input
-                type="password"
-                id="inputPassword5"
-                className="form-control"
-                placeholder="Enter your password"
-                name="password"
-                value={user.password}
-                onChange={onInputChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <div htmlFor="inputPassword5">Confirm Password</div>
-              <input
-                type="password"
-                id="inputConfirmedPassword5"
-                className="form-control"
-                placeholder="Confirm your password"
-                name="confirmedPassword"
-                value={user.confirmedPassword}
-                onChange={onInputChange}
-                onBlur={validateInput}
-                required
-              />
+              <small style={{ color: "var(--text-secondary)", opacity: 0.8, display: "block" }}>
+                We will never share your email.
+              </small>
+              {error.email && <span style={{ color: "var(--destructive)", fontSize: "12px" }}>{error.email}</span>}
+
+              <label className="uc-field">
+                <span>Password</span>
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  name="password"
+                  value={user.password}
+                  onChange={onInputChange}
+                  required
+                />
+              </label>
+
+              <label className="uc-field">
+                <span>Confirm Password</span>
+                <input
+                  type="password"
+                  placeholder="Confirm your password"
+                  name="confirmedPassword"
+                  value={user.confirmedPassword}
+                  onChange={onInputChange}
+                  onBlur={validateInput}
+                  required
+                />
+              </label>
               {error.confirmedPassword && (
-                <span className="err">{error.confirmedPassword}</span>
+                <span style={{ color: "var(--destructive)", fontSize: "12px" }}>{error.confirmedPassword}</span>
               )}
-            </div>
-            <button type="submit" className="btn">
-              Send OTP
-            </button>
-          </form>
-        )}
-        {step === "otp" && (
-          <form className="form-body" onSubmit={verifyOtp}>
-            <div className="mb-3">
-              <label htmlFor="otpInput" className="form-label">
-                Enter 6-digit OTP sent to {user.email}
+
+              <button type="submit" className="uc-login-submit">
+                Send OTP
+              </button>
+
+              <p className="uc-login-switch">
+                Already have an account? <Link to="/login/student">Login</Link>
+              </p>
+            </form>
+          )}
+
+          {step === "otp" && (
+            <form className="uc-login-form" onSubmit={verifyOtp}>
+              <p style={{ color: "green", marginBottom: "12px" }}>{message}</p>
+              <label className="uc-field">
+                <span>Enter 6-digit OTP sent to {user.email}</span>
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={onOtpChange}
+                  maxLength="6"
+                  required
+                />
               </label>
-              <input
-                type="text"
-                className="form-control"
-                id="otpInput"
-                placeholder="Enter OTP"
-                value={otp}
-                onChange={onOtpChange}
-                maxLength="6"
-                required
-              />
-              {error.otp && <span className="err">{error.otp}</span>}
-            </div>
-            <button type="submit" className="btn">
-              Verify and Register
-            </button>
-            <button type="button" className="btn" onClick={resendOtp}>
-              Resend OTP
-            </button>
-            {message && <p>{message}</p>}
-          </form>
-        )}
+              {error.otp && <span style={{ color: "var(--destructive)", fontSize: "12px" }}>{error.otp}</span>}
+
+              <button type="submit" className="uc-login-submit">
+                Verify and Register
+              </button>
+
+              <button type="button" className="uc-login-submit" style={{ background: "transparent", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} onClick={resendOtp}>
+                Resend OTP
+              </button>
+            </form>
+          )}
+        </section>
       </div>
-    </main>
+    </div>
   );
 }
-
-Register.protTypes = {};
 
 export default Register;

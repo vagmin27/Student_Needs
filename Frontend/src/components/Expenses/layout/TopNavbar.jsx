@@ -25,26 +25,26 @@ const TopNavbar = ({ setIsSidebarOpen }) => {
       <div className="flex items-center gap-4 min-w-0">
         <button 
           onClick={() => setIsSidebarOpen(true)}
-          className="p-2 text-slate-400 hover:text-white transition-colors md:hidden focus-animation rounded-lg shrink-0"
+          className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors md:hidden focus-animation rounded-lg shrink-0"
         >
           <HiOutlineMenuAlt2 size={24} />
         </button>
 
         <Link
           to="/student/dashboard"
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors text-sm font-medium shrink-0"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors text-sm font-medium shrink-0"
           aria-label="Back to Dashboard"
         >
           <MdArrowBack size={20} />
           <span className="hidden sm:inline">Back to Dashboard</span>
         </Link>
         
-        <div className="hidden md:flex items-center bg-brand-800/80 border border-white/10 rounded-xl px-4 py-2 hover:border-brand-primary/50 transition-colors min-w-0">
-          <HiOutlineSearch size={20} className="text-slate-400 mr-2" />
+        <div className="hidden md:flex items-center bg-secondary/50 border border-border/50 rounded-xl px-4 py-2 hover:border-brand-primary/50 transition-colors min-w-0">
+          <HiOutlineSearch size={20} className="text-muted-foreground mr-2" />
           <input 
             type="text" 
             placeholder="Search transactions..." 
-            className="bg-transparent border-none outline-none text-white placeholder-slate-500 w-64"
+            className="bg-transparent border-none outline-none text-foreground placeholder-muted-foreground/60 w-64"
           />
         </div>
       </div>
@@ -57,12 +57,12 @@ const TopNavbar = ({ setIsSidebarOpen }) => {
           <NotificationCenter />
         </div>
 
-        <div className="h-8 w-px bg-white/10 hidden sm:block"></div>
+        <div className="h-8 w-px bg-border/20 hidden sm:block"></div>
 
         {/* User Profile */}
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right">
-            <p className="text-sm font-semibold text-white">{user?.username || user?.name || "User"}</p>
+            <p className="text-sm font-semibold text-foreground">{user?.username || user?.name || "User"}</p>
             <Link to="/expenses-tracker/settings" className="text-xs text-brand-primary hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
           </div>
           
@@ -72,7 +72,7 @@ const TopNavbar = ({ setIsSidebarOpen }) => {
 
           <button 
             onClick={logoutHandle}
-            className="ml-1 p-2 text-slate-400 hover:text-brand-danger transition-colors focus-animation rounded-lg group hidden sm:block"
+            className="ml-1 p-2 text-muted-foreground hover:text-brand-danger transition-colors focus-animation rounded-lg group hidden sm:block"
             title="Log out"
           >
             <FiLogOut size={22} className="group-hover:-translate-x-1 transition-transform" />

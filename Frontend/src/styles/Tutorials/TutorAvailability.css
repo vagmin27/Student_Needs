@@ -1,7 +1,8 @@
 /* 🌍 Page */
 .availability-page {
   font-family: Arial, sans-serif;
-  background: #f5f6f8;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
@@ -11,23 +12,24 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: #8fa79a;
-  color: white;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .availability-navbar button {
   padding: 8px 16px;
-  border: 1px solid white;
+  border: 1px solid var(--border-color);
   background: transparent;
-  color: white;
+  color: var(--text-primary);
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .availability-navbar button:hover {
-  background: white;
-  color: #8fa79a;
+  background: var(--bg-hover, rgba(0, 0, 0, 0.05));
+  color: var(--text-primary);
 }
 
 /* 🔥 Layout */
@@ -50,6 +52,7 @@
 .availability-left h2 {
   font-size: 28px;
   margin-bottom: 15px;
+  color: var(--text-primary);
 }
 
 /* 🖼️ IMAGE (ENLARGED 🔥) */
@@ -68,10 +71,12 @@
 .availability-right {
   flex: 1;
   max-width: 450px;
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-primary);
   padding: 35px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft, 0 15px 40px rgba(0,0,0,0.12));
 }
 
 /* 🧾 Form */
@@ -86,20 +91,23 @@
   display: block;
   margin: 6px 0;
   font-size: 15px;
+  color: var(--text-secondary);
 }
 
 /* 📝 Input */
 .availability-input {
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   width: 100%;
   outline: none;
   transition: 0.2s;
 }
 
 .availability-input:focus {
-  border-color: #ff7a2f;
+  border-color: var(--accent-cyan, #ff7a2f);
 }
 
 /* ➕ Add button */

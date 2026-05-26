@@ -49,90 +49,72 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-900 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute top-[10%] right-[-10%] w-96 h-96 bg-brand-primary/20 rounded-full blur-[100px]"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-emerald-600/20 rounded-full blur-[100px]"></div>
+    <div className="uc-login-page">
+      <div className="uc-login-card">
+        <Link to="/role-selection" className="uc-back-link">
+          <span>{"<- "}</span>
+          Back to role selection
+        </Link>
+        
+        <LoadingBar color="#10B981" ref={ref} height={3} />
 
-      <LoadingBar color="#10B981" ref={ref} height={3} />
-
-      <div className="glass-panel p-8 md:p-12 w-full max-w-md relative z-10 animate-fade-in-up">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold font-mont tracking-wider text-white mb-2">
-            <span className="text-brand-primary">Join</span> Us
-          </h1>
-          <p className="text-slate-400">Create an account to start tracking.</p>
-        </div>
-
-        <form onSubmit={submitForm} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">
-              Username
-            </label>
-            <input
-              type="text"
-              placeholder="johndoe"
-              onChange={(e) => setUsername(e.target.value)}
-              className="premium-input"
-              required
-            />
+        <section className="uc-login-panel">
+          <div className="uc-login-icon">
+            <span className="font-bold text-xl leading-none">F</span>
           </div>
+          <h1>FinTrack Sign Up</h1>
+          <p>Create an account to start tracking your student budget.</p>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">
-              Email Address
+          <form onSubmit={submitForm} className="uc-login-form">
+            <label className="uc-field">
+              <span>Username</span>
+              <input
+                type="text"
+                placeholder="johndoe"
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
             </label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              onChange={(e) => setEmail(e.target.value)}
-              className="premium-input"
-              required
-            />
-          </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">
-              Password
+            <label className="uc-field">
+              <span>Email Address</span>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              onChange={(e) => setPassword(e.target.value)}
-              className="premium-input"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">
-              Monthly Budget (₹)
+
+            <label className="uc-field">
+              <span>Password</span>
+              <input
+                type="password"
+                placeholder="••••••••"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </label>
-            <input
-              type="number"
-              placeholder="Enter your monthly spending limit"
-              onChange={(e) => setBudget(e.target.value)}
-              className="premium-input"
-              required
-            />
-          </div>
 
-          <button
-            type="submit"
-            className="w-full h-12 mt-6 rounded-xl bg-gradient-to-r from-brand-accent to-emerald-600 text-white font-bold tracking-wide shadow-lg shadow-brand-accent/30 hover:shadow-brand-accent/50 hover:-translate-y-0.5 transition-all duration-300"
-          >
-            Create Account
-          </button>
-        </form>
+            <label className="uc-field">
+              <span>Monthly Budget (₹)</span>
+              <input
+                type="number"
+                placeholder="Enter your monthly spending limit"
+                onChange={(e) => setBudget(e.target.value)}
+                required
+              />
+            </label>
 
-        <p className="text-center text-slate-400 mt-8 text-sm">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-brand-accent hover:text-white font-semibold transition-colors"
-          >
-            Sign in
-          </Link>
-        </p>
+            <button type="submit" className="uc-login-submit">
+              Create Account
+            </button>
+          </form>
+
+          <p className="uc-login-switch">
+            Already have an account? <Link to="/login">Sign in</Link>
+          </p>
+        </section>
       </div>
     </div>
   );

@@ -241,7 +241,7 @@ const StudentDashboard = () => {
   }
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="attendance-module space-y-6 pb-8">
       <BackToStudentDashboard />
 
       {loadError && (

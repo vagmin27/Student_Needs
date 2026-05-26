@@ -35,7 +35,7 @@ function Reports() {
   };
 
   return (
-    <div>
+    <div className="attendance-module">
       <div className="page-header">
         <h1>Download Reports</h1>
         <p>Export attendance data as a CSV file for any date range</p>

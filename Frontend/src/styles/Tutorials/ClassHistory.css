@@ -10,10 +10,11 @@
 .innerDivHistory {
   width: 100%;
   max-width: 1000px;
-  background: #f8faf7;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-soft);
 }
 
 /* TITLE */
@@ -21,7 +22,7 @@
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
-  color: #c3591c;
+  color: var(--text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -36,17 +37,18 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background: white;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   padding: 1rem 1.2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-soft);
   transition: all 0.2s ease;
 }
 
 /* HOVER EFFECT */
 .scheduleDivHistory:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-glow);
 }
 
 /* TEXT STYLING */
@@ -54,7 +56,7 @@
 .timep,
 .tutorp,
 .subjectp {
-  color: #444;
+  color: var(--text-secondary);
   font-weight: 500;
   margin-right: 1rem;
   margin-bottom: 0.5rem;

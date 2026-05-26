@@ -97,31 +97,31 @@ export function VerifierDashboard() {
   };
 
   return (
-    <div className="space-y-6 mt-24">
+    <div className="space-y-6 mt-2">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between p-6 glass-panel rounded-2xl border border-border/50">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate('/')}
-            className="gap-2"
+            className="gap-2 hover:bg-secondary"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
           </Button>
           <div>
-            <h1 className="text-3xl font-bold text-foreground">
+            <h1 className="text-3xl font-bold text-foreground tracking-tight">
               Verifier Dashboard
             </h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-1 text-sm">
               Welcome back, {verifierName}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-verifier">
-          <ShieldCheck className="w-6 h-6" />
-          <span className="font-semibold">Verifier Role</span>
+        <div className="flex items-center gap-2 text-primary font-semibold">
+          <ShieldCheck className="w-6 h-6 text-primary" />
+          <span className="hidden sm:inline">Verifier Role</span>
         </div>
       </div>
 

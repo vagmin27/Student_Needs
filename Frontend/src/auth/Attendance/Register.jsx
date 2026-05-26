@@ -61,118 +61,115 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-logo">
-          <div className="auth-logo-icon">
-            <MdOutlineSchool color="#fff" />
-          </div>
-          <div>
-            <div className="auth-logo-text">AttendEase</div>
-          </div>
-        </div>
+    <div className="uc-login-page">
+      <div className="uc-login-card">
+        <Link to="/role-selection" className="uc-back-link">
+          <span>{"<- "}</span>
+          Back to role selection
+        </Link>
 
-        <h1 className="auth-heading">Create Account</h1>
-        <p className="auth-subtext">Join AttendEase to manage your attendance</p>
+        <section className="uc-login-panel">
+          <div className="uc-login-icon">
+            <MdOutlineSchool size={28} />
+          </div>
+          <h1>AttendEase Sign Up</h1>
+          <p>Join AttendEase to manage your class attendance.</p>
 
-        <form onSubmit={handleSubmit} noValidate>
-          {/* Name */}
-          <div className="form-group">
-            <label className="form-label">Full Name</label>
-            <div className="form-input-wrap">
+          <form onSubmit={handleSubmit} noValidate className="uc-login-form">
+            <label className="uc-field">
+              <span>Full Name</span>
               <input
                 name="name"
                 type="text"
-                className={`form-input ${errors.name ? "error" : ""}`}
                 placeholder="John Doe"
                 value={formData.name}
                 onChange={handleChange}
+                required
               />
-              <FiUser className="input-icon-right" style={{ pointerEvents: "none" }} />
-            </div>
-            {errors.name && <p className="form-error">{errors.name}</p>}
-          </div>
+            </label>
+            {errors.name && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.name}</p>}
 
-          {/* Email */}
-          <div className="form-group">
-            <label className="form-label">Email Address</label>
-            <div className="form-input-wrap">
+            <label className="uc-field">
+              <span>Email Address</span>
               <input
                 name="email"
                 type="email"
-                className={`form-input ${errors.email ? "error" : ""}`}
                 placeholder="you@example.com"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
-              <FiMail className="input-icon-right" style={{ pointerEvents: "none" }} />
-            </div>
-            {errors.email && <p className="form-error">{errors.email}</p>}
-          </div>
+            </label>
+            {errors.email && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.email}</p>}
 
-          {/* Role */}
-          <div className="form-group">
-            <label className="form-label">Role</label>
-            <div className="form-input-wrap">
+            <label className="uc-field">
+              <span>Role</span>
               <select
                 name="role"
-                className="form-select"
                 value={formData.role}
                 onChange={handleChange}
+                required
               >
                 <option value="student">Student</option>
                 <option value="teacher">Teacher</option>
               </select>
-              <FiUserCheck className="input-icon-right" style={{ pointerEvents: "none" }} />
-            </div>
-          </div>
+            </label>
 
-          {/* Password */}
-          <div className="form-group">
-            <label className="form-label">Password</label>
-            <div className="form-input-wrap">
-              <input
-                name="password"
-                type={showPass ? "text" : "password"}
-                className={`form-input ${errors.password ? "error" : ""}`}
-                placeholder="Minimum 6 characters"
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <span className="input-icon-right" onClick={() => setShowPass(!showPass)}>
-                {showPass ? <FiEyeOff /> : <FiEye />}
-              </span>
-            </div>
-            {errors.password && <p className="form-error">{errors.password}</p>}
-          </div>
+            <label className="uc-field">
+              <span>Password</span>
+              <div style={{ position: "relative" }}>
+                <input
+                  name="password"
+                  type={showPass ? "text" : "password"}
+                  placeholder="Minimum 6 characters"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  style={{ paddingRight: "40px" }}
+                />
+                <span 
+                  className="input-icon-right" 
+                  onClick={() => setShowPass(!showPass)}
+                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", color: "var(--text-secondary)" }}
+                >
+                  {showPass ? <FiEyeOff /> : <FiEye />}
+                </span>
+              </div>
+            </label>
+            {errors.password && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.password}</p>}
 
-          {/* Confirm Password */}
-          <div className="form-group">
-            <label className="form-label">Confirm Password</label>
-            <div className="form-input-wrap">
-              <input
-                name="confirmPassword"
-                type={showConfirm ? "text" : "password"}
-                className={`form-input ${errors.confirmPassword ? "error" : ""}`}
-                placeholder="Re-enter password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-              <span className="input-icon-right" onClick={() => setShowConfirm(!showConfirm)}>
-                {showConfirm ? <FiEyeOff /> : <FiEye />}
-              </span>
-            </div>
-            {errors.confirmPassword && <p className="form-error">{errors.confirmPassword}</p>}
-          </div>
+            <label className="uc-field">
+              <span>Confirm Password</span>
+              <div style={{ position: "relative" }}>
+                <input
+                  name="confirmPassword"
+                  type={showConfirm ? "text" : "password"}
+                  placeholder="Re-enter password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  style={{ paddingRight: "40px" }}
+                />
+                <span 
+                  className="input-icon-right" 
+                  onClick={() => setShowConfirm(!showConfirm)}
+                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", color: "var(--text-secondary)" }}
+                >
+                  {showConfirm ? <FiEyeOff /> : <FiEye />}
+                </span>
+              </div>
+            </label>
+            {errors.confirmPassword && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.confirmPassword}</p>}
 
-          <button type="submit" className="btn btn-primary btn-lg" disabled={loading} style={{ marginTop: 4 }}>
-            {loading ? <><span className="spinner" /> Creating Account...</> : "Create Account"}
-          </button>
-        </form>
+            <button type="submit" className="uc-login-submit" disabled={loading} style={{ marginTop: 4 }}>
+              {loading ? "Creating Account..." : "Create Account"}
+            </button>
+          </form>
 
-        <div className="auth-footer">
-          Already have an account? <Link to="/login">Sign in</Link>
-        </div>
+          <p className="uc-login-switch">
+            Already have an account? <Link to="/attendance/login">Sign in</Link>
+          </p>
+        </section>
       </div>
     </div>
   );

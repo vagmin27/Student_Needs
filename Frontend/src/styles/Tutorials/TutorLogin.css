@@ -1,7 +1,8 @@
 /* 🌍 Page */
 .tutor-page {
   font-family: Arial, sans-serif;
-  background: #f5f6f8;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
@@ -11,8 +12,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: #8fa79a;
-  color: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .tutor-navbar h2 {
@@ -21,17 +23,17 @@
 
 .tutor-navbar button {
   padding: 8px 16px;
-  border: 1px solid white;
+  border: 1px solid var(--border-color);
   background: transparent;
-  color: white;
+  color: var(--text-primary);
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s ease;
 }
 
 .tutor-navbar button:hover {
-  background: white;
-  color: #8fa79a;
+  background: var(--bg-primary);
+  color: var(--primary);
 }
 
 /* 🔥 Layout */
@@ -52,7 +54,7 @@
 }
 
 .tutor-left h2 {
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 10px;
 }
 
@@ -71,16 +73,17 @@
 .tutor-right {
   flex: 1;
   max-width: 400px;
-  background: white;
+  background: var(--card-bg);
   padding: 35px;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
   animation: fadeIn 0.4s ease-in-out;
 }
 
 .tutor-right h1 {
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 /* 🧾 Form */
@@ -92,30 +95,32 @@
 
 .tutor-form label {
   font-weight: 500;
-  color: #444;
+  color: var(--text-secondary);
 }
 
 /* ✏️ Inputs */
 .tutor-form input {
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   outline: none;
   transition: all 0.2s ease;
 }
 
 .tutor-form input:focus {
-  border-color: #ff7a2f;
-  box-shadow: 0 0 5px rgba(255, 122, 47, 0.3);
+  border-color: var(--primary);
+  box-shadow: 0 0 5px var(--primary)/20;
 }
 
 /* 🔘 Button */
 .tutor-form button {
   margin-top: 15px;
   padding: 12px;
-  background: #ff7a2f;
+  background: var(--primary);
   border: none;
-  color: white;
+  color: var(--primary-foreground);
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
@@ -123,13 +128,13 @@
 }
 
 .tutor-form button:hover {
-  background: #e66a20;
+  background: var(--primary)/90;
   transform: translateY(-2px);
 }
 
 /* 🔗 Signup Link */
 .tutor-form span {
-  color: #ff7a2f;
+  color: var(--primary);
   font-weight: bold;
   cursor: pointer;
 }

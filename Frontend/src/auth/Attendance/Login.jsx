@@ -48,68 +48,70 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-logo">
-          <div className="auth-logo-icon">
-            <MdOutlineSchool color="#fff" size={22} />
-          </div>
-          <div>
-            <div className="auth-logo-text">AttendEase</div>
-          </div>
-        </div>
+    <div className="uc-login-page">
+      <div className="uc-login-card">
+        <Link to="/role-selection" className="uc-back-link">
+          <span>{"<- "}</span>
+          Back to role selection
+        </Link>
 
-        <h1 className="auth-heading">Welcome back</h1>
-        <p className="auth-subtext">Sign in to your account to continue</p>
+        <section className="uc-login-panel">
+          <div className="uc-login-icon">
+            <MdOutlineSchool size={28} />
+          </div>
+          <h1>AttendEase Sign In</h1>
+          <p>Sign in to your teacher or student attendance account.</p>
 
-        <form onSubmit={handleSubmit} noValidate>
-          <div className="form-group">
-            <label className="form-label">Email Address</label>
-            <div className="form-input-wrap">
+          <form onSubmit={handleSubmit} noValidate className="uc-login-form">
+            <label className="uc-field">
+              <span>Email Address</span>
               <input
                 type="email"
                 name="email"
-                className={`form-input ${errors.email ? "error" : ""}`}
                 placeholder="you@example.com"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
-              <FiMail className="input-icon-right" style={{ pointerEvents: "none" }} />
-            </div>
-            {errors.email && <p className="form-error">{errors.email}</p>}
-          </div>
+            </label>
+            {errors.email && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.email}</p>}
 
-          <div className="form-group">
-            <label className="form-label">Password</label>
-            <div className="form-input-wrap">
-              <input
-                type={showPass ? "text" : "password"}
-                name="password"
-                className={`form-input ${errors.password ? "error" : ""}`}
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <span className="input-icon-right" onClick={() => setShowPass(!showPass)}>
-                {showPass ? <FiEyeOff /> : <FiEye />}
-              </span>
-            </div>
-            {errors.password && <p className="form-error">{errors.password}</p>}
-          </div>
+            <label className="uc-field">
+              <span>Password</span>
+              <div style={{ position: "relative" }}>
+                <input
+                  type={showPass ? "text" : "password"}
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  style={{ paddingRight: "40px" }}
+                />
+                <span 
+                  onClick={() => setShowPass(!showPass)}
+                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", color: "var(--text-secondary)" }}
+                >
+                  {showPass ? <FiEyeOff /> : <FiEye />}
+                </span>
+              </div>
+            </label>
+            {errors.password && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.password}</p>}
 
-          <button
-            type="submit"
-            className="btn btn-primary btn-lg"
-            disabled={loading}
-            style={{ marginTop: 8 }}
-          >
-            {loading ? <><span className="spinner" /> Signing in...</> : "Sign In"}
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="uc-login-submit"
+              disabled={loading}
+              style={{ marginTop: 8 }}
+            >
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
+          </form>
 
-        <div className="auth-footer">
-          Don't have an account? <Link to="/attendance/register">Create one</Link>
-        </div>
+          <p className="uc-login-switch">
+            Don't have an account? <Link to="/attendance/register">Create one</Link>
+          </p>
+        </section>
       </div>
     </div>
   );

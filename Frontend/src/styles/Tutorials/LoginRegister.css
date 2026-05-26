@@ -3,7 +3,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* 🧱 MAIN CONTAINER (FIXED CENTERING) */
@@ -19,17 +20,18 @@ body {
 #loginCard {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
+  background: var(--card-bg);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
   transition: 0.3s ease;
 }
 
 /* ✨ HOVER EFFECT */
 #loginCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-glow);
 }
 
 /* 🏷️ TITLE */
@@ -38,7 +40,7 @@ body {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: var(--text-primary);
 }
 
 /* 📝 FORM */
@@ -52,7 +54,7 @@ body {
 .form-label {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #555;
+  color: var(--text-secondary);
   margin-top: 0.5rem;
 }
 
@@ -61,16 +63,18 @@ body {
   width: 100%;
   padding: 0.85rem;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   transition: 0.25s ease;
   font-size: 0.95rem;
 }
 
 /* ✨ INPUT FOCUS */
 .form-control:focus {
-  border-color: #ff7a18;
+  border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 122, 24, 0.2);
+  box-shadow: 0 0 0 3px var(--primary)/20;
 }
 
 /* 🔘 BUTTON */
@@ -79,8 +83,8 @@ body {
   padding: 0.9rem;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(135deg, #ff7a18, #ffb347);
-  color: white;
+  background: var(--primary);
+  color: var(--primary-foreground);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -90,7 +94,7 @@ body {
 /* ✨ BUTTON HOVER */
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255, 122, 24, 0.3);
+  background: var(--primary)/90;
 }
 
 /* 🔗 REGISTER LINK */
@@ -98,11 +102,12 @@ body {
   text-align: right;
   margin-bottom: 1rem;
   font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 #reg-link {
   text-decoration: none;
-  color: #ff7a18;
+  color: var(--primary);
   font-weight: 500;
 }
 
@@ -113,13 +118,13 @@ body {
 /* ℹ️ SMALL TEXT */
 .form-text {
   font-size: 0.75rem;
-  color: #888;
+  color: var(--text-secondary);
   margin-bottom: 0.8rem;
 }
 
 /* ❌ ERROR TEXT */
 .err {
-  color: #e63946;
+  color: var(--destructive);
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }

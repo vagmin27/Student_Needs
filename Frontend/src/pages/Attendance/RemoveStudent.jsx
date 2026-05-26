@@ -24,7 +24,7 @@ function RemoveStudent() {
   };
 
   return (
-    <div>
+    <div className="attendance-module">
       <div className="page-header">
         <h1>Remove Student</h1>
         <p>Permanently delete a student and their attendance records</p>

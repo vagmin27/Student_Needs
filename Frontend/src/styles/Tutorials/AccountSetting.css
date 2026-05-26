@@ -9,7 +9,7 @@
 }
 
 .light-theme .AccountSetting {
-  background: var(--card-bg, #ffffff);
+  background: var(--bg-secondary, #ffffff);
 }
 
 /* MAIN CONTAINER */
@@ -18,9 +18,11 @@
   max-width: 1100px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #f8faf7;
+  background: var(--bg-secondary, #f8faf7);
+  color: var(--text-primary);
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-soft, 0 10px 25px rgba(0, 0, 0, 0.08));
+  border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -31,7 +33,7 @@
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
-  color: #c3591c;
+  color: var(--accent-purple, #c3591c);
 }
 
 /* PRICE + BUTTON SECTION */
@@ -53,10 +55,10 @@
 .btnAccount {
   min-width: 180px;
   padding: 0.9em 1.8em;
-  border: 2px solid #f5a440;
+  border: 2px solid var(--accent-cyan, #f5a440);
   border-radius: 8px;
-  background: white;
-  color: #352e25;
+  background: var(--card-bg, white);
+  color: var(--text-primary, #352e25);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -64,10 +66,10 @@
 
 /* HOVER EFFECT */
 .btnAccount:hover {
-  background: #f5a440;
-  color: white;
+  background: var(--accent-cyan, #f5a440);
+  color: var(--bg-primary, white);
   transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(245, 164, 64, 0.4);
+  box-shadow: var(--shadow-glow, 0 6px 15px rgba(245, 164, 64, 0.4));
 }
 
 /* ACTIVE CLICK EFFECT */

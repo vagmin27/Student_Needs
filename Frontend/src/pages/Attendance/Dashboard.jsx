@@ -117,7 +117,7 @@ function Dashboard() {
   const presentPct = totalToday > 0 ? ((presentStudents.length / totalToday) * 100).toFixed(0) : 0;
 
   return (
-    <div>
+    <div className="attendance-module">
       <div className="page-header">
         <h1>Teacher Dashboard</h1>
         <p>Overview of attendance and student performance</p>
@@ -174,7 +174,7 @@ function Dashboard() {
       </div>
 
       {/* Present / Absent Lists */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginBottom: 20 }}>
         <div className="card" style={{ borderLeft: "4px solid var(--success)", marginBottom: 0 }}>
           <div className="card-title" style={{ color: "var(--success)" }}>
             <MdCheckCircle /> Present ({presentStudents.length})

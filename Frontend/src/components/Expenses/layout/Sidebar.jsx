@@ -32,10 +32,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar container */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 glass-panel border-l-0 rounded-l-none transform transition-transform duration-300 ease-in-out md:translate-x-0 md:relative md:flex md:flex-col ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed inset-y-0 left-0 z-50 w-64 premium-sidebar border-l-0 rounded-l-none transform transition-transform duration-300 ease-in-out md:translate-x-0 md:relative md:flex md:flex-col ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="flex items-center justify-center h-24 border-b border-white/10">
-          <h1 className="text-2xl font-bold font-mont tracking-wider text-white">
+        <div className="flex items-center justify-center h-24 border-b border-border/50">
+          <h1 className="text-2xl font-bold font-mont tracking-wider text-foreground">
             <span className="text-brand-primary">Fin</span>Track
           </h1>
         </div>
@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <Link
             to="/student/dashboard"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-4 px-4 py-3 mb-4 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white border border-white/10 transition-all duration-200 group"
+            className="flex items-center gap-4 px-4 py-3 mb-4 rounded-xl text-muted-foreground hover:bg-white/10 transition-all duration-200 group"
           >
             <div className="flex-shrink-0 transition-transform group-hover:scale-110 duration-200">
               <MdArrowBack size={24} />
@@ -60,8 +60,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               className={({ isActive }) =>
                 `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
                   isActive
-                    ? "bg-brand-primary/20 text-brand-primary border border-brand-primary/30 shadow-[0_0_15px_rgba(99,102,241,0.2)]"
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                    ? "active"
+                    : "text-muted-foreground hover:bg-white/10"
                 }`
               }
             >

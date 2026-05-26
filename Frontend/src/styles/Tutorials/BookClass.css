@@ -10,8 +10,8 @@
 
 /* BODY */
 body {
-  background: #f5f7fb;
-  color: #333;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* MAIN WRAPPER */
@@ -31,10 +31,11 @@ body {
 
 /* SEARCH / CONTENT AREA */
 .searchDiv {
-  background: #ffffff;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-soft);
   min-height: 400px;
   transition: all 0.3s ease;
 }

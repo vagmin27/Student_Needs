@@ -67,7 +67,7 @@ function Attendance() {
   const markedCount = Object.keys(attendanceData).length;
 
   return (
-    <div>
+    <div className="attendance-module">
       <div className="page-header">
         <h1>Mark Attendance</h1>
         <p>Select a subject, date, then mark each student present or absent</p>

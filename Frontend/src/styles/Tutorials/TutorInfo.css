@@ -3,10 +3,11 @@
   width: 100%;
   max-width: 1100px;
   margin: 2rem auto;
-  background: #f8faf7;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-soft);
 }
 
 /* REMOVE FULL HEIGHT */
@@ -31,13 +32,13 @@
 .card-title2 {
   font-size: 1.6rem;
   font-weight: 600;
-  color: #2f3e3a;
+  color: var(--text-primary);
 }
 
 /* TEXT */
 .card-text2 {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-top: 1rem;
 }
@@ -79,13 +80,14 @@
 
 /* REVIEW CARD */
 .review-base {
-  background: white;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1rem;
   margin-bottom: 1rem;
   font-size: 0.9rem;
-  color: #444;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-soft);
 }
 
 /* REMOVE OLD QUOTE POSITION BUG */

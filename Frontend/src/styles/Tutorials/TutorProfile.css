@@ -3,7 +3,7 @@
   text-align: center;
   font-size: 1.8rem;
   font-weight: 600;
-  color: #2f3e3a;
+  color: var(--text-primary);
   margin: 1.5rem 0;
 }
 
@@ -15,13 +15,13 @@
 
 .back {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: 0.2s;
 }
 
 .back:hover {
-  color: #000;
+  color: var(--text-primary);
 }
 
 /* CARD GROUP (ROW) */
@@ -37,17 +37,18 @@
 .cardimage {
   width: 100%;
   max-width: 420px;
-  background: white;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-soft);
   transition: all 0.25s ease;
 }
 
 /* HOVER EFFECT */
 .cardimage:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-glow);
 }
 
 /* REMOVE FIXED HEIGHT */
@@ -69,13 +70,13 @@
 .card-title-tutor {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 /* TEXT */
 .card-text {
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-top: 0.5rem;
 }

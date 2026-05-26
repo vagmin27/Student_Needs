@@ -11,7 +11,8 @@
 
 /* ================= BODY ================= */
 body {
-background: #f5f7fb;
+background: var(--bg-primary);
+color: var(--text-primary);
 }
 
 /* ================= MAIN LAYOUT ================= */
@@ -86,7 +87,7 @@ transform: scale(0.96);
 /* ================= FEATURES SECTION ================= */
 .featuresSection {
 padding: 4rem 2rem;
-background: #ffffff;
+background: var(--bg-secondary);
 text-align: center;
 }
 
@@ -94,7 +95,7 @@ text-align: center;
 font-size: 2rem;
 margin-bottom: 2.5rem;
 font-weight: 700;
-color: #1a1a1a;
+color: var(--text-primary);
 }
 
 /* GRID */
@@ -108,21 +109,22 @@ margin: 0 auto;
 
 /* CARD */
 .featureCard {
-background: #f9fbff;
+background: var(--card-bg);
 padding: 2rem;
 border-radius: 16px;
 transition: all 0.3s ease;
-border: 1px solid #eef2f7;
-box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+border: 1px solid var(--border-color);
+box-shadow: var(--shadow-soft);
 }
 
 .featureCard h3 {
 margin-bottom: 1rem;
 font-size: 1.2rem;
+color: var(--text-primary);
 }
 
 .featureCard p {
-color: #555;
+color: var(--text-secondary);
 font-size: 0.95rem;
 }
 

@@ -3,12 +3,13 @@
   width: 90%;
   max-width: 600px;
   max-height: 85vh;
-  background: #ffffff;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-soft);
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -29,12 +30,12 @@
   align-self: flex-end;
   font-size: 20px;
   cursor: pointer;
-  color: #666;
+  color: var(--text-secondary);
   transition: 0.2s;
 }
 
 .closeBtnReview:hover {
-  color: #000;
+  color: var(--text-primary);
 }
 
 /* CONTENT */
@@ -47,7 +48,7 @@
 .titleReview {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -64,23 +65,25 @@
   display: block;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 /* TEXTAREA */
 .form-control {
   width: 100%;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
+  background: var(--secondary);
+  color: var(--text-primary);
   padding: 0.75rem;
   font-size: 0.9rem;
   transition: all 0.2s ease;
 }
 
 .form-control:focus {
-  border-color: #f5a440;
+  border-color: var(--accent-blue);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(245, 164, 64, 0.2);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 /* REMOVE FIXED WIDTH */

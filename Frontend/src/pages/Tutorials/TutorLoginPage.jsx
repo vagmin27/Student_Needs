@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import API from "@/services/api/tutorialsApi.js";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
-
-import "../../styles/Tutorials/TutorLogin.css";
-import { useNavigate } from "react-router-dom";
-import blackboard from "../../assets/images/blackboard.png";
+import { useNavigate, Link } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 
 function TutorLoginPage() {
   const [email, setEmail] = useState("");
@@ -68,62 +66,52 @@ function TutorLoginPage() {
   };
 
   return (
-    <div className="tutor-page">
-      {/* 🔝 Navbar */}
-      <div className="tutor-navbar">
-        <h2>💡 Tutor Match</h2>
-        <button onClick={() => navigate("/role-selection")}>Back</button>
-      </div>
+    <div className="uc-login-page">
+      <div className="uc-login-card">
+        <Link to="/role-selection" className="uc-back-link">
+          <span>{"<- "}</span>
+          Back to role selection
+        </Link>
 
-      {/* 🔥 Layout */}
-      <div className="tutor-container">
-        {/* LEFT */}
-        <div className="tutor-left">
-          <h2>Login to Start Teaching!</h2>
-          <img src={blackboard} alt="illustration" />
-        </div>
-
-        {/* RIGHT */}
-        <div className="tutor-right">
+        <section className="uc-login-panel">
+          <div className="uc-login-icon">
+            <BookOpen />
+          </div>
           <h1>Tutor Sign In</h1>
+          <p>Login to start teaching and manage your student bookings.</p>
 
-          <form onSubmit={handleSubmit} className="tutor-form">
-            <label>Email address</label>
-            <input
-              type="email"
-              placeholder="Enter your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+          <form onSubmit={handleSubmit} className="uc-login-form">
+            <label className="uc-field">
+              <span>Email address</span>
+              <input
+                type="email"
+                placeholder="Enter your Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
 
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <label className="uc-field">
+              <span>Password</span>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
 
-            <button type="submit">LOGIN</button>
-
-            {/* 🔥 SIGNUP LINK */}
-            <p style={{ marginTop: "10px" }}>
-              Don’t have an account?{" "}
-              <span
-                style={{
-                  color: "#ff7a2f",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
-                onClick={() => navigate("/signup/tutor")}
-              >
-                Sign Up
-              </span>
-            </p>
+            <button type="submit" className="uc-login-submit">
+              LOGIN
+            </button>
           </form>
-        </div>
+
+          <p className="uc-login-switch">
+            Don't have an account? <Link to="/signup/tutor">Sign Up</Link>
+          </p>
+        </section>
       </div>
     </div>
   );

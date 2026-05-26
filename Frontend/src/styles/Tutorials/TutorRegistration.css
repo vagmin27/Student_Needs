@@ -1,7 +1,8 @@
 /* 🌍 Page */
 .tutor-page {
   font-family: Arial, sans-serif;
-  background: #f5f6f8;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
@@ -11,15 +12,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: #8fa79a;
-  color: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .tutor-navbar button {
   padding: 8px 16px;
-  border: 1px solid white;
+  border: 1px solid var(--border-color);
   background: transparent;
-  color: white;
+  color: var(--text-primary);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -43,6 +45,7 @@
 
 .tutor-left h2 {
   margin-bottom: 10px;
+  color: var(--text-primary);
 }
 
 .tutor-left img {
@@ -55,10 +58,11 @@
 .tutor-right {
   flex: 1;
   max-width: 420px;
-  background: #ffffff;
+  background: var(--card-bg);
   padding: 35px;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
 }
 
 /* 🧾 Form */
@@ -70,6 +74,7 @@
 
 .tutor-form label {
   font-weight: 500;
+  color: var(--text-secondary);
 }
 
 /* ✏️ Inputs */
@@ -77,23 +82,25 @@
 .tutor-form select {
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   outline: none;
   transition: 0.2s;
 }
 
 .tutor-form input:focus,
 .tutor-form select:focus {
-  border-color: #ff7a2f;
+  border-color: var(--primary);
 }
 
 /* 🔘 Button */
 .tutor-form button {
   margin-top: 15px;
   padding: 12px;
-  background: #ff7a2f;
+  background: var(--primary);
   border: none;
-  color: white;
+  color: var(--primary-foreground);
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
@@ -101,12 +108,12 @@
 }
 
 .tutor-form button:hover {
-  background: #e66a20;
+  background: var(--primary)/90;
 }
 
 /* 🔗 Links */
 .tutor-form span {
-  color: #ff7a2f;
+  color: var(--primary);
   cursor: pointer;
   font-weight: bold;
 }

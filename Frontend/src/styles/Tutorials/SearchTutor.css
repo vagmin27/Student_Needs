@@ -11,7 +11,7 @@
 .searchHeader {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #2f3e3a;
+  color: var(--text-primary);
   margin-bottom: 1.2rem;
 }
 
@@ -19,10 +19,11 @@
 .search {
   display: flex;
   align-items: center;
-  background: white;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-soft);
 }
 
 /* INPUT */
@@ -32,7 +33,7 @@
   padding: 0.9rem 1rem;
   font-size: 1rem;
   outline: none;
-  color: #333;
+  color: var(--text-primary);
 }
 
 /* INPUT FOCUS */

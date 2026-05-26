@@ -17,8 +17,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color: #333;
-  background-color: #f5f7fb;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -33,8 +33,8 @@
 body {
   min-width: 320px;
   min-height: 100vh;
-  background: #f5f7fb;
-  color: #333;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
 }
@@ -244,7 +244,7 @@ img {
 }
 
 .uc-secondary-button {
-  border: 1px solid;
+  border: 1px solid var(--border-color);
 }
 
 .uc-hero {
@@ -306,7 +306,7 @@ img {
   width: 112px;
   height: 260px;
   border-radius: 60px 60px 22px 22px;
-  border: 1px solid;
+  border: 1px solid var(--border-color);
 }
 
 .uc-student-card.tall {
@@ -320,7 +320,7 @@ img {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  border: 1px solid;
+  border: 1px solid var(--border-color);
 }
 
 .uc-floating-icon svg {
@@ -351,7 +351,7 @@ img {
 .uc-logo-strip {
   text-align: center;
   padding-top: 24px;
-  border-top: 1px solid;
+  border-top: 1px solid var(--border-color);
 }
 
 .uc-logo-strip p {
@@ -401,7 +401,7 @@ img {
   min-height: 126px;
   padding: 22px;
   border-radius: 14px;
-  border: 1px solid;
+  border: 1px solid var(--border-color);
 }
 
 .uc-role-card strong,
@@ -419,7 +419,7 @@ img {
   display: grid;
   place-items: center;
   border-radius: 18px;
-  border: 1px solid;
+  border: 1px solid var(--border-color);
   flex: 0 0 auto;
 }
 
@@ -449,7 +449,7 @@ img {
 
 .uc-sidebar {
   padding: 28px 18px;
-  border-right: 1px solid;
+  border-right: 1px solid var(--border-color);
 }
 
 .uc-sidebar nav {
@@ -503,7 +503,7 @@ img {
 .uc-panel,
 .uc-quick-actions,
 .uc-module-card {
-  border: 1px solid;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
 }
 
@@ -568,7 +568,7 @@ img {
   gap: 8px;
   padding: 18px;
   text-align: center;
-  border: 1px solid;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
 }
 
@@ -606,7 +606,7 @@ img {
   display: grid;
   place-items: center;
   padding: 32px 18px;
-  background: #f8fafc;
+  background: var(--bg-primary);
 }
 
 .uc-login-card {
@@ -618,16 +618,16 @@ img {
   align-items: center;
   gap: 8px;
   margin-bottom: 18px;
-  color: #2563eb;
+  color: var(--primary);
   font-weight: 700;
 }
 
 .uc-login-panel {
   padding: 34px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 20px 55px rgba(15, 23, 42, 0.1);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-soft);
 }
 
 .uc-login-icon {
@@ -637,8 +637,8 @@ img {
   place-items: center;
   margin-bottom: 16px;
   border-radius: 14px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--primary)/10;
+  color: var(--primary);
 }
 
 .uc-login-icon svg {
@@ -650,12 +650,12 @@ img {
   margin-bottom: 8px;
   font-size: 28px;
   line-height: 1.15;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .uc-login-panel > p {
   margin-bottom: 24px;
-  color: #64748b;
+  color: var(--text-secondary);
 }
 
 .uc-login-form {
@@ -676,35 +676,35 @@ img {
 
 .uc-field span {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .uc-field input {
   width: 100%;
   min-height: 46px;
   padding: 0 14px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: #ffffff;
-  color: #0f172a;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .uc-field input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary)/20;
 }
 
 .uc-field small,
 .uc-form-error {
-  color: #b91c1c;
+  color: var(--destructive);
 }
 
 .uc-form-error {
   margin-bottom: 16px;
   padding: 10px 12px;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--destructive)/20;
   border-radius: 8px;
-  background: #fef2f2;
+  background: var(--destructive)/10;
 }
 
 .uc-login-submit {
@@ -714,8 +714,8 @@ img {
   justify-content: center;
   gap: 8px;
   border-radius: 8px;
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--primary-foreground);
   font-weight: 800;
 }
 
@@ -732,11 +732,11 @@ img {
 .uc-login-switch {
   margin-top: 18px;
   text-align: center;
-  color: #64748b;
+  color: var(--text-secondary);
 }
 
 .uc-login-switch a {
-  color: #2563eb;
+  color: var(--primary);
   font-weight: 800;
 }
 

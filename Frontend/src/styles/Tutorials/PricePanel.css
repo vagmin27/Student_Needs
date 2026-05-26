@@ -5,18 +5,20 @@
   gap: 1.5rem;
   flex-wrap: wrap;
   padding: 1.5rem;
-  background-color: #f8faf7;
+  background-color: var(--bg-secondary);
   border-radius: 16px;
 }
 
 /* EACH CARD */
 .price-panelDiv {
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-primary);
   border-radius: 16px;
   padding: 1.5rem;
   width: 280px;
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-soft, 0 8px 20px rgba(0, 0, 0, 0.06));
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
 
@@ -37,16 +39,16 @@
 .pricing-features {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #c3591c;
+  color: var(--accent-purple, #c3591c);
   margin: 1rem 0 0.5rem;
 }
 
 /* FEATURE ITEMS */
 .pricing-features-items {
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
   padding: 0.6rem 0;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-color);
 }
 
 /* PRICE (LAST ITEM STYLE) */

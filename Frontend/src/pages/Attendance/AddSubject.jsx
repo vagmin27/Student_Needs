@@ -35,7 +35,7 @@ function AddSubject() {
   };
 
   return (
-    <div>
+    <div className="attendance-module">
       <div className="page-header">
         <h1>Add Subject</h1>
         <p>Add a new subject to the system for attendance tracking</p>

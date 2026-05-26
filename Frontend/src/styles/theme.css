@@ -335,3 +335,252 @@ body {
 .light-theme header.fixed > .container {
   opacity: 1;
 }
+
+/* ======================================================
+   GLOBAL TYPOGRAPHY SYNCHRONIZATION
+   ====================================================== */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+}
+
+p, label, li {
+  color: var(--text-secondary);
+}
+
+/* Form input placeholder synchronization */
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.65 !important;
+}
+
+/* ======================================================
+   PREMIUM SIDEBAR SYSTEM
+   ====================================================== */
+.premium-sidebar {
+  background: var(--sidebar-bg) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease;
+}
+
+/* Light mode gradient/glow */
+.light-theme .premium-sidebar {
+  background: linear-gradient(180deg, #1e4a8c 0%, #163d75 42%, #0f2847 100%) !important;
+  box-shadow: 4px 0 24px rgba(15, 40, 80, 0.15) !important;
+}
+
+/* Dark mode deep glass */
+.dark-theme .premium-sidebar {
+  background: rgba(10, 15, 35, 0.95) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+.premium-sidebar h1,
+.premium-sidebar h2,
+.premium-sidebar h3,
+.premium-sidebar span,
+.premium-sidebar a,
+.premium-sidebar button {
+  color: #ffffff !important;
+}
+
+.premium-sidebar .text-muted-foreground {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.premium-sidebar nav a,
+.premium-sidebar nav button {
+  color: rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.premium-sidebar nav a:hover,
+.premium-sidebar nav button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  transform: translateX(3px);
+}
+
+.premium-sidebar nav a.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
+}
+
+/* ======================================================
+   THEME SYNCHRONIZATION OVERRIDES
+   ====================================================== */
+
+/* Inputs, Selects, and Textareas */
+input, select, textarea {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+/* Placeholders */
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.65 !important;
+}
+
+/* Browser Autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text-primary) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-secondary) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ======================================================
+   DARK THEME SYNCHRONIZATION OVERRIDES FOR TUTORIALS
+   ====================================================== */
+
+/* Main containers background overrides in dark theme */
+.dark-theme .main-profile,
+.dark-theme .innerDivHistory,
+.dark-theme .innerDivBook,
+.dark-theme #cardimage2,
+.dark-theme #signupCard,
+.dark-theme .secondDiv {
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-soft) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Inner card layouts in dark theme */
+.dark-theme .profileInnerDiv,
+.dark-theme .scheduleDivHistory,
+.dark-theme .scheduleDivBook,
+.dark-theme .review-base,
+.dark-theme .cardimage,
+.dark-theme .price-panel-card,
+.dark-theme .tutor-info-card,
+.dark-theme .tutor-availability-card,
+.dark-theme .tutor-schedule-card,
+.dark-theme .tutor-dashboard-card,
+.dark-theme .account-setting-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+/* Titles and labels styling in dark mode */
+.dark-theme .titleBook,
+.dark-theme .titleHistory,
+.dark-theme .userName,
+.dark-theme .card-title2,
+.dark-theme .card-title-tutor,
+.dark-theme .searchRes,
+.dark-theme .searchHeader {
+  color: var(--text-primary) !important;
+}
+
+/* Body texts and descriptions in dark mode */
+.dark-theme .card-text,
+.dark-theme .card-text2,
+.dark-theme .datep,
+.dark-theme .timep,
+.dark-theme .tutorp,
+.dark-theme .subjectp,
+.dark-theme .back,
+.dark-theme .backBtn {
+  color: var(--text-secondary) !important;
+}
+
+.dark-theme .backBtn {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark-theme .backBtn:hover {
+  background: var(--bg-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Search Term inputs */
+.dark-theme .searchTerm {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .searchTerm:focus {
+  background: var(--bg-hover) !important;
+}
+
+/* ======================================================
+   LANDING PAGE THEME ADAPTABILITY & GLOW ACCENTS
+   ====================================================== */
+
+/* Light mode landing adjustments */
+.light-theme .uc-page {
+  background: #f5f7fb !important;
+}
+
+.light-theme .uc-student-card {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .uc-floating-icon {
+  background: #ffffff !important;
+  color: var(--accent-blue) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode landing adjustments */
+.dark-theme .uc-page {
+  background: radial-gradient(ellipse at top right, rgba(34, 211, 238, 0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at bottom left, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+              var(--bg-primary) !important;
+}
+
+.dark-theme .uc-student-card {
+  background: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(12px);
+  border-color: rgba(34, 211, 238, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .uc-student-card.tall {
+  border-color: rgba(168, 85, 247, 0.25) !important;
+}
+
+.dark-theme .uc-floating-icon {
+  background: rgba(15, 23, 42, 0.75) !important;
+  color: var(--accent-cyan) !important;
+  border-color: rgba(34, 211, 238, 0.25) !important;
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.15);
+}
+
+.dark-theme .uc-logo-strip span {
+  border-color: rgba(34, 211, 238, 0.25) !important;
+}
+
+/* Hero copy glow span */
+.uc-hero-copy h1 span {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark-theme .uc-hero-copy h1 span {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
+}
+
+
+

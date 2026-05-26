@@ -17,10 +17,11 @@
 
 /* MAIN CARD */
 .main-profile {
-  background: #f8faf7;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-soft);
 }
 
 /* FLEX WRAPPER */
@@ -34,17 +35,18 @@
 /* LEFT PROFILE INFO */
 .profileInnerDiv {
   flex: 2;
-  background: white;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   padding: 1.5rem;
   border-radius: 12px;
   font-size: 1rem;
-  color: #444;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-soft);
 }
 
 /* USER NAME */
 .userName {
-  color: #f76612;
+  color: var(--text-primary);
   font-size: 1.6rem;
   font-weight: 600;
   margin-bottom: 1rem;
@@ -53,12 +55,13 @@
 /* RIGHT SIDE CARD */
 .secondDiv {
   flex: 1;
-  background: white;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   padding: 2rem 1.5rem;
   border-radius: 16px;
   text-align: center;
-  color: #444;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-soft);
 
   display: flex;
   flex-direction: column;

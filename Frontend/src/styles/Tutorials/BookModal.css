@@ -14,12 +14,13 @@
   width: 90%;
   max-width: 900px;
   max-height: 85vh;
-  background: #ffffff;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-soft);
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -40,12 +41,12 @@
   align-self: flex-end;
   font-size: 20px;
   cursor: pointer;
-  color: #666;
+  color: var(--text-secondary);
   transition: 0.2s;
 }
 
 .closeBtn:hover {
-  color: #000;
+  color: var(--text-primary);
 }
 
 /* CONTENT SCROLL */
@@ -67,7 +68,7 @@
 .time p {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: var(--text-primary);
 }
 
 /* HOURS GRID */
@@ -82,19 +83,20 @@
   padding: 8px 14px;
   font-size: 14px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 /* DEFAULT SLOT */
 .hourBtn {
-  background: #f5f7fa;
-  color: #333;
+  background: var(--secondary);
+  color: var(--text-primary);
 }
 
 .hourBtn:hover {
-  background: #e6edf5;
+  background: var(--secondary);
+  opacity: 0.8;
   transform: translateY(-1px);
 }
 

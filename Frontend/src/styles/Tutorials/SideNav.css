@@ -2,8 +2,8 @@
 .sidenav {
   width: 240px;
   min-height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #eee;
+  background: var(--card-bg);
+  border-right: 1px solid var(--border-color);
   padding-top: 1.5rem;
 
   display: flex;
@@ -29,7 +29,7 @@
   gap: 12px;
   padding: 0.8rem 1.2rem;
   text-decoration: none;
-  color: #444;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   border-radius: 8px;
   margin: 0 0.8rem;
@@ -39,7 +39,7 @@
 /* ICON */
 .sideNavIcon {
   font-size: 1.1rem;
-  color: #f57c00;
+  color: var(--accent-blue);
 }
 
 /* TEXT */
@@ -50,15 +50,16 @@
 
 /* HOVER */
 .sidenav__list-item a:hover {
-  background: #f5f7fb;
-  color: #000;
+  background: var(--secondary);
+  color: var(--text-primary);
   transform: translateX(4px);
 }
 
 /* ACTIVE (when clicked/focused) */
-.sidenav__list-item a:focus {
-  background: #e9f1ff;
-  color: #4c6ef5;
+.sidenav__list-item a:focus,
+.sidenav__list-item a.active {
+  background: var(--primary);
+  color: #ffffff;
 }
 
 /* REMOVE OLD BEHAVIOR */
