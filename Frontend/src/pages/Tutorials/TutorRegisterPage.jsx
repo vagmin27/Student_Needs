@@ -106,7 +106,7 @@ function TutorRegisterPage() {
             </form>
           ) : (
             <form onSubmit={handleVerifyOtp} className="uc-login-form">
-              <p style={{ color: "green", marginBottom: "12px" }}>{message}</p>
+              <p style={{ color: "var(--success, green)", marginBottom: "12px" }}>{message}</p>
               <label className="uc-field">
                 <span>Enter OTP sent to {tutor.email}</span>
                 <input

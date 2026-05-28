@@ -60,7 +60,7 @@ export const InteractiveJobsTable = React.memo(({ jobs = [], onRowClick, onActio
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border border-slate-200 dark:border-slate-800 overflow-x-auto">
+      <div className="rounded-md border border-border overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -84,10 +84,10 @@ export const InteractiveJobsTable = React.memo(({ jobs = [], onRowClick, onActio
             {paginatedJobs?.map((job) => (
               <TableRow 
                 key={job.id || job._id}
-                className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/50"
+                className="cursor-pointer hover:bg-secondary/40"
                 onClick={() => onRowClick && onRowClick(job)}
               >
-                <TableCell className="font-medium text-slate-900 dark:text-slate-100">{job.title || job.jobTitle}</TableCell>
+                <TableCell className="font-medium text-foreground">{job.title || job.jobTitle}</TableCell>
                 <TableCell>{job.company || job.postedBy?.company || "Unknown"}</TableCell>
                 <TableCell>{job.location || job.experienceLevel || "Remote"}</TableCell>
                 <TableCell>{job.applicants || job.referralsGiven || 0}</TableCell>
@@ -114,7 +114,7 @@ export const InteractiveJobsTable = React.memo(({ jobs = [], onRowClick, onActio
       
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-muted-foreground">
             Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, jobs.length)} of {jobs.length} entries
           </p>
           <div className="flex items-center space-x-2">

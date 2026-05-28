@@ -96,7 +96,7 @@ export const RecommendedOpportunities = ({ refreshTrigger }) => {
                 <MdWorkOutline className="shrink-0" />
                 <span className="line-clamp-1">{opportunity.postedBy?.company || 'Confidential'}</span>
                 <span className="mx-1">•</span>
-                <span className="text-xs font-medium text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                <span className="text-xs font-medium text-muted-foreground bg-secondary px-1.5 py-0.5 rounded">
                   {opportunity.experienceLevel || "Entry Level"}
                 </span>
               </p>

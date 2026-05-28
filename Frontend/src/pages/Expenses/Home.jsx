@@ -102,16 +102,16 @@ const Home = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-bold font-mont text-white tracking-tight flex items-center gap-3">
+          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
             <span className="text-brand-primary">Overview</span> Dashboard
           </h2>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Welcome back! Here's your financial snapshot.
           </p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
         >
           <MdAdd size={20} /> Add Expense
         </button>
@@ -154,10 +154,10 @@ const Home = () => {
             <Skeleton type="card" lines={1} />
           ) : (
             <div
-              className={`glass-panel p-6 border ${budgetPercentage > 90 ? "border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]" : "border-white/10"}`}
+              className={`glass-panel p-6 border ${budgetPercentage > 90 ? "border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]" : "border-border"}`}
             >
               <div className="flex justify-between items-center mb-2">
-                <h4 className="text-white font-bold">Budget Health</h4>
+                <h4 className="text-foreground font-bold">Budget Health</h4>
                 {budgetPercentage > 90 && (
                   <MdWarning
                     className="text-amber-500 animate-pulse"
@@ -171,7 +171,7 @@ const Home = () => {
                   style={{ width: `${budgetPercentage}%` }}
                 ></div>
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-muted-foreground">
                 {budgetPercentage.toFixed(1)}% of ₹
                 {userSettings.monthlyBudget.toLocaleString()} used up.
               </p>
@@ -184,7 +184,7 @@ const Home = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 glass-panel p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
               <MdShowChart className="text-brand-primary" /> Expense Trends
             </h3>
           </div>
@@ -201,7 +201,7 @@ const Home = () => {
         </div>
 
         <div className="lg:col-span-1 glass-panel p-6 flex flex-col">
-          <h3 className="text-xl font-bold text-white mb-6">
+          <h3 className="text-xl font-bold text-foreground mb-6">
             Category Breakdown
           </h3>
           {isLoading ? (
@@ -232,25 +232,25 @@ const Home = () => {
 
         {/* Quick Actions Panel */}
         <div className="lg:col-span-1 glass-panel p-6 space-y-4">
-          <h3 className="text-lg font-bold text-white mb-4">Quick Actions</h3>
+          <h3 className="text-lg font-bold text-foreground mb-4">Quick Actions</h3>
           <button
             onClick={() => navigate("/expenses-tracker/recurring")}
-            className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors group"
+            className="w-full flex items-center justify-between p-4 rounded-xl bg-muted/10 hover:bg-muted/20 border border-border transition-colors group"
           >
             <div className="flex items-center gap-3">
               <MdAccountBalanceWallet className="text-purple-400" size={20} />
-              <span className="text-slate-200 font-medium text-sm group-hover:text-white">
+              <span className="text-muted-foreground font-medium text-sm group-hover:text-foreground">
                 Recurring Rules
               </span>
             </div>
           </button>
           <button
             onClick={downloadCSV}
-            className="w-full flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors group"
+            className="w-full flex items-center justify-between p-4 rounded-xl bg-muted/10 hover:bg-muted/20 border border-border transition-colors group"
           >
             <div className="flex items-center gap-3">
               <MdOutlineFileDownload className="text-emerald-400" size={20} />
-              <span className="text-slate-200 font-medium text-sm group-hover:text-white">
+              <span className="text-muted-foreground font-medium text-sm group-hover:text-foreground">
                 Export CSV
               </span>
             </div>
@@ -266,7 +266,7 @@ const Home = () => {
       >
         <form onSubmit={handleAddSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">
+            <label className="text-sm font-medium text-muted-foreground">
               Amount (₹)
             </label>
             <input
@@ -282,7 +282,7 @@ const Home = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">
+            <label className="text-sm font-medium text-muted-foreground">
               Category
             </label>
             <select
@@ -290,7 +290,7 @@ const Home = () => {
               onChange={(e) =>
                 setFormData({ ...formData, category: e.target.value })
               }
-              className="premium-input text-slate-300 cursor-pointer appearance-none"
+              className="premium-input text-muted-foreground cursor-pointer appearance-none"
               required
             >
               {[
@@ -310,7 +310,7 @@ const Home = () => {
           </div>
 
           <div className="space-y-2 flex flex-col items-stretch z-50">
-            <label className="text-sm font-medium text-slate-300">Date</label>
+            <label className="text-sm font-medium text-muted-foreground">Date</label>
             <div className="relative z-50">
               <DatePicker
                 selected={formData.date}
@@ -326,13 +326,13 @@ const Home = () => {
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              className="px-6 py-2.5 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-colors"
+              className="px-6 py-2.5 rounded-xl border border-border text-foreground font-medium hover:bg-muted/10 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
             >
               Confirm
             </button>

@@ -78,7 +78,7 @@
   border-radius: 8px;
   border: none;
   background: linear-gradient(135deg, #4c6ef5, #5c7cfa);
-  color: white;
+  color: var(--text-white);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;

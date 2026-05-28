@@ -114,7 +114,7 @@
   margin-top: 8px;
   padding: 8px 12px;
   background: #4CAF50;
-  color: white;
+  color: var(--text-white);
   border: none;
   border-radius: 5px;
   cursor: pointer;

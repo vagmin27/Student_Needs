@@ -8,7 +8,7 @@ export const MetricCard = React.memo(({ title, value, subtext, icon: Icon, iconC
       <CardContent className="p-6">
         <div className="flex items-center justify-between space-x-4">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+            <p className="text-sm font-medium text-muted-foreground">
               {title}
             </p>
             <div className="flex items-baseline space-x-2">
@@ -16,14 +16,14 @@ export const MetricCard = React.memo(({ title, value, subtext, icon: Icon, iconC
               {trend && (
                 <span className={cn(
                   "text-xs font-medium",
-                  trend === 'up' ? "text-emerald-500" : trend === 'down' ? "text-red-500" : "text-slate-500"
+                  trend === 'up' ? "text-emerald-500" : trend === 'down' ? "text-red-500" : "text-muted-foreground"
                 )}>
                   {trend === 'up' ? '↑' : trend === 'down' ? '↓' : ''} {trendValue}
                 </span>
               )}
             </div>
             {subtext && (
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-muted-foreground">
                 {subtext}
               </p>
             )}

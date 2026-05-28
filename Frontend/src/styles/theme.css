@@ -9,8 +9,8 @@
   --card-bg: #ffffff;
   --sidebar-bg: linear-gradient(180deg, #1e4a8c 0%, #163d75 42%, #0f2847 100%);
   --navbar-bg: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
+  --text-primary: #000000;
+  --text-secondary: #374151;
   --border-color: #e5e7eb;
   --accent-blue: #2563eb;
   --accent-cyan: #0891b2;
@@ -20,6 +20,19 @@
   --gradient-page: #f5f7fb;
   --glass-bg: #ffffff;
   --glass-border: #e5e7eb;
+
+  /* Centralized Typography Variables */
+  --text-heading: #000000;
+  --text-paragraph: #374151;
+  --text-label: #000000;
+  --text-table: #000000;
+  --text-input: #000000;
+  --text-button: #000000;
+  --text-navbar: #000000;
+  --text-sidebar: #ffffff;
+  --text-placeholder: #6b7280;
+  --text-white: #ffffff;
+  --text-black: #000000;
 }
 
 .dark-theme {
@@ -28,8 +41,8 @@
   --card-bg: #1e293b;
   --sidebar-bg: rgba(10, 15, 35, 0.98);
   --navbar-bg: #0c1428;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
   --border-color: rgba(34, 211, 238, 0.15);
   --accent-blue: #6366f1;
   --accent-cyan: #22d3ee;
@@ -44,6 +57,19 @@
   );
   --glass-bg: rgba(15, 23, 42, 0.75);
   --glass-border: rgba(34, 211, 238, 0.2);
+
+  /* Centralized Typography Variables */
+  --text-heading: #ffffff;
+  --text-paragraph: #d1d5db;
+  --text-label: #f1f5f9;
+  --text-table: #f1f5f9;
+  --text-input: #ffffff;
+  --text-button: #ffffff;
+  --text-navbar: #ffffff;
+  --text-sidebar: #ffffff;
+  --text-placeholder: #94a3b8;
+  --text-white: #ffffff;
+  --text-black: #000000;
 }
 
 /* Theme switch — only root, not every descendant */
@@ -238,11 +264,11 @@ body {
 }
 
 .light-theme .expenses-layout .text-white {
-  color: #111827 !important;
+  color: var(--text-primary) !important;
 }
 
 .light-theme .expenses-layout .text-slate-400 {
-  color: #6b7280 !important;
+  color: var(--text-secondary) !important;
 }
 
 .light-theme .expenses-layout header {
@@ -258,9 +284,9 @@ body {
   --bg-hover: #f3f4f6;
   --border: #e5e7eb;
   --border-light: #d1d5db;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
+  --text-primary: #000000;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
 }
 
 /* ======================================================
@@ -340,19 +366,27 @@ body {
    GLOBAL TYPOGRAPHY SYNCHRONIZATION
    ====================================================== */
 h1, h2, h3, h4, h5, h6 {
-  color: var(--text-primary);
+  color: var(--text-heading);
 }
 
-p, label, li {
-  color: var(--text-secondary);
+p, li {
+  color: var(--text-paragraph);
+}
+
+label {
+  color: var(--text-label);
 }
 
 /* Form input placeholder synchronization */
 input::placeholder,
 textarea::placeholder,
 select::placeholder {
-  color: var(--text-secondary) !important;
+  color: var(--text-placeholder) !important;
   opacity: 0.65 !important;
+}
+
+button {
+  color: var(--text-button);
 }
 
 /* ======================================================
@@ -417,7 +451,7 @@ select::placeholder {
 
 /* Inputs, Selects, and Textareas */
 input, select, textarea {
-  color: var(--text-primary);
+  color: var(--text-input);
   background-color: var(--bg-secondary);
   border-color: var(--border-color);
 }
@@ -426,7 +460,7 @@ input, select, textarea {
 input::placeholder,
 textarea::placeholder,
 select::placeholder {
-  color: var(--text-secondary) !important;
+  color: var(--text-placeholder) !important;
   opacity: 0.65 !important;
 }
 

@@ -38,7 +38,7 @@
 
 /* INPUT FOCUS */
 .searchTerm:focus {
-  background: #f9fafb;
+  background: var(--bg-hover, #f9fafb);
 }
 
 /* BUTTON */
@@ -47,7 +47,7 @@
   height: 100%;
   border: none;
   background: linear-gradient(135deg, #667a6f, #8c9f95);
-  color: white;
+  color: var(--text-white);
   cursor: pointer;
   font-size: 18px;
   transition: 0.3s;
@@ -72,6 +72,7 @@
   margin-top: 2rem;
 }
 
+/* IMAGE GRAPHIC */
 .study2pic {
   width: 100%;
   border-radius: 12px;
@@ -85,7 +86,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: var(--card-bg);
   border-radius: 10px;
   margin: 1rem auto;
   max-width: 500px;

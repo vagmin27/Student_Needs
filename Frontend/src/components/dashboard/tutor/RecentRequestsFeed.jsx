@@ -19,15 +19,15 @@ export const RecentRequestsFeed = React.memo(({ requests = [], onAccept, onDecli
       {requests?.map((request) => (
         <div 
           key={request.id} 
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 gap-4"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-lg border border-border bg-secondary/40 gap-4"
         >
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
               {request.avatar}
             </div>
             <div className="flex flex-col space-y-1">
-              <span className="font-medium text-sm text-slate-900 dark:text-slate-100">{request.studentName}</span>
-              <div className="flex items-center space-x-2 text-xs text-slate-500">
+              <span className="font-medium text-sm text-foreground">{request.studentName}</span>
+              <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                 <span>{request.subject}</span>
                 <span>•</span>
                 <span>{request.date}</span>

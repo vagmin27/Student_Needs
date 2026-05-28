@@ -80,7 +80,7 @@ function Login() {
               style={styles.input}
             />
 
-            <small style={{ color: "#777" }}>
+            <small style={{ color: "var(--text-placeholder)" }}>
               We will never share your email.
             </small>
 
@@ -122,7 +122,7 @@ export default Login;
 const styles = {
   page: {
     fontFamily: "Arial, sans-serif",
-    background: "#f5f6f8",
+    background: "var(--bg-primary)",
     minHeight: "100vh",
   },
 
@@ -132,7 +132,7 @@ const styles = {
     alignItems: "center",
     padding: "15px 40px",
     background: "#8fa79a",
-    color: "#fff",
+    color: "var(--text-white)",
   },
 
   logo: {
@@ -141,9 +141,9 @@ const styles = {
 
   navBtn: {
     padding: "8px 16px",
-    border: "1px solid white",
+    border: "1px solid var(--text-white)",
     background: "transparent",
-    color: "white",
+    color: "var(--text-white)",
     cursor: "pointer",
     borderRadius: "4px",
   },
@@ -171,7 +171,7 @@ const styles = {
   right: {
     flex: 1,
     maxWidth: "400px",
-    background: "#fff",
+    background: "var(--card-bg)",
     padding: "35px",
     borderRadius: "20px",
     boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
@@ -186,7 +186,7 @@ const styles = {
   input: {
     padding: "10px",
     borderRadius: "6px",
-    border: "1px solid #ccc",
+    border: "1px solid var(--border-color)",
     outline: "none",
   },
 
@@ -195,7 +195,7 @@ const styles = {
     padding: "12px",
     background: "#ff7a2f",
     border: "none",
-    color: "white",
+    color: "var(--text-white)",
     fontWeight: "bold",
     borderRadius: "6px",
     cursor: "pointer",

@@ -14,13 +14,13 @@
 
 .heading {
   font-size: 3rem;
-  color: white;
+  color: var(--text-heading);
   margin-bottom: 40px;
   font-weight: 700;
 }
 
 .card {
-  background: #050505;
+  background: var(--card-bg);
   padding: 40px;
   border-radius: 24px;
   width: 380px;
@@ -28,7 +28,7 @@
 }
 
 .card h3 {
-  color: white;
+  color: var(--text-heading);
   text-align: center;
   margin-bottom: 30px;
   font-size: 1.8rem;
@@ -41,7 +41,7 @@
   border: none;
   border-radius: 14px;
   background: #ff8c2f;
-  color: white;
+  color: var(--text-white);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;

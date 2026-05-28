@@ -29,11 +29,11 @@ export const UpcomingTasks = React.memo(({ tasks = [] }) => {
       {tasks?.map((task) => (
         <div 
           key={task.id} 
-          className="flex items-start justify-between p-3 sm:p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+          className="flex items-start justify-between p-3 sm:p-4 rounded-lg border border-border bg-secondary/40 hover:bg-secondary/70 transition-colors"
         >
           <div className="flex flex-col space-y-1">
-            <span className="font-medium text-sm sm:text-base text-slate-900 dark:text-slate-100 line-clamp-1">{task.title}</span>
-            <div className="flex items-center space-x-2 text-xs text-slate-500">
+            <span className="font-medium text-sm sm:text-base text-foreground line-clamp-1">{task.title}</span>
+            <div className="flex items-center space-x-2 text-xs text-muted-foreground">
               <span>{task.date}</span>
               <span>•</span>
               <span>{task.type}</span>

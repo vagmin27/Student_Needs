@@ -29,7 +29,7 @@
   font-weight: 600;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #333;
+  color: var(--text-paragraph);
 }
 
 .blackboard {
@@ -41,7 +41,7 @@
 #signupCard {
   width: 100%;
   max-width: 400px;
-  background: white;
+  background: var(--card-bg);
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
@@ -59,7 +59,7 @@
   width: 100%;
   padding: 0.75rem;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   margin-top: 0.3rem;
   margin-bottom: 0.8rem;
   transition: 0.2s;
@@ -78,7 +78,7 @@
   border-radius: 8px;
   border: none;
   background: linear-gradient(135deg, #ff7a18, #ffb347);
-  color: white;
+  color: var(--text-white);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;

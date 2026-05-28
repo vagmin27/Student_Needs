@@ -26,22 +26,22 @@ export const BookingActivityTimeline = React.memo(({ activities = [] }) => {
 
   return (
     <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2">
-      <div className="relative border-l border-slate-200 dark:border-slate-800 ml-3 space-y-6 pb-2">
+      <div className="relative border-l border-border ml-3 space-y-6 pb-2">
         {activities?.map((activity, index) => (
           <div key={activity.id} className="relative pl-6">
-            <span className="absolute -left-2.5 top-1 bg-white dark:bg-slate-950 p-0.5 rounded-full ring-2 ring-white dark:ring-slate-950">
+            <span className="absolute -left-2.5 top-1 bg-background p-0.5 rounded-full ring-2 ring-background">
               {getStatusIcon(activity.status)}
             </span>
             <div className="flex flex-col space-y-1.5">
               <div className="flex items-center justify-between gap-4">
-                <span className="font-medium text-sm text-slate-900 dark:text-slate-100">
+                <span className="font-medium text-sm text-foreground">
                   {activity.title}
                 </span>
-                <span className="text-xs text-slate-500 shrink-0">
+                <span className="text-xs text-muted-foreground shrink-0">
                   {activity.timestamp}
                 </span>
               </div>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-muted-foreground">
                 {activity.description}
               </p>
             </div>

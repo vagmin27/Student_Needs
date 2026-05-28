@@ -103,7 +103,7 @@
 /* SELECTED SLOT */
 .hourBtnSelect {
   background: #4caf50;
-  color: white;
+  color: var(--text-white);
   border: none;
   box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
 }
@@ -124,7 +124,7 @@
   border-radius: 8px;
   border: none;
   background: linear-gradient(135deg, #ff7a18, #ffb347);
-  color: white;
+  color: var(--text-white);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;

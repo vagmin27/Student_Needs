@@ -48,7 +48,8 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "Arial",
-    background: "#f5f6f8",
+    background: "var(--bg-primary)",
+    color: "var(--text-primary)",
   },
 
   cardContainer: {
@@ -60,9 +61,11 @@ const styles = {
   card: {
     width: "220px",
     height: "160px",
-    background: "#fff",
+    background: "var(--card-bg)",
+    color: "var(--text-primary)",
+    border: "1px solid var(--border-color)",
     borderRadius: "15px",
-    boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+    boxShadow: "var(--shadow-soft)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

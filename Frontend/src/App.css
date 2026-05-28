@@ -214,6 +214,7 @@ img {
 .uc-brand {
   gap: 8px;
   font-weight: 700;
+  color: var(--text-heading);
 }
 
 .uc-brand-mark {
@@ -223,6 +224,8 @@ img {
   place-items: center;
   border-radius: 50%;
   font-size: 13px;
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .uc-navlinks {
@@ -230,6 +233,15 @@ img {
   gap: 32px;
   font-size: 14px;
   font-weight: 600;
+}
+
+.uc-navlinks a {
+  color: var(--text-paragraph);
+  transition: color 0.2s ease;
+}
+
+.uc-navlinks a:hover {
+  color: var(--accent-cyan, var(--primary));
 }
 
 .uc-primary-button,
@@ -241,10 +253,29 @@ img {
   padding: 0 22px;
   border-radius: 10px;
   font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.uc-primary-button {
+  background: var(--primary);
+  color: var(--primary-foreground) !important;
+}
+
+.uc-primary-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
 }
 
 .uc-secondary-button {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   border: 1px solid var(--border-color);
+}
+
+.uc-secondary-button:hover {
+  background: var(--bg-hover);
+  transform: translateY(-1px);
 }
 
 .uc-hero {
@@ -262,12 +293,14 @@ img {
   line-height: 1.02;
   letter-spacing: 0;
   margin-bottom: 24px;
+  color: var(--text-heading);
 }
 
 .uc-hero-copy p {
   max-width: 430px;
   margin-bottom: 24px;
   font-size: 18px;
+  color: var(--text-paragraph);
 }
 
 .uc-check-list {
@@ -277,10 +310,15 @@ img {
   margin-bottom: 28px;
 }
 
+.uc-check-list li {
+  color: var(--text-paragraph);
+}
+
 .uc-check-list li::before {
   content: "✓";
   margin-right: 10px;
   font-weight: 800;
+  color: var(--accent-cyan);
 }
 
 .uc-actions {
@@ -356,6 +394,7 @@ img {
 
 .uc-logo-strip p {
   margin-bottom: 22px;
+  color: var(--text-secondary);
 }
 
 .uc-logo-strip div {
@@ -374,6 +413,8 @@ img {
   display: grid;
   place-items: center;
   padding: 32px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .uc-auth-shell > .uc-brand {
@@ -389,6 +430,7 @@ img {
 .uc-role-panel h1 {
   text-align: center;
   margin-bottom: 28px;
+  color: var(--text-heading);
 }
 
 .uc-role-list {
@@ -402,15 +444,27 @@ img {
   padding: 22px;
   border-radius: 14px;
   border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  transition: all 0.2s ease-in-out;
 }
 
-.uc-role-card strong,
+.uc-role-card:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.uc-role-card strong {
+  display: block;
+  color: var(--text-heading);
+}
+
 .uc-role-card small {
   display: block;
-}
-
-.uc-role-card small {
   margin-top: 8px;
+  color: var(--text-secondary);
 }
 
 .uc-role-avatar {
@@ -421,6 +475,8 @@ img {
   border-radius: 18px;
   border: 1px solid var(--border-color);
   flex: 0 0 auto;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .uc-role-avatar svg {
@@ -431,15 +487,18 @@ img {
 .uc-arrow {
   margin-left: auto;
   font-weight: 800;
+  color: var(--text-primary);
 }
 
 .uc-auth-switch {
   margin-top: 28px;
   text-align: center;
+  color: var(--text-secondary);
 }
 
 .uc-auth-switch a {
   font-weight: 700;
+  color: var(--primary);
 }
 
 .uc-dashboard {

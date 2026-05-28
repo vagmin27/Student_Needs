@@ -137,28 +137,31 @@
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight;
-    color: var(--text-primary);
+    color: var(--text-heading);
   }
 
   p, li {
-    color: var(--text-secondary);
+    color: var(--text-paragraph);
   }
 
   label {
-    color: var(--text-primary);
+    color: var(--text-label);
   }
 
   /* Global Table Styling */
   table {
     @apply w-full border-collapse text-left;
+    color: var(--text-table);
   }
   
   th {
     @apply p-4 font-semibold text-sm border-b border-border text-muted-foreground bg-muted/10;
+    color: var(--text-placeholder);
   }
   
   td {
     @apply p-4 text-sm border-b border-border text-foreground/95;
+    color: var(--text-table);
   }
   
   tr {

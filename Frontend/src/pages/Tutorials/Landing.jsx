@@ -70,7 +70,7 @@ function Landing() {
           </div>
           {isAuthenticated && isStudent && (
             <p style={{ textAlign: "center", marginTop: "1.5rem" }}>
-              <Link to={TUTORIAL_PATHS.moduleHome} style={{ color: "#6366f1", fontWeight: 600 }}>
+              <Link to={TUTORIAL_PATHS.moduleHome} style={{ color: "var(--primary)", fontWeight: 600 }}>
                 Go to Tutorials home →
               </Link>
             </p>

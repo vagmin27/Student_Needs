@@ -196,7 +196,7 @@ export function UnifiedLanding() {
             onClick={() => setTheme("light")}
             className={`p-2 rounded-xl flex items-center justify-center gap-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer ${
               theme === "light"
-                ? "bg-white text-slate-900 shadow-md scale-105"
+                ? "bg-white text-slate-950 shadow-md scale-105"
                 : "text-slate-400 hover:text-white hover:bg-white/5"
             }`}
             title="Light Mode"

@@ -79,23 +79,23 @@ const Analytics = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-bold font-mont text-white tracking-tight flex items-center gap-3">
+          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
             <span className="text-brand-primary">Deep</span> Analytics
           </h2>
 
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Visualize your spending patterns and financial health.
           </p>
         </div>
 
         {/* Monthly / Yearly Toggle */}
-        <div className="bg-brand-800/80 border border-white/10 rounded-xl p-1 flex">
+        <div className="bg-brand-800/80 border border-border rounded-xl p-1 flex">
           <button
             onClick={() => setViewType("monthly")}
             className={`px-4 py-1.5 rounded-lg text-sm font-medium ${
               viewType === "monthly"
-                ? "bg-white/10 text-white"
-                : "text-slate-400 hover:text-white"
+                ? "bg-muted/30 text-foreground"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             Monthly
@@ -105,8 +105,8 @@ const Analytics = () => {
             onClick={() => setViewType("yearly")}
             className={`px-4 py-1.5 rounded-lg text-sm font-medium ${
               viewType === "yearly"
-                ? "bg-white/10 text-white"
-                : "text-slate-400 hover:text-white"
+                ? "bg-muted/30 text-foreground"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             Yearly
@@ -121,9 +121,9 @@ const Analytics = () => {
             <MdLightbulbOutline size={24} />
           </div>
 
-          <p className="text-slate-300 text-sm leading-relaxed">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             Your highest spending is on{" "}
-            <strong className="text-white">{topCategoryStr}</strong>. Try
+            <strong className="text-foreground">{topCategoryStr}</strong>. Try
             setting a specific budget to constrain this category.
           </p>
         </div>
@@ -133,9 +133,9 @@ const Analytics = () => {
             <MdSavings size={24} />
           </div>
 
-          <p className="text-slate-300 text-sm leading-relaxed">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             You are on track to save{" "}
-            <strong className="text-white">{savingsPercent}%</strong> more than
+            <strong className="text-foreground">{savingsPercent}%</strong> more than
             last month. Keep up the good work!
           </p>
         </div>
@@ -145,9 +145,9 @@ const Analytics = () => {
             <MdTrendingUp size={24} />
           </div>
 
-          <p className="text-slate-300 text-sm leading-relaxed">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             Weekly spending peaked on{" "}
-            <strong className="text-white">Friday</strong>. Plan your weekend
+            <strong className="text-foreground">Friday</strong>. Plan your weekend
             expenses carefully.
           </p>
         </div>
@@ -158,7 +158,7 @@ const Analytics = () => {
         {/* Trend Chart */}
         <div className="glass-panel p-6 min-h-[350px] flex flex-col">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-xl font-bold text-foreground">
               {viewType === "monthly" ? "Monthly Trend" : "Yearly Trend"}
             </h3>
           </div>
@@ -176,7 +176,7 @@ const Analytics = () => {
         {/* Weekly Chart */}
         <div className="glass-panel p-6 min-h-[350px] flex flex-col">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-xl font-bold text-foreground">
               Weekly Spend Comparison
             </h3>
           </div>

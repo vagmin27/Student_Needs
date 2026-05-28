@@ -127,16 +127,16 @@ const RecurringTransactions = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-bold font-mont text-white tracking-tight flex items-center gap-3">
+          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
             <span className="text-brand-primary">Automated</span> Payments
           </h2>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Manage your subscriptions and recurring bills effortlessly.
           </p>
         </div>
         <button
           onClick={() => openForm()}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
         >
           <AiOutlinePlus size={20} /> New Rule
         </button>
@@ -156,7 +156,7 @@ const RecurringTransactions = () => {
           return (
             <div
               key={card.id}
-              className={`relative overflow-hidden rounded-2xl p-6 transition-transform hover:-translate-y-2 group ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-white/10"}`}
+              className={`relative overflow-hidden rounded-2xl p-6 transition-transform hover:-translate-y-2 group ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-border"}`}
             >
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${bgGradient} opacity-20 group-hover:opacity-30 transition-opacity`}
@@ -168,28 +168,28 @@ const RecurringTransactions = () => {
               <div className="relative z-10 flex flex-col h-full justify-between">
                 <div className="flex justify-between items-start mb-8">
                   <div>
-                    <h4 className="text-white font-bold text-lg">
+                    <h4 className="text-[var(--text-white)] font-bold text-lg">
                       {card.title}
                     </h4>
-                    <p className="text-white/60 text-xs font-medium uppercase tracking-wider">
+                    <p className="text-[var(--text-white)]/60 text-xs font-medium uppercase tracking-wider">
                       {card.category}
                     </p>
                   </div>
-                  <div className="bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-xs font-bold text-white">
+                  <div className="bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-xs font-bold text-[var(--text-white)]">
                     {card.frequency}
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-white/60 text-sm mb-1">
+                  <p className="text-[var(--text-white)]/60 text-sm mb-1">
                     Auto Debit Amount
                   </p>
                   <div className="flex justify-between items-end">
-                    <p className="text-3xl font-handjet font-bold text-white tracking-widest">
+                    <p className="text-3xl font-handjet font-bold text-[var(--text-white)] tracking-widest">
                       ₹ {card.amount.toLocaleString()}
                     </p>
                     <p
-                      className={`text-sm font-bold ${isOverdue ? "text-rose-400 animate-pulse" : "text-white"}`}
+                      className={`text-sm font-bold ${isOverdue ? "text-rose-400 animate-pulse" : "text-[var(--text-white)]"}`}
                     >
                       {isOverdue
                         ? "OVERDUE"
@@ -205,7 +205,7 @@ const RecurringTransactions = () => {
           );
         })}
         {upcomingCards.length === 0 && (
-          <div className="col-span-full py-8 text-center text-slate-500 border border-dashed border-white/10 rounded-2xl">
+          <div className="col-span-full py-8 text-center text-muted-foreground border border-dashed border-border rounded-2xl">
             No active subscriptions upcoming.
           </div>
         )}
@@ -213,14 +213,14 @@ const RecurringTransactions = () => {
 
       {/* Main Recurring List Table */}
       <div className="glass-panel overflow-hidden w-full">
-        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-brand-800/80">
-          <h3 className="text-xl font-bold text-white">Active Rules</h3>
+        <div className="p-6 border-b border-border flex justify-between items-center bg-brand-800/80">
+          <h3 className="text-xl font-bold text-[var(--primary-foreground)]">Active Rules</h3>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>
-              <tr className="bg-black/20 text-slate-400 text-xs uppercase tracking-widest">
+              <tr className="bg-black/20 text-muted-foreground text-xs uppercase tracking-widest">
                 <th className="px-6 py-4 font-semibold">Subscription / Bill</th>
                 <th className="px-6 py-4 font-semibold">Amount</th>
                 <th className="px-6 py-4 font-semibold text-center">
@@ -240,21 +240,21 @@ const RecurringTransactions = () => {
                 return (
                   <tr
                     key={tx.id}
-                    className="border-b border-white/5 hover:bg-white/5 transition-colors group"
+                    className="border-b border-border hover:bg-muted/10 transition-colors group"
                   >
                     <td className="px-6 py-4">
-                      <p className="text-white font-medium">{tx.title}</p>
-                      <p className="text-slate-500 text-xs">{tx.category}</p>
+                      <p className="text-foreground font-medium">{tx.title}</p>
+                      <p className="text-muted-foreground text-xs">{tx.category}</p>
                     </td>
-                    <td className="px-6 py-4 font-handjet text-xl text-white tracking-wider">
+                    <td className="px-6 py-4 font-handjet text-xl text-foreground tracking-wider">
                       ₹ {tx.amount.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-slate-300 text-sm">
+                      <span className="px-3 py-1 bg-muted/10 border border-border rounded-lg text-muted-foreground text-sm">
                         {tx.frequency}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-center text-slate-300 text-sm">
+                    <td className="px-6 py-4 text-center text-muted-foreground text-sm">
                       {new Date(tx.nextDate).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
@@ -283,13 +283,13 @@ const RecurringTransactions = () => {
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => openForm(tx)}
-                          className="p-2 text-slate-500 hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
+                          className="p-2 text-muted-foreground hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
                         >
                           <AiOutlineEdit size={20} />
                         </button>
                         <button
                           onClick={() => handleDelete(tx.id)}
-                          className="p-2 text-slate-500 hover:text-brand-danger hover:bg-brand-danger/10 rounded-lg transition-colors"
+                          className="p-2 text-muted-foreground hover:text-brand-danger hover:bg-brand-danger/10 rounded-lg transition-colors"
                         >
                           <AiOutlineDelete size={20} />
                         </button>
@@ -302,7 +302,7 @@ const RecurringTransactions = () => {
                 <tr>
                   <td
                     colSpan="7"
-                    className="px-6 py-8 text-center text-slate-500"
+                    className="px-6 py-8 text-center text-muted-foreground"
                   >
                     No recurring rules configured.
                   </td>
@@ -321,7 +321,7 @@ const RecurringTransactions = () => {
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">
+            <label className="text-sm font-medium text-muted-foreground">
               Rule Name / Title
             </label>
             <input
@@ -338,7 +338,7 @@ const RecurringTransactions = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">
+              <label className="text-sm font-medium text-muted-foreground">
                 Amount (₹)
               </label>
               <input
@@ -354,7 +354,7 @@ const RecurringTransactions = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">
+              <label className="text-sm font-medium text-muted-foreground">
                 Frequency
               </label>
               <select
@@ -363,7 +363,7 @@ const RecurringTransactions = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, frequency: e.target.value })
                 }
-                className="premium-input text-slate-300"
+                className="premium-input text-muted-foreground"
               >
                 <option className="bg-brand-900" value="Daily">
                   Daily
@@ -383,7 +383,7 @@ const RecurringTransactions = () => {
 
           <div className="grid grid-cols-2 gap-4 z-50 relative">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">
+              <label className="text-sm font-medium text-muted-foreground">
                 Next Execution
               </label>
               <input
@@ -398,7 +398,7 @@ const RecurringTransactions = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">
+              <label className="text-sm font-medium text-muted-foreground">
                 Category
               </label>
               <select
@@ -407,7 +407,7 @@ const RecurringTransactions = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, category: e.target.value })
                 }
-                className="premium-input text-slate-300"
+                className="premium-input text-muted-foreground"
               >
                 {[
                   "Grocery",
@@ -430,13 +430,13 @@ const RecurringTransactions = () => {
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              className="px-6 py-2.5 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-colors"
+              className="px-6 py-2.5 rounded-xl border border-border text-foreground font-medium hover:bg-muted/10 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
             >
               Save Rule
             </button>

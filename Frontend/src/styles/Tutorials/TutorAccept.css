@@ -12,7 +12,7 @@
 }
 
 .booking-card {
-  background: #fff;
+  background: var(--card-bg);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -32,7 +32,7 @@
 
 .accept-btn {
   background: #4caf50;
-  color: white;
+  color: var(--text-white);
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
@@ -41,7 +41,7 @@
 
 .reject-btn {
   background: #f44336;
-  color: white;
+  color: var(--text-white);
   border: none;
   padding: 8px 16px;
   border-radius: 6px;

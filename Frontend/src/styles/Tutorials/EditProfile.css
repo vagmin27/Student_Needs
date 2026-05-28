@@ -115,7 +115,7 @@ select.form-control {
   border-radius: 12px;
   border: none;
   background: linear-gradient(135deg, #ff7a18, #ffb347);
-  color: white;
+  color: var(--text-white);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;

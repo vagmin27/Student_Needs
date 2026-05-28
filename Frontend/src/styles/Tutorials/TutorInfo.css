@@ -96,7 +96,7 @@
   position: static;
   font-size: 1.5rem;
   margin-right: 5px;
-  color: #ccc;
+  color: var(--text-placeholder);
 }
 
 /* CLEAN TEXT */
@@ -118,7 +118,7 @@
   border-radius: 8px;
   border: none;
   background: linear-gradient(135deg, #ff7a18, #ffb347);
-  color: white;
+  color: var(--text-white);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -139,15 +139,15 @@
 .backBtn {
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  background: white;
-  color: #555;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-paragraph);
   cursor: pointer;
   transition: 0.2s;
 }
 
 .backBtn:hover {
-  background: #f5f5f5;
+  background: var(--bg-hover, #f5f5f5);
 }
 
 /* REMOVE OLD TRANSFORMS */

@@ -59,7 +59,7 @@
 .sidenav__list-item a:focus,
 .sidenav__list-item a.active {
   background: var(--primary);
-  color: #ffffff;
+  color: var(--primary-foreground);
 }
 
 /* REMOVE OLD BEHAVIOR */
@@ -75,7 +75,7 @@
     flex-direction: row;
     justify-content: space-around;
     border-right: none;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color);
   }
 
   .sidenav__list {
