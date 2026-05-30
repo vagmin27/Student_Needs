@@ -19,7 +19,8 @@ export const auth = async (req, res, next) => {
 
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
-      const rawRole = (decode.role || decode.accountType || "student").toLowerCase();
+      let rawRole = (decode.role || decode.accountType || "student").toLowerCase();
+      if (rawRole === "user") rawRole = "student";
       req.user = {
         ...decode,
         role: rawRole,

@@ -198,6 +198,21 @@ export function StudentSignupPage() {
                 )}
               </div>
 
+              {/* College Name */}
+              <div className="space-y-2">
+                <Label htmlFor="collegeName">College Name</Label>
+                <Input
+                  id="collegeName"
+                  type="text"
+                  value={data.collegeName}
+                  onChange={(e) => setField('collegeName', e.target.value)}
+                  placeholder="e.g. Stanford University"
+                  disabled={isSubmitting}
+                  className={errors.collegeName ? 'border-destructive' : ''}
+                />
+                {errors.collegeName && <p className="text-xs text-destructive">{errors.collegeName}</p>}
+              </div>
+
               <Button
                 type="submit"
                 className="w-full"

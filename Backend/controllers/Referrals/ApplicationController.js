@@ -8,6 +8,33 @@ import { notificationService } from "../../services/NotificationService.js";
 // ALUMNI SIDE - Management Endpoints
 // =====================================================
 
+export const getVerifiedCandidates = async (req, res) => {
+    try {
+        const alumniId = req.user.id;
+
+        const applications = await Application.find({
+            alumni: alumniId,
+            status: { $in: ["Referred", "Shortlisted"] }
+        })
+        .populate('student', 'firstName lastName email college branch graduationYear skills profileCompleteness image')
+        .populate('opportunity', 'jobTitle experienceLevel')
+        .sort({ updatedAt: -1 });
+
+        return res.status(200).json({
+            success: true,
+            total: applications.length,
+            data: applications,
+            message: "Verified candidates fetched successfully",
+        });
+    } catch (error) {
+        console.error("Get verified candidates error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch verified candidates. Please try again.",
+        });
+    }
+};
+
 // View Applications for an Opportunity
 export const viewApplications = async (req, res) => {
     try {
@@ -461,15 +488,12 @@ export const applyForReferral = async (req, res) => {
         });
 
         await notificationService.createAndEmitNotification({
-            userId: opportunity.postedBy._id,
+            recipientId: opportunity.postedBy._id,
             title: 'New Referral Application',
             message: `${student.firstName} applied for ${opportunity.jobTitle}`,
-            type: 'INFO',
-            category: 'REFERRAL',
-            metadata: { opportunityId: opportunity._id, applicationId: application._id }
+            type: 'REFERRAL',
+            link: `/alumni/referrals/${opportunity._id}`
         });
-
-        notificationService.emitToUser(studentId, 'dashboard_refresh', { type: 'referral_update' });
 
         return res.status(201).json({
             success: true,

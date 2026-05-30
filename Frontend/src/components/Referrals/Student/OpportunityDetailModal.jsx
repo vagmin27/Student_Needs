@@ -205,7 +205,7 @@ export function OpportunityDetailModal({
                 ) : (
                   <>
                     <Users className="w-4 h-4 mr-2" />
-                    Apply for Referral
+                    Apply for {opportunity.opportunityType === 'Job' ? 'Job' : 'Referral'}
                   </>
                 )}
               </Button>

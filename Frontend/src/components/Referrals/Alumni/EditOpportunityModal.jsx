@@ -28,6 +28,8 @@ export function EditOpportunityModal({
     requiredSkills: '',
     experienceLevel: 'full-time',
     numberOfReferrals: 1,
+    company: '',
+    location: '',
   });
 
   // Update internal form state whenever the opportunity prop changes
@@ -41,6 +43,8 @@ export function EditOpportunityModal({
           : '',
         experienceLevel: opportunity.experienceLevel || 'full-time',
         numberOfReferrals: opportunity.numberOfReferrals || 1,
+        company: opportunity.company || '',
+        location: opportunity.location || '',
       });
     }
   }, [opportunity]);
@@ -58,6 +62,8 @@ export function EditOpportunityModal({
         .filter(s => s.length > 0),
       experienceLevel: formData.experienceLevel,
       numberOfReferrals: formData.numberOfReferrals,
+      company: formData.company,
+      location: formData.location,
     };
 
     await onSubmit(opportunity._id, updateData);
@@ -101,6 +107,28 @@ export function EditOpportunityModal({
                   placeholder="Senior Software Engineer"
                   required
                 />
+              </div>
+
+              {/* Company & Location Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="edit-company">Company</Label>
+                  <Input
+                    id="edit-company"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    placeholder="Tech Corp"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="edit-location">Location</Label>
+                  <Input
+                    id="edit-location"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    placeholder="San Francisco, CA"
+                  />
+                </div>
               </div>
 
               {/* Employment Type */}

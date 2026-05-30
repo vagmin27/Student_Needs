@@ -3,6 +3,7 @@
 import Student from "../../models/Referrals/StudentModel.js";
 import { uploadPdfToMongoDB } from "../../utils/Referrals/getStringFromPdf.js";
 import { calculateProfileCompleteness } from "../../utils/Referrals/calculateProfileScore.js";
+import { extractAndUpdateProfileFromResume } from "../../utils/Referrals/parseResumeAndFillProfile.js";
 
 // Upload Resume
 export const uploadResume = async (req, res) => {
@@ -34,6 +35,12 @@ export const uploadResume = async (req, res) => {
     const pdfData = await uploadPdfToMongoDB(req.files.resume);
 
     student.resume = pdfData;
+
+    // Auto-fill profile from resume
+    if (pdfData && pdfData.data) {
+      await extractAndUpdateProfileFromResume(student, pdfData.data);
+    }
+
     student.profileCompleteness = calculateProfileCompleteness(student);
 
     await student.save();
@@ -81,6 +88,12 @@ export const updateResume = async (req, res) => {
     const pdfData = await uploadPdfToMongoDB(req.files.resume);
 
     student.resume = pdfData;
+
+    // Auto-fill profile from resume
+    if (pdfData && pdfData.data) {
+      await extractAndUpdateProfileFromResume(student, pdfData.data);
+    }
+
     student.profileCompleteness = calculateProfileCompleteness(student);
 
     await student.save();

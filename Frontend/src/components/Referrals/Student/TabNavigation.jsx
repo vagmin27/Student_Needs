@@ -19,19 +19,7 @@ import {
 export function TabNavigation({ activeTab, student, appliedCount = 0 }) {
   return (
     <div className="flex gap-1.5 sm:gap-2 p-1 sm:p-1.5 bg-muted rounded-lg w-full sm:w-fit mx-auto flex-wrap justify-center">
-      {/* Referrals Tab */}
-      <Link
-        to="/student/referrals"
-        className={cn(
-          'px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-all flex items-center',
-          activeTab === 'referrals'
-            ? 'bg-card text-foreground shadow-sm'
-            : 'text-muted-foreground hover:text-foreground'
-        )}
-      >
-        <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
-        Referrals
-      </Link>
+
 
       {/* Applied Jobs Tab with Count Badge */}
       <Link
@@ -64,6 +52,20 @@ export function TabNavigation({ activeTab, student, appliedCount = 0 }) {
       >
         <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
         Browse Jobs
+      </Link>
+
+      {/* Browse Referrals Tab */}
+      <Link
+        to="/student/referrals"
+        className={cn(
+          'px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-all flex items-center',
+          activeTab === 'referrals'
+            ? 'bg-card text-foreground shadow-sm'
+            : 'text-muted-foreground hover:text-foreground'
+        )}
+      >
+        <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+        Browse Referrals
       </Link>
 
       {/* My Profile Tab */}

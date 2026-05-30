@@ -18,6 +18,7 @@ import { applicationsApi } from '@/services/Referrals/application.js';
 export function AlumniDashboard() {
   const { user, isAuthenticated } = useAuth();
   const [backendOpportunities, setBackendOpportunities] = useState([]);
+  const [verifiedCandidates, setVerifiedCandidates] = useState([]);
   const [selectedOpportunityApplications, setSelectedOpportunityApplications] = useState([]);
   const [selectedBackendOpportunity, setSelectedBackendOpportunity] = useState(null);
   const [showEditOpportunity, setShowEditOpportunity] = useState(false);
@@ -74,12 +75,20 @@ export function AlumniDashboard() {
     // Fetch opportunities from backend if authenticated
     if (isAuthenticated && user) {
       try {
-        const response = await opportunitiesApi.getMyOpportunities();
-        if (response.success) {
-          setBackendOpportunities(response.data);
+        const [oppsResponse, candidatesResponse] = await Promise.all([
+          opportunitiesApi.getMyOpportunities(),
+          applicationsApi.getVerifiedCandidates().catch(() => ({ success: false, data: [] }))
+        ]);
+        
+        if (oppsResponse.success) {
+          setBackendOpportunities(oppsResponse.data);
+        }
+        
+        if (candidatesResponse.success) {
+          setVerifiedCandidates(candidatesResponse.data);
         }
       } catch (error) {
-        console.error('Failed to load opportunities:', error);
+        console.error('Failed to load data:', error);
       }
     }
   };
@@ -139,6 +148,7 @@ export function AlumniDashboard() {
     try {
       const payload = {
         jobTitle: jobForm.title,
+        opportunityType: 'Job',
         roleDescription: jobForm.description,
         requiredSkills: jobForm.requirements
           .split('\n')
@@ -146,6 +156,8 @@ export function AlumniDashboard() {
           .filter(r => r.length > 0),
         experienceLevel: jobForm.type,
         numberOfReferrals: parseInt(jobForm.vacancy) || 1,
+        company: jobForm.company,
+        location: jobForm.location,
       };
 
       const response = await opportunitiesApi.createOpportunity(payload);
@@ -352,6 +364,7 @@ export function AlumniDashboard() {
     try {
       const payload = {
         jobTitle: referralForm.title,
+        opportunityType: 'Referral',
         roleDescription: referralForm.description,
         requiredSkills: referralForm.requirements
           .split('\n')
@@ -359,6 +372,8 @@ export function AlumniDashboard() {
           .filter(r => r.length > 0),
         experienceLevel: referralForm.type,
         numberOfReferrals: parseInt(referralForm.vacancy) || 1,
+        company: referralForm.company,
+        location: referralForm.location,
       };
 
       const response = await opportunitiesApi.createOpportunity(payload);
@@ -432,10 +447,16 @@ export function AlumniDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div className="bg-card rounded-xl border border-border/50 p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-foreground">My Opportunities</h3>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {activeTab === 'jobs' ? 'My Posted Jobs' : 'My Posted Referrals'}
+                  </h3>
                 </div>
                 <InteractiveJobsTable 
-                  jobs={backendOpportunities}
+                  jobs={backendOpportunities.filter(opp => 
+                    activeTab === 'jobs' 
+                      ? opp.opportunityType === 'Job' 
+                      : (opp.opportunityType === 'Referral' || !opp.opportunityType)
+                  )}
                   onRowClick={(opp) => {
                     setSelectedBackendOpportunity(opp);
                     loadApplicationsForOpportunity(opp._id);
@@ -484,44 +505,41 @@ export function AlumniDashboard() {
 
       {activeTab === 'candidates' && (
         <div className="space-y-4 sm:space-y-6">
-          {isAuthenticated && backendOpportunities.length > 0 && (
+          {isAuthenticated && verifiedCandidates.length > 0 ? (
             <div className="bg-card rounded-xl border border-border/50 p-4 sm:p-6">
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">
-                Candidates from Backend Opportunities
+                Verified Candidates
               </h3>
-              <InteractiveJobsTable 
-                jobs={backendOpportunities}
-                onRowClick={(opp) => {
-                  setSelectedBackendOpportunity(opp);
-                  loadApplicationsForOpportunity(opp._id);
-                  setActiveTab('jobs');
-                }}
-                onActionClick={(opp) => {
-                  setSelectedBackendOpportunity(opp);
-                  loadApplicationsForOpportunity(opp._id);
-                  setActiveTab('jobs');
-                }}
-                actionLabel="View Applications"
-              />
+              <div className="space-y-4">
+                {verifiedCandidates.map((application) => (
+                  <ApplicationCard
+                    key={application._id}
+                    application={application}
+                    opportunityId={application.opportunity?._id}
+                    onViewProfile={loadStudentProfile}
+                    onShortlist={handleShortlistBackend}
+                    onReject={handleRejectBackend}
+                    onRefer={handleReferBackend}
+                  />
+                ))}
+              </div>
             </div>
-          )}
-
-          {(!isAuthenticated || backendOpportunities.length === 0) && (
+          ) : (
             <div className="bg-card rounded-xl p-6 sm:p-8 md:p-12 border border-border/50 text-center">
-              <Briefcase className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
+              <Users className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
-                No Candidates Yet
+                No Verified Candidates Yet
               </h3>
               <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4">
-                Post opportunities to start receiving applications from candidates
+                Review applications and refer candidates to see them here.
               </p>
               <Button 
                 variant="alumni" 
                 onClick={() => setActiveTab('jobs')}
                 className='bg-primary text-background'
               >
-                <Briefcase className="w-4 h-4" />
-                Post Opportunity
+                <Briefcase className="w-4 h-4 mr-2" />
+                Go to Opportunities
               </Button>
             </div>
           )}

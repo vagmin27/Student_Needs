@@ -69,10 +69,10 @@ export function StudentProfilePage() {
   const fetchScores = async () => {
     try {
       // Fetch applications to get interview and profile scores
-      const response = await referralsApiClient.get("/applications");
+      const response = await referralsApiClient.get("/my-applications");
       if (response.status === 200) {
         const data = response.data;
-        const applications = data.data || data;
+        const applications = data.data?.applications || data.applications || [];
 
         // Calculate average scores from all applications
         let totalProfileScore = 0;

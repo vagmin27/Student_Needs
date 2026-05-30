@@ -8,9 +8,21 @@ const router = express.Router();
 /**
  * ✅ CREATE BOOKING (FROM FRONTEND)
  */
+import jwt from "jsonwebtoken";
+
 router.post("/", async (req, res) => {
   try {
-    const userId = req.session?.passport?.user;
+    let userId = req.session?.passport?.user;
+
+    if (!userId && req.headers.authorization?.startsWith("Bearer")) {
+      try {
+        const token = req.headers.authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        userId = decoded.id || decoded._id;
+      } catch (e) {
+        console.error("JWT Decode error in booking:", e);
+      }
+    }
 
     if (!userId) {
       return res.status(401).json({ msg: "Please log in to book a class" });
@@ -76,7 +88,17 @@ router.post("/", async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
-    const userId = req.session?.passport?.user;
+    let userId = req.session?.passport?.user;
+
+    if (!userId && req.headers.authorization?.startsWith("Bearer")) {
+      try {
+        const token = req.headers.authorization.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        userId = decoded.id || decoded._id;
+      } catch (e) {
+        console.error("JWT Decode error in booking get:", e);
+      }
+    }
 
     if (!userId) {
       return res.json([]);

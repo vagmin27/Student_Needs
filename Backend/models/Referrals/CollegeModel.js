@@ -16,7 +16,7 @@ const collegeSchema = new mongoose.Schema({
     },
     Student : [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Student",
+        ref: "ReferralStudent",
     }],
 
     Alumni : [{ 

@@ -5,10 +5,13 @@
  */
 export function AlumniStats({ backendOpportunities = [] }) {
   // Backend stats
-  const opportunitiesCount = backendOpportunities.length;
+  const jobsCount = backendOpportunities.filter(opp => opp.opportunityType === 'Job').length;
+  const referralsCount = backendOpportunities.filter(opp => opp.opportunityType === 'Referral' || !opp.opportunityType).length;
   const totalReferralsGiven = backendOpportunities.reduce((acc, opp) => acc + (opp.referralsGiven || 0), 0);
   const activeOpportunities = backendOpportunities?.filter(opp => opp.isActive || opp.status === 'Open').length;
-  const totalReferralsPossible = backendOpportunities.reduce((acc, opp) => acc + (opp.numberOfReferrals || 0), 0);
+  const totalReferralsPossible = backendOpportunities
+    .filter(opp => opp.opportunityType === 'Referral' || !opp.opportunityType)
+    .reduce((acc, opp) => acc + (opp.numberOfReferrals || 0), 0);
 
   // Advanced AI/Analytics stats
   const applicationsReceived = backendOpportunities.reduce((acc, opp) => acc + (opp.applicationsCount || 0), 0);
@@ -17,11 +20,17 @@ export function AlumniStats({ backendOpportunities = [] }) {
     : 0;
 
   return (
-    <div className="mx-auto grid sm:grid-cols-3 lg:grid-cols-6 gap-4">
-      {/* Opportunities Posted */}
+    <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-7 gap-4">
+      {/* Jobs Posted */}
       <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
-        <p className="text-3xl font-bold text-foreground">{opportunitiesCount}</p>
-        <p className="text-sm text-muted-foreground">Opportunities Posted</p>
+        <p className="text-3xl font-bold text-foreground">{jobsCount}</p>
+        <p className="text-sm text-muted-foreground">Jobs Posted</p>
+      </div>
+
+      {/* Referrals Posted */}
+      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
+        <p className="text-3xl font-bold text-foreground">{referralsCount}</p>
+        <p className="text-sm text-muted-foreground">Referrals Posted</p>
       </div>
 
       {/* Active Opportunities */}

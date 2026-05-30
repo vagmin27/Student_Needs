@@ -404,6 +404,7 @@ function StudentSignupFlow() {
         { name: "lastName", label: "Last Name", type: "text", placeholder: "Sharma" },
         { name: "email", label: "Email", type: "email", placeholder: "name@email.com" },
         { name: "password", label: "Password", type: "password", placeholder: "Password" },
+        { name: "collegeName", label: "College Name", type: "text", placeholder: "e.g. Stanford University" },
       ]}
       submitText="Sign up"
       submittingText="Creating account..."

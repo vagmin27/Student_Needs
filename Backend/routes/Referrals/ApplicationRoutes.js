@@ -12,6 +12,7 @@ import {
     getMyApplications,
     getApplicationDetails,
     downloadStudentResume,
+    getVerifiedCandidates,
 } from "../../controllers/Referrals/ApplicationController.js";
 
 // Import middleware
@@ -23,6 +24,9 @@ import { auth } from "../../middlewares/Referrals/auth.js";
 
 // All routes require authentication
 router.use(auth);
+
+// View Verified Candidates (Alumni)
+router.get("/verified-candidates", getVerifiedCandidates);
 
 // View Applications for an Opportunity (Alumni only - owner)
 router.get("/applications/:opportunityId", viewApplications);

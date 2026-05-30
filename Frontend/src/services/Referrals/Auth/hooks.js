@@ -76,6 +76,7 @@ const initialStudentSignup = {
   lastName: '',
   email: '',
   password: '',
+  collegeName: '',
 };
 
 export function useStudentSignup() {
@@ -109,6 +110,11 @@ export function useStudentSignup() {
       isValid = false;
     } else if (form.data.password.length < 6) {
       form.setError('password', 'Password must be at least 6 characters');
+      isValid = false;
+    }
+
+    if (!form.data.collegeName || !form.data.collegeName.trim()) {
+      form.setError('collegeName', 'College Name is required');
       isValid = false;
     }
 

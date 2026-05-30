@@ -6,6 +6,12 @@ const OpportunitySchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    opportunityType: {
+        type: String,
+        enum: ["Job", "Referral"],
+        required: true,
+        default: "Referral",
+    },
     roleDescription: {
         type: String,
         required: true,
@@ -18,6 +24,14 @@ const OpportunitySchema = new mongoose.Schema({
     experienceLevel: {
         type: String,
         required: true,
+    },
+    company: {
+        type: String,
+        trim: true,
+    },
+    location: {
+        type: String,
+        trim: true,
     },
     numberOfReferrals: {
         type: Number,

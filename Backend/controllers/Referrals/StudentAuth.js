@@ -26,12 +26,13 @@ export const signup = async (req, res) => {
       lastName,
       email,
       password,
+      collegeName,
       accountType,
     } = req.body;
 
     // ================= REQUIRED FIELD VALIDATION =================
 
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !email || !password || !collegeName) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -73,6 +74,19 @@ export const signup = async (req, res) => {
       });
     }
 
+    // ================= FIND OR CREATE COLLEGE =================
+    const matchingName = collegeName.replace(/\s+/g, "").toLowerCase();
+    let college = await College.findOne({ matchingName });
+
+    if (!college) {
+      college = await College.create({
+        name: collegeName,
+        matchingName,
+        Student: [],
+        Alumni: [],
+      });
+    }
+
     // ================= HASH PASSWORD =================
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -85,8 +99,13 @@ export const signup = async (req, res) => {
       email,
       password: hashedPassword,
       accountType: accountType || "student",
+      college: college._id,
       image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`,
     });
+
+    // ================= LINK COLLEGE =================
+    college.Student.push(student._id);
+    await college.save();
 
     // ================= PROFILE COMPLETENESS =================
 
@@ -94,6 +113,9 @@ export const signup = async (req, res) => {
       calculateProfileCompleteness(student);
 
     await student.save();
+    
+    // Populate college for the response
+    await student.populate("college", "name matchingName");
 
     // ================= SUCCESS RESPONSE =================
 
