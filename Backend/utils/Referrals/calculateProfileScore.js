@@ -16,9 +16,9 @@ export const calculateProfileCompleteness = (student) => {
     { field: student.certifications && student.certifications.length > 0, weight: 5 },
     { field: student.preferredRoles && student.preferredRoles.length > 0, weight: 5 },
     { field: student.resume && student.resume.data, weight: 7 },
-    { field: student.linkedIn && student.linkedIn.data, weight: 5 },
-    { field: student.linkedIn && student.linkedIn.linkedInUrl, weight: 2 },
+    { field: student.linkedinUrl, weight: 7 },
     { field: student.githubUrl, weight: 5 },
+    { field: student.portfolioUrl, weight: 5 },
   ];
 
   fields.forEach(({ field, weight }) => {

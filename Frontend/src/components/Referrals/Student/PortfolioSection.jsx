@@ -19,7 +19,7 @@ import {
   Save,
   Edit2,
 } from "lucide-react";
-import { linkedInApi } from "@/services/Referrals/studentProfile.js";
+import { portfolioApi } from "@/services/Referrals/studentProfile.js";
 import {
   showTransactionToast,
   dismissToast,
@@ -27,41 +27,44 @@ import {
 
 /**
  * @param {Object} props
- * @param {string} [props.linkedinUrl] - LinkedIn URL from profile
- * @param {Function} props.onLinkedInChange - Callback to refresh profile data after changes
+ * @param {string} [props.portfolioUrl] - Portfolio URL from profile
+ * @param {Function} props.onPortfolioChange - Callback to refresh profile data after changes
  */
-export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInChange }) {
+export function PortfolioSection({ portfolioUrl: initialPortfolioUrl, onPortfolioChange }) {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [linkedinUrl, setLinkedinUrl] = useState(initialLinkedinUrl || "");
+  const [portfolioUrl, setPortfolioUrl] = useState(initialPortfolioUrl || "");
 
-  const hasLinkedinUrl = !!initialLinkedinUrl;
+  const hasPortfolioUrl = !!initialPortfolioUrl;
 
   useEffect(() => {
-    setLinkedinUrl(initialLinkedinUrl || "");
-  }, [initialLinkedinUrl]);
+    setPortfolioUrl(initialPortfolioUrl || "");
+  }, [initialPortfolioUrl]);
 
-  const validateLinkedInUrl = (url) => {
-    const pattern =
-      /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/i;
-    return pattern.test(url.trim());
+  const validateUrl = (url) => {
+    try {
+      const parsed = new URL(url.trim());
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch (_) {
+      return false;
+    }
   };
 
   const handleSave = async () => {
-    if (!linkedinUrl.trim()) {
+    if (!portfolioUrl.trim()) {
       showTransactionToast({
         type: "error",
-        message: "Please enter a LinkedIn profile URL",
+        message: "Please enter a Portfolio URL",
       });
       return;
     }
 
-    if (!validateLinkedInUrl(linkedinUrl)) {
+    if (!validateUrl(portfolioUrl)) {
       showTransactionToast({
         type: "error",
         message:
-          "Please enter a valid LinkedIn profile URL (e.g. linkedin.com/in/username)",
+          "Please enter a valid URL (e.g. https://myportfolio.com)",
       });
       return;
     }
@@ -69,29 +72,29 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
     setSaving(true);
     const toastId = showTransactionToast({
       type: "pending",
-      message: hasLinkedinUrl ? "Updating LinkedIn URL..." : "Adding LinkedIn URL...",
+      message: hasPortfolioUrl ? "Updating Portfolio URL..." : "Adding Portfolio URL...",
     });
 
     try {
-      if (hasLinkedinUrl) {
-        await linkedInApi.updateLinkedInUrl(linkedinUrl.trim());
+      if (hasPortfolioUrl) {
+        await portfolioApi.updatePortfolioUrl(portfolioUrl.trim());
       } else {
-        await linkedInApi.addLinkedInUrl(linkedinUrl.trim());
+        await portfolioApi.addPortfolioUrl(portfolioUrl.trim());
       }
 
       dismissToast(toastId);
       showTransactionToast({
         type: "success",
-        message: hasLinkedinUrl ? "LinkedIn URL updated!" : "LinkedIn URL added!",
+        message: hasPortfolioUrl ? "Portfolio URL updated!" : "Portfolio URL added!",
       });
 
       setIsEditing(false);
-      onLinkedInChange();
+      onPortfolioChange();
     } catch (error) {
       dismissToast(toastId);
       showTransactionToast({
         type: "error",
-        message: error.response?.data?.message || "Failed to save LinkedIn URL",
+        message: error.response?.data?.message || "Failed to save Portfolio URL",
       });
     } finally {
       setSaving(false);
@@ -99,35 +102,35 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
   };
 
   const handleDelete = async () => {
-    if (!hasLinkedinUrl) return;
+    if (!hasPortfolioUrl) return;
 
-    if (!window.confirm("Are you sure you want to remove your LinkedIn URL?")) {
+    if (!window.confirm("Are you sure you want to remove your Portfolio URL?")) {
       return;
     }
 
     setDeleting(true);
     const toastId = showTransactionToast({
       type: "pending",
-      message: "Removing LinkedIn URL...",
+      message: "Removing Portfolio URL...",
     });
 
     try {
-      await linkedInApi.deleteLinkedInUrl();
+      await portfolioApi.deletePortfolioUrl();
 
       dismissToast(toastId);
       showTransactionToast({
         type: "success",
-        message: "LinkedIn URL removed!",
+        message: "Portfolio URL removed!",
       });
 
-      setLinkedinUrl("");
+      setPortfolioUrl("");
       setIsEditing(false);
-      onLinkedInChange();
+      onPortfolioChange();
     } catch (error) {
       dismissToast(toastId);
       showTransactionToast({
         type: "error",
-        message: error.response?.data?.message || "Failed to remove LinkedIn URL",
+        message: error.response?.data?.message || "Failed to remove Portfolio URL",
       });
     } finally {
       setDeleting(false);
@@ -135,14 +138,8 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
   };
 
   const handleCancel = () => {
-    setLinkedinUrl(initialLinkedinUrl || "");
+    setPortfolioUrl(initialPortfolioUrl || "");
     setIsEditing(false);
-  };
-
-  const extractUsername = (url) => {
-    if (!url) return "";
-    const match = url.match(/linkedin\.com\/in\/([a-zA-Z0-9_-]+)/i);
-    return match ? match[1] : url;
   };
 
   return (
@@ -150,15 +147,15 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Globe className="w-5 h-5 text-[#0A66C2]" />
+            <Globe className="w-5 h-5" />
             <div>
-              <CardTitle>LinkedIn</CardTitle>
+              <CardTitle>Portfolio</CardTitle>
               <CardDescription>
-                Add your LinkedIn profile for recruiters
+                Add your personal website or online portfolio
               </CardDescription>
             </div>
           </div>
-          {hasLinkedinUrl && (
+          {hasPortfolioUrl && (
             <Badge variant="default" className="gap-1">
               <CheckCircle2 className="w-3 h-3" />
               Added
@@ -167,26 +164,22 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {hasLinkedinUrl && !isEditing ? (
+        {hasPortfolioUrl && !isEditing ? (
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-muted/50 border">
               <div className="flex items-center gap-3">
-                <Globe className="w-8 h-8 flex-shrink-0 text-[#0A66C2]" />
+                <Globe className="w-8 h-8 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm text-foreground">
-                    @{extractUsername(initialLinkedinUrl)}
+                    Personal Portfolio
                   </p>
                   <a
-                    href={
-                      initialLinkedinUrl.startsWith("http")
-                        ? initialLinkedinUrl
-                        : `https://${initialLinkedinUrl}`
-                    }
+                    href={portfolioUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 truncate"
                   >
-                    {initialLinkedinUrl}
+                    {portfolioUrl}
                     <ExternalLink className="w-3 h-3 flex-shrink-0" />
                   </a>
                 </div>
@@ -197,17 +190,10 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() =>
-                  window.open(
-                    initialLinkedinUrl.startsWith("http")
-                      ? initialLinkedinUrl
-                      : `https://${initialLinkedinUrl}`,
-                    "_blank",
-                  )
-                }
+                onClick={() => window.open(portfolioUrl, "_blank")}
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
-                View Profile
+                View Site
               </Button>
 
               <Button
@@ -239,15 +225,15 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
             <div className="flex gap-2">
               <Input
                 type="url"
-                value={linkedinUrl}
-                onChange={(e) => setLinkedinUrl(e.target.value)}
-                placeholder="https://linkedin.com/in/username"
+                value={portfolioUrl}
+                onChange={(e) => setPortfolioUrl(e.target.value)}
+                placeholder="https://myportfolio.com"
                 className="flex-1"
                 onKeyPress={(e) => e.key === "Enter" && handleSave()}
               />
               <Button
                 onClick={handleSave}
-                disabled={saving || !linkedinUrl.trim()}
+                disabled={saving || !portfolioUrl.trim()}
               >
                 {saving ? (
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -266,7 +252,7 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
             <div className="flex items-start gap-2 text-sm text-muted-foreground">
               <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
               <p>
-                Linking your LinkedIn profile helps recruiters learn more about your professional background and accomplishments.
+                Add your personal website, GitHub Pages site, or Behance/Dribbble link to showcase your best works.
               </p>
             </div>
           </div>

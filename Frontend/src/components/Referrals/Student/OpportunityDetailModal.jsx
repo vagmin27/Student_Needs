@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Referrals/ui/button.jsx';
 import {
   X,
@@ -10,6 +11,7 @@ import {
   Briefcase,
   CheckCircle,
   Loader2,
+  MessageSquare,
 } from 'lucide-react';
 
 /**
@@ -29,7 +31,9 @@ export function OpportunityDetailModal({
   onApply,
   isApplying,
   hasApplied,
+  chatId,
 }) {
+  const navigate = useNavigate();
   if (!isOpen || !opportunity) return null;
 
   const referralsGiven = opportunity.referralsGiven || 0;
@@ -177,10 +181,22 @@ export function OpportunityDetailModal({
           {/* Footer Action Bar */}
           <div className="sticky bottom-0 bg-card border-t border-border p-6">
             {hasApplied ? (
-              <Button disabled className="w-full bg-success/20 text-success hover:bg-success/20">
-                <CheckCircle className="w-4 h-4 mr-2" />
-                Already Applied
-              </Button>
+              <div className="flex gap-3 w-full">
+                <Button disabled className="flex-1 bg-success/20 text-success hover:bg-success/20">
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Already Applied
+                </Button>
+                <Button
+                  onClick={() => {
+                    onClose();
+                    navigate(`/student/chat?chatId=${chatId || ''}`);
+                  }}
+                  className="flex-1 bg-primary text-primary-foreground hover:bg-primary/95"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Message Alumni
+                </Button>
+              </div>
             ) : !isOpen_ ? (
               <Button variant="secondary" disabled className="w-full">
                 <X className="w-4 h-4 mr-2" />

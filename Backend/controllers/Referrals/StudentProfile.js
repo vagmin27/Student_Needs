@@ -149,9 +149,9 @@ export const getProfileStatus = async (req, res) => {
         if (!student.certifications || student.certifications.length === 0) missingFields.push("certifications");
         if (!student.preferredRoles || student.preferredRoles.length === 0) missingFields.push("preferredRoles");
         if (!student.resume || !student.resume.data) missingFields.push("resume");
-        if (!student.linkedIn || !student.linkedIn.data) missingFields.push("linkedInPdf");
-        if (!student.linkedIn || !student.linkedIn.linkedInUrl) missingFields.push("linkedInUrl");
+        if (!student.linkedinUrl) missingFields.push("linkedinUrl");
         if (!student.githubUrl) missingFields.push("githubUrl");
+        if (!student.portfolioUrl) missingFields.push("portfolioUrl");
 
         // Determine profile strength
         let strength = "Weak";
@@ -173,8 +173,9 @@ export const getProfileStatus = async (req, res) => {
                     certifications: student.certifications && student.certifications.length > 0 ? "Complete" : "Incomplete",
                     preferredRoles: student.preferredRoles && student.preferredRoles.length > 0 ? "Complete" : "Incomplete",
                     resume: student.resume && student.resume.data ? "Complete" : "Incomplete",
-                    linkedIn: student.linkedIn && (student.linkedIn.data || student.linkedIn.linkedInUrl) ? "Complete" : "Incomplete",
+                    linkedIn: student.linkedinUrl ? "Complete" : "Incomplete",
                     github: student.githubUrl ? "Complete" : "Incomplete",
+                    portfolio: student.portfolioUrl ? "Complete" : "Incomplete",
                 }
             },
             message: "Profile status fetched successfully",

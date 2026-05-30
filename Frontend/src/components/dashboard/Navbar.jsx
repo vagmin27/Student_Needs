@@ -19,6 +19,7 @@ const STUDENT_MODULE_PATHS = [
   "/student/qrcode",
   "/student/applied",
   "/student/interview",
+  "/student/chat",
 ];
 
 const Navbar = ({ onMenuClick, pageTitle = "Dashboard", showBackToDashboard }) => {

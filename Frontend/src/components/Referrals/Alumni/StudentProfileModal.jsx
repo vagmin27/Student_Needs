@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/Referrals/ui/button.jsx";
 import {
   X,
@@ -16,6 +17,7 @@ import {
   Code,
   Award,
   ExternalLink,
+  MessageSquare,
 } from "lucide-react";
 import { cn } from "@/lib/Referrals/utils.js";
 import { applicationsApi } from "@/services/Referrals/application.js";
@@ -30,6 +32,7 @@ import { showToast } from "@/components/Referrals/TransactionToast.jsx";
  * @param {boolean} [props.loading] - Loading state for fetching data
  */
 export function StudentProfileModal({ isOpen, onClose, student, loading }) {
+  const navigate = useNavigate();
   if (!isOpen) return null;
 
   return (
@@ -375,7 +378,17 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                 </div>
               </div>
 
-              <div className="mt-6 pt-6 border-t border-border/50 flex justify-end">
+              <div className="mt-6 pt-6 border-t border-border/50 flex justify-end gap-3">
+                <Button
+                  onClick={() => {
+                    onClose();
+                    navigate(`/alumni/chat?chatId=${student.chatId || ''}`);
+                  }}
+                  className="flex items-center gap-1.5 bg-primary text-primary-foreground hover:bg-primary/95"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Message Student
+                </Button>
                 <Button variant="outline" onClick={onClose}>
                   Close
                 </Button>

@@ -94,13 +94,16 @@ export function AlumniDashboard() {
   };
 
   // Load student profile
-  const loadStudentProfile = async (studentId) => {
+  const loadStudentProfile = async (studentId, chatId = null) => {
     setLoadingStudentProfile(true);
     setShowStudentProfile(true);
     try {
       const response = await applicationsApi.getStudentProfile(studentId);
       if (response.success) {
-        setSelectedStudentProfile(response.data);
+        setSelectedStudentProfile({
+          ...response.data,
+          chatId: chatId
+        });
       }
     } catch (error) {
       console.error('Failed to load student profile:', error);

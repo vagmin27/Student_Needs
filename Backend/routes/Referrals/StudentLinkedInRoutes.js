@@ -3,36 +3,29 @@ const router = express.Router();
 
 // Import controllers
 import {
-    uploadLinkedIn,
-    updateLinkedInLink,
-    updateLinkedInPdf,
-    getLinkedIn,
-    deleteLinkedIn,
+    addLinkedInUrl,
+    updateLinkedInUrl,
+    getLinkedInUrl,
+    deleteLinkedInUrl,
 } from "../../controllers/Referrals/StudentLinkedIn.js";
 
 // Import middleware
 import { auth } from "../../middlewares/Referrals/auth.js";
 
-// ********************************************************************************************************
-//                                      Student LinkedIn routes
-// ********************************************************************************************************
-
 // All routes require authentication
 router.use(auth);
 
-// Upload LinkedIn PDF with optional URL (first time)
-router.post("/linkedin/upload", uploadLinkedIn);
+// Core CRUD Endpoints
+router.post("/linkedin", addLinkedInUrl);
+router.put("/linkedin", updateLinkedInUrl);
+router.get("/linkedin", getLinkedInUrl);
+router.delete("/linkedin", deleteLinkedInUrl);
 
-// Update only LinkedIn URL
-router.put("/linkedin/url", updateLinkedInLink);
-
-// Update only LinkedIn PDF
-router.put("/linkedin/pdf", updateLinkedInPdf);
-
-// Get LinkedIn PDF
-router.get("/linkedin", getLinkedIn);
-
-// Delete LinkedIn PDF
-router.delete("/linkedin", deleteLinkedIn);
+// Legacy Route Mappings for safety
+router.post("/linkedin/upload", updateLinkedInUrl); // Map upload to simple URL update
+router.put("/linkedin/url", updateLinkedInUrl);      // Map legacy URL put
+router.put("/linkedin/pdf", (req, res) => {          // Disable PDF endpoint
+    res.status(410).json({ success: false, message: "LinkedIn PDF uploads are no longer supported. Please add a LinkedIn Profile URL." });
+});
 
 export default router;

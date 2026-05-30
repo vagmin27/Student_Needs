@@ -101,70 +101,84 @@ export const resumeApi = {
 
 export const linkedInApi = {
   /**
-   * Upload LinkedIn PDF with optional URL (first time)
-   * @param {File} file - LinkedIn PDF file
-   * @param {string} [linkedInUrl] - Optional LinkedIn profile URL
-   * @returns {Promise<Object>} LinkedInUploadResponse
-   */
-  uploadLinkedIn: async (file, linkedInUrl) => {
-    const formData = new FormData();
-    formData.append('linkedIn', file);
-    if (linkedInUrl) {
-      formData.append('linkedInUrl', linkedInUrl);
-    }
-    
-    const response = await api.post('/student/linkedin/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
-  },
-
-  /**
-   * Update only LinkedIn URL (without changing PDF)
-   * @param {string} linkedInUrl - New LinkedIn profile URL
+   * Add LinkedIn URL (first time)
+   * @param {string} linkedinUrl - LinkedIn profile URL
    * @returns {Promise<Object>} LinkedInUrlResponse
    */
-  updateLinkedInUrl: async (linkedInUrl) => {
-    const response = await api.put('/student/linkedin/url', { linkedInUrl });
+  addLinkedInUrl: async (linkedinUrl) => {
+    const response = await api.post('/student/linkedin', { linkedinUrl });
     return response.data;
   },
 
   /**
-   * Update only LinkedIn PDF (without changing URL)
-   * @param {File} file - New LinkedIn PDF file
-   * @returns {Promise<Object>} LinkedInUploadResponse
+   * Update LinkedIn URL
+   * @param {string} linkedinUrl - New LinkedIn profile URL
+   * @returns {Promise<Object>} LinkedInUrlResponse
    */
-  updateLinkedInPdf: async (file) => {
-    const formData = new FormData();
-    formData.append('linkedIn', file);
-    
-    const response = await api.put('/student/linkedin/pdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+  updateLinkedInUrl: async (linkedinUrl) => {
+    const response = await api.put('/student/linkedin', { linkedinUrl });
     return response.data;
   },
 
   /**
-   * Download LinkedIn PDF
-   * @returns {Promise<Blob>} PDF file as Blob
+   * Get LinkedIn URL
+   * @returns {Promise<Object>} LinkedInUrlResponse
    */
-  getLinkedIn: async () => {
-    const response = await api.get('/student/linkedin', {
-      responseType: 'blob',
-    });
+  getLinkedInUrl: async () => {
+    const response = await api.get('/student/linkedin');
     return response.data;
   },
 
   /**
-   * Delete LinkedIn PDF
+   * Delete LinkedIn URL
    * @returns {Promise<Object>} DeleteResponse
    */
-  deleteLinkedIn: async () => {
+  deleteLinkedInUrl: async () => {
     const response = await api.delete('/student/linkedin');
+    return response.data;
+  },
+};
+
+// ============================================
+// Portfolio URL API Functions
+// ============================================
+
+export const portfolioApi = {
+  /**
+   * Add Portfolio URL (first time)
+   * @param {string} portfolioUrl - Portfolio URL
+   * @returns {Promise<Object>} PortfolioUrlResponse
+   */
+  addPortfolioUrl: async (portfolioUrl) => {
+    const response = await api.post('/student/portfolio', { portfolioUrl });
+    return response.data;
+  },
+
+  /**
+   * Update Portfolio URL
+   * @param {string} portfolioUrl - New Portfolio URL
+   * @returns {Promise<Object>} PortfolioUrlResponse
+   */
+  updatePortfolioUrl: async (portfolioUrl) => {
+    const response = await api.put('/student/portfolio', { portfolioUrl });
+    return response.data;
+  },
+
+  /**
+   * Get Portfolio URL
+   * @returns {Promise<Object>} PortfolioUrlResponse
+   */
+  getPortfolioUrl: async () => {
+    const response = await api.get('/student/portfolio');
+    return response.data;
+  },
+
+  /**
+   * Delete Portfolio URL
+   * @returns {Promise<Object>} DeleteResponse
+   */
+  deletePortfolioUrl: async () => {
+    const response = await api.delete('/student/portfolio');
     return response.data;
   },
 };

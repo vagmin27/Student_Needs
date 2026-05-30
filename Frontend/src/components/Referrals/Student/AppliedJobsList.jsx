@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/Referrals/ui/button.jsx';
 import {
   Briefcase,
   Building2,
@@ -8,6 +10,7 @@ import {
   XCircle,
   AlertCircle,
   Target,
+  MessageSquare,
 } from 'lucide-react';
 
 /**
@@ -66,6 +69,7 @@ const getStatusConfig = (status) => {
  * @param {boolean} [props.loading] - Loading state indicator
  */
 export function AppliedJobsList({ applications = [], loading }) {
+  const navigate = useNavigate();
   // Loading State
   if (loading) {
     return (
@@ -144,14 +148,26 @@ export function AppliedJobsList({ applications = [], loading }) {
                 </div>
               </div>
 
-              {/* Status Badge */}
-              <div className="flex items-center">
+              {/* Status Badge & Message Button */}
+              <div className="flex flex-col sm:items-end gap-2 shrink-0">
                 <span
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${statusConfig.bgColor} ${statusConfig.color} border ${statusConfig.borderColor}`}
+                  className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${statusConfig.bgColor} ${statusConfig.color} border ${statusConfig.borderColor}`}
                 >
                   <StatusIcon className="w-4 h-4" />
                   {statusConfig.label}
                 </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/student/chat?chatId=${application.chatId || ''}`);
+                  }}
+                  className="flex items-center justify-center gap-1.5 border border-border/80 text-foreground bg-secondary/20 hover:bg-secondary/50 font-medium"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  Message Alumni
+                </Button>
               </div>
             </div>
 

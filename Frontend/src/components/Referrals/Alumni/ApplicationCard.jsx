@@ -1,6 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Referrals/ui/button.jsx';
 import { cn } from '@/lib/Referrals/utils.js';
-import { Eye } from 'lucide-react';
+import { Eye, MessageSquare } from 'lucide-react';
 
 /**
  * Card component to display and manage a student's job application.
@@ -20,6 +21,7 @@ export function ApplicationCard({
   onReject,
   onRefer,
 }) {
+  const navigate = useNavigate();
   return (
     <div className="bg-muted/50 rounded-lg p-4 border border-border">
       <div className="flex items-start justify-between mb-2">
@@ -98,16 +100,27 @@ export function ApplicationCard({
         </div>
       )}
 
-      {/* View Full Profile Button */}
-      <Button
-        size="sm"
-        variant="ghost"
-        onClick={() => onViewProfile(application.student._id)}
-        className="w-full mb-3 text-primary hover:text-primary hover:bg-primary/10"
-      >
-        <Eye className="w-4 h-4 mr-2" />
-        View Full Profile
-      </Button>
+      {/* View Full Profile & Message Button Group */}
+      <div className="flex gap-2 mb-3">
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => onViewProfile(application.student._id, application.chatId)}
+          className="flex-1 text-primary hover:text-primary hover:bg-primary/10"
+        >
+          <Eye className="w-4 h-4 mr-2" />
+          Profile
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => navigate(`/alumni/chat?chatId=${application.chatId || ''}`)}
+          className="flex-1 text-primary hover:text-primary hover:bg-primary/10"
+        >
+          <MessageSquare className="w-4 h-4 mr-2" />
+          Message
+        </Button>
+      </div>
       
       {/* Action Buttons based on status */}
       {application.status === 'Applied' && (

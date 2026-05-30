@@ -51,6 +51,8 @@ const DashboardLayout = ({ children, pageTitle, role = "student" }) => {
     if (path.startsWith("/student/qrcode")) return "My QR Code";
     if (path.startsWith("/student/applied")) return "Applied Jobs";
     if (path.startsWith("/student/interview")) return "Interviews";
+    if (path.startsWith("/student/chat")) return "Referrals Chat";
+    if (path.startsWith("/alumni/chat")) return "Referrals Chat";
     return "Dashboard";
   };
 

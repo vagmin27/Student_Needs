@@ -12,6 +12,7 @@ import {
   Settings,
   LogOut,
   CalendarDays,
+  MessageSquare,
 } from "lucide-react";
 
 const Sidebar = ({ className, role = "student" }) => {
@@ -59,6 +60,11 @@ const Sidebar = ({ className, role = "student" }) => {
         href: "/alumni/dashboard",
         icon: LayoutDashboard,
       },
+      {
+        name: "Chat",
+        href: "/alumni/chat",
+        icon: MessageSquare,
+      },
     ];
   } else if (currentRole === "verifier") {
     links = [
@@ -95,6 +101,11 @@ const Sidebar = ({ className, role = "student" }) => {
         name: "Referrals",
         href: "/student/referrals",
         icon: Briefcase,
+      },
+      {
+        name: "Chat",
+        href: "/student/chat",
+        icon: MessageSquare,
       },
     ];
   }

@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./auth.js";
+import { registerChatHandlers } from "./chat.js";
 
 let io;
 
@@ -33,6 +34,8 @@ export const initSocket = (server) => {
       socket.join(`role:${role}`);
     }
 
+    // Register Chat Handlers
+    registerChatHandlers(io, socket);
   });
 
   console.log("✅ WebSocket Server Initialized");

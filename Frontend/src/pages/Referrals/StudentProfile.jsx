@@ -33,6 +33,7 @@ import {
 import { ResumeSection } from "@/components/Referrals/Student/ResumeSection.jsx";
 import { LinkedInSection } from "@/components/Referrals/Student/LinkedInSection.jsx";
 import { GitHubSection } from "@/components/Referrals/Student/GitHubSection.jsx";
+import { PortfolioSection } from "@/components/Referrals/Student/PortfolioSection.jsx";
 
 export function StudentProfilePage() {
   const navigate = useNavigate();
@@ -666,18 +667,22 @@ export function StudentProfilePage() {
         <h2 className="text-xl font-semibold text-foreground">
           Documents & Links
         </h2>
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <ResumeSection
             resume={profile?.resume}
             onResumeChange={refreshProfile}
           />
           <LinkedInSection
-            linkedIn={profile?.linkedIn}
+            linkedinUrl={profile?.linkedinUrl}
             onLinkedInChange={refreshProfile}
           />
           <GitHubSection
             githubUrl={profile?.githubUrl}
             onGitHubChange={refreshProfile}
+          />
+          <PortfolioSection
+            portfolioUrl={profile?.portfolioUrl}
+            onPortfolioChange={refreshProfile}
           />
         </div>
       </div>

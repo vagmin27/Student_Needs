@@ -25,6 +25,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { showToast } from '@/components/Referrals/TransactionToast.jsx';
+import { toast } from 'sonner';
 
 export default function InterviewPage() {
   const [searchParams] = useSearchParams();
@@ -378,9 +379,38 @@ export default function InterviewPage() {
         interviewScore: interviewScore || 0,
       }));
 
-      await opportunitiesApi.applyForReferral(opportunityId);
+      const response = await opportunitiesApi.applyForReferral(opportunityId);
       addLog('✓ Application submitted successfully!');
       
+      const chatId = response.data?.chat?._id;
+      if (chatId) {
+        toast.success(
+          <div className="flex flex-col gap-2 w-full">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+              <span className="font-semibold text-slate-900 dark:text-slate-100">
+                Application Submitted Successfully
+              </span>
+            </div>
+            <button
+              onClick={() => {
+                toast.dismiss();
+                navigate(`/student/chat?chatId=${chatId}`);
+              }}
+              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-lg shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
+            >
+              Message Alumni
+            </button>
+          </div>,
+          { duration: 6000 }
+        );
+      } else {
+        showToast({
+          type: "success",
+          message: "Application Submitted Successfully",
+        });
+      }
+
       setTimeout(() => {
         navigate('/student/applied');
       }, 2000);

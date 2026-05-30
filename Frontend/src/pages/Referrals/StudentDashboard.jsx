@@ -22,7 +22,8 @@ import { StudentProfilePage } from "@/pages/Referrals/StudentProfile.jsx";
 import { ProfileCompletionModal } from "@/components/Referrals/Student/ProfileCompletionModal.jsx";
 import { OpportunityDetailModal } from "@/components/Referrals/Student/OpportunityDetailModal.jsx";
 import { AppliedJobsList } from "@/components/Referrals/Student/AppliedJobsList.jsx";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/Referrals/utils.js";
 import { opportunitiesApi } from "@/services/Referrals/opportunities.js";
 import { studentProfileApi } from "@/services/Referrals/studentProfile.js";
@@ -244,10 +245,35 @@ export function StudentDashboard() {
       const response = await opportunitiesApi.applyForReferral(jobId);
 
       dismissToast(toastId);
-      showToast({
-        type: "success",
-        message: response.message || "Application submitted successfully!",
-      });
+      
+      const chatId = response.data?.chat?._id;
+      if (chatId) {
+        toast.success(
+          <div className="flex flex-col gap-2 w-full">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+              <span className="font-semibold text-slate-900 dark:text-slate-100">
+                Application Submitted Successfully
+              </span>
+            </div>
+            <button
+              onClick={() => {
+                toast.dismiss();
+                navigate(`/student/chat?chatId=${chatId}`);
+              }}
+              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-lg shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
+            >
+              Message Alumni
+            </button>
+          </div>,
+          { duration: 6000 }
+        );
+      } else {
+        showToast({
+          type: "success",
+          message: "Application Submitted Successfully",
+        });
+      }
 
       setAppliedOpportunities(prev => [...prev, jobId]);
       await fetchOpportunities();
@@ -429,6 +455,7 @@ export function StudentDashboard() {
         }}
         isApplying={isApplying === selectedOpportunity?._id}
         hasApplied={selectedOpportunity ? appliedOpportunities.includes(selectedOpportunity._id) : false}
+        chatId={selectedOpportunity ? myApplications.find(app => app.opportunity?._id === selectedOpportunity._id)?.chatId : null}
       />
     </div>
   );

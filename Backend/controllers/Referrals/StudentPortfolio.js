@@ -1,31 +1,35 @@
 import Student from "../../models/Referrals/StudentModel.js";
 import { calculateProfileCompleteness } from "../../utils/Referrals/calculateProfileScore.js";
 
-// Validation helper for LinkedIn URL
-const validateLinkedInUrl = (url) => {
-  const pattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/i;
-  return pattern.test(url.trim());
+// Validation helper for Portfolio URL
+const validateUrl = (url) => {
+  try {
+    const parsed = new URL(url.trim());
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch (_) {
+    return false;
+  }
 };
 
-// Add LinkedIn URL
-export const addLinkedInUrl = async (req, res) => {
+// Add Portfolio URL
+export const addPortfolioUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
-    const { linkedinUrl } = req.body;
+    const { portfolioUrl } = req.body;
 
-    if (!linkedinUrl) {
+    if (!portfolioUrl) {
       return res.status(400).json({
         success: false,
-        message: "LinkedIn URL is required",
+        message: "Portfolio URL is required",
       });
     }
 
-    const trimmedUrl = linkedinUrl.trim();
+    const trimmedUrl = portfolioUrl.trim();
 
-    if (!validateLinkedInUrl(trimmedUrl)) {
+    if (!validateUrl(trimmedUrl)) {
       return res.status(400).json({
         success: false,
-        message: "Invalid LinkedIn URL format. Example: https://linkedin.com/in/username",
+        message: "Invalid URL format. Example: https://myportfolio.com",
       });
     }
 
@@ -37,14 +41,14 @@ export const addLinkedInUrl = async (req, res) => {
       });
     }
 
-    if (student.linkedinUrl) {
+    if (student.portfolioUrl) {
       return res.status(400).json({
         success: false,
-        message: "LinkedIn URL already exists. Use update endpoint to change it.",
+        message: "Portfolio URL already exists. Use update endpoint to change it.",
       });
     }
 
-    student.linkedinUrl = trimmedUrl;
+    student.portfolioUrl = trimmedUrl;
     student.profileCompleteness = calculateProfileCompleteness(student);
 
     await student.save();
@@ -52,39 +56,39 @@ export const addLinkedInUrl = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: {
-        linkedinUrl: student.linkedinUrl,
+        portfolioUrl: student.portfolioUrl,
         profileCompleteness: student.profileCompleteness,
       },
-      message: "LinkedIn URL added successfully",
+      message: "Portfolio URL added successfully",
     });
   } catch (error) {
-    console.error("Add LinkedIn URL Error:", error.message);
+    console.error("Add Portfolio URL Error:", error.message);
     return res.status(500).json({
       success: false,
-      message: "Failed to add LinkedIn URL",
+      message: "Failed to add Portfolio URL",
     });
   }
 };
 
-// Update LinkedIn URL (Used by both POST upload stubs and URL updates)
-export const updateLinkedInUrl = async (req, res) => {
+// Update Portfolio URL
+export const updatePortfolioUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
-    const { linkedinUrl } = req.body;
+    const { portfolioUrl } = req.body;
 
-    if (!linkedinUrl) {
+    if (!portfolioUrl) {
       return res.status(400).json({
         success: false,
-        message: "LinkedIn URL is required",
+        message: "Portfolio URL is required",
       });
     }
 
-    const trimmedUrl = linkedinUrl.trim();
+    const trimmedUrl = portfolioUrl.trim();
 
-    if (!validateLinkedInUrl(trimmedUrl)) {
+    if (!validateUrl(trimmedUrl)) {
       return res.status(400).json({
         success: false,
-        message: "Invalid LinkedIn URL format. Example: https://linkedin.com/in/username",
+        message: "Invalid URL format. Example: https://myportfolio.com",
       });
     }
 
@@ -96,7 +100,7 @@ export const updateLinkedInUrl = async (req, res) => {
       });
     }
 
-    student.linkedinUrl = trimmedUrl;
+    student.portfolioUrl = trimmedUrl;
     student.profileCompleteness = calculateProfileCompleteness(student);
 
     await student.save();
@@ -104,22 +108,22 @@ export const updateLinkedInUrl = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: {
-        linkedinUrl: student.linkedinUrl,
+        portfolioUrl: student.portfolioUrl,
         profileCompleteness: student.profileCompleteness,
       },
-      message: "LinkedIn URL updated successfully",
+      message: "Portfolio URL updated successfully",
     });
   } catch (error) {
-    console.error("Update LinkedIn URL Error:", error.message);
+    console.error("Update Portfolio URL Error:", error.message);
     return res.status(500).json({
       success: false,
-      message: "Failed to update LinkedIn URL",
+      message: "Failed to update Portfolio URL",
     });
   }
 };
 
-// Get LinkedIn URL
-export const getLinkedInUrl = async (req, res) => {
+// Get Portfolio URL
+export const getPortfolioUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -131,31 +135,31 @@ export const getLinkedInUrl = async (req, res) => {
       });
     }
 
-    if (!student.linkedinUrl) {
+    if (!student.portfolioUrl) {
       return res.status(404).json({
         success: false,
-        message: "LinkedIn URL not found.",
+        message: "Portfolio URL not found.",
       });
     }
 
     return res.status(200).json({
       success: true,
       data: {
-        linkedinUrl: student.linkedinUrl,
+        portfolioUrl: student.portfolioUrl,
       },
-      message: "LinkedIn URL retrieved successfully",
+      message: "Portfolio URL retrieved successfully",
     });
   } catch (error) {
-    console.error("Get LinkedIn URL Error:", error.message);
+    console.error("Get Portfolio URL Error:", error.message);
     return res.status(500).json({
       success: false,
-      message: "Failed to retrieve LinkedIn URL",
+      message: "Failed to retrieve Portfolio URL",
     });
   }
 };
 
-// Delete LinkedIn URL
-export const deleteLinkedInUrl = async (req, res) => {
+// Delete Portfolio URL
+export const deletePortfolioUrl = async (req, res) => {
   try {
     const studentId = req.user.id;
 
@@ -167,7 +171,7 @@ export const deleteLinkedInUrl = async (req, res) => {
       });
     }
 
-    student.linkedinUrl = undefined;
+    student.portfolioUrl = undefined;
     student.profileCompleteness = calculateProfileCompleteness(student);
 
     await student.save();
@@ -177,13 +181,13 @@ export const deleteLinkedInUrl = async (req, res) => {
       data: {
         profileCompleteness: student.profileCompleteness,
       },
-      message: "LinkedIn URL deleted successfully",
+      message: "Portfolio URL deleted successfully",
     });
   } catch (error) {
-    console.error("Delete LinkedIn URL Error:", error.message);
+    console.error("Delete Portfolio URL Error:", error.message);
     return res.status(500).json({
       success: false,
-      message: "Failed to delete LinkedIn URL",
+      message: "Failed to delete Portfolio URL",
     });
   }
 };

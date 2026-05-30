@@ -94,6 +94,7 @@ const ReferralsStudentDashboard = React.lazy(() =>
 const ReferralsInterviewPage = React.lazy(
   () => import("@/pages/Referrals/InterviewPage.jsx"),
 );
+const ChatPage = React.lazy(() => import("@/pages/Referrals/ChatPage.jsx"));
 import {
   RoleAuthPage,
   RoleSelectionPage,
@@ -338,6 +339,7 @@ const AttendanceRoutes = () => {
         <Route path="/student/qrcode" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsStudentDashboard /></Suspense>} />
         <Route path="/student/applied" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsStudentDashboard /></Suspense>} />
         <Route path="/student/interview" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsInterviewPage /></Suspense>} />
+        <Route path="/student/chat" element={<Suspense fallback={<DashboardSkeleton />}><ChatPage /></Suspense>} />
         <Route path="/student" element={<Navigate to="/student/dashboard" replace />} />
         <Route
           path="/referrals/*"
@@ -395,6 +397,14 @@ const AttendanceRoutes = () => {
           element={
             <Suspense fallback={<DashboardSkeleton />}>
               <ReferralsInterviewPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student/chat"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ChatPage />
             </Suspense>
           }
         />
@@ -529,6 +539,16 @@ const AttendanceRoutes = () => {
             <Suspense fallback={<DashboardSkeleton />}>
               <DashboardLayout role="alumni" pageTitle="Alumni Dashboard">
                 <AlumniDashboard />
+              </DashboardLayout>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/alumni/chat"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <DashboardLayout role="alumni" pageTitle="Referrals Chat">
+                <ChatPage />
               </DashboardLayout>
             </Suspense>
           }

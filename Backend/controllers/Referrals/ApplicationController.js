@@ -2,6 +2,7 @@ import Application from "../../models/Referrals/ApplicationModel.js";
 import Opportunity from "../../models/Referrals/OpportunityModel.js";
 import Student from "../../models/Referrals/StudentModel.js";
 import Alumni from "../../models/Referrals/AlumniModel.js";
+import Chat from "../../models/Referrals/ChatModel.js";
 import { notificationService } from "../../services/NotificationService.js";
 
 // =====================================================
@@ -20,10 +21,22 @@ export const getVerifiedCandidates = async (req, res) => {
         .populate('opportunity', 'jobTitle experienceLevel')
         .sort({ updatedAt: -1 });
 
+        // Retrieve or create Chat rooms for these candidates
+        const applicationsWithChat = await Promise.all(applications.map(async (app) => {
+            const chat = await Chat.findOneAndUpdate(
+                { student: app.student._id, alumni: alumniId },
+                { $setOnInsert: { student: app.student._id, alumni: alumniId } },
+                { upsert: true, new: true, returnDocument: 'after' }
+            );
+            const appObj = app.toObject();
+            appObj.chatId = chat ? chat._id : null;
+            return appObj;
+        }));
+
         return res.status(200).json({
             success: true,
-            total: applications.length,
-            data: applications,
+            total: applicationsWithChat.length,
+            data: applicationsWithChat,
             message: "Verified candidates fetched successfully",
         });
     } catch (error) {
@@ -64,18 +77,30 @@ export const viewApplications = async (req, res) => {
         .populate('opportunity', 'jobTitle experienceLevel')
         .sort({ createdAt: -1 });
 
+        // Retrieve or create Chat rooms for these applicants
+        const applicationsWithChat = await Promise.all(applications.map(async (app) => {
+            const chat = await Chat.findOneAndUpdate(
+                { student: app.student._id, alumni: alumniId },
+                { $setOnInsert: { student: app.student._id, alumni: alumniId } },
+                { upsert: true, new: true, returnDocument: 'after' }
+            );
+            const appObj = app.toObject();
+            appObj.chatId = chat ? chat._id : null;
+            return appObj;
+        }));
+
         const groupedApplications = {
-            applied: applications.filter(app => app.status === "Applied"),
-            shortlisted: applications.filter(app => app.status === "Shortlisted"),
-            referred: applications.filter(app => app.status === "Referred"),
-            rejected: applications.filter(app => app.status === "Rejected"),
+            applied: applicationsWithChat.filter(app => app.status === "Applied"),
+            shortlisted: applicationsWithChat.filter(app => app.status === "Shortlisted"),
+            referred: applicationsWithChat.filter(app => app.status === "Referred"),
+            rejected: applicationsWithChat.filter(app => app.status === "Rejected"),
         };
 
         return res.status(200).json({
             success: true,
-            total: applications.length,
+            total: applicationsWithChat.length,
             data: {
-                all: applications,
+                all: applicationsWithChat,
                 grouped: groupedApplications,
                 counts: {
                     applied: groupedApplications.applied.length,
@@ -478,6 +503,19 @@ export const applyForReferral = async (req, res) => {
             }],
         });
 
+        // Automatically create or find chat room between student and opportunity poster (alumni)
+        let chat = null;
+        try {
+            chat = await Chat.findOneAndUpdate(
+                { student: studentId, alumni: opportunity.postedBy._id },
+                { $setOnInsert: { student: studentId, alumni: opportunity.postedBy._id } },
+                { upsert: true, new: true, returnDocument: 'after' }
+            );
+            console.log(`💬 Chat room verified/created between Student ${studentId} and Alumni ${opportunity.postedBy._id}`);
+        } catch (chatRoomErr) {
+            console.error("⚠️ Failed to automatically create chat room on application:", chatRoomErr.message);
+        }
+
         const populatedApplication = await Application.findById(application._id)
             .populate('opportunity', 'jobTitle roleDescription experienceLevel requiredSkills')
             .populate('alumni', 'firstName lastName company currentRole');
@@ -489,16 +527,22 @@ export const applyForReferral = async (req, res) => {
 
         await notificationService.createAndEmitNotification({
             recipientId: opportunity.postedBy._id,
+            senderId: studentId,
             title: 'New Referral Application',
-            message: `${student.firstName} applied for ${opportunity.jobTitle}`,
+            message: `New applicant can now contact you regarding your opportunity.`,
             type: 'REFERRAL',
-            link: `/alumni/referrals/${opportunity._id}`
+            link: chat ? `/alumni/chat?chatId=${chat._id}` : `/alumni/chat`
         });
 
         return res.status(201).json({
             success: true,
             data: {
                 application: populatedApplication,
+                chat: chat ? {
+                    _id: chat._id,
+                    student: chat.student,
+                    alumni: chat.alumni
+                } : null,
                 message: "Your application has been submitted successfully",
             },
             message: "Applied for referral successfully",
@@ -541,6 +585,18 @@ export const getMyApplications = async (req, res) => {
             .skip((page - 1) * limit)
             .limit(parseInt(limit));
 
+        // Retrieve or create Chat rooms for these applications
+        const applicationsWithChat = await Promise.all(applications.map(async (app) => {
+            const chat = await Chat.findOneAndUpdate(
+                { student: studentId, alumni: app.alumni._id },
+                { $setOnInsert: { student: studentId, alumni: app.alumni._id } },
+                { upsert: true, new: true, returnDocument: 'after' }
+            );
+            const appObj = app.toObject();
+            appObj.chatId = chat ? chat._id : null;
+            return appObj;
+        }));
+
         const allApplications = await Application.find({ student: studentId });
         const statusSummary = {
             applied: allApplications.filter(app => app.status === "Applied").length,
@@ -552,7 +608,7 @@ export const getMyApplications = async (req, res) => {
         return res.status(200).json({
             success: true,
             data: {
-                applications,
+                applications: applicationsWithChat,
                 statusSummary,
                 pagination: {
                     currentPage: parseInt(page),
@@ -599,6 +655,12 @@ export const getApplicationDetails = async (req, res) => {
             });
         }
 
+        const chat = await Chat.findOneAndUpdate(
+            { student: application.student._id, alumni: application.alumni._id },
+            { $setOnInsert: { student: application.student._id, alumni: application.alumni._id } },
+            { upsert: true, new: true, returnDocument: 'after' }
+        );
+
         const applicationDetails = {
             _id: application._id,
             status: application.status,
@@ -606,6 +668,7 @@ export const getApplicationDetails = async (req, res) => {
             shortlistedAt: application.shortlistedAt,
             referredAt: application.referredAt,
             rejectedAt: application.rejectedAt,
+            chatId: chat ? chat._id : null,
             opportunity: {
                 _id: application.opportunity._id,
                 jobTitle: application.opportunity.jobTitle,
