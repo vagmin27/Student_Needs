@@ -40,7 +40,8 @@ export const getVerifiedCandidates = async (req, res) => {
 
         const applications = await Application.find({
             alumni: alumniId,
-            status: { $in: ["approved", "Referred", "Shortlisted"] }
+            status: { $in: ["approved", "Referred", "Shortlisted"] },
+            archived: { $ne: true }
         })
         .populate('student', 'firstName lastName email college branch graduationYear skills profileCompleteness image cgpa resume')
         .populate('opportunity', 'jobTitle experienceLevel')
@@ -440,6 +441,10 @@ export const rejectApplication = async (req, res) => {
         application.status = "rejected";
         application.rejectedAt = new Date();
         application.rejectedBy = alumniId;
+
+        const archiveDate = new Date();
+        archiveDate.setDate(archiveDate.getDate() + 30);
+        application.archiveAt = archiveDate;
 
         if (!application.statusHistory) {
             application.statusHistory = [];
@@ -966,6 +971,10 @@ export const approveApplication = async (req, res) => {
         application.referredAt = new Date();
         application.approvedAt = new Date();
         application.approvedBy = alumniId;
+
+        const archiveDate = new Date();
+        archiveDate.setDate(archiveDate.getDate() + 30);
+        application.archiveAt = archiveDate;
 
         if (!application.statusHistory) {
             application.statusHistory = [];

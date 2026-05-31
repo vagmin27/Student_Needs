@@ -33,11 +33,15 @@ const checkChatAccess = async (chatId, userId) => {
 
   if (!isStudent && !isAlumni) return null;
 
-  // Verify that the student participant has 100% profile completeness
-  const student = await Student.findById(chat.student);
-  if (!student || student.profileCompleteness !== 100) {
-    return null; // Deny access if eligibility criteria are not met
-  }
+  // Verify that an application exists between this student and alumni with valid status
+  const validStatuses = ["Applied", "Shortlisted", "Referred", "pending", "approved"];
+  const appExists = await Application.findOne({
+    student: chat.student,
+    alumni: chat.alumni,
+    status: { $in: validStatuses }
+  });
+
+  if (!appExists) return null;
 
   return {
     chat,
@@ -62,10 +66,28 @@ export const getChats = async (req, res) => {
     const userId = req.user.id;
     const userRole = req.user.role || req.user.accountType;
 
+    console.log("==============");
+    console.log("GET CHATS");
+    console.log("User:", req.user.id);
+    console.log("Role:", req.user.role);
+
+    const validStatuses = ["Applied", "Shortlisted", "Referred", "pending", "approved"];
+
     // --- Dynamic Self-Healing Reconciliation ---
-    // Fetch all applications involving the user
+    // Fetch all applications involving the user with valid statuses
     const appQuery = userRole === "alumni" ? { alumni: userId } : { student: userId };
+    appQuery.status = { $in: validStatuses };
     const applications = await Application.find(appQuery);
+
+    console.log("Applications Found:", applications.length);
+    console.log(
+      applications.map(a => ({
+         id: a._id,
+         status: a.status,
+         student: a.student,
+         alumni: a.alumni
+      }))
+    );
 
     // Identify unique student-alumni pairs
     const pairs = [];
@@ -100,11 +122,33 @@ export const getChats = async (req, res) => {
       })
       .sort({ updatedAt: -1 });
 
+    console.log("Raw Chats:", chats.length);
+
+    const activePartnerIds = new Set(
+      applications.map(app => 
+        userRole === "alumni" ? app.student.toString() : app.alumni.toString()
+      )
+    );
+
+    console.log("=== CHAT DIAGNOSTICS ===");
+    console.log("User ID:", userId);
+    console.log("User Role:", userRole);
+    console.log("Applications (Valid):", applications.length);
+    console.log("Chats Found:", chats.length);
+
     // Format response and determine unread badge counts and online status, filtering out ineligible student chats
     const data = chats
       .filter(chat => {
-        // Enforce that the student in the conversation exists and has 100% profile completeness
-        return chat.student && chat.student.profileCompleteness === 100;
+        if (!chat.student) {
+          console.log("No student found in chat object");
+          return false;
+        }
+
+        const partnerId = userRole === "alumni" ? chat.student?._id?.toString() : chat.alumni?._id?.toString();
+        const hasActiveApp = partnerId && activePartnerIds.has(partnerId);
+        console.log(`Student ${chat.student._id} - Active App: ${hasActiveApp}`);
+        
+        return hasActiveApp;
       })
       .map(chat => {
         const chatObj = chat.toObject();
@@ -120,11 +164,37 @@ export const getChats = async (req, res) => {
         return chatObj;
       });
 
-    return res.status(200).json({
+    console.log("Filtered Chats:", data.length);
+    console.log("========================");
+
+    const responsePayload = {
       success: true,
       data,
       message: "Conversations fetched successfully",
-    });
+    };
+
+    if (process.env.NODE_ENV !== "production") {
+      responsePayload.diagnostics = {
+        userId,
+        userRole,
+        applicationsCount: applications.length,
+        chatsCount: chats.length,
+        filteredChatsCount: data.length,
+        applications: applications.map(app => ({
+          _id: app._id,
+          student: app.student,
+          alumni: app.alumni,
+          status: app.status
+        })),
+        chats: chats.map(c => ({
+          _id: c._id,
+          student: c.student ? { _id: c.student._id, profileCompleteness: c.student.profileCompleteness } : null,
+          alumni: c.alumni ? c.alumni._id : null
+        }))
+      };
+    }
+
+    return res.status(200).json(responsePayload);
   } catch (error) {
     console.error("Get chats error:", error);
     return res.status(500).json({
@@ -600,23 +670,22 @@ export const createChat = async (req, res) => {
       });
     }
 
-    // 1. Enforce student profile eligibility: completeness must be 100
-    const student = await Student.findById(studentId);
-    if (!student) {
-      return res.status(404).json({
-        success: false,
-        message: "Student profile not found",
-      });
-    }
+    // 1. Enforce active application check
+    const validStatuses = ["Applied", "Shortlisted", "Referred", "pending", "approved"];
+    const appExists = await Application.findOne({
+      student: studentId,
+      alumni: alumniId,
+      status: { $in: validStatuses }
+    });
 
-    if (student.profileCompleteness !== 100) {
+    if (!appExists) {
       return res.status(403).json({
         success: false,
-        message: "Complete the required eligibility criteria before messaging alumni.",
+        message: "Chat connections require active referral requests."
       });
     }
 
-    // 2. Find or create the conversation
+    // 3. Find or create the conversation
     const chat = await Chat.findOneAndUpdate(
       { student: studentId, alumni: alumniId },
       { $setOnInsert: { student: studentId, alumni: alumniId } },

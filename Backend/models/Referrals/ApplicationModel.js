@@ -73,6 +73,13 @@ const ApplicationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Alumni",
     },
+    archived: {
+        type: Boolean,
+        default: false,
+    },
+    archiveAt: {
+        type: Date,
+    },
     statusHistory: [{
         status: {
             type: String,

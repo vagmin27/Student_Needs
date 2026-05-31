@@ -106,6 +106,7 @@ import {
   monthlyAnalysisScheduler,
   recurringTransactionScheduler,
 } from "./utils/Expenses/scheduler.js";
+import { archiveCleanupScheduler } from "./utils/Referrals/scheduler.js";
 
 // =====================================================
 //                    ENV CONFIG
@@ -499,6 +500,9 @@ const initializeServer = async () => {
     smartReminderScheduler();
     monthlyAnalysisScheduler();
     recurringTransactionScheduler();
+
+    // Referral Archival Scheduler
+    archiveCleanupScheduler();
 
     // Cloudinary
     cloudinary.cloudinaryConnect();
