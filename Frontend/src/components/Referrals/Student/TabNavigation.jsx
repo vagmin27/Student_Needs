@@ -6,6 +6,7 @@ import {
   QrCode,
   Users,
   CheckSquare,
+  MessageSquare,
 } from 'lucide-react';
 
 /**
@@ -16,7 +17,7 @@ import {
  * @param {Object|null} props.student - Student profile data (used to check for resumeHash)
  * @param {number} [props.appliedCount=0] - Number of jobs applied to, shown as a badge
  */
-export function TabNavigation({ activeTab, student, appliedCount = 0 }) {
+export function TabNavigation({ activeTab, student, appliedCount = 0, unreadChatsCount = 0 }) {
   return (
     <div className="flex gap-1.5 sm:gap-2 p-1 sm:p-1.5 bg-muted rounded-lg w-full sm:w-fit mx-auto flex-wrap justify-center">
 
@@ -80,6 +81,25 @@ export function TabNavigation({ activeTab, student, appliedCount = 0 }) {
       >
         <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
         My Profile
+      </Link>
+
+      {/* Chat Tab */}
+      <Link
+        to="/student/chat"
+        className={cn(
+          'px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 sm:gap-2',
+          activeTab === 'chat'
+            ? 'bg-card text-foreground shadow-sm'
+            : 'text-muted-foreground hover:text-foreground'
+        )}
+      >
+        <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        Chat
+        {unreadChatsCount > 0 && (
+          <span className="px-1.5 py-0.5 rounded-full bg-red-500 text-white text-xs font-bold animate-pulse">
+            {unreadChatsCount}
+          </span>
+        )}
       </Link>
 
       {/* QR Code Tab - Only visible if the student has a resumeHash (on-chain record) */}

@@ -27,6 +27,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/Referrals/utils.js";
 import { opportunitiesApi } from "@/services/Referrals/opportunities.js";
 import { studentProfileApi } from "@/services/Referrals/studentProfile.js";
+import { useWebSocket } from "@/hooks/useWebSocket.js";
+import { chatApi } from "@/services/Referrals/chat.js";
 
 export function StudentDashboard() {
   const location = useLocation();
@@ -82,6 +84,42 @@ export function StudentDashboard() {
   };
 
   const activeTab = getActiveTab();
+
+  const { isConnected, on, off } = useWebSocket();
+  const [unreadChatsCount, setUnreadChatsCount] = useState(0);
+
+  // Fetch unread chats count and listen to WebSocket message events
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    if (!token) return;
+
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await chatApi.getChats();
+        if (response.success && Array.isArray(response.data)) {
+          const count = response.data.reduce((sum, chat) => sum + (chat.unreadCount || 0), 0);
+          setUnreadChatsCount(count);
+        }
+      } catch (error) {
+        console.error('Error fetching unread chats count:', error);
+      }
+    };
+
+    fetchUnreadCount();
+
+    const handleNewMessage = () => {
+      fetchUnreadCount();
+    };
+
+    on('message', handleNewMessage);
+
+    const interval = setInterval(fetchUnreadCount, 10000);
+
+    return () => {
+      off('message', handleNewMessage);
+      clearInterval(interval);
+    };
+  }, [isConnected, on, off]);
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -327,6 +365,7 @@ export function StudentDashboard() {
         activeTab={activeTab}
         student={student}
         appliedCount={myApplications.length}
+        unreadChatsCount={unreadChatsCount}
       />
 
       {/* Profile Tab */}

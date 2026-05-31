@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { useWebSocket } from "@/hooks/useWebSocket.js";
@@ -9,6 +9,12 @@ import { ChatSkeleton } from "@/components/Referrals/Chat/ChatSkeleton.jsx";
 import { showToast } from "@/components/Referrals/TransactionToast.jsx";
 import { X, ExternalLink, Download } from "lucide-react";
 import { cn } from "@/lib/Referrals/utils.js";
+import { LayoutContext } from "@/components/layouts/DashboardLayout.jsx";
+import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboard";
+import { TabNavigation } from "@/components/Referrals/Student/TabNavigation.jsx";
+import { StatusBadge } from "@/components/Referrals/StatusBadge.jsx";
+import { storage } from "@/lib/Referrals/storage.js";
+import { opportunitiesApi } from "@/services/Referrals/opportunities.js";
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -39,6 +45,23 @@ export default function ChatPage() {
   activeChatRef.current = activeChat;
 
   const currentRole = (user?.role || user?.accountType || "student").toLowerCase();
+
+  const isUnifiedLayout = useContext(LayoutContext);
+  const [student, setStudent] = useState(null);
+  const [appliedCount, setAppliedCount] = useState(0);
+
+  useEffect(() => {
+    if (currentRole === "student") {
+      const userId = localStorage.getItem('user_id') || 'guest';
+      setStudent(storage.getStudent(userId));
+
+      opportunitiesApi.getMyApplications().then(response => {
+        if (response.success && response.data) {
+          setAppliedCount(response.data.applications?.length || 0);
+        }
+      }).catch(console.error);
+    }
+  }, [currentRole]);
 
   // 1. Initial Load of Chats
   const loadChats = async (selectFirst = false) => {
@@ -408,89 +431,133 @@ export default function ChatPage() {
 
   // Update browser tab unread counts
   useEffect(() => {
-    const totalUnreads = chats.reduce((acc, c) => acc + (c.unreadCount || 0), 0);
-    if (totalUnreads > 0) {
-      document.title = `(${totalUnreads}) UniConnect - Referrals Chat`;
+    const count = chats.reduce((acc, c) => acc + (c.unreadCount || 0), 0);
+    if (count > 0) {
+      document.title = `(${count}) UniConnect - Referrals Chat`;
     } else {
       document.title = "UniConnect - Referrals Chat";
     }
+    
+    // Dispatch custom event to notify other components (like TabNavigation)
+    window.dispatchEvent(new CustomEvent("chat_unread_count_changed", { detail: { count } }));
+
     return () => {
       document.title = "UniConnect";
     };
   }, [chats]);
 
+  const totalUnreads = chats.reduce((acc, c) => acc + (c.unreadCount || 0), 0);
+
   return (
-    <div className="h-[calc(100vh-130px)] md:h-[calc(100vh-160px)] flex bg-card border border-border/45 rounded-2xl overflow-hidden glass-panel relative">
-      {/* Sidebar List (Visible on desktop, hidden on mobile if chat is active) */}
-      <div className={cn(
-        "w-full md:w-[320px] lg:w-[360px] h-full flex flex-col flex-shrink-0 transition-all",
-        activeChat ? "hidden md:flex" : "flex"
-      )}>
-        {loadingChats ? (
-          <ChatSkeleton />
-        ) : (
-          <ChatList
-            chats={chats}
-            activeChatId={activeChat?._id}
-            onSelectChat={handleSelectChat}
-            onlineUsersList={onlineUsersList}
-          />
-        )}
-      </div>
+    <div
+      className={cn(
+        currentRole === "student" ? "space-y-4 sm:space-y-6 px-4 sm:px-6 md:px-8" : "",
+        currentRole === "student" ? (isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24") : ""
+      )}
+    >
+      {currentRole === "student" && isUnifiedLayout && <BackToStudentDashboard />}
 
-      {/* Main Chat Panel (Visible on desktop, hidden on mobile if no chat is active) */}
-      <div className={cn(
-        "flex-1 h-full flex flex-col transition-all",
-        activeChat ? "flex" : "hidden md:flex"
-      )}>
-        <ChatWindow
-          chat={activeChat}
-          messages={messages}
-          loadingMessages={loadingMessages}
-          onSendMessage={handleSendMessage}
-          onUploadAttachment={handleUploadAttachment}
-          onEditMessage={handleEditMessage}
-          onDeleteMessage={handleDeleteMessage}
-          onMarkRead={handleMarkRead}
-          isTyping={typingStates[activeChat?._id] || false}
-          otherUserTyping={typingStates[activeChat?._id] || false}
-          onBack={() => setActiveChat(null)}
-          onTypingStateChange={handleTypingStateChange}
-          onOpenAttachment={(url, name) => setLightbox({ url, name })}
-        />
-      </div>
-
-      {/* Lightbox attachment preview overlay */}
-      {lightbox && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6">
-          {/* Lightbox controls */}
-          <div className="absolute top-4 right-4 flex gap-3 text-white">
-            <a 
-              href={lightbox.url} 
-              download={lightbox.name}
-              className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all"
-              title="Download"
-            >
-              <Download className="w-5 h-5" />
-            </a>
-            <button 
-              onClick={() => setLightbox(null)}
-              className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all"
-              title="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
+      {currentRole === "student" && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex flex-col items-start justify-center">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight text-foreground">
+              <span className="gradient-text2">Student </span>
+              <span className="gradient-text3">Dashboard</span>
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Upload your resume and apply for referrals
+            </p>
           </div>
-
-          {/* Large image display */}
-          <img 
-            src={lightbox.url} 
-            alt={lightbox.name} 
-            className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10"
-          />
-          <p className="text-white/60 text-xs mt-3 select-none">{lightbox.name}</p>
+          {student && <StatusBadge status={student.resumeStatus} />}
         </div>
       )}
+
+      {currentRole === "student" && (
+        <TabNavigation
+          activeTab="chat"
+          student={student}
+          appliedCount={appliedCount}
+          unreadChatsCount={totalUnreads}
+        />
+      )}
+
+      <div className={cn(
+        "flex bg-card border border-border/45 rounded-2xl overflow-hidden glass-panel relative",
+        currentRole === "student"
+          ? "h-[calc(100vh-270px)] md:h-[calc(100vh-320px)]"
+          : "h-[calc(100vh-130px)] md:h-[calc(100vh-160px)]"
+      )}>
+        {/* Sidebar List (Visible on desktop, hidden on mobile if chat is active) */}
+        <div className={cn(
+          "w-full md:w-[320px] lg:w-[360px] h-full flex flex-col flex-shrink-0 transition-all",
+          activeChat ? "hidden md:flex" : "flex"
+        )}>
+          {loadingChats ? (
+            <ChatSkeleton />
+          ) : (
+            <ChatList
+              chats={chats}
+              activeChatId={activeChat?._id}
+              onSelectChat={handleSelectChat}
+              onlineUsersList={onlineUsersList}
+            />
+          )}
+        </div>
+
+        {/* Main Chat Panel (Visible on desktop, hidden on mobile if no chat is active) */}
+        <div className={cn(
+          "flex-1 h-full flex flex-col transition-all",
+          activeChat ? "flex" : "hidden md:flex"
+        )}>
+          <ChatWindow
+            chat={activeChat}
+            messages={messages}
+            loadingMessages={loadingMessages}
+            onSendMessage={handleSendMessage}
+            onUploadAttachment={handleUploadAttachment}
+            onEditMessage={handleEditMessage}
+            onDeleteMessage={handleDeleteMessage}
+            onMarkRead={handleMarkRead}
+            isTyping={typingStates[activeChat?._id] || false}
+            otherUserTyping={typingStates[activeChat?._id] || false}
+            onBack={() => setActiveChat(null)}
+            onTypingStateChange={handleTypingStateChange}
+            onOpenAttachment={(url, name) => setLightbox({ url, name })}
+          />
+        </div>
+
+        {/* Lightbox attachment preview overlay */}
+        {lightbox && (
+          <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6">
+            {/* Lightbox controls */}
+            <div className="absolute top-4 right-4 flex gap-3 text-white">
+              <a 
+                href={lightbox.url} 
+                download={lightbox.name}
+                className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all"
+                title="Download"
+              >
+                <Download className="w-5 h-5" />
+              </a>
+              <button 
+                onClick={() => setLightbox(null)}
+                className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all"
+                title="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Large image display */}
+            <img 
+              src={lightbox.url} 
+              alt={lightbox.name} 
+              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10"
+            />
+            <p className="text-white/60 text-xs mt-3 select-none">{lightbox.name}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
