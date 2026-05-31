@@ -33,6 +33,15 @@ const tutorSchema = new mongoose.Schema({
   reviews: [String],
   education: String,
   hourlyRate: Number,
+  bio: String,
+  subjects: [String],
+  skills: [String],
+  availableDays: [String],
+  availableTimeSlots: [String],
+  linkedinUrl: String,
+  githubUrl: String,
+  portfolioUrl: String,
+  profileCompleteness: { type: Number, default: 0 },
 });
 
 export default mongoose.model("Tutor", tutorSchema);

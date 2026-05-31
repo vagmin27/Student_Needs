@@ -1,19 +1,52 @@
 import Alumni from "../../models/Referrals/AlumniModel.js";
 
+const calculateAlumniProfileCompleteness = (alumni) => {
+  let score = 0;
+  if (alumni.firstName) score += 5;
+  if (alumni.lastName) score += 5;
+  if (alumni.email) score += 5;
+  if (alumni.image) score += 5;
+
+  if (alumni.company) score += 8;
+  if (alumni.jobTitle) score += 8;
+  if (alumni.yearsOfExperience !== undefined && alumni.yearsOfExperience !== null) score += 7;
+  if (alumni.skills && alumni.skills.length > 0) score += 7;
+
+  if (alumni.referralPreferences) score += 10;
+  if (alumni.hiringInterests) score += 10;
+
+  if (alumni.bio) score += 6;
+  if (alumni.careerJourney) score += 6;
+  if (alumni.linkedinUrl) score += 6;
+  if (alumni.githubUrl) score += 6;
+  if (alumni.portfolioUrl) score += 6;
+
+  return Math.min(score, 100);
+};
+
 // Create / Update Profile
 export const updateProfile = async (req, res) => {
     try {
         const alumniId = req.user.id;
         const {
+            firstName,
+            lastName,
             company,
             jobTitle,
             yearsOfExperience,
             skills,
             referralPreferences,
+            hiringInterests,
+            linkedinUrl,
+            githubUrl,
+            portfolioUrl,
+            bio,
+            careerJourney,
+            image,
         } = req.body;
 
         // Validate yearsOfExperience if provided
-        if (yearsOfExperience !== undefined && yearsOfExperience < 0) {
+        if (yearsOfExperience !== undefined && yearsOfExperience !== null && yearsOfExperience < 0) {
             return res.status(400).json({
                 success: false,
                 message: "Years of experience cannot be negative",
@@ -31,11 +64,23 @@ export const updateProfile = async (req, res) => {
         }
 
         // Update fields if provided
+        if (firstName !== undefined) alumni.firstName = firstName;
+        if (lastName !== undefined) alumni.lastName = lastName;
         if (company !== undefined) alumni.company = company;
         if (jobTitle !== undefined) alumni.jobTitle = jobTitle;
         if (yearsOfExperience !== undefined) alumni.yearsOfExperience = yearsOfExperience;
         if (skills !== undefined) alumni.skills = skills;
         if (referralPreferences !== undefined) alumni.referralPreferences = referralPreferences;
+        if (hiringInterests !== undefined) alumni.hiringInterests = hiringInterests;
+        if (linkedinUrl !== undefined) alumni.linkedinUrl = linkedinUrl;
+        if (githubUrl !== undefined) alumni.githubUrl = githubUrl;
+        if (portfolioUrl !== undefined) alumni.portfolioUrl = portfolioUrl;
+        if (bio !== undefined) alumni.bio = bio;
+        if (careerJourney !== undefined) alumni.careerJourney = careerJourney;
+        if (image !== undefined) alumni.image = image;
+
+        // Calculate completeness
+        alumni.profileCompleteness = calculateAlumniProfileCompleteness(alumni);
 
         await alumni.save();
 

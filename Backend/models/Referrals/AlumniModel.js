@@ -66,6 +66,34 @@ const AlumniSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    hiringInterests: {
+        type: String,
+        trim: true,
+    },
+    linkedinUrl: {
+        type: String,
+        trim: true,
+    },
+    githubUrl: {
+        type: String,
+        trim: true,
+    },
+    portfolioUrl: {
+        type: String,
+        trim: true,
+    },
+    bio: {
+        type: String,
+        trim: true,
+    },
+    careerJourney: {
+        type: String,
+        trim: true,
+    },
+    profileCompleteness: {
+        type: Number,
+        default: 0,
+    },
 }, { timestamps: true }
 )   
 

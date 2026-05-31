@@ -8,12 +8,23 @@ export const updateProfile = async (req, res) => {
     try {
         const studentId = req.user.id;
         const {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            degree,
+            cgpa,
+            bio,
+            careerInterests,
             branch,
             graduationYear,
             skills,
             projects,
             certifications,
             preferredRoles,
+            linkedinUrl,
+            githubUrl,
+            portfolioUrl,
         } = req.body;
 
         // Validate graduationYear if provided
@@ -21,6 +32,14 @@ export const updateProfile = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "Invalid graduation year",
+            });
+        }
+
+        // Validate cgpa if provided
+        if (cgpa !== undefined && cgpa !== null && (cgpa < 0 || cgpa > 10)) {
+            return res.status(400).json({
+                success: false,
+                message: "CGPA must be between 0.0 and 10.0",
             });
         }
 
@@ -34,13 +53,35 @@ export const updateProfile = async (req, res) => {
             });
         }
 
+        // Validate email uniqueness if changed
+        if (email && email !== student.email) {
+            const emailExists = await Student.findOne({ email });
+            if (emailExists) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Email is already in use by another account",
+                });
+            }
+            student.email = email;
+        }
+
         // Update fields if provided
+        if (firstName !== undefined) student.firstName = firstName;
+        if (lastName !== undefined) student.lastName = lastName;
+        if (phoneNumber !== undefined) student.phoneNumber = phoneNumber;
+        if (degree !== undefined) student.degree = degree;
+        if (cgpa !== undefined) student.cgpa = cgpa;
+        if (bio !== undefined) student.bio = bio;
+        if (careerInterests !== undefined) student.careerInterests = careerInterests;
         if (branch !== undefined) student.branch = branch;
         if (graduationYear !== undefined) student.graduationYear = graduationYear;
         if (skills !== undefined) student.skills = skills;
         if (projects !== undefined) student.projects = projects;
         if (certifications !== undefined) student.certifications = certifications;
         if (preferredRoles !== undefined) student.preferredRoles = preferredRoles;
+        if (linkedinUrl !== undefined) student.linkedinUrl = linkedinUrl;
+        if (githubUrl !== undefined) student.githubUrl = githubUrl;
+        if (portfolioUrl !== undefined) student.portfolioUrl = portfolioUrl;
 
         // Calculate and update profile completeness
         student.profileCompleteness = calculateProfileCompleteness(student);

@@ -48,6 +48,28 @@ const studentSchema = new mongoose.Schema({
   graduationYear: {
     type: Number,
   },
+  phoneNumber: {
+    type: String,
+    trim: true,
+  },
+  degree: {
+    type: String,
+    trim: true,
+  },
+  cgpa: {
+    type: Number,
+    min: 0,
+    max: 10,
+    default: null,
+  },
+  bio: {
+    type: String,
+    trim: true,
+  },
+  careerInterests: [{
+    type: String,
+    trim: true,
+  }],
   skills: [{
     type: String,
     trim: true,

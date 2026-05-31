@@ -100,4 +100,20 @@ export const applicationsApi = {
     const response = await api.get(`/verified-candidates`);
     return response.data;
   },
+
+  /**
+   * Get all applications grouped by role (Alumni only)
+   */
+  getApplications: async () => {
+    const response = await api.get(`/applications`);
+    return response.data;
+  },
+
+  /**
+   * Approve an application by ID (Alumni only)
+   */
+  approveApplication: async (id) => {
+    const response = await api.post(`/applications/${id}/approve`);
+    return response.data;
+  },
 };

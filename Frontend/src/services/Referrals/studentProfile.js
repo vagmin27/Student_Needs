@@ -33,6 +33,28 @@ export const studentProfileApi = {
     const response = await api.get('/student/profile/status');
     return response.data;
   },
+
+  /**
+   * Upload profile image
+   */
+  uploadProfileImage: async (file) => {
+    const formData = new FormData();
+    formData.append('profileImage', file);
+    const response = await api.post('/student/profile/image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  /**
+   * Remove profile image
+   */
+  removeProfileImage: async () => {
+    const response = await api.delete('/student/profile/image');
+    return response.data;
+  },
 };
 
 // ============================================

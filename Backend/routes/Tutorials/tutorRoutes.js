@@ -373,6 +373,31 @@ router.get("/profile", async (req, res) => {
   }
 });
 
+const calculateTutorProfileCompleteness = (tutor) => {
+  let score = 0;
+  if (tutor.fName) score += 4;
+  if (tutor.lName) score += 4;
+  if (tutor.email) score += 4;
+  if (tutor.contact) score += 4;
+  if (tutor.bio) score += 4;
+  
+  if (tutor.subjects && tutor.subjects.length > 0) score += 10;
+  if (tutor.skills && tutor.skills.length > 0) score += 10;
+  if (tutor.expertise) score += 10;
+  if (tutor.experience) score += 10;
+
+  if (tutor.hourlyRate) score += 10;
+  if (tutor.availableDays && tutor.availableDays.length > 0) score += 5;
+  if (tutor.availableTimeSlots && tutor.availableTimeSlots.length > 0) score += 5;
+
+  if (tutor.profilePic) score += 5;
+  if (tutor.linkedinUrl) score += 5;
+  if (tutor.githubUrl) score += 5;
+  if (tutor.portfolioUrl) score += 5;
+
+  return Math.min(score, 100);
+};
+
 // ================= UPDATE PROFILE =================
 router.put("/profile", async (req, res) => {
   try {
@@ -380,26 +405,67 @@ router.put("/profile", async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const updated = await Tutor.findByIdAndUpdate(
-      req.session.user.id,
-      {
-        name: req.body.displayName,
-        fName: req.body.fName,
-        lName: req.body.lName,
-        email: req.body.email,
-        contact: req.body.contact,
-        location: req.body.location,
-        experience: req.body.experience,
-        expertise: req.body.expertise,
-      },
-      { new: true },
-    );
+    const tutor = await Tutor.findById(req.session.user.id);
+    if (!tutor) {
+      return res.status(404).json({ message: "Tutor not found" });
+    }
+
+    if (req.body.displayName !== undefined) tutor.name = req.body.displayName;
+    if (req.body.fName !== undefined) tutor.fName = req.body.fName;
+    if (req.body.lName !== undefined) tutor.lName = req.body.lName;
+    if (req.body.email !== undefined) tutor.email = req.body.email;
+    if (req.body.contact !== undefined) tutor.contact = req.body.contact;
+    if (req.body.location !== undefined) tutor.location = req.body.location;
+    if (req.body.experience !== undefined) tutor.experience = req.body.experience;
+    if (req.body.expertise !== undefined) tutor.expertise = req.body.expertise;
+    if (req.body.bio !== undefined) tutor.bio = req.body.bio;
+    if (req.body.hourlyRate !== undefined) tutor.hourlyRate = Number(req.body.hourlyRate) || null;
+    
+    // Parse arrays
+    if (req.body.subjects !== undefined) {
+      tutor.subjects = Array.isArray(req.body.subjects) 
+        ? req.body.subjects 
+        : typeof req.body.subjects === 'string'
+          ? req.body.subjects.split(',').map(s => s.trim()).filter(Boolean)
+          : [];
+    }
+    if (req.body.skills !== undefined) {
+      tutor.skills = Array.isArray(req.body.skills) 
+        ? req.body.skills 
+        : typeof req.body.skills === 'string'
+          ? req.body.skills.split(',').map(s => s.trim()).filter(Boolean)
+          : [];
+    }
+    if (req.body.availableDays !== undefined) {
+      tutor.availableDays = Array.isArray(req.body.availableDays) 
+        ? req.body.availableDays 
+        : typeof req.body.availableDays === 'string'
+          ? req.body.availableDays.split(',').map(s => s.trim()).filter(Boolean)
+          : [];
+    }
+    if (req.body.availableTimeSlots !== undefined) {
+      tutor.availableTimeSlots = Array.isArray(req.body.availableTimeSlots) 
+        ? req.body.availableTimeSlots 
+        : typeof req.body.availableTimeSlots === 'string'
+          ? req.body.availableTimeSlots.split(',').map(s => s.trim()).filter(Boolean)
+          : [];
+    }
+
+    if (req.body.linkedinUrl !== undefined) tutor.linkedinUrl = req.body.linkedinUrl;
+    if (req.body.githubUrl !== undefined) tutor.githubUrl = req.body.githubUrl;
+    if (req.body.portfolioUrl !== undefined) tutor.portfolioUrl = req.body.portfolioUrl;
+
+    // Recalculate completeness
+    tutor.profileCompleteness = calculateTutorProfileCompleteness(tutor);
+
+    await tutor.save();
 
     res.json({
       msg: "Profile updated",
-      profile: updated,
+      profile: tutor,
     });
   } catch (err) {
+    console.error("Tutor profile update failed:", err);
     res.status(500).json({ message: "Update failed" });
   }
 });

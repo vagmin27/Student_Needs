@@ -13,6 +13,8 @@ import {
     getApplicationDetails,
     downloadStudentResume,
     getVerifiedCandidates,
+    getGroupedApplications,
+    approveApplication,
 } from "../../controllers/Referrals/ApplicationController.js";
 
 // Import middleware
@@ -27,6 +29,9 @@ router.use(auth);
 
 // View Verified Candidates (Alumni)
 router.get("/verified-candidates", getVerifiedCandidates);
+
+// Get all applications grouped by role (Alumni)
+router.get("/applications", getGroupedApplications);
 
 // View Applications for an Opportunity (Alumni only - owner)
 router.get("/applications/:opportunityId", viewApplications);
@@ -43,7 +48,11 @@ router.post("/applications/:applicationId/shortlist", shortlistStudent);
 // Mark as Referred (Alumni only - owner)
 router.post("/applications/:applicationId/refer", markAsReferred);
 
+// Approve application (Alumni only - owner)
+router.post("/applications/:id/approve", approveApplication);
+
 // Reject Application (Alumni only - owner)
+router.post("/applications/:id/reject", rejectApplication);
 router.post("/applications/:applicationId/reject", rejectApplication);
 
 // ********************************************************************************************************

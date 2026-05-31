@@ -4,6 +4,31 @@ import Student from "../../models/Referrals/StudentModel.js";
 import Alumni from "../../models/Referrals/AlumniModel.js";
 import Chat from "../../models/Referrals/ChatModel.js";
 import { notificationService } from "../../services/NotificationService.js";
+import { calculateProfileCompleteness } from "../../utils/Referrals/calculateProfileScore.js";
+
+const calculateAlumniProfileCompleteness = (alumni) => {
+  let score = 0;
+  if (alumni.firstName) score += 5;
+  if (alumni.lastName) score += 5;
+  if (alumni.email) score += 5;
+  if (alumni.image) score += 5;
+
+  if (alumni.company) score += 8;
+  if (alumni.jobTitle) score += 8;
+  if (alumni.yearsOfExperience !== undefined && alumni.yearsOfExperience !== null) score += 7;
+  if (alumni.skills && alumni.skills.length > 0) score += 7;
+
+  if (alumni.referralPreferences) score += 10;
+  if (alumni.hiringInterests) score += 10;
+
+  if (alumni.bio) score += 6;
+  if (alumni.careerJourney) score += 6;
+  if (alumni.linkedinUrl) score += 6;
+  if (alumni.githubUrl) score += 6;
+  if (alumni.portfolioUrl) score += 6;
+
+  return Math.min(score, 100);
+};
 
 // =====================================================
 // ALUMNI SIDE - Management Endpoints
@@ -15,9 +40,9 @@ export const getVerifiedCandidates = async (req, res) => {
 
         const applications = await Application.find({
             alumni: alumniId,
-            status: { $in: ["Referred", "Shortlisted"] }
+            status: { $in: ["approved", "Referred", "Shortlisted"] }
         })
-        .populate('student', 'firstName lastName email college branch graduationYear skills profileCompleteness image')
+        .populate('student', 'firstName lastName email college branch graduationYear skills profileCompleteness image cgpa resume')
         .populate('opportunity', 'jobTitle experienceLevel')
         .sort({ updatedAt: -1 });
 
@@ -33,10 +58,20 @@ export const getVerifiedCandidates = async (req, res) => {
             return appObj;
         }));
 
+        // Group by jobTitle dynamically
+        const grouped = {};
+        for (const app of applicationsWithChat) {
+            const roleName = app.opportunity?.jobTitle || "Other Opportunity";
+            if (!grouped[roleName]) {
+                grouped[roleName] = [];
+            }
+            grouped[roleName].push(app);
+        }
+
         return res.status(200).json({
             success: true,
             total: applicationsWithChat.length,
-            data: applicationsWithChat,
+            data: grouped,
             message: "Verified candidates fetched successfully",
         });
     } catch (error) {
@@ -171,7 +206,7 @@ export const viewStudentProfile = async (req, res) => {
 // Shortlist Student
 export const shortlistStudent = async (req, res) => {
     try {
-        const alumniId = req.user.id;
+        const alumniId = req.user.id || req.user._id;
         const { applicationId } = req.params;
 
         const application = await Application.findById(applicationId)
@@ -185,7 +220,15 @@ export const shortlistStudent = async (req, res) => {
             });
         }
 
-        if (application.opportunity.postedBy.toString() !== alumniId) {
+        const opportunity = await Opportunity.findById(application.opportunity?._id || application.opportunity);
+        if (!opportunity) {
+            return res.status(404).json({
+                success: false,
+                message: "Associated opportunity not found",
+            });
+        }
+
+        if (opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
                 message: "You are not authorized to shortlist this application",
@@ -208,16 +251,30 @@ export const shortlistStudent = async (req, res) => {
 
         application.status = "Shortlisted";
         application.shortlistedAt = new Date();
+
+        if (!application.statusHistory) {
+            application.statusHistory = [];
+        }
+        application.statusHistory.push({
+            status: "Shortlisted",
+            timestamp: new Date(),
+            note: "Application shortlisted by alumni"
+        });
+
         await application.save();
 
-        await notificationService.createAndEmitNotification({
-            userId: application.student._id,
-            title: 'Application Shortlisted',
-            message: `Your application for ${application.opportunity.jobTitle} has been shortlisted!`,
-            type: 'INFO',
-            category: 'REFERRAL',
-            metadata: { applicationId: application._id, opportunityId: application.opportunity._id }
-        });
+        try {
+            await notificationService.createAndEmitNotification({
+                recipientId: application.student._id || application.student,
+                senderId: alumniId,
+                type: 'REFERRAL',
+                title: 'Application Shortlisted',
+                message: `Your application for ${opportunity.jobTitle} has been shortlisted!`,
+                link: '/student/my-applications'
+            });
+        } catch (notifError) {
+            console.error("Failed to emit notification in shortlistStudent:", notifError);
+        }
 
         // Trigger Alumni Dashboard Refresh to update grouped application counts
         notificationService.emitToUser(alumniId, 'dashboard_refresh', { type: 'referral_update' });
@@ -240,7 +297,7 @@ export const shortlistStudent = async (req, res) => {
 // Mark as Referred
 export const markAsReferred = async (req, res) => {
     try {
-        const alumniId = req.user.id;
+        const alumniId = req.user.id || req.user._id;
         const { applicationId } = req.params;
 
         const application = await Application.findById(applicationId)
@@ -254,7 +311,15 @@ export const markAsReferred = async (req, res) => {
             });
         }
 
-        if (application.opportunity.postedBy.toString() !== alumniId) {
+        const opportunity = await Opportunity.findById(application.opportunity?._id || application.opportunity);
+        if (!opportunity) {
+            return res.status(404).json({
+                success: false,
+                message: "Associated opportunity not found",
+            });
+        }
+
+        if (opportunity.postedBy.toString() !== alumniId) {
             return res.status(403).json({
                 success: false,
                 message: "You are not authorized to update this application",
@@ -268,8 +333,7 @@ export const markAsReferred = async (req, res) => {
             });
         }
 
-        const opportunity = await Opportunity.findById(application.opportunity._id);
-        if (opportunity.referralsGiven >= opportunity.numberOfReferrals) {
+        if ((opportunity.referralsGiven || 0) >= opportunity.numberOfReferrals) {
             return res.status(400).json({
                 success: false,
                 message: "No more referral slots available for this opportunity",
@@ -283,23 +347,36 @@ export const markAsReferred = async (req, res) => {
             application.shortlistedAt = new Date();
         }
 
+        if (!application.statusHistory) {
+            application.statusHistory = [];
+        }
+        application.statusHistory.push({
+            status: "Referred",
+            timestamp: new Date(),
+            note: "Application marked as referred by alumni"
+        });
+
         await application.save();
 
-        opportunity.referralsGiven += 1;
+        opportunity.referralsGiven = (opportunity.referralsGiven || 0) + 1;
         
         if (opportunity.referralsGiven >= opportunity.numberOfReferrals) {
             opportunity.status = "Closed";
         }
         await opportunity.save();
 
-        await notificationService.createAndEmitNotification({
-            userId: application.student._id,
-            title: 'Referral Granted!',
-            message: `You have successfully been referred for ${application.opportunity.jobTitle}.`,
-            type: 'SUCCESS',
-            category: 'REFERRAL',
-            metadata: { applicationId: application._id, opportunityId: application.opportunity._id }
-        });
+        try {
+            await notificationService.createAndEmitNotification({
+                recipientId: application.student._id || application.student,
+                senderId: alumniId,
+                type: 'REFERRAL',
+                title: 'Referral Granted!',
+                message: `You have successfully been referred for ${opportunity.jobTitle}.`,
+                link: '/student/my-applications'
+            });
+        } catch (notifError) {
+            console.error("Failed to emit notification in markAsReferred:", notifError);
+        }
 
         notificationService.emitToUser(alumniId, 'dashboard_refresh', { type: 'referral_update' });
 
@@ -320,45 +397,74 @@ export const markAsReferred = async (req, res) => {
 
 // Reject Application
 export const rejectApplication = async (req, res) => {
+    console.log("=== REJECT APPLICATION START ===");
+    console.log("Request params id/applicationId:", req.params.id, req.params.applicationId);
+    console.log("Request user:", req.user);
     try {
-        const alumniId = req.user.id;
-        const { applicationId } = req.params;
+        const alumniId = req.user.id || req.user._id;
+        const { id, applicationId } = req.params;
+        const appId = id || applicationId;
 
-        const application = await Application.findById(applicationId)
+        const application = await Application.findById(appId)
             .populate('opportunity');
 
+        console.log("Fetched application:", application);
+
         if (!application) {
+            console.log("Application not found for ID:", appId);
             return res.status(404).json({
                 success: false,
                 message: "Application not found",
             });
         }
 
-        if (application.opportunity.postedBy.toString() !== alumniId) {
+        const opportunity = await Opportunity.findById(application.opportunity?._id || application.opportunity);
+        console.log("Fetched opportunity:", opportunity);
+
+        if (!opportunity) {
+            console.log("Opportunity not found for Application:", application);
+            return res.status(404).json({
+                success: false,
+                message: "Associated opportunity not found",
+            });
+        }
+
+        if (opportunity.postedBy.toString() !== alumniId) {
+            console.log("Unauthorized alumni rejection attempt:", { postedBy: opportunity.postedBy, alumniId });
             return res.status(403).json({
                 success: false,
                 message: "You are not authorized to reject this application",
             });
         }
 
-        if (application.status === "Referred") {
-            return res.status(400).json({
-                success: false,
-                message: "Cannot reject an application that has been referred",
-            });
+        application.status = "rejected";
+        application.rejectedAt = new Date();
+        application.rejectedBy = alumniId;
+
+        if (!application.statusHistory) {
+            application.statusHistory = [];
         }
-
-        application.status = "Rejected";
-        await application.save();
-
-        await notificationService.createAndEmitNotification({
-            userId: application.student._id,
-            title: 'Application Update',
-            message: `Your application for ${application.opportunity.jobTitle} was not selected.`,
-            type: 'WARNING',
-            category: 'REFERRAL',
-            metadata: { applicationId: application._id, opportunityId: application.opportunity._id }
+        application.statusHistory.push({
+            status: "rejected",
+            timestamp: new Date(),
+            note: "Application rejected by alumni"
         });
+
+        await application.save();
+        console.log("Application status rejected saved successfully.");
+
+        try {
+            await notificationService.createAndEmitNotification({
+                recipientId: application.student._id || application.student,
+                senderId: alumniId,
+                type: 'REFERRAL',
+                title: 'Application Update',
+                message: `Your application for ${opportunity.jobTitle} was not selected.`,
+                link: '/student/my-applications'
+            });
+        } catch (notifError) {
+            console.error("Failed to emit notification in rejectApplication:", notifError);
+        }
 
         notificationService.emitToUser(alumniId, 'dashboard_refresh', { type: 'referral_update' });
 
@@ -372,6 +478,8 @@ export const rejectApplication = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Failed to reject application. Please try again.",
+            error: error.message,
+            stack: process.env.NODE_ENV !== "production" ? error.stack : undefined
         });
     }
 };
@@ -475,6 +583,7 @@ export const applyForReferral = async (req, res) => {
             graduationYear: student.graduationYear,
             skills: student.skills || [],
             profileCompleteness: student.profileCompleteness,
+            cgpa: student.cgpa || null,
         };
 
         const resumeSnapshot = {
@@ -488,7 +597,7 @@ export const applyForReferral = async (req, res) => {
             opportunity: opportunityId,
             student: studentId,
             alumni: opportunity.postedBy._id,
-            status: "Applied",
+            status: "pending",
             studentDetails: {
                 profileScore: req.body.profileScore || null,
                 interviewScore: req.body.interviewScore || null,
@@ -497,7 +606,7 @@ export const applyForReferral = async (req, res) => {
             resumeSnapshot,
             appliedAt: new Date(),
             statusHistory: [{
-                status: "Applied",
+                status: "pending",
                 timestamp: new Date(),
                 note: "Application submitted",
             }],
@@ -572,7 +681,7 @@ export const getMyApplications = async (req, res) => {
         const { status, page = 1, limit = 10 } = req.query;
 
         const filter = { student: studentId };
-        if (status && ["Applied", "Shortlisted", "Referred", "Rejected"].includes(status)) {
+        if (status && ["Applied", "Shortlisted", "Referred", "Rejected", "pending", "approved", "rejected"].includes(status)) {
             filter.status = status;
         }
 
@@ -599,10 +708,10 @@ export const getMyApplications = async (req, res) => {
 
         const allApplications = await Application.find({ student: studentId });
         const statusSummary = {
-            applied: allApplications.filter(app => app.status === "Applied").length,
-            shortlisted: allApplications.filter(app => app.status === "Shortlisted").length,
-            referred: allApplications.filter(app => app.status === "Referred").length,
-            rejected: allApplications.filter(app => app.status === "Rejected").length,
+            applied: allApplications.filter(app => ["Applied", "pending"].includes(app.status)).length,
+            shortlisted: allApplications.filter(app => ["Shortlisted", "approved"].includes(app.status)).length,
+            referred: allApplications.filter(app => ["Referred"].includes(app.status)).length,
+            rejected: allApplications.filter(app => ["Rejected", "rejected"].includes(app.status)).length,
         };
 
         return res.status(200).json({
@@ -759,6 +868,242 @@ export const downloadStudentResume = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Failed to download resume. Please try again.",
+        });
+    }
+};
+
+// GET /applications - returns dynamically grouped pending/applied applications
+export const getGroupedApplications = async (req, res) => {
+    try {
+        const alumniId = req.user.id;
+
+        const applications = await Application.find({
+            alumni: alumniId,
+            status: { $in: ["pending", "Applied"] }
+        })
+        .populate('student', 'firstName lastName email college branch graduationYear skills profileCompleteness image cgpa resume')
+        .populate('opportunity', 'jobTitle experienceLevel')
+        .sort({ createdAt: -1 });
+
+        const applicationsWithChat = await Promise.all(applications.map(async (app) => {
+            const chat = await Chat.findOneAndUpdate(
+                { student: app.student._id, alumni: alumniId },
+                { $setOnInsert: { student: app.student._id, alumni: alumniId } },
+                { upsert: true, new: true, returnDocument: 'after' }
+            );
+            const appObj = app.toObject();
+            appObj.chatId = chat ? chat._id : null;
+            return appObj;
+        }));
+
+        const grouped = {};
+        for (const app of applicationsWithChat) {
+            const roleName = app.opportunity?.jobTitle || "Other Opportunity";
+            if (!grouped[roleName]) {
+                grouped[roleName] = [];
+            }
+            grouped[roleName].push(app);
+        }
+
+        return res.status(200).json({
+            success: true,
+            total: applicationsWithChat.length,
+            data: grouped,
+            message: "Pending applications grouped successfully",
+        });
+    } catch (error) {
+        console.error("Get grouped applications error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch pending applications",
+        });
+    }
+};
+
+// POST /applications/:id/approve - approve a pending application
+export const approveApplication = async (req, res) => {
+    console.log("=== APPROVE APPLICATION START ===");
+    console.log("Request params id:", req.params.id);
+    console.log("Request user:", req.user);
+    try {
+        const alumniId = req.user.id || req.user._id;
+        const { id } = req.params;
+
+        const application = await Application.findById(id)
+            .populate('opportunity')
+            .populate('student', 'firstName lastName email');
+
+        console.log("Fetched application:", application);
+
+        if (!application) {
+            console.log("Application not found for ID:", id);
+            return res.status(404).json({
+                success: false,
+                message: "Application not found",
+            });
+        }
+
+        const opportunity = await Opportunity.findById(application.opportunity?._id || application.opportunity);
+        console.log("Fetched opportunity:", opportunity);
+
+        if (!opportunity) {
+            console.log("Opportunity not found for Application:", application);
+            return res.status(404).json({
+                success: false,
+                message: "Associated opportunity not found",
+            });
+        }
+
+        if (opportunity.postedBy.toString() !== alumniId) {
+            console.log("Unauthorized alumni approval attempt:", { postedBy: opportunity.postedBy, alumniId });
+            return res.status(403).json({
+                success: false,
+                message: "You are not authorized to approve this application",
+            });
+        }
+
+        application.status = "approved";
+        application.referredAt = new Date();
+        application.approvedAt = new Date();
+        application.approvedBy = alumniId;
+
+        if (!application.statusHistory) {
+            application.statusHistory = [];
+        }
+        application.statusHistory.push({
+            status: "approved",
+            timestamp: new Date(),
+            note: "Application approved by alumni"
+        });
+
+        await application.save();
+        console.log("Application status approved saved successfully.");
+
+        opportunity.referralsGiven = (opportunity.referralsGiven || 0) + 1;
+        if (opportunity.referralsGiven >= opportunity.numberOfReferrals) {
+            opportunity.status = "Closed";
+        }
+        await opportunity.save();
+        console.log("Opportunity referralsGiven updated successfully.");
+
+        try {
+            await notificationService.createAndEmitNotification({
+                recipientId: application.student._id || application.student,
+                senderId: alumniId,
+                type: 'REFERRAL',
+                title: 'Application Approved!',
+                message: `Your application for ${opportunity.jobTitle} has been approved!`,
+                link: '/student/my-applications'
+            });
+        } catch (notifError) {
+            console.error("Failed to emit notification in approveApplication:", notifError);
+        }
+
+        notificationService.emitToUser(alumniId, 'dashboard_refresh', { type: 'referral_update' });
+
+        return res.status(200).json({
+            success: true,
+            data: application,
+            message: "Application approved successfully",
+        });
+    } catch (error) {
+        console.error("Approve application error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to approve application. Please try again.",
+            error: error.message,
+            stack: process.env.NODE_ENV !== "production" ? error.stack : undefined
+        });
+    }
+};
+
+// POST /profile/image - upload profile image
+export const uploadProfileImage = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const role = req.user.accountType;
+        
+        if (!req.files || !req.files.profileImage) {
+            return res.status(400).json({
+                success: false,
+                message: "Profile image file is required",
+            });
+        }
+        
+        const file = req.files.profileImage;
+        const ext = path.extname(file.name);
+        const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+        const uploadDir = path.join(process.cwd(), "uploads");
+        const uploadPath = path.join(uploadDir, filename);
+        
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        
+        await file.mv(uploadPath);
+        
+        let user;
+        if (role === "alumni" || req.user.role === "alumni") {
+            user = await Alumni.findById(userId);
+            if (!user) return res.status(404).json({ success: false, message: "Alumni not found" });
+            user.image = filename;
+            user.profileCompleteness = calculateAlumniProfileCompleteness(user);
+            await user.save();
+        } else {
+            user = await Student.findById(userId);
+            if (!user) return res.status(404).json({ success: false, message: "Student not found" });
+            user.image = filename;
+            user.profileCompleteness = calculateProfileCompleteness(user);
+            await user.save();
+        }
+        
+        return res.status(200).json({
+            success: true,
+            message: "Profile image uploaded successfully",
+            image: filename,
+            data: user,
+        });
+    } catch (error) {
+        console.error("Upload profile image error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to upload profile image",
+        });
+    }
+};
+
+// DELETE /profile/image - remove profile image
+export const removeProfileImage = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const role = req.user.accountType;
+        
+        let user;
+        if (role === "alumni" || req.user.role === "alumni") {
+            user = await Alumni.findById(userId);
+            if (!user) return res.status(404).json({ success: false, message: "Alumni not found" });
+            user.image = `https://api.dicebear.com/5.x/initials/svg?seed=${user.firstName}%20${user.lastName}`;
+            user.profileCompleteness = calculateAlumniProfileCompleteness(user);
+            await user.save();
+        } else {
+            user = await Student.findById(userId);
+            if (!user) return res.status(404).json({ success: false, message: "Student not found" });
+            user.image = `https://api.dicebear.com/5.x/initials/svg?seed=${user.firstName}%20${user.lastName}`;
+            user.profileCompleteness = calculateProfileCompleteness(user);
+            await user.save();
+        }
+        
+        return res.status(200).json({
+            success: true,
+            message: "Profile image removed successfully",
+            image: user.image,
+            data: user,
+        });
+    } catch (error) {
+        console.error("Remove profile image error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to remove profile image",
         });
     }
 };

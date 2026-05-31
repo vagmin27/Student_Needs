@@ -3,27 +3,40 @@
 export const calculateProfileCompleteness = (student) => {
   let score = 0;
 
-  const fields = [
-    { field: student.firstName, weight: 7 },
-    { field: student.lastName, weight: 7 },
-    { field: student.email, weight: 6 },
-    { field: student.image, weight: 5 },
-    { field: student.college, weight: 10 },
-    { field: student.branch, weight: 8 },
-    { field: student.graduationYear, weight: 8 },
-    { field: student.skills && student.skills.length > 0, weight: 10 },
-    { field: student.projects && student.projects.length > 0, weight: 10 },
-    { field: student.certifications && student.certifications.length > 0, weight: 5 },
-    { field: student.preferredRoles && student.preferredRoles.length > 0, weight: 5 },
-    { field: student.resume && student.resume.data, weight: 7 },
-    { field: student.linkedinUrl, weight: 7 },
-    { field: student.githubUrl, weight: 5 },
-    { field: student.portfolioUrl, weight: 5 },
-  ];
+  // Basic Details (20%) - 4% each for firstName, lastName, email, phoneNumber, image
+  let basicDetailsScore = 0;
+  if (student.firstName) basicDetailsScore += 4;
+  if (student.lastName) basicDetailsScore += 4;
+  if (student.email) basicDetailsScore += 4;
+  if (student.phoneNumber) basicDetailsScore += 4;
+  if (student.image) basicDetailsScore += 4;
+  score += basicDetailsScore;
 
-  fields.forEach(({ field, weight }) => {
-    if (field) score += weight;
-  });
+  // Education (20%) - 4% each for college, branch, degree, graduationYear, cgpa
+  let eduScore = 0;
+  if (student.college) eduScore += 4;
+  if (student.branch) eduScore += 4;
+  if (student.degree) eduScore += 4;
+  if (student.graduationYear) eduScore += 4;
+  if (student.cgpa) eduScore += 4;
+  score += eduScore;
+
+  // Skills (20%) - 20% if there is at least one skill
+  if (student.skills && student.skills.length > 0) {
+    score += 20;
+  }
+
+  // Resume (20%) - 20% if resume exists
+  if (student.resume && student.resume.data) {
+    score += 20;
+  }
+
+  // Links (20%) - 7% LinkedIn, 7% GitHub, 6% Portfolio
+  let linksScore = 0;
+  if (student.linkedinUrl || (student.linkedIn && student.linkedIn.linkedInUrl)) linksScore += 7;
+  if (student.githubUrl) linksScore += 7;
+  if (student.portfolioUrl) linksScore += 6;
+  score += linksScore;
 
   return Math.min(score, 100);
 };

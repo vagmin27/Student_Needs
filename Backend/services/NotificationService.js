@@ -36,6 +36,24 @@ class NotificationService {
   }
 
   /**
+   * Emits a real-time event to a specific user.
+   */
+  emitToUser(userId, event, data) {
+    try {
+      const io = getIO();
+      if (io && userId) {
+        io.to(userId.toString()).emit(event, data);
+      }
+    } catch (wsError) {
+      if (typeof logger !== 'undefined' && logger.warn) {
+        logger.warn(`Failed to emit real-time event ${event} to user ${userId}: ${wsError.message}`);
+      } else {
+        console.warn(`Failed to emit real-time event ${event} to user ${userId}: ${wsError.message}`);
+      }
+    }
+  }
+
+  /**
    * Fetch paginated notifications for a user.
    */
   async getUserNotifications(userId, page = 1, limit = 20) {
