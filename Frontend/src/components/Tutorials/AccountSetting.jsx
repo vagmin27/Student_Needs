@@ -1,76 +1,40 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PricePanel from "./PricePanel";
+import React from "react";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { ThemePreference } from "@/components/ThemePreference.jsx";
-import "../../styles/Tutorials/AccountSetting.css";
-import API from "@/services/api/tutorialsApi.js";
+import StudentProfileView from "@/components/profile/StudentProfileView.jsx";
+import TutorProfileView from "@/components/profile/TutorProfileView.jsx";
+import AlumniProfileView from "@/components/profile/AlumniProfileView.jsx";
 
 function AccountSetting() {
-  const navigate = useNavigate();
-  const auth = useAuth();
-  const [classCount, setClassCount] = useState(0);
-
-  const alertDel = (e) => {
-    e.preventDefault();
-    if (window.confirm("Confirm to permanently cancel your account.")) {
-      delAC();
-    }
-  };
-
-  // ✅ FIXED DELETE ACCOUNT API
-  const delAC = async () => {
-    try {
-      const { data } = await API.delete(`/account/deleteAccount/${auth.user?._id}`);
-      alert(data.message);
-
-      auth.logout();
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert("Error deleting account");
-    }
-  };
+  const { user } = useAuth();
+  const role = (user?.role || user?.accountType || "student").toLowerCase();
 
   return (
-    <main className="AccountSetting">
-      <div className="account-theme-preference">
-        <ThemePreference />
+    <main className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 animate-fade-in-up">
+      {/* Title */}
+      <div>
+        <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
+          <span className="text-brand-primary">Settings</span>
+        </h2>
+        <p className="text-muted-foreground text-sm mt-1">
+          Manage your theme preferences and account profile information.
+        </p>
       </div>
 
-      <h1 className="plan-selection">Select your plan</h1>
-
-      <div className="price-container">
-        <PricePanel />
-
-        <div className="select-plan">
-          <button
-            className="btnAccount"
-            onClick={() => setClassCount(classCount + 1)}
-          >
-            ONE TIMER
-          </button>
-
-          <button
-            className="btnAccount"
-            onClick={() => setClassCount(classCount + 3)}
-          >
-            BRUSH UP PLAN
-          </button>
-
-          <button
-            className="btnAccount"
-            onClick={() => setClassCount(classCount + 5)}
-          >
-            PRO PLAN
-          </button>
-        </div>
+      {/* Global Theme Preference Section */}
+      <div className="glass-panel p-6 bg-card border border-border rounded-xl">
+        <ThemePreference
+          variant="inline"
+          title="Theme Preference"
+          description="Choose between Light and Dark mode styles. Syncs across the platform."
+        />
       </div>
 
-      <div className="delete-account">
-        <button className="delete-button" onClick={alertDel}>
-          I would like to delete my account...
-        </button>
+      {/* Profile Management Section */}
+      <div className="glass-panel p-6 bg-card border border-border rounded-xl">
+        {role === "student" && <StudentProfileView />}
+        {(role === "tutor" || role === "teacher") && <TutorProfileView />}
+        {role === "alumni" && <AlumniProfileView />}
       </div>
     </main>
   );

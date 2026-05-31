@@ -2,6 +2,7 @@ import Student from "../../models/Referrals/StudentModel.js";
 import { embeddingService } from "../../services/ai/EmbeddingService.js";
 import { calculateProfileCompleteness } from "../../utils/Referrals/calculateProfileScore.js";
 import mongoose from "mongoose";
+import College from "../../models/Referrals/CollegeModel.js";
 
 // Create / Update Profile
 export const updateProfile = async (req, res) => {
@@ -25,6 +26,7 @@ export const updateProfile = async (req, res) => {
             linkedinUrl,
             githubUrl,
             portfolioUrl,
+            collegeName,
         } = req.body;
 
         // Validate graduationYear if provided
@@ -82,6 +84,26 @@ export const updateProfile = async (req, res) => {
         if (linkedinUrl !== undefined) student.linkedinUrl = linkedinUrl;
         if (githubUrl !== undefined) student.githubUrl = githubUrl;
         if (portfolioUrl !== undefined) student.portfolioUrl = portfolioUrl;
+
+        if (collegeName !== undefined) {
+            if (collegeName.trim()) {
+                const matchingName = collegeName.replace(/\s+/g, "").toLowerCase();
+                const college = await College.findOne({ matchingName });
+                if (!college) {
+                    return res.status(400).json({
+                        success: false,
+                        message: `College "${collegeName}" not found in our database. Please select from registered colleges or contact support.`,
+                    });
+                }
+                student.college = college._id;
+                if (!college.Student.includes(studentId)) {
+                    college.Student.push(studentId);
+                    await college.save();
+                }
+            } else {
+                student.college = null;
+            }
+        }
 
         // Calculate and update profile completeness
         student.profileCompleteness = calculateProfileCompleteness(student);
@@ -227,6 +249,23 @@ export const getProfileStatus = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Failed to fetch profile status. Please try again.",
+        });
+    }
+};
+
+// Get All Registered Colleges
+export const getColleges = async (req, res) => {
+    try {
+        const colleges = await College.find({}, "name matchingName").sort({ name: 1 });
+        return res.status(200).json({
+            success: true,
+            data: colleges,
+        });
+    } catch (error) {
+        console.error("GET COLLEGES ERROR:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch colleges. Please try again.",
         });
     }
 };

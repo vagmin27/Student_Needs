@@ -6,6 +6,7 @@ import {
     updateProfile,
     getProfile,
     getProfileStatus,
+    getColleges,
 } from "../../controllers/Referrals/StudentProfile.js";
 
 import {
@@ -22,6 +23,9 @@ import { auth } from "../../middlewares/Referrals/auth.js";
 
 // All routes require authentication
 router.use(auth);
+
+// Get all registered colleges
+router.get("/colleges", getColleges);
 
 // Create / Update Profile
 router.put("/profile", updateProfile);

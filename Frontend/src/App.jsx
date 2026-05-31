@@ -477,6 +477,14 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
+        <Route
+          path="/student/settings"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <Settings />
+            </Suspense>
+          }
+        />
 
       </Route>
 
@@ -549,6 +557,16 @@ const AttendanceRoutes = () => {
             <Suspense fallback={<DashboardSkeleton />}>
               <DashboardLayout role="alumni" pageTitle="Referrals Chat">
                 <ChatPage />
+              </DashboardLayout>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/alumni/settings"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <DashboardLayout role="alumni" pageTitle="Alumni Settings">
+                <Settings />
               </DashboardLayout>
             </Suspense>
           }

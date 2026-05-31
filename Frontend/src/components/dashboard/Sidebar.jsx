@@ -152,7 +152,13 @@ const Sidebar = ({ className, role = "student" }) => {
       {/* Bottom Actions */}
       <div className="mt-auto space-y-1 pt-4 border-t border-border">
         <Link
-          to="/tutorials/profile/accountSettings"
+          to={
+            currentRole === "student"
+              ? "/student/settings"
+              : currentRole === "alumni"
+              ? "/alumni/settings"
+              : "/tutorials/profile/accountSettings"
+          }
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-secondary-foreground transition-colors"
         >
           <Settings className="w-4 h-4" />
