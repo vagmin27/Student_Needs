@@ -59,20 +59,38 @@ const AddSubject = React.lazy(() => import("./pages/Attendance/AddSubject"));
 const StudentDashboard = React.lazy(
   () => import("./pages/Attendance/StudentDashboard"),
 );
-const UnifiedDashboard = React.lazy(
-  () => import("./pages/UnifiedDashboard"),
-);
+const UnifiedDashboard = React.lazy(() => import("./pages/UnifiedDashboard"));
 
-const AttendanceManagementHub = React.lazy(() => import("./pages/Tutorials/AttendanceManagementHub"));
-const TutorMarkAttendance = React.lazy(() => import("./pages/Tutorials/TutorMarkAttendance"));
-const TutorManageSubjects = React.lazy(() => import("./pages/Tutorials/TutorManageSubjects"));
-const OnlineAttendanceView = React.lazy(() => import("./pages/Tutorials/OnlineAttendanceView"));
-const AttendanceDashboard = React.lazy(() => import("./pages/Attendance/Dashboard"));
-const AttendanceMark = React.lazy(() => import("./pages/Attendance/Attendance"));
-const AttendanceAddStudent = React.lazy(() => import("./pages/Attendance/AddStudent"));
-const AttendanceRemoveStudent = React.lazy(() => import("./pages/Attendance/RemoveStudent"));
-const AttendanceAddSubject = React.lazy(() => import("./pages/Attendance/AddSubject"));
-const AttendanceReports = React.lazy(() => import("./pages/Attendance/Reports"));
+const AttendanceManagementHub = React.lazy(
+  () => import("./pages/Tutorials/AttendanceManagementHub"),
+);
+const TutorMarkAttendance = React.lazy(
+  () => import("./pages/Tutorials/TutorMarkAttendance"),
+);
+const TutorManageSubjects = React.lazy(
+  () => import("./pages/Tutorials/TutorManageSubjects"),
+);
+const OnlineAttendanceView = React.lazy(
+  () => import("./pages/Tutorials/OnlineAttendanceView"),
+);
+const AttendanceDashboard = React.lazy(
+  () => import("./pages/Attendance/Dashboard"),
+);
+const AttendanceMark = React.lazy(
+  () => import("./pages/Attendance/Attendance"),
+);
+const AttendanceAddStudent = React.lazy(
+  () => import("./pages/Attendance/AddStudent"),
+);
+const AttendanceRemoveStudent = React.lazy(
+  () => import("./pages/Attendance/RemoveStudent"),
+);
+const AttendanceAddSubject = React.lazy(
+  () => import("./pages/Attendance/AddSubject"),
+);
+const AttendanceReports = React.lazy(
+  () => import("./pages/Attendance/Reports"),
+);
 
 // ======================================================
 //                    REFERRALS
@@ -116,7 +134,9 @@ import EditProfilePage from "./pages/Tutorials/EditProfile";
 import AccountSettingPage from "./pages/Tutorials/AccountSettingPage";
 import NotFound from "./pages/Tutorials/NotFound";
 import BookClass from "./pages/Tutorials/BookClass";
-const TutorialsHome = React.lazy(() => import("./pages/Tutorials/TutorialsHome"));
+const TutorialsHome = React.lazy(
+  () => import("./pages/Tutorials/TutorialsHome"),
+);
 import ManageBookingPage from "./pages/Tutorials/ManageBookingPage";
 import ClassHistoryPage from "./pages/Tutorials/ClassHistoryPage";
 // Replaced by GlobalProtectedRoute
@@ -230,7 +250,6 @@ const AttendanceRoutes = () => {
         path="/auth/verifier/signup"
         element={<Navigate to="/signup/verifier" replace />}
       />
-     
 
       <Route
         path="/student/expenses"
@@ -275,7 +294,6 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
-
 
         {/* Attendance Management Hub */}
         <Route
@@ -360,14 +378,66 @@ const AttendanceRoutes = () => {
         />
 
         {/* Referrals Routes */}
-        <Route path="/student/referrals" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsStudentDashboard /></Suspense>} />
-        <Route path="/student/jobs" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsStudentDashboard /></Suspense>} />
-        <Route path="/student/profile" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsStudentDashboard /></Suspense>} />
-        <Route path="/student/qrcode" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsStudentDashboard /></Suspense>} />
-        <Route path="/student/applied" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsStudentDashboard /></Suspense>} />
-        <Route path="/student/interview" element={<Suspense fallback={<DashboardSkeleton />}><ReferralsInterviewPage /></Suspense>} />
-        <Route path="/student/chat" element={<Suspense fallback={<DashboardSkeleton />}><ChatPage /></Suspense>} />
-        <Route path="/student" element={<Navigate to="/student/dashboard" replace />} />
+        <Route
+          path="/student/referrals"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ReferralsStudentDashboard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student/jobs"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ReferralsStudentDashboard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student/profile"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ReferralsStudentDashboard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student/qrcode"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ReferralsStudentDashboard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student/applied"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ReferralsStudentDashboard />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student/interview"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ReferralsInterviewPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student/chat"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <ChatPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/student"
+          element={<Navigate to="/student/dashboard" replace />}
+        />
         <Route
           path="/referrals/*"
           element={
@@ -376,7 +446,6 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
-
 
         {/* Referrals */}
         <Route
@@ -449,7 +518,10 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
-        <Route path="/student/tutorials" element={<Navigate to="/tutorials/home" />} />
+        <Route
+          path="/student/tutorials"
+          element={<Navigate to="/tutorials/home" />}
+        />
 
         {/* Tutorials feature routes */}
         <Route
@@ -512,7 +584,6 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
-
       </Route>
 
       {/* Expense Tracker Routes */}
@@ -598,7 +669,10 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
-        <Route path="/alumni/*" element={<Navigate to="/alumni/dashboard" replace />} />
+        <Route
+          path="/alumni/*"
+          element={<Navigate to="/alumni/dashboard" replace />}
+        />
       </Route>
 
       {/* Verifier Protected Group */}
@@ -619,7 +693,10 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
-        <Route path="/verifier/*" element={<Navigate to="/verifier/dashboard" replace />} />
+        <Route
+          path="/verifier/*"
+          element={<Navigate to="/verifier/dashboard" replace />}
+        />
       </Route>
       <Route
         path="/auth/*"
@@ -645,32 +722,42 @@ const AttendanceRoutes = () => {
       <Route
         path="/attendance/login"
         element={
-          isAuthenticated ? (
-            <Navigate to="/student/dashboard" />
-          ) : (
-            <Login />
-          )
+          isAuthenticated ? <Navigate to="/student/dashboard" /> : <Login />
         }
       />
 
       <Route
         path="/attendance/register"
         element={
-          isAuthenticated ? (
-            <Navigate to="/student/dashboard" />
-          ) : (
-            <Register />
-          )
+          isAuthenticated ? <Navigate to="/student/dashboard" /> : <Register />
         }
       />
 
       {/* Legacy teacher attendance routes → personal tracker */}
-      <Route path="/attendance/dashboard" element={<Navigate to="/student/attendance" replace />} />
-      <Route path="/attendance/attendance" element={<Navigate to="/student/attendance" replace />} />
-      <Route path="/attendance/add-student" element={<Navigate to="/student/attendance" replace />} />
-      <Route path="/attendance/remove-student" element={<Navigate to="/student/attendance" replace />} />
-      <Route path="/attendance/add-subject" element={<Navigate to="/student/attendance" replace />} />
-      <Route path="/attendance/reports" element={<Navigate to="/student/attendance" replace />} />
+      <Route
+        path="/attendance/dashboard"
+        element={<Navigate to="/student/attendance" replace />}
+      />
+      <Route
+        path="/attendance/attendance"
+        element={<Navigate to="/student/attendance" replace />}
+      />
+      <Route
+        path="/attendance/add-student"
+        element={<Navigate to="/student/attendance" replace />}
+      />
+      <Route
+        path="/attendance/remove-student"
+        element={<Navigate to="/student/attendance" replace />}
+      />
+      <Route
+        path="/attendance/add-subject"
+        element={<Navigate to="/student/attendance" replace />}
+      />
+      <Route
+        path="/attendance/reports"
+        element={<Navigate to="/student/attendance" replace />}
+      />
       <Route
         path="/student/online-attendance"
         element={<Navigate to="/tutorials/online-attendance" replace />}
@@ -779,6 +866,15 @@ function App() {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
+      prevent: (node) => {
+        // Prevent Lenis from handling these elements
+        return (
+          node.classList.contains("overflow-y-auto") ||
+          node.classList.contains("expenses-content") ||
+          node.classList.contains("mainDivBook") ||
+          node.getAttribute("data-lenis-prevent") !== null
+        );
+      },
     });
 
     lenis.on("scroll", ScrollTrigger.update);

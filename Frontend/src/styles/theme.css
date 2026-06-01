@@ -48,7 +48,8 @@
   --accent-cyan: #22d3ee;
   --accent-purple: #a855f7;
   --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 24px rgba(34, 211, 238, 0.25), 0 0 48px rgba(168, 85, 247, 0.15);
+  --shadow-glow:
+    0 0 24px rgba(34, 211, 238, 0.25), 0 0 48px rgba(168, 85, 247, 0.15);
   --gradient-page: linear-gradient(
     135deg,
     #070b1a 0%,
@@ -74,12 +75,15 @@
 
 /* Theme switch — only root, not every descendant */
 html {
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 html,
-html body,
+body,
 #root {
+  height: 100%;
   opacity: 1;
 }
 
@@ -135,7 +139,12 @@ body {
 
 /* ----- Sidebar: navy gradient, white text ----- */
 .light-theme .app-dashboard-layout aside {
-  background: linear-gradient(180deg, #1e4a8c 0%, #163d75 42%, #0f2847 100%) !important;
+  background: linear-gradient(
+    180deg,
+    #1e4a8c 0%,
+    #163d75 42%,
+    #0f2847 100%
+  ) !important;
   border-right-color: rgba(255, 255, 255, 0.08) !important;
   color: #ffffff !important;
   box-shadow: 4px 0 24px rgba(15, 40, 80, 0.12);
@@ -337,8 +346,16 @@ body {
 
 .dark-theme .auth-page {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(34, 211, 238, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+    radial-gradient(
+      ellipse at 20% 50%,
+      rgba(34, 211, 238, 0.12) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(168, 85, 247, 0.1) 0%,
+      transparent 50%
+    ),
     var(--bg-base);
 }
 
@@ -365,11 +382,17 @@ body {
 /* ======================================================
    GLOBAL TYPOGRAPHY SYNCHRONIZATION
    ====================================================== */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text-heading);
 }
 
-p, li {
+p,
+li {
   color: var(--text-paragraph);
 }
 
@@ -401,7 +424,12 @@ button {
 
 /* Light mode gradient/glow */
 .light-theme .premium-sidebar {
-  background: linear-gradient(180deg, #1e4a8c 0%, #163d75 42%, #0f2847 100%) !important;
+  background: linear-gradient(
+    180deg,
+    #1e4a8c 0%,
+    #163d75 42%,
+    #0f2847 100%
+  ) !important;
   box-shadow: 4px 0 24px rgba(15, 40, 80, 0.15) !important;
 }
 
@@ -450,7 +478,9 @@ button {
    ====================================================== */
 
 /* Inputs, Selects, and Textareas */
-input, select, textarea {
+input,
+select,
+textarea {
   color: var(--text-input);
   background-color: var(--bg-secondary);
   border-color: var(--border-color);
@@ -466,8 +496,8 @@ select::placeholder {
 
 /* Browser Autofill styling */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-text-fill-color: var(--text-primary) !important;
   -webkit-box-shadow: 0 0 0 1000px var(--bg-secondary) inset !important;
@@ -575,9 +605,18 @@ input:-webkit-autofill:active {
 
 /* Dark mode landing adjustments */
 .dark-theme .uc-page {
-  background: radial-gradient(ellipse at top right, rgba(34, 211, 238, 0.08) 0%, transparent 60%),
-              radial-gradient(ellipse at bottom left, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
-              var(--bg-primary) !important;
+  background:
+    radial-gradient(
+      ellipse at top right,
+      rgba(34, 211, 238, 0.08) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at bottom left,
+      rgba(168, 85, 247, 0.06) 0%,
+      transparent 50%
+    ),
+    var(--bg-primary) !important;
 }
 
 .dark-theme .uc-student-card {
@@ -615,6 +654,3 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
 }
-
-
-

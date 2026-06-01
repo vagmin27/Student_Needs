@@ -10,18 +10,15 @@ import { apiClient } from "@/services/apiClient";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, BookOpen, Inbox } from "lucide-react";
+import { toast } from "sonner";
 
 function TutorDashboard() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, []);
-
-  const { on } = useWebSocket();
+  const { on, off } = useWebSocket();
   const [analytics, setAnalytics] = useState({ recentRequests: [], activityTimeline: [] });
-  
-  const fetchAnalytics = async () => {
+
+  const fetchAnalytics = useCallback(async () => {
     try {
       const res = await apiClient.get("/api/analytics/tutor-dashboard");
       if (res.data?.success) {
@@ -30,18 +27,28 @@ function TutorDashboard() {
     } catch (err) {
       console.error("Failed to fetch tutor analytics", err);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    on("dashboard_refresh", () => fetchAnalytics());
-  }, [on]);
+    fetchAnalytics();
+  }, [fetchAnalytics]);
+
+  useEffect(() => {
+    const handler = () => fetchAnalytics();
+    on("dashboard_refresh", handler);
+    return () => {
+      if (off) off("dashboard_refresh", handler);
+    };
+  }, [on, off, fetchAnalytics]);
 
   const handleAcceptRequest = useCallback((id) => {
     // TODO: implement accept logic
+    toast.error("Feature coming soon");
   }, []);
 
   const handleDeclineRequest = useCallback((id) => {
     // TODO: implement decline logic
+    toast.error("Feature coming soon");
   }, []);
 
   return (

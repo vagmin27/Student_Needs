@@ -1,6 +1,7 @@
 import myDB from "../../db/Tutorials/myDB.js";
 import cloudinary from "../../utils/Tutorials/cloudinary.js";
 import User from "../../models/Tutorials/user.js";
+import Tutor from "../../models/Tutorials/Tutor.js";
 import fs from "fs";
 
 export const updateProfile = async (req, res) => {
@@ -34,6 +35,22 @@ export const uploadPic = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "No file uploaded",
+      });
+    }
+
+    if (req.session?.user?.role === "tutor") {
+      const updatedTutor = await Tutor.findByIdAndUpdate(
+        req.session.user.id,
+        { profilePic: req.file.filename },
+        { new: true }
+      );
+      
+      console.log("✅ Updated Tutor Pic:", updatedTutor.profilePic);
+      
+      return res.status(200).json({
+        success: true,
+        message: "Profile picture uploaded",
+        pic: updatedTutor.profilePic,
       });
     }
 

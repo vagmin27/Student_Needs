@@ -10,6 +10,17 @@ function MyMongoDB() {
   const TUTORS_COLLECTION = "tutors";
   const PAGE_SIZE = 18;
 
+  const client = new MongoClient(url, { maxPoolSize: 10 });
+  let connected = false;
+
+  const getDb = async () => {
+    if (!connected) {
+      await client.connect();
+      connected = true;
+    }
+    return client.db(DB_NAME);
+  };
+
   // ✅ Safe close
   const closeClient = async (client) => {
     if (client) await client.close();
@@ -19,10 +30,8 @@ function MyMongoDB() {
    * 🔐 CREATE USER
    */
   myDB.createUser = async (_user, _hash, displayName = {}) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const usersCol = db.collection(USER_COLLECTION);
 
       const res = await usersCol.insertOne({
@@ -37,8 +46,6 @@ function MyMongoDB() {
       return res;
     } catch (err) {
       throw new Error(err.message);
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -46,10 +53,8 @@ function MyMongoDB() {
    * 🔍 GET USER BY EMAIL (FOR LOGIN)
    */
   myDB.getUsers = async (_email) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const usersCol = db.collection(USER_COLLECTION);
 
       return await usersCol.findOne(
@@ -64,8 +69,6 @@ function MyMongoDB() {
       );
     } catch (err) {
       throw new Error(err.message);
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -73,10 +76,8 @@ function MyMongoDB() {
    * 🔥 GET USER BY ID (VERY IMPORTANT FOR PASSPORT)
    */
   myDB.getUsersById = async (id) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const usersCol = db.collection(USER_COLLECTION);
 
       console.log("🔍 Fetching user by ID:", id);
@@ -91,8 +92,6 @@ function MyMongoDB() {
     } catch (err) {
       console.error("❌ getUsersById error:", err);
       return null;
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -139,8 +138,6 @@ function MyMongoDB() {
     } catch (err) {
       console.error("❌ findTutors ERROR:", err);
       return [[], 0]; // ✅ prevent crash
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -148,10 +145,8 @@ function MyMongoDB() {
    * 📝 UPDATE PROFILE
    */
   myDB.updatesProfile = async (id, updatedProfile) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const usersCol = db.collection(USER_COLLECTION);
 
       return await usersCol.updateOne(
@@ -160,8 +155,6 @@ function MyMongoDB() {
       );
     } catch (err) {
       throw new Error(err.message);
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -169,10 +162,8 @@ function MyMongoDB() {
    * 🖼️ UPDATE PROFILE PIC
    */
   myDB.updatesPic = async (id, picPath) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const usersCol = db.collection(USER_COLLECTION);
 
       return await usersCol.updateOne(
@@ -181,8 +172,6 @@ function MyMongoDB() {
       );
     } catch (err) {
       throw new Error(err.message);
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -190,17 +179,13 @@ function MyMongoDB() {
    * ❌ DELETE USER
    */
   myDB.deleteUser = async (id) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const usersCol = db.collection(USER_COLLECTION);
 
       return await usersCol.deleteOne({ _id: new ObjectId(id) });
     } catch (err) {
       throw new Error(err.message);
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -208,12 +193,11 @@ function MyMongoDB() {
    * 📅 GET USER SCHEDULE
    */
   myDB.getUserSchedule = async (_user) => {
-    let client;
     try {
       if (!_user) return { schedule: [] };
 
-      client = new MongoClient(url);
-      const userCol = client.db(DB_NAME).collection(USER_COLLECTION);
+      const db = await getDb();
+      const userCol = db.collection(USER_COLLECTION);
 
       const userId = typeof _user === "string" ? new ObjectId(_user) : _user;
 
@@ -226,8 +210,6 @@ function MyMongoDB() {
     } catch (err) {
       console.error("🔥 SCHEDULE ERROR:", err);
       return { schedule: [] };
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -235,28 +217,21 @@ function MyMongoDB() {
    * 📌 BOOKING
    */
   myDB.makeBooking = async (_user, _booking) => {
-    let client;
-    try {
-      client = new MongoClient(url);
-      const userCol = client.db(DB_NAME).collection(USER_COLLECTION);
+    const db = await getDb();
+    const userCol = db.collection(USER_COLLECTION);
 
-      return await userCol.updateOne(
-        { _id: new ObjectId(_user) },
-        { $push: { schedule: { $each: _booking } } },
-      );
-    } finally {
-      await closeClient(client);
-    }
+    return await userCol.updateOne(
+      { _id: new ObjectId(_user) },
+      { $push: { schedule: { $each: _booking } } }
+    );
   };
 
   /**
    * ⭐ ADD REVIEW
    */
   myDB.addReview = async (tutor, tutor_lastname, review) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const reviewsCol = db.collection("reviews");
 
       return await reviewsCol.insertOne({
@@ -267,8 +242,6 @@ function MyMongoDB() {
       });
     } catch (err) {
       throw new Error(err.message);
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -276,10 +249,8 @@ function MyMongoDB() {
    * ⭐ GET REVIEWS BY TUTOR
    */
   myDB.getReviewsByTutor = async (tutorId) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const reviewsCol = db.collection("reviews");
 
       const reviews = await reviewsCol.find({ tutor: tutorId }).toArray();
@@ -288,8 +259,6 @@ function MyMongoDB() {
     } catch (err) {
       console.error("❌ getReviewsByTutor ERROR:", err);
       return [];
-    } finally {
-      await closeClient(client);
     }
   };
 
@@ -297,10 +266,8 @@ function MyMongoDB() {
    * ❌ DELETE REVIEW
    */
   myDB.deleteReview = async (reviewId) => {
-    let client;
     try {
-      client = new MongoClient(url);
-      const db = client.db(DB_NAME);
+      const db = await getDb();
       const reviewsCol = db.collection("reviews");
 
       return await reviewsCol.deleteOne({
@@ -308,8 +275,6 @@ function MyMongoDB() {
       });
     } catch (err) {
       throw new Error(err.message);
-    } finally {
-      await closeClient(client);
     }
   };
 

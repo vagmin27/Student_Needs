@@ -20,7 +20,7 @@ function ManageBookingPage() {
       try {
         const list = await getBookings();
         const sorted = [...list].sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
         setBookings(sorted);
       } catch {
@@ -38,11 +38,7 @@ function ManageBookingPage() {
       await API.patch(`/booking/${id}/cancel`);
 
       setBookings((prev) =>
-        prev?.map((b) =>
-          b._id === id
-            ? { ...b, status: "Cancelled" }
-            : b
-        )
+        prev?.map((b) => (b._id === id ? { ...b, status: "Cancelled" } : b)),
       );
 
       alert("Booking cancelled ✅");
@@ -63,52 +59,36 @@ function ManageBookingPage() {
       {isUnifiedLayout && <BackToStudentDashboard />}
 
       <div
-        className="mainDivBook"
-        style={{
-          paddingTop: isUnifiedLayout ? "0" : "120px",
-          minHeight: "100vh",
-        }}
+        className="mainDivBook h-[calc(100vh-100px)] md:h-screen overflow-y-auto"
+        style={{}}
+        data-lenis-prevent="true"
       >
         <div className="innerDivBook">
-          <h1 className="titleBook">
-            📚 My Bookings
-          </h1>
+          <h1 className="titleBook">📚 My Bookings</h1>
 
           {bookings.length === 0 ? (
             <div className="emptyState">
               <h3>No bookings yet 😔</h3>
 
-              <p>
-                Go ahead and book your first class!
-              </p>
+              <p>Go ahead and book your first class!</p>
             </div>
           ) : (
             bookings?.map((b) => (
               <div className="line1" key={b._id}>
                 <div
                   className={`scheduleDivBook ${
-                    isUpcoming(b.date)
-                      ? "upcoming"
-                      : ""
+                    isUpcoming(b.date) ? "upcoming" : ""
                   }`}
                 >
                   {/* LEFT INFO */}
                   <div>
-                    <p className="tutorp">
-                      👨‍🏫 {b.tutorName}
-                    </p>
+                    <p className="tutorp">👨‍🏫 {b.tutorName}</p>
 
-                    <p className="subjectp">
-                      📖 {b.subject}
-                    </p>
+                    <p className="subjectp">📖 {b.subject}</p>
 
-                    <p className="datep">
-                      📅 {b.date}
-                    </p>
+                    <p className="datep">📅 {b.date}</p>
 
-                    <p className="timep">
-                      ⏰ {b.time}
-                    </p>
+                    <p className="timep">⏰ {b.time}</p>
 
                     {/* STATUS */}
                     <p>
@@ -118,8 +98,7 @@ function ManageBookingPage() {
                           color:
                             b.status === "Booked"
                               ? "orange"
-                              : b.status ===
-                                  "Completed"
+                              : b.status === "Completed"
                                 ? "green"
                                 : "red",
                           fontWeight: "bold",
@@ -145,9 +124,7 @@ function ManageBookingPage() {
                   <div className="actionButtons">
                     {b.status === "Booked" && (
                       <button
-                        onClick={() =>
-                          cancelBooking(b._id)
-                        }
+                        onClick={() => cancelBooking(b._id)}
                         style={{
                           marginTop: "10px",
                           background: "#dc3545",

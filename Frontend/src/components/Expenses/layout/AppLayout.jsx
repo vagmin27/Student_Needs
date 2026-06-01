@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
-import { Outlet, Link, Navigate } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import TopNavbar from './TopNavbar';
-import { ArrowLeft } from 'lucide-react';
+import React, { useState } from "react";
+import { Outlet, Link, Navigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import TopNavbar from "./TopNavbar";
+import { ArrowLeft } from "lucide-react";
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
+
   if (!localStorage.getItem("User")) {
-    return <Navigate to='/expenses-tracker/login' />;
+    return <Navigate to="/expenses-tracker/login" />;
   }
 
   return (
-    <div className="expenses-layout font-inter relative">
+    <div
+      className="expenses-layout font-inter relative h-screen overflow-hidden flex flex-col md:flex-row"
+      data-lenis-prevent="true"
+    >
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      
-      <main className="expenses-main">
+
+      <main className="expenses-main flex flex-col flex-1 min-h-0">
         <TopNavbar setIsSidebarOpen={setIsSidebarOpen} />
-        
-        <div className="expenses-content scroll-smooth">
+
+        <div className="expenses-content flex-1 overflow-y-auto min-h-0">
           <Outlet />
         </div>
       </main>

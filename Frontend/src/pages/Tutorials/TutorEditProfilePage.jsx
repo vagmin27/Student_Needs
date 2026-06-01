@@ -1,15 +1,12 @@
 import React from "react";
-import Navbar from "../../components/Tutorials/Navbar";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
 import TutorProfileView from "@/components/profile/TutorProfileView.jsx";
 
 function TutorEditProfilePage() {
   return (
-    <>
-      <Navbar />
-      <div style={{ paddingTop: "100px", minHeight: "100vh", paddingBottom: "40px" }}>
-        <TutorProfileView />
-      </div>
-    </>
+    <DashboardLayout pageTitle="Edit Profile" role="tutor">
+      <TutorProfileView />
+    </DashboardLayout>
   );
 }
 

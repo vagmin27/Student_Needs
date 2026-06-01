@@ -51,6 +51,11 @@ router.post("/register/request-otp", async (req, res) => {
     const expires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     otpStore[email] = { otp, expires, name, password };
+
+    setTimeout(() => {
+      delete otpStore[email];
+    }, 11 * 60 * 1000);
+
     console.log(`[Tutor OTP] Generated OTP: ${otp} for ${email}, expires at: ${new Date(expires).toISOString()}`);
 
     const transporter = nodemailer.createTransport({
@@ -148,28 +153,7 @@ router.post("/register/verify-otp", async (req, res) => {
 // ================= REGISTER (DIRECT - KEEP FOR NOW) =================
 
 router.post("/register", async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-
-    const existingTutor = await Tutor.findOne({ email });
-
-    if (existingTutor) {
-      return res.status(400).json({ message: "Tutor already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const tutor = await Tutor.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
-    res.json({ status: "ok", tutor });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error registering tutor" });
-  }
+  return res.status(410).json({ message: "Use /register/request-otp instead" });
 });
 
 // ================= LOGIN =================
@@ -234,7 +218,7 @@ router.post("/availability", async (req, res) => {
         time,
         isBooked: false,
         meetingLink: "",
-        subject: subjects.join(", "),
+        subject: "",
       };
     });
 
@@ -332,15 +316,12 @@ router.post("/save-link", async (req, res) => {
     const tutorId = requireTutorSession(req, res);
     if (!tutorId) return;
 
-    const { slotTime, link } = req.body;
-
-    const [date, time] = slotTime.split(" - ");
+    const { slotId, link } = req.body;
 
     await Tutor.updateOne(
       {
         _id: tutorId,
-        "schedule.date": date,
-        "schedule.time": time,
+        "schedule._id": slotId,
       },
       {
         $set: {

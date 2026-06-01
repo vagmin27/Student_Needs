@@ -13,6 +13,8 @@ import {
   LogOut,
   CalendarDays,
   MessageSquare,
+  Inbox,
+  CalendarCheck,
 } from "lucide-react";
 
 const Sidebar = ({ className, role = "student" }) => {
@@ -43,9 +45,9 @@ const Sidebar = ({ className, role = "student" }) => {
         href: "/tutorials/tutor/schedule",
         icon: CalendarDays,
       },
-      { name: "Requests", href: "/tutorials/tutor/accept", icon: BookOpen },
+      { name: "Requests", href: "/tutorials/tutor/accept", icon: Inbox },
       { name: "Profile", href: "/tutorials/tutor/editProfile", icon: Users },
-      { name: "Attendance", href: "/tutorials/attendance", icon: BookOpen },
+      { name: "Attendance", href: "/tutorials/attendance", icon: CalendarCheck },
     ];
   } else if (currentRole === "teacher") {
     links = [
@@ -108,7 +110,7 @@ const Sidebar = ({ className, role = "student" }) => {
   return (
     <aside
       className={cn(
-        "hidden md:flex flex-col w-64 h-screen border-r border-border bg-card sticky top-0 px-4 py-6",
+        "hidden md:flex flex-col w-64 h-full border-r border-border bg-card overflow-y-auto px-4 py-6",
         className,
       )}
     >
@@ -138,7 +140,7 @@ const Sidebar = ({ className, role = "student" }) => {
               className={cn(
                 "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-primary/15 text-primary font-semibold"
                   : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground",
               )}
             >

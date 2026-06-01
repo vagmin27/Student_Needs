@@ -25,15 +25,18 @@ const DashboardLayout = ({ children, pageTitle, role = "student" }) => {
       if (path.includes("/settings")) return "Expenses Settings";
       return "Expenses Tracker";
     }
-    if (path === "/tutorials/home" || path === "/student/tutorials") return "Tutorials";
+    if (path === "/tutorials/home" || path === "/student/tutorials")
+      return "Tutorials";
     if (path.startsWith("/tutorials")) {
-      if (path.includes("/book") || path.includes("/searchTutor")) return "Find a Tutor";
+      if (path.includes("/book") || path.includes("/searchTutor"))
+        return "Find a Tutor";
       if (path.includes("/profile/editProfile")) return "Edit Profile";
       if (path.includes("/profile/manageBooking")) return "Manage Bookings";
       if (path.includes("/profile/classHistory")) return "Class History";
       if (path.includes("/profile/accountSettings")) return "Account Settings";
       if (path.includes("/profile")) return "Tutorial Profile";
-      if (path.includes("/tutorials/online-attendance")) return "View Online Attendance";
+      if (path.includes("/tutorials/online-attendance"))
+        return "View Online Attendance";
       if (path.startsWith("/tutorials/attendance")) {
         if (path === "/tutorials/attendance") return "Attendance Management";
         if (path.includes("/subjects")) return "Tutor Subjects";
@@ -61,7 +64,7 @@ const DashboardLayout = ({ children, pageTitle, role = "student" }) => {
 
   return (
     <LayoutContext.Provider value={true}>
-      <div className="app-dashboard-layout flex min-h-screen w-full bg-background">
+      <div className="app-dashboard-layout flex h-screen w-full overflow-hidden bg-background">
         {/* Mobile Sidebar overlay */}
         {isMobileMenuOpen && (
           <div
@@ -72,20 +75,25 @@ const DashboardLayout = ({ children, pageTitle, role = "student" }) => {
 
         {/* Sidebar */}
         <div
-          className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 ${
-            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:h-screen md:shrink-0 ${
+            isMobileMenuOpen
+              ? "translate-x-0"
+              : "-translate-x-full md:translate-x-0"
           }`}
         >
           <Sidebar className="w-full" role={role} />
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <div
+          className="flex-1 flex flex-col min-w-0 min-h-0"
+          data-lenis-prevent="true"
+        >
           <Navbar
             pageTitle={getDynamicTitle()}
             onMenuClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           />
-          <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <main className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 lg:p-8">
             <div className="max-w-7xl mx-auto space-y-6">
               {children || <Outlet />}
             </div>

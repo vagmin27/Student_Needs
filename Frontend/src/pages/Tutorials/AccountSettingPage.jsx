@@ -9,14 +9,14 @@ function AccountSettingPage() {
       <Navbar />
 
       <div
-        className="flex"
-        style={{
-          paddingTop: "100px",
-          minHeight: "100vh",
-        }}
+        className="flex h-[calc(100vh-100px)] overflow-hidden"
+        style={{}}
+        data-lenis-prevent="true"
       >
         <SideNav />
-        <AccountSetting />
+        <div className="flex-1 overflow-y-auto min-h-0 min-w-0">
+          <AccountSetting />
+        </div>
       </div>
     </>
   );

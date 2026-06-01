@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import Booking from "../../models/Tutorials/Booking.js";
 import Tutor from "../../models/Tutorials/Tutor.js";
 import { notificationService } from "../../services/NotificationService.js";
@@ -100,6 +101,20 @@ router.get("/", async (req, res) => {
  */
 router.delete("/deleteClass/:id", async (req, res) => {
   try {
+    const userId = resolveBookingStudentId(req);
+    if (!userId) {
+      return res.status(401).json({ msg: "Unauthorized" });
+    }
+
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ msg: "Booking not found" });
+    }
+
+    if (booking.userId.toString() !== userId.toString()) {
+      return res.status(403).json({ msg: "Not your booking" });
+    }
+
     await Booking.findByIdAndDelete(req.params.id);
     res.json({ msg: "Booking deleted" });
   } catch (err) {
@@ -119,9 +134,13 @@ router.get("/for-tutor", async (req, res) => {
       return res.status(401).json({ msg: "Unauthorized" });
     }
 
+    if (!mongoose.isValidObjectId(tutorId)) {
+      return res.status(400).json({ msg: "Invalid tutor ID" });
+    }
+
     // Find ALL bookings for this tutor regardless of status
     const bookings = await Booking.find({
-      tutorId: tutorId.toString(),
+      tutorId: new mongoose.Types.ObjectId(tutorId),
     });
 
     res.json({ bookings });
@@ -136,6 +155,11 @@ router.get("/for-tutor", async (req, res) => {
  */
 router.patch("/:id/status", async (req, res) => {
   try {
+    const tutorId = req.session?.user?.id;
+    if (!tutorId || req.session?.user?.role !== "tutor") {
+      return res.status(401).json({ msg: "Unauthorized" });
+    }
+
     const { status } = req.body;
     const validStatuses = ["Booked", "Completed", "Cancelled"];
 
@@ -143,11 +167,17 @@ router.patch("/:id/status", async (req, res) => {
       return res.status(400).json({ msg: "Invalid status" });
     }
 
-    const booking = await Booking.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      { new: true },
-    );
+    let booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ msg: "Booking not found" });
+    }
+
+    if (booking.tutorId.toString() !== tutorId.toString()) {
+      return res.status(403).json({ msg: "Not your booking" });
+    }
+
+    booking.status = status;
+    await booking.save();
 
     if (booking) {
       await notificationService.createAndEmitNotification({

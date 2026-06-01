@@ -82,14 +82,11 @@ function TutorAvailability() {
       <Navbar />
 
       <div
-        className="availability-page"
-        style={{
-          paddingTop: "120px",
-          minHeight: "100vh",
-        }}
+        className="availability-page h-[calc(100vh-100px)] overflow-y-auto"
+        style={{}}
+        data-lenis-prevent="true"
       >
         <div className="availability-container">
-          
           {/* LEFT */}
           <div className="availability-left">
             <h2>Set Your Availability</h2>
@@ -99,10 +96,7 @@ function TutorAvailability() {
 
           {/* RIGHT */}
           <div className="availability-right">
-            <form
-              onSubmit={handleSubmit}
-              className="availability-form"
-            >
+            <form onSubmit={handleSubmit} className="availability-form">
               {/* SUBJECTS */}
               <div>
                 <h4>Add Subjects</h4>
@@ -111,17 +105,11 @@ function TutorAvailability() {
                   type="text"
                   placeholder="Enter subject (Java, AI...)"
                   value={subjectInput}
-                  onChange={(e) =>
-                    setSubjectInput(e.target.value)
-                  }
+                  onChange={(e) => setSubjectInput(e.target.value)}
                   className="availability-input"
                 />
 
-                <button
-                  type="button"
-                  onClick={addSubject}
-                  className="add-btn"
-                >
+                <button type="button" onClick={addSubject} className="add-btn">
                   Add Subject
                 </button>
 
@@ -130,10 +118,7 @@ function TutorAvailability() {
                     <span key={index} className="tag">
                       {sub}
 
-                      <button
-                        type="button"
-                        onClick={() => removeSubject(sub)}
-                      >
+                      <button type="button" onClick={() => removeSubject(sub)}>
                         ❌
                       </button>
                     </span>
@@ -146,17 +131,14 @@ function TutorAvailability() {
                 <h4>Add Time Slot</h4>
 
                 {(() => {
-                  const today =
-                    new Date().toISOString().split("T")[0];
+                  const today = new Date().toISOString().split("T")[0];
 
                   return (
                     <input
                       type="date"
                       min={today}
                       value={date}
-                      onChange={(e) =>
-                        setDate(e.target.value)
-                      }
+                      onChange={(e) => setDate(e.target.value)}
                       className="availability-input"
                     />
                   );
@@ -165,17 +147,11 @@ function TutorAvailability() {
                 <input
                   type="time"
                   value={time}
-                  onChange={(e) =>
-                    setTime(e.target.value)
-                  }
+                  onChange={(e) => setTime(e.target.value)}
                   className="availability-input"
                 />
 
-                <button
-                  type="button"
-                  onClick={addSlot}
-                  className="add-btn"
-                >
+                <button type="button" onClick={addSlot} className="add-btn">
                   Add Slot
                 </button>
 
@@ -184,10 +160,7 @@ function TutorAvailability() {
                     <span key={index} className="tag">
                       {slot}
 
-                      <button
-                        type="button"
-                        onClick={() => removeSlot(slot)}
-                      >
+                      <button type="button" onClick={() => removeSlot(slot)}>
                         ❌
                       </button>
                     </span>
@@ -195,10 +168,7 @@ function TutorAvailability() {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="save-btn"
-              >
+              <button type="submit" className="save-btn">
                 Save Availability
               </button>
             </form>

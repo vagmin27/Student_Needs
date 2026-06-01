@@ -14,14 +14,14 @@ function ClassHistoryPage() {
       {isUnifiedLayout && <BackToStudentDashboard />}
 
       <div
-        className="flex"
-        style={{
-          paddingTop: isUnifiedLayout ? "0" : "100px",
-          minHeight: "100vh",
-        }}
+        className="flex h-[calc(100vh-100px)] md:h-screen overflow-hidden"
+        style={{}}
+        data-lenis-prevent="true"
       >
         <SideNav />
-        <ClassHistory />
+        <div className="flex-1 overflow-y-auto min-h-0 min-w-0">
+          <ClassHistory />
+        </div>
       </div>
     </>
   );

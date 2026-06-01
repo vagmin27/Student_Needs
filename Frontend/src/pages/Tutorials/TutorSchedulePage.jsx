@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/Tutorials/TutorSchedule.css";
-import teachingImg from "../../assets/images/Teaching.jpg";
 import API, { getSchedule } from "@/services/api/tutorialsApi.js";
-import Navbar from "../../components/Tutorials/Navbar";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-hot-toast";
 
 function TutorSchedulePage() {
   const [schedule, setSchedule] = useState([]);
@@ -27,6 +27,12 @@ function TutorSchedulePage() {
   }, []);
 
   const deleteSlot = async (slotId) => {
+    const slot = schedule.find(s => s._id === slotId);
+    if (slot?.isBooked) {
+      toast.error("Cannot delete a booked slot. Cancel the booking first.");
+      return;
+    }
+
     if (!window.confirm("Delete this slot? This cannot be undone.")) return;
 
     try {
@@ -36,162 +42,111 @@ function TutorSchedulePage() {
         prev?.filter((s) => s._id !== slotId)
       );
 
-      alert("Slot deleted ✅");
+      toast.success("Slot deleted ✅");
     } catch (err) {
       console.error(err);
-      alert("Error deleting slot ❌");
+      toast.error("Error deleting slot ❌");
     }
   };
 
   return (
-    <>
-      <Navbar />
+    <DashboardLayout pageTitle="My Schedule" role="tutor">
+      <div className="space-y-4 pb-8">
+        <h1 className="text-2xl font-bold tracking-tight">📅 My Schedule</h1>
 
-      <div className="schedule-page">
+        {loading ? (
+          <p>Loading schedule... ⏳</p>
+        ) : schedule.length === 0 ? (
+          <p>No schedule found ❌</p>
+        ) : (
+          schedule?.map((item, index) => (
+            <div key={item._id || index} className="rounded-xl border border-border bg-card p-5 shadow-sm space-y-3">
+              
+              <p className="text-sm text-muted-foreground">
+                <strong>📅 Date:</strong> {item.date}
+              </p>
+              
+              <p className="text-sm text-muted-foreground">
+                <strong>⏰ Time:</strong> {item.time}
+              </p>
+              
+              <p className="text-sm text-muted-foreground">
+                <strong>📖 Subject:</strong>{" "}
+                {item.subject || item.subjects || "N/A"}
+              </p>
+              
+              {item.tutor && (
+                <p className="text-sm text-muted-foreground">
+                  <strong>👨‍🏫 Tutor:</strong> {item.tutor}
+                </p>
+              )}
+              
+              <p className="text-sm text-muted-foreground">
+                <strong>Status:</strong>{" "}
+                {item.isBooked ? "✅ Booked" : "⏳ Available"}
+              </p>
 
-        {/* TITLE */}
-        <div className="schedule-navbar">
-          <h2>📅 My Schedule</h2>
-        </div>
+              <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                <input
+                  type="text"
+                  placeholder="Paste Zoom / Google Meet link"
+                  value={item.meetingLink || ""}
+                  onChange={(e) => {
+                    const updated = [...schedule];
+                    updated[index].meetingLink = e.target.value;
+                    setSchedule(updated);
+                  }}
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                />
 
-        {/* DASHBOARD BUTTON */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            padding: "10px 40px 0 40px",
-          }}
-        >
-          <button
-            onClick={() => navigate("/tutorials/tutor/dashboard")}
-            style={{
-              background: "#ff7a2f",
-              color: "#fff",
-              border: "none",
-              borderRadius: "6px",
-              padding: "6px 12px",
-              cursor: "pointer",
-              fontWeight: "500",
-              fontSize: "14px",
-            }}
-          >
-            🏠 Dashboard
-          </button>
-        </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={async () => {
+                    try {
+                      await API.post("/tutor/save-link", {
+                        slotId: item._id,
+                        link: item.meetingLink,
+                      });
 
-        {/* MAIN */}
-        <div className="schedule-container">
+                      toast.success("Link saved ✅");
+                    } catch (err) {
+                      console.error(err);
+                      toast.error("Error ❌");
+                    }
+                  }}
+                >
+                  Save Link
+                </Button>
+              </div>
 
-          {/* LEFT IMAGE */}
-          <div className="schedule-left">
-            <img src={teachingImg} alt="teaching" />
-          </div>
-
-          {/* RIGHT */}
-          <div className="schedule-right">
-
-            {loading ? (
-              <p>Loading schedule... ⏳</p>
-            ) : schedule.length === 0 ? (
-              <p>No schedule found ❌</p>
-            ) : (
-              schedule?.map((item, index) => (
-                <div key={index} className="schedule-card">
-
-                  <div className="slot-info">
-                    <p>
-                      <strong>📅 Date:</strong> {item.date}
-                    </p>
-
-                    <p>
-                      <strong>⏰ Time:</strong> {item.time}
-                    </p>
-
-                    <p>
-                      <strong>📖 Subject:</strong>{" "}
-                      {item.subject || item.subjects || "N/A"}
-                    </p>
-
-                    {item.tutor && (
-                      <p>
-                        <strong>👨‍🏫 Tutor:</strong> {item.tutor}
-                      </p>
-                    )}
-
-                    <p>
-                      <strong>Status:</strong>{" "}
-                      {item.isBooked ? "✅ Booked" : "⏳ Available"}
-                    </p>
-                  </div>
-
-                  <div className="link-section">
-
-                    <input
-                      type="text"
-                      placeholder="Paste Zoom / Google Meet link"
-                      value={item.meetingLink || ""}
-                      onChange={(e) => {
-                        const updated = [...schedule];
-                        updated[index].meetingLink = e.target.value;
-                        setSchedule(updated);
-                      }}
-                      className="link-input"
-                    />
-
-                    <button
-                      className="save-link-btn"
-                      onClick={async () => {
-                        try {
-                          await API.post("/tutor/save-link", {
-                            slotTime: `${item.date} - ${item.time}`,
-                            link: item.meetingLink,
-                          });
-
-                          alert("Link saved ✅");
-                        } catch (err) {
-                          console.error(err);
-                          alert("Error ❌");
-                        }
-                      }}
-                    >
-                      Save Link
-                    </button>
-
-                    {item.meetingLink && (
-                      <p>
-                        <a
-                          href={item.meetingLink}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Join Class 🚀
-                        </a>
-                      </p>
-                    )}
-                  </div>
-
-                  <button
-                    onClick={() => deleteSlot(item._id)}
-                    style={{
-                      marginTop: "10px",
-                      background: "#dc3545",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: "8px",
-                      padding: "6px 16px",
-                      cursor: "pointer",
-                      fontWeight: "bold",
-                    }}
+              {item.meetingLink && (
+                <p className="text-sm mt-2">
+                  <a
+                    href={item.meetingLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary hover:underline"
                   >
-                    🗑️ Delete Slot
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
+                    Join Class 🚀
+                  </a>
+                </p>
+              )}
+
+              <div className="pt-2">
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => deleteSlot(item._id)}
+                >
+                  🗑️ Delete Slot
+                </Button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
-    </>
+    </DashboardLayout>
   );
 }
 
