@@ -30,6 +30,9 @@ const jwtDecode = (token) => {
   return payload;
 };
 
+const isUnsignedDummyToken = (token) =>
+  typeof token === "string" && token.endsWith(".dummy_signature");
+
 let authInitPromise = null;
 
 export const useAuth = () => {
@@ -96,14 +99,15 @@ export const AuthProvider = ({ children }) => {
         };
         setUser(normalizedUser);
 
-        let storedToken = localStorage.getItem('token') || localStorage.getItem('auth_token');
-        if (!storedToken) {
-          const header = btoa(JSON.stringify({ alg: "none", typ: "JWT" }));
-          const payload = btoa(JSON.stringify({ id: normalizedUser._id || normalizedUser.id, role: normalizedUser.role }));
-          storedToken = `${header}.${payload}.dummy_signature`;
+        let storedToken =
+          data.token ||
+          localStorage.getItem("token") ||
+          localStorage.getItem("auth_token");
+
+        if (storedToken) {
+          setToken(storedToken);
+          persistAuth(storedToken, normalizedUser);
         }
-        setToken(storedToken);
-        persistAuth(storedToken, normalizedUser);
       }
     } catch (err) {
       if (import.meta.env.DEV) {
@@ -115,7 +119,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        const storedToken = localStorage.getItem('token') || localStorage.getItem('auth_token');
+        let storedToken = localStorage.getItem('token') || localStorage.getItem('auth_token');
+        if (isUnsignedDummyToken(storedToken)) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("auth_token");
+          storedToken = null;
+        }
         let storedUser = localStorage.getItem('user') || localStorage.getItem('User') || localStorage.getItem('auth_user');
 
         if (storedToken && !storedUser) {
@@ -273,11 +282,16 @@ export const AuthProvider = ({ children }) => {
           accountType: resolvedRole
         };
         setUser(normalized);
-        const currentToken = localStorage.getItem('token') || localStorage.getItem('auth_token') || u.token;
+        const currentToken =
+          u.token ||
+          localStorage.getItem("token") ||
+          localStorage.getItem("auth_token");
         if (currentToken) {
           setToken(currentToken);
+          persistAuth(currentToken, normalized);
+        } else {
+          persistAuth(null, normalized);
         }
-        persistAuth(currentToken, normalized);
       } else {
         setUser(null);
         setToken(null);

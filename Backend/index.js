@@ -59,6 +59,7 @@ import authRoutes from "./routes/Attendance/authRoutes.js";
 import studentRoutes from "./routes/Attendance/studentRoutes.js";
 import subjectRoutes from "./routes/Attendance/subjectRoutes.js";
 import attendanceRoutes from "./routes/Attendance/attendanceRoutes.js";
+import tutorAttendanceRoutes from "./routes/Attendance/tutorAttendanceRoutes.js";
 
 // =====================================================
 //                  REFERRAL ROUTES
@@ -346,6 +347,7 @@ app.use("/api/students", studentRoutes);
 app.use("/api/subjects", subjectRoutes);
 
 app.use("/api/attendance", attendanceRoutes);
+app.use("/api/tutor-attendance", tutorAttendanceRoutes);
 
 // =====================================================
 //                REFERRAL MODULE ROUTES

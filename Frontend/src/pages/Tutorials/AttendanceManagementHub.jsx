@@ -1,16 +1,24 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, LayoutDashboard, CalendarCheck, UserPlus, UserMinus, BookPlus, FileDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookPlus, CalendarCheck } from "lucide-react";
+import { TUTORIAL_PATHS } from "@/utils/tutorialRoutes";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 
 const HUB_ACTIONS = [
-  { title: "Dashboard", description: "Overview of attendance stats and student records", to: "/tutorials/attendance/dashboard", icon: LayoutDashboard },
-  { title: "Mark Attendance", description: "Select subject, date, and mark students present or absent", to: "/tutorials/attendance/mark", icon: CalendarCheck },
-  { title: "Add Student", description: "Register a new student into the attendance system", to: "/tutorials/attendance/add-student", icon: UserPlus },
-  { title: "Remove Student", description: "Permanently delete a student and their attendance records", to: "/tutorials/attendance/remove-student", icon: UserMinus },
-  { title: "Add Subject", description: "Add a new subject for attendance tracking", to: "/tutorials/attendance/add-subject", icon: BookPlus },
-  { title: "Reports", description: "Download attendance data as CSV for any date range", to: "/tutorials/attendance/reports", icon: FileDown },
+  {
+    title: "Manage Subjects",
+    description: "Add and manage courses you teach (Java, Python, DSA, etc.)",
+    to: TUTORIAL_PATHS.tutorManageSubjects,
+    icon: BookPlus,
+  },
+  {
+    title: "Mark Online Attendance",
+    description:
+      "Select a subject and mark enrolled students present or absent for a session",
+    to: TUTORIAL_PATHS.tutorMarkAttendance,
+    icon: CalendarCheck,
+  },
 ];
 
 export default function AttendanceManagementHub() {
@@ -27,7 +35,7 @@ export default function AttendanceManagementHub() {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Attendance Management</h1>
         <p className="text-muted-foreground">
-          Manage students, subjects, and attendance records
+          Mark attendance for students enrolled through your online tutorial bookings
         </p>
       </div>
 

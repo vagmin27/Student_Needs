@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import Tutor from "../../models/Tutorials/Tutor.js";
 import Booking from "../../models/Tutorials/Booking.js";
 import upload from "../../utils/Tutorials/multer.js";
+import { getJwtSecret } from "../../utils/jwtSecret.js";
 
 
 // Temporary in-memory OTP store
@@ -196,7 +197,7 @@ router.post("/login", async (req, res) => {
 
     const token = jwt.sign(
       { id: tutor._id, role: "tutor" },
-      process.env.JWT_SECRET || "mySuperSecretKey123",
+      getJwtSecret(),
       { expiresIn: "7d" }
     );
 

@@ -64,6 +64,9 @@ const UnifiedDashboard = React.lazy(
 );
 
 const AttendanceManagementHub = React.lazy(() => import("./pages/Tutorials/AttendanceManagementHub"));
+const TutorMarkAttendance = React.lazy(() => import("./pages/Tutorials/TutorMarkAttendance"));
+const TutorManageSubjects = React.lazy(() => import("./pages/Tutorials/TutorManageSubjects"));
+const OnlineAttendanceView = React.lazy(() => import("./pages/Tutorials/OnlineAttendanceView"));
 const AttendanceDashboard = React.lazy(() => import("./pages/Attendance/Dashboard"));
 const AttendanceMark = React.lazy(() => import("./pages/Attendance/Attendance"));
 const AttendanceAddStudent = React.lazy(() => import("./pages/Attendance/AddStudent"));
@@ -280,6 +283,30 @@ const AttendanceRoutes = () => {
           element={
             <Suspense fallback={<DashboardSkeleton />}>
               <AttendanceManagementHub />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/tutorials/attendance/subjects"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <TutorManageSubjects />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/tutorials/attendance/mark-online"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <TutorMarkAttendance />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/tutorials/online-attendance"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <OnlineAttendanceView />
             </Suspense>
           }
         />
@@ -644,6 +671,10 @@ const AttendanceRoutes = () => {
       <Route path="/attendance/remove-student" element={<Navigate to="/student/attendance" replace />} />
       <Route path="/attendance/add-subject" element={<Navigate to="/student/attendance" replace />} />
       <Route path="/attendance/reports" element={<Navigate to="/student/attendance" replace />} />
+      <Route
+        path="/student/online-attendance"
+        element={<Navigate to="/tutorials/online-attendance" replace />}
+      />
 
       {/* ======================================================
                         TUTORIAL AUTH

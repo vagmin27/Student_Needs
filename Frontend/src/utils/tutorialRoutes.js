@@ -17,6 +17,10 @@ export const TUTORIAL_PATHS = {
   /** Search & book flow — only from module home */
   studentSearch: "/tutorials/book",
   studentProfile: "/tutorials/profile",
+  studentOnlineAttendance: "/tutorials/online-attendance",
+  tutorAttendanceHub: "/tutorials/attendance",
+  tutorManageSubjects: "/tutorials/attendance/subjects",
+  tutorMarkAttendance: "/tutorials/attendance/mark-online",
   tutorHome: "/tutorials/tutor/dashboard",
   tutorSchedule: "/tutorials/tutor/schedule",
   tutorRequests: "/tutorials/tutor/accept",

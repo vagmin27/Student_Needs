@@ -4,39 +4,19 @@ import Booking from "../models/Tutorials/Booking.js";
 import GradeModel from "../models/Attendance/GradeModel.js";
 import { catchAsync } from "../utils/catchAsync.js";
 
-import jwt from "jsonwebtoken";
-
 import mongoose from "mongoose";
+import protect from "../middlewares/Attendance/authMiddleware.js";
 
 const router = express.Router();
 
-// Mock Auth Middleware for unification (in a real app, use passport.authenticate('jwt'))
-const requireAuth = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ success: false, message: "Unauthorized" });
-  }
-  try {
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.decode(token);
-    if (!decoded) {
-      return res.status(401).json({ success: false, message: "Invalid Token" });
-    }
-    req.user = decoded;
-    next();
-  } catch(e) {
-    return res.status(401).json({ success: false, message: "Invalid Token" });
-  }
-};
-
-router.use(requireAuth);
+router.use(protect);
 
 /**
  * GET /api/analytics/student-dashboard
  * Aggregates live data for the student dashboard.
  */
 router.get("/student-dashboard", catchAsync(async (req, res) => {
-  const userId = req.user.id || req.user._id;
+  const userId = req.user._id || req.user.id;
 
   // 1. Fetch Expenses (group by category for pie chart)
   const expenses = await expenseModel.aggregate([
@@ -93,7 +73,7 @@ router.get("/student-dashboard", catchAsync(async (req, res) => {
  * Aggregates live data for the tutor dashboard.
  */
 router.get("/tutor-dashboard", catchAsync(async (req, res) => {
-  const tutorId = req.user.id || req.user._id;
+  const tutorId = req.user._id || req.user.id;
 
   // 1. Fetch Recent Requests (Bookings where status is Pending/Booked)
   const recentBookings = await Booking.find({

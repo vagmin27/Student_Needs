@@ -33,8 +33,11 @@ const DashboardLayout = ({ children, pageTitle, role = "student" }) => {
       if (path.includes("/profile/classHistory")) return "Class History";
       if (path.includes("/profile/accountSettings")) return "Account Settings";
       if (path.includes("/profile")) return "Tutorial Profile";
+      if (path.includes("/tutorials/online-attendance")) return "View Online Attendance";
       if (path.startsWith("/tutorials/attendance")) {
         if (path === "/tutorials/attendance") return "Attendance Management";
+        if (path.includes("/subjects")) return "Tutor Subjects";
+        if (path.includes("/mark-online")) return "Mark Online Attendance";
         if (path.includes("/dashboard")) return "Attendance Dashboard";
         if (path.includes("/mark")) return "Mark Attendance";
         if (path.includes("/add-student")) return "Add Student";

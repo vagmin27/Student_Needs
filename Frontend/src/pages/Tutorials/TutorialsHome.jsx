@@ -5,7 +5,7 @@ import {
   CalendarClock,
   User,
   History,
-  Settings,
+  ClipboardList,
   ArrowRight,
 } from "lucide-react";
 import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboard";
@@ -26,22 +26,22 @@ const MODULE_ACTIONS = [
     icon: CalendarClock,
   },
   {
-    title: "My Profile",
-    description: "Update your student profile and preferences",
-    to: TUTORIAL_PATHS.studentProfile,
-    icon: User,
-  },
-  {
     title: "Class History",
     description: "Review past tutorial sessions",
     to: "/tutorials/profile/classHistory",
     icon: History,
   },
   {
-    title: "Account Settings",
-    description: "Security and notification settings",
-    to: "/tutorials/profile/accountSettings",
-    icon: Settings,
+    title: "View Online Attendance",
+    description: "See attendance marked by your tutors for online classes",
+    to: TUTORIAL_PATHS.studentOnlineAttendance,
+    icon: ClipboardList,
+  },
+  {
+    title: "My Profile",
+    description: "Update your student profile and preferences",
+    to: TUTORIAL_PATHS.studentProfile,
+    icon: User,
   },
 ];
 
@@ -56,7 +56,7 @@ function TutorialsHome() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Tutorials</h1>
         <p className="text-muted-foreground mt-1">
-          Tutor Match module — choose what you want to do
+          Tutor Match — find tutors, manage bookings, and view online class attendance
         </p>
       </div>
 

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import Tutor from "../../models/Tutorials/Tutor.js";
 import Alumni from "../../models/Referrals/AlumniModel.js";
 import Student from "../../models/Referrals/StudentModel.js";
+import { getJwtSecret } from "../../utils/jwtSecret.js";
 
 const getBearerToken = (req) => {
   const authHeader = req.headers.authorization;
@@ -10,7 +11,7 @@ const getBearerToken = (req) => {
 };
 
 const resolveUserFromToken = async (token) => {
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = jwt.verify(token, getJwtSecret());
   if (!decoded?.id) return null;
 
   const resolvedRole = (decoded.role || decoded.accountType || "student").toLowerCase();
@@ -91,8 +92,14 @@ export const getUser = async (req, res) => {
     if (req.session?.user?.id && req.session?.user?.role === "tutor") {
       const tutor = await Tutor.findById(req.session.user.id).select("-password").lean();
       if (tutor) {
+        const sessionToken = jwt.sign(
+          { id: tutor._id, role: "tutor" },
+          getJwtSecret(),
+          { expiresIn: "7d" }
+        );
         return res.status(200).json({
           user: { ...tutor, role: "tutor", accountType: "tutor" },
+          token: sessionToken,
         });
       }
     }

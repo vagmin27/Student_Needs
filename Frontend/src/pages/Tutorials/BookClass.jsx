@@ -225,9 +225,12 @@ function BookClass() {
 
     const params = new URLSearchParams(window.location.search);
     const tutorId = params.get("tutorId") || tutorProfile?._id;
-    const tutorName = `${tutorProfile?.first_name || "Tutor"} ${
-      tutorProfile?.last_name || ""
-    }`.trim();
+    const tutorName = `${
+      tutorProfile?.fName ||
+      tutorProfile?.name ||
+      tutorProfile?.first_name ||
+      "Tutor"
+    } ${tutorProfile?.lName || tutorProfile?.last_name || ""}`.trim();
     const subject =
       selectedSlot.subject ||
       (Array.isArray(tutorProfile?.subjects)

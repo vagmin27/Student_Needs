@@ -1,7 +1,8 @@
 import express from "express";
 import Booking from "../../models/Tutorials/Booking.js";
-import User from "../../models/Tutorials/user.js";
+import Tutor from "../../models/Tutorials/Tutor.js";
 import { notificationService } from "../../services/NotificationService.js";
+import { resolveBookingStudentId } from "../../utils/Tutorials/resolveBookingStudentId.js";
 
 const router = express.Router();
 
@@ -12,17 +13,7 @@ import jwt from "jsonwebtoken";
 
 router.post("/", async (req, res) => {
   try {
-    let userId = req.session?.passport?.user;
-
-    if (!userId && req.headers.authorization?.startsWith("Bearer")) {
-      try {
-        const token = req.headers.authorization.split(" ")[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        userId = decoded.id || decoded._id;
-      } catch (e) {
-        console.error("JWT Decode error in booking:", e);
-      }
-    }
+    const userId = resolveBookingStudentId(req);
 
     if (!userId) {
       return res.status(401).json({ msg: "Please log in to book a class" });
@@ -47,18 +38,20 @@ router.post("/", async (req, res) => {
     await booking.save();
 
     if (tutorId) {
-      await User.updateOne(
+      await Tutor.updateOne(
         {
           _id: tutorId,
-          "schedule.date": date,
-          "schedule.time": time,
+          schedule: {
+            $elemMatch: { date, time, isBooked: { $ne: true } },
+          },
         },
         {
           $set: {
             "schedule.$.isBooked": true,
             "schedule.$.studentId": userId,
+            ...(subject ? { "schedule.$.subject": subject } : {}),
           },
-        },
+        }
       );
 
       await notificationService.createAndEmitNotification({
@@ -88,17 +81,7 @@ router.post("/", async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
-    let userId = req.session?.passport?.user;
-
-    if (!userId && req.headers.authorization?.startsWith("Bearer")) {
-      try {
-        const token = req.headers.authorization.split(" ")[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        userId = decoded.id || decoded._id;
-      } catch (e) {
-        console.error("JWT Decode error in booking get:", e);
-      }
-    }
+    const userId = resolveBookingStudentId(req);
 
     if (!userId) {
       return res.json([]);
@@ -193,7 +176,7 @@ router.patch("/:id/status", async (req, res) => {
  */
 router.patch("/:id/cancel", async (req, res) => {
   try {
-    const userId = req.session?.passport?.user;
+    const userId = resolveBookingStudentId(req);
 
     if (!userId) {
       return res.status(401).json({ msg: "Unauthorized" });
@@ -205,7 +188,6 @@ router.patch("/:id/cancel", async (req, res) => {
       return res.status(404).json({ msg: "Booking not found" });
     }
 
-    // Ensure the student owns this booking
     if (booking.userId.toString() !== userId.toString()) {
       return res.status(403).json({ msg: "Not your booking" });
     }

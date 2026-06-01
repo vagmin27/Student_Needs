@@ -16,33 +16,28 @@ function TutorLoginPage() {
     try {
       const res = await API.post("/tutor/login", { email, password });
 
-      if (res.data.status === "ok") {
-        alert("Login successful ✅");
-
+      if (res.data.status === "ok" && res.data.token && res.data.tutor) {
         const normalizedUser = {
           ...res.data.tutor,
           role: "tutor",
           accountType: "tutor",
         };
 
-        const header = btoa(JSON.stringify({ alg: "none", typ: "JWT" }));
-        const payload = btoa(JSON.stringify({ id: normalizedUser._id || normalizedUser.id, role: "tutor" }));
-        const dummyToken = `${header}.${payload}.dummy_signature`;
-        
-        localStorage.setItem("token", dummyToken);
-        localStorage.setItem("auth_token", dummyToken);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("auth_token", res.data.token);
         localStorage.setItem("user", JSON.stringify(normalizedUser));
         localStorage.setItem("User", JSON.stringify(normalizedUser));
         localStorage.setItem("auth_user", JSON.stringify(normalizedUser));
-        localStorage.setItem("auth_data", JSON.stringify({ token: dummyToken, user: normalizedUser }));
+        localStorage.setItem(
+          "auth_data",
+          JSON.stringify({ token: res.data.token, user: normalizedUser })
+        );
 
-        auth.setUser(normalizedUser);
+        auth.setUser({ ...normalizedUser, token: res.data.token });
 
-        setTimeout(() => {
-          navigate("/tutorials/tutor/dashboard");
-        }, 100);
+        navigate("/tutorials/tutor/dashboard");
       } else {
-        handleError(res.data.message);
+        handleError(res.data.message || "Login succeeded but no auth token was returned. Please try again.");
       }
     } catch (err) {
       console.error(err.response?.data || err.message);
