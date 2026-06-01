@@ -63,6 +63,7 @@ export const getEnrolledStudents = catchAsync(async (req, res) => {
 });
 
 export const getSessionRecords = catchAsync(async (req, res) => {
+  console.log("Tutor attendance session query:", req.query);
   const { isValid, data, errorResponse } = validateRequest(
     sessionQuerySchema,
     req.query

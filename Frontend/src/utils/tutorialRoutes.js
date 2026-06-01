@@ -21,6 +21,7 @@ export const TUTORIAL_PATHS = {
   tutorAttendanceHub: "/tutorials/attendance",
   tutorManageSubjects: "/tutorials/attendance/subjects",
   tutorMarkAttendance: "/tutorials/attendance/mark-online",
+  tutorAttendanceAnalytics: "/tutorials/attendance/analytics",
   tutorHome: "/tutorials/tutor/dashboard",
   tutorSchedule: "/tutorials/tutor/schedule",
   tutorRequests: "/tutorials/tutor/accept",
@@ -46,9 +47,7 @@ export function resolveTutorialEntryPath({
   }
 
   if (isStudent || normalizedRole === "student") {
-    return isAuthenticated
-      ? TUTORIAL_PATHS.moduleHome
-      : TUTORIAL_PATHS.landing;
+    return isAuthenticated ? TUTORIAL_PATHS.moduleHome : TUTORIAL_PATHS.landing;
   }
 
   return TUTORIAL_PATHS.landing;

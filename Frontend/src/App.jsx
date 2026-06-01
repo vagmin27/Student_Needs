@@ -70,6 +70,9 @@ const TutorMarkAttendance = React.lazy(
 const TutorManageSubjects = React.lazy(
   () => import("./pages/Tutorials/TutorManageSubjects"),
 );
+const TutorAttendanceAnalytics = React.lazy(
+  () => import("./pages/Tutorials/TutorAttendanceAnalytics"),
+);
 const OnlineAttendanceView = React.lazy(
   () => import("./pages/Tutorials/OnlineAttendanceView"),
 );
@@ -317,6 +320,14 @@ const AttendanceRoutes = () => {
           element={
             <Suspense fallback={<DashboardSkeleton />}>
               <TutorMarkAttendance />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/tutorials/attendance/analytics"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <TutorAttendanceAnalytics />
             </Suspense>
           }
         />

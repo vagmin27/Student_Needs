@@ -1,7 +1,19 @@
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, BookPlus, CalendarCheck } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookPlus,
+  CalendarCheck,
+  BarChart3,
+} from "lucide-react";
 import { TUTORIAL_PATHS } from "@/utils/tutorialRoutes";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 
@@ -19,23 +31,37 @@ const HUB_ACTIONS = [
     to: TUTORIAL_PATHS.tutorMarkAttendance,
     icon: CalendarCheck,
   },
+  {
+    title: "Attendance Analytics",
+    description: "View detailed attendance reports and student statistics",
+    to: TUTORIAL_PATHS.tutorAttendanceAnalytics,
+    icon: BarChart3,
+  },
 ];
 
 export default function AttendanceManagementHub() {
   const { user } = useAuth();
-  const isTeacher = ["teacher", "tutor"].includes((user?.role || "").toLowerCase());
+  const isTeacher = ["teacher", "tutor"].includes(
+    (user?.role || "").toLowerCase(),
+  );
 
   return (
     <div className="space-y-6">
-      <Link to="/tutorials/home" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+      <Link
+        to="/tutorials/home"
+        className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+      >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Tutorials
       </Link>
 
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Attendance Management</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Attendance Management
+        </h1>
         <p className="text-muted-foreground">
-          Mark attendance for students enrolled through your online tutorial bookings
+          Mark attendance for students enrolled through your online tutorial
+          bookings
         </p>
       </div>
 
@@ -44,9 +70,13 @@ export default function AttendanceManagementHub() {
           <CardContent className="pt-6">
             <div className="text-center space-y-4">
               <p className="text-red-600 dark:text-red-400 font-medium">
-                Attendance Management is for teachers. Contact your administrator.
+                Attendance Management is for teachers. Contact your
+                administrator.
               </p>
-              <Link to="/tutorials/home" className="text-primary hover:underline inline-flex items-center gap-1">
+              <Link
+                to="/tutorials/home"
+                className="text-primary hover:underline inline-flex items-center gap-1"
+              >
                 Back to Tutorials <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -64,7 +94,9 @@ export default function AttendanceManagementHub() {
                       <Icon className="w-5 h-5" />
                     </div>
                     <CardTitle className="text-xl">{action.title}</CardTitle>
-                    <CardDescription className="text-sm mt-2">{action.description}</CardDescription>
+                    <CardDescription className="text-sm mt-2">
+                      {action.description}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center text-sm font-medium text-primary opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0">

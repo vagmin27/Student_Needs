@@ -95,6 +95,15 @@ const normalizeSubjectKey = (name) =>
 const subjectMatches = (bookingSubject, tutorSubject) =>
   normalizeSubjectKey(bookingSubject) === normalizeSubjectKey(tutorSubject);
 
+const normalizeDate = (d) => {
+  if (!d) return d;
+  if (/^\d{2}-\d{2}-\d{4}$/.test(d)) {
+    const [dd, mm, yyyy] = d.split("-");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+  return d;
+};
+
 export class TutorAttendanceService {
   static async getTutorSubjects(tutorUser) {
     const tutorId = getTutorId(tutorUser);
@@ -227,16 +236,28 @@ export class TutorAttendanceService {
 
   static async getSessionRecords(tutorUser, { date, subject, sessionTime = "" }) {
     const tutorId = getTutorId(tutorUser);
-    if (!date || !subject) {
-      throw new AppError("Date and subject are required", 400);
+    if (!subject) {
+      throw new AppError("Subject is required", 400);
+    }
+    const owned = await this.assertTutorOwnsSubject(tutorId, subject);
+    const canonicalSubject = owned.subjectName;
+    const normalizedDate = normalizeDate(date);
+
+    const filter = {
+      tutorId,
+      subject: canonicalSubject,
+    };
+
+    if (normalizedDate) {
+      filter.date = normalizedDate;
+    }
+    if (sessionTime) {
+      filter.sessionTime = sessionTime;
     }
 
-    const records = await TutorSessionAttendance.find({
-      tutorId,
-      date,
-      subject,
-      sessionTime: sessionTime || "",
-    }).lean();
+    const records = await TutorSessionAttendance.find(filter)
+      .sort({ date: -1, sessionTime: 1, studentName: 1, createdAt: -1 })
+      .lean();
 
     return records;
   }
@@ -248,6 +269,7 @@ export class TutorAttendanceService {
     if (!date || !subject || !Array.isArray(records) || records.length === 0) {
       throw new AppError("Date, subject, and at least one student record are required", 400);
     }
+    const normalizedDate = normalizeDate(date);
 
     const owned = await this.assertTutorOwnsSubject(tutorId, subject);
     const canonicalSubject = owned.subjectName;
@@ -282,7 +304,7 @@ export class TutorAttendanceService {
             tutorId,
             studentId: sid,
             subject: canonicalSubject,
-            date,
+            date: normalizedDate,
             sessionTime: sessionTime || "",
           },
           update: {

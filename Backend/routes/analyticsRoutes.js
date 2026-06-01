@@ -82,7 +82,7 @@ router.get("/tutor-dashboard", catchAsync(async (req, res) => {
 
   const recentRequests = recentBookings.map(b => ({
     id: b._id,
-    studentName: b.userId.substring(0, 8), // Assuming we don't populate student name yet
+    studentName: b.userId?.toString?.().slice(0, 8) || "Student",
     subject: b.subject,
     date: b.date,
     time: b.time,

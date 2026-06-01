@@ -2,11 +2,28 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { ArrowLeft, CalendarCheck, Check, X } from "lucide-react";
-import API, { TUTOR_ATTENDANCE_PATHS } from "@/services/Attendance/tutorAttendanceApi";
+import API, {
+  TUTOR_ATTENDANCE_PATHS,
+} from "@/services/Attendance/tutorAttendanceApi";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const todayISO = () => new Date().toISOString().split("T")[0];
+
+const normalizeDate = (value) => {
+  if (!value) return value;
+  if (/^\d{2}-\d{2}-\d{4}$/.test(value)) {
+    const [dd, mm, yyyy] = value.split("-");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+  return value;
+};
 
 const getErrorMessage = (err) =>
   err?.response?.data?.message || err?.message || "Something went wrong";
@@ -63,8 +80,13 @@ export default function TutorMarkAttendance() {
   const loadExistingMarks = useCallback(async () => {
     if (!subject || !date) return;
     try {
+      const params = { date: normalizeDate(date), subject };
+      const trimmedSessionTime = sessionTime.trim();
+      if (trimmedSessionTime) {
+        params.sessionTime = trimmedSessionTime;
+      }
       const res = await API.get(TUTOR_ATTENDANCE_PATHS.tutorSession, {
-        params: { date, subject, sessionTime },
+        params,
       });
       const next = {};
       for (const row of res.data || []) {
@@ -100,10 +122,13 @@ export default function TutorMarkAttendance() {
       return;
     }
     const records = filteredStudents
-      .map((s) => ({
-        studentId: s.studentId,
-        status: marks[s.studentId],
-      }))
+      .map((s) => {
+        const rawStatus = marks[s.studentId];
+        return {
+          studentId: s.studentId,
+          status: rawStatus || null,
+        };
+      })
       .filter((r) => r.status);
 
     if (records.length === 0) {
@@ -113,12 +138,17 @@ export default function TutorMarkAttendance() {
 
     setSaving(true);
     try {
-      await API.post(TUTOR_ATTENDANCE_PATHS.tutorSession, {
-        date,
+      const payload = {
+        date: normalizeDate(date),
         subject,
-        sessionTime,
         records,
-      });
+      };
+      const trimmedSessionTime = sessionTime.trim();
+      if (trimmedSessionTime) {
+        payload.sessionTime = trimmedSessionTime;
+      }
+
+      await API.post(TUTOR_ATTENDANCE_PATHS.tutorSession, payload);
       toast.success("Online class attendance saved");
       await loadExistingMarks();
     } catch (err) {
@@ -142,13 +172,18 @@ export default function TutorMarkAttendance() {
       </Link>
 
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Mark Online Class Attendance</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Mark Online Class Attendance
+        </h1>
         <p className="text-muted-foreground mt-1">
           Select a subject you teach, then mark students who booked that course.
         </p>
         {subjects.length === 0 && !loadingSubjects && (
           <p className="text-sm text-amber-600 dark:text-amber-400 mt-2">
-            <Link to="/tutorials/attendance/subjects" className="underline font-medium">
+            <Link
+              to="/tutorials/attendance/subjects"
+              className="underline font-medium"
+            >
               Add subjects
             </Link>{" "}
             before marking attendance.
@@ -159,11 +194,15 @@ export default function TutorMarkAttendance() {
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Session details</CardTitle>
-          <CardDescription>Subject list comes from your tutor subjects</CardDescription>
+          <CardDescription>
+            Subject list comes from your tutor subjects
+          </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-3">
           <div>
-            <label className="text-sm font-medium mb-1 block">Course / Subject</label>
+            <label className="text-sm font-medium mb-1 block">
+              Course / Subject
+            </label>
             <select
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               value={subject}
@@ -188,7 +227,9 @@ export default function TutorMarkAttendance() {
             />
           </div>
           <div>
-            <label className="text-sm font-medium mb-1 block">Session time (optional)</label>
+            <label className="text-sm font-medium mb-1 block">
+              Session time (optional)
+            </label>
             <input
               type="text"
               placeholder="e.g. 10:00 AM"
@@ -205,8 +246,8 @@ export default function TutorMarkAttendance() {
           <div>
             <CardTitle className="text-lg">Enrolled students</CardTitle>
             <CardDescription>
-              {markedCount} of {filteredStudents.length} marked · students with bookings for
-              this subject
+              {markedCount} of {filteredStudents.length} marked · students with
+              bookings for this subject
             </CardDescription>
           </div>
           <Button
@@ -228,8 +269,8 @@ export default function TutorMarkAttendance() {
             </p>
           ) : filteredStudents.length === 0 ? (
             <p className="text-sm text-muted-foreground py-6 text-center">
-              No students have booked this subject yet. They will appear after booking a class
-              with you for the same course name.
+              No students have booked this subject yet. They will appear after
+              booking a class with you for the same course name.
             </p>
           ) : (
             <div className="divide-y rounded-lg border">
@@ -259,7 +300,9 @@ export default function TutorMarkAttendance() {
                       <Button
                         type="button"
                         size="sm"
-                        variant={status === "absent" ? "destructive" : "outline"}
+                        variant={
+                          status === "absent" ? "destructive" : "outline"
+                        }
                         onClick={() => setStatus(student.studentId, "absent")}
                       >
                         <X className="w-4 h-4 mr-1" />
