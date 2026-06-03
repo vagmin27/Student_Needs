@@ -197,7 +197,7 @@ export const AuthProvider = ({ children }) => {
   const studentSignup = async (payload) => {
     try {
       const { data } = await referralsApiClient.post(AUTH_ENDPOINTS.student.signup, payload);
-      if (data.success) handleAuthSuccess(data.token, data.user);
+      // Under the upgraded flow, signup does not immediately log in.
       return data;
     } catch (err) {
       return { success: false, message: err.response?.data?.message || 'Signup failed' };
@@ -210,14 +210,17 @@ export const AuthProvider = ({ children }) => {
       if (data.success) handleAuthSuccess(data.token, data.user);
       return data;
     } catch (err) {
-      return { success: false, message: err.response?.data?.message || 'Login failed' };
+      const resData = err.response?.data;
+      if (resData && resData.isVerified === false) {
+        return { success: false, isVerified: false, message: resData.message };
+      }
+      return { success: false, message: resData?.message || 'Login failed' };
     }
   }, [handleAuthSuccess]);
 
   const alumniSignup = async (payload) => {
     try {
       const { data } = await referralsApiClient.post(AUTH_ENDPOINTS.alumni.signup, payload);
-      if (data.success) handleAuthSuccess(data.token, data.user);
       return data;
     } catch (err) {
       return { success: false, message: err.response?.data?.message || 'Signup failed' };
@@ -230,7 +233,101 @@ export const AuthProvider = ({ children }) => {
       if (data.success) handleAuthSuccess(data.token, data.user);
       return data;
     } catch (err) {
-      return { success: false, message: err.response?.data?.message || 'Login failed' };
+      const resData = err.response?.data;
+      if (resData && resData.isVerified === false) {
+        return { success: false, isVerified: false, message: resData.message };
+      }
+      return { success: false, message: resData?.message || 'Login failed' };
+    }
+  };
+
+  const verifyStudentOtp = async (email, otp) => {
+    try {
+      const { data } = await referralsApiClient.post("/student/verify-otp", { email, otp });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Verification failed' };
+    }
+  };
+
+  const resendStudentOtp = async (email) => {
+    try {
+      const { data } = await referralsApiClient.post("/student/resend-otp", { email });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Resend failed' };
+    }
+  };
+
+  const verifyAlumniOtp = async (email, otp) => {
+    try {
+      const { data } = await referralsApiClient.post("/alumni/verify-otp", { email, otp });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Verification failed' };
+    }
+  };
+
+  const resendAlumniOtp = async (email) => {
+    try {
+      const { data } = await referralsApiClient.post("/alumni/resend-otp", { email });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Resend failed' };
+    }
+  };
+
+  const studentForgotPassword = async (email) => {
+    try {
+      const { data } = await referralsApiClient.post("/student/forgot-password", { email });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Request failed' };
+    }
+  };
+
+  const studentVerifyResetOtp = async (email, otp) => {
+    try {
+      const { data } = await referralsApiClient.post("/student/verify-reset-otp", { email, otp });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'OTP verification failed' };
+    }
+  };
+
+  const studentResetPassword = async (payload) => {
+    try {
+      const { data } = await referralsApiClient.post("/student/reset-password", payload);
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Reset password failed' };
+    }
+  };
+
+  const alumniForgotPassword = async (email) => {
+    try {
+      const { data } = await referralsApiClient.post("/alumni/forgot-password", { email });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Request failed' };
+    }
+  };
+
+  const alumniVerifyResetOtp = async (email, otp) => {
+    try {
+      const { data } = await referralsApiClient.post("/alumni/verify-reset-otp", { email, otp });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'OTP verification failed' };
+    }
+  };
+
+  const alumniResetPassword = async (payload) => {
+    try {
+      const { data } = await referralsApiClient.post("/alumni/reset-password", payload);
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Reset password failed' };
     }
   };
 
@@ -250,6 +347,39 @@ export const AuthProvider = ({ children }) => {
   const clearError = () => setError(null);
 
   const userRole = (user?.role || user?.accountType || "").toLowerCase();
+
+  const stableSetUser = useCallback((u) => {
+    if (u) {
+      const resolvedRole = (u.role || u.accountType || "student").toLowerCase();
+      const normalized = {
+        ...u,
+        role: resolvedRole,
+        accountType: resolvedRole
+      };
+      setUser(normalized);
+      const currentToken =
+        u.token ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("auth_token");
+      if (currentToken) {
+        setToken(currentToken);
+        persistAuth(currentToken, normalized);
+      } else {
+        persistAuth(null, normalized);
+      }
+    } else {
+      setUser(null);
+      setToken(null);
+      [
+        "token",
+        "auth_token",
+        "user",
+        "User",
+        "auth_user",
+        "auth_data"
+      ].forEach((key) => localStorage.removeItem(key));
+    }
+  }, []);
 
   const value = {
     user,
@@ -271,40 +401,19 @@ export const AuthProvider = ({ children }) => {
     studentLogin,
     alumniSignup,
     alumniLogin,
+    verifyStudentOtp,
+    resendStudentOtp,
+    verifyAlumniOtp,
+    resendAlumniOtp,
+    studentForgotPassword,
+    studentVerifyResetOtp,
+    studentResetPassword,
+    alumniForgotPassword,
+    alumniVerifyResetOtp,
+    alumniResetPassword,
     fetchUser,
     clearError,
-    setUser: (u) => {
-      if (u) {
-        const resolvedRole = (u.role || u.accountType || "student").toLowerCase();
-        const normalized = {
-          ...u,
-          role: resolvedRole,
-          accountType: resolvedRole
-        };
-        setUser(normalized);
-        const currentToken =
-          u.token ||
-          localStorage.getItem("token") ||
-          localStorage.getItem("auth_token");
-        if (currentToken) {
-          setToken(currentToken);
-          persistAuth(currentToken, normalized);
-        } else {
-          persistAuth(null, normalized);
-        }
-      } else {
-        setUser(null);
-        setToken(null);
-        [
-          "token",
-          "auth_token",
-          "user",
-          "User",
-          "auth_user",
-          "auth_data"
-        ].forEach((key) => localStorage.removeItem(key));
-      }
-    }
+    setUser: stableSetUser
   };
 
   return (

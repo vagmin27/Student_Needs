@@ -20,6 +20,7 @@ import { logger as winstonLogger } from "./utils/logger.js";
 import { initSocket } from "./sockets/index.js";
 
 import "./config/Tutorials/passport.js";
+import "./config/Referrals/passport.js";
 
 
 // =====================================================

@@ -124,6 +124,9 @@ import {
   RoleSelectionPage,
   UnifiedLanding,
 } from "@/pages/UnifiedFlow.jsx";
+import VerifyOtp from "@/pages/VerifyOtp.jsx";
+import ForgotPassword from "@/pages/ForgotPassword.jsx";
+import SocialSuccess from "@/pages/SocialSuccess.jsx";
 
 // ======================================================
 //                    TUTORIALS
@@ -217,6 +220,9 @@ const AttendanceRoutes = () => {
 
       <Route path="/" element={<UnifiedLanding />} />
       <Route path="/role-selection" element={<RoleSelectionPage />} />
+      <Route path="/verify-otp" element={<VerifyOtp />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/auth/social-success" element={<SocialSuccess />} />
       <Route
         path="/role-selector"
         element={<Navigate to="/role-selection" replace />}

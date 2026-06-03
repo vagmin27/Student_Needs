@@ -108,9 +108,12 @@ export function useStudentSignup() {
     if (!form.data.password) {
       form.setError('password', 'Password is required');
       isValid = false;
-    } else if (form.data.password.length < 6) {
-      form.setError('password', 'Password must be at least 6 characters');
-      isValid = false;
+    } else {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!regex.test(form.data.password)) {
+        form.setError('password', 'Password must be at least 8 characters, with 1 uppercase, 1 lowercase, 1 number, and 1 special character.');
+        isValid = false;
+      }
     }
 
     if (!form.data.collegeName || !form.data.collegeName.trim()) {
@@ -121,32 +124,7 @@ export function useStudentSignup() {
     return isValid;
   }, [form]);
 
-  // const handleSubmit = useCallback(async () => {
-  //   if (!validate()) {
-  //     return { success: false, message: 'Please fix form errors' };
-  //   }
-
-  //   form.setSubmitting(true);
-  //   try {
-  //     const response = await studentSignup(form.data);
-  //     if (response.success) {
-  //       form.resetForm();
-  //       navigate('/student/dashboard');
-  //     } else {
-  //       form.setSubmitError(response.message);
-  //     }
-  //     return response;
-  //   } catch (error) {
-  //     const message = error instanceof Error ? error.message : 'Signup failed';
-  //     form.setSubmitError(message);
-  //     return { success: false, message };
-  //   } finally {
-  //     form.setSubmitting(false);
-  //   }
-  // }, [form, studentSignup, navigate, validate]);
-
   const handleSubmit = useCallback(async () => {
-
     if (!validate()) {
       return {
         success: false,
@@ -157,51 +135,32 @@ export function useStudentSignup() {
     form.setSubmitting(true);
 
     try {
-
-      console.log("SIGNUP FORM DATA:", form.data);
-
       const response = await studentSignup(form.data);
-
-      console.log("SIGNUP RESPONSE:", response);
-
       if (response.success) {
-
+        const userEmail = form.data.email;
         form.resetForm();
-
-        // Delay avoids auth timing issues
         setTimeout(() => {
-          navigate('/student/dashboard');
+          navigate(`/verify-otp?email=${encodeURIComponent(userEmail)}&role=student`);
         }, 100);
-
       } else {
-
         form.setSubmitError(
           response.message || 'Signup failed'
         );
       }
-
       return response;
-
     } catch (error) {
-
-      console.log("SIGNUP HOOK ERROR:", error);
-
       const message =
         error?.response?.data?.message ||
         error?.message ||
         'Signup failed';
-
       form.setSubmitError(message);
-
       return {
         success: false,
         message
       };
-
     } finally {
       form.setSubmitting(false);
     }
-
   }, [form, studentSignup, navigate, validate]);
 
   return {
@@ -320,7 +279,6 @@ export function useStudentLogin() {
       const response = await studentLogin(form.data);
 
       if (response.success) {
-
         const token =
           response.token ||
           response.data?.token;
@@ -351,13 +309,18 @@ export function useStudentLogin() {
 
         form.resetForm();
 
-        // Delay avoids protected route timing issue
         setTimeout(() => {
           navigate('/student/dashboard');
         }, 100);
 
+      } else if (response.isVerified === false) {
+        // Redirect to OTP verification page if login response returns unverified
+        const userEmail = form.data.email;
+        form.resetForm();
+        setTimeout(() => {
+          navigate(`/verify-otp?email=${encodeURIComponent(userEmail)}&role=student`);
+        }, 100);
       } else {
-
         form.setSubmitError(
           response.message || 'Login failed'
         );
@@ -435,9 +398,12 @@ export function useAlumniSignup() {
     if (!form.data.password) {
       form.setError('password', 'Password is required');
       isValid = false;
-    } else if (form.data.password.length < 6) {
-      form.setError('password', 'Password must be at least 6 characters');
-      isValid = false;
+    } else {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!regex.test(form.data.password)) {
+        form.setError('password', 'Password must be at least 8 characters, with 1 uppercase, 1 lowercase, 1 number, and 1 special character.');
+        isValid = false;
+      }
     }
 
     if (!form.data.collegeName.trim()) {
@@ -457,8 +423,11 @@ export function useAlumniSignup() {
     try {
       const response = await alumniSignup(form.data);
       if (response.success) {
+        const userEmail = form.data.email;
         form.resetForm();
-        navigate('/login/alumni');
+        setTimeout(() => {
+          navigate(`/verify-otp?email=${encodeURIComponent(userEmail)}&role=alumni`);
+        }, 100);
       } else {
         form.setSubmitError(response.message);
       }
@@ -541,6 +510,12 @@ export function useAlumniLogin() {
         form.resetForm();
         setTimeout(() => {
           navigate('/alumni/dashboard');
+        }, 100);
+      } else if (response.isVerified === false) {
+        const userEmail = form.data.email;
+        form.resetForm();
+        setTimeout(() => {
+          navigate(`/verify-otp?email=${encodeURIComponent(userEmail)}&role=alumni`);
         }, 100);
       } else {
         form.setSubmitError(response.message || 'Login failed');

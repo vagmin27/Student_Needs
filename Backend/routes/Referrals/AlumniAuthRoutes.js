@@ -1,23 +1,32 @@
 import express from "express";
-const router = express.Router();
-
-// Import controllers
-import { signup, login, getAlumniData } from "../../controllers/Referrals/AlumniAuth.js";
-
-// Import middleware
+import {
+  signup,
+  login,
+  verifyOtp,
+  resendOtp,
+  refreshToken,
+  forgotPassword,
+  verifyResetOtp,
+  resetPassword,
+  getAlumniData,
+} from "../../controllers/Referrals/AlumniAuth.js";
 import { auth } from "../../middlewares/Referrals/auth.js";
 
-// ********************************************************************************************************
-//                                      Alumni Authentication routes
-// ********************************************************************************************************
+const router = express.Router();
 
-// Route for alumni signup
+// ================= LOCAL AUTH ENDPOINTS =================
 router.post("/signup", signup);
-
-// Route for alumni login
+router.post("/verify-otp", verifyOtp);
+router.post("/resend-otp", resendOtp);
 router.post("/login", login);
+router.post("/refresh", refreshToken);
 
-// Route for fetching alumni data
+// ================= PASSWORD RESET ENDPOINTS =================
+router.post("/forgot-password", forgotPassword);
+router.post("/verify-reset-otp", verifyResetOtp);
+router.post("/reset-password", resetPassword);
+
+// ================= USER DATA ENDPOINT =================
 router.get("/getAlumniData", auth, getAlumniData);
 
 export default router;

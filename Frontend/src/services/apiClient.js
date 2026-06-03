@@ -21,9 +21,95 @@ export const createApiClient = (prefix = "") => {
     return config;
   });
 
+  let isRefreshing = false;
+  let failedQueue = [];
+
+  const processQueue = (error, token = null) => {
+    failedQueue.forEach((prom) => {
+      if (error) {
+        prom.reject(error);
+      } else {
+        prom.resolve(token);
+      }
+    });
+    failedQueue = [];
+  };
+
   client.interceptors.response.use(
     (response) => response,
-    (error) => Promise.reject(error)
+    async (error) => {
+      const originalRequest = error.config;
+
+      if (error.response?.status === 401 && !originalRequest._retry) {
+        const urlStr = originalRequest.url || "";
+        if (
+          urlStr.includes("/refresh") ||
+          urlStr.includes("/login") ||
+          urlStr.includes("/signup") ||
+          urlStr.includes("/verify-otp") ||
+          urlStr.includes("/forgot-password") ||
+          urlStr.includes("/reset-password")
+        ) {
+          return Promise.reject(error);
+        }
+
+        if (isRefreshing) {
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+          })
+            .then((token) => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              return client(originalRequest);
+            })
+            .catch((err) => Promise.reject(err));
+        }
+
+        originalRequest._retry = true;
+        isRefreshing = true;
+
+        try {
+          const userStr = localStorage.getItem("user") || localStorage.getItem("User");
+          const user = userStr ? JSON.parse(userStr) : null;
+          const accountType = user?.accountType || "student";
+          const refreshUrl =
+            accountType === "alumni"
+              ? `${getApiUrl(API_PREFIXES.referrals)}/alumni/refresh`
+              : `${getApiUrl(API_PREFIXES.referrals)}/student/refresh`;
+
+          const res = await axios.post(refreshUrl, {}, { withCredentials: true });
+
+          if (res.data.success && res.data.token) {
+            const newToken = res.data.token;
+            localStorage.setItem(AUTH_STORAGE_KEYS.token, newToken);
+            localStorage.setItem("token", newToken);
+
+            client.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+            originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+            processQueue(null, newToken);
+            isRefreshing = false;
+            return client(originalRequest);
+          }
+        } catch (refreshError) {
+          processQueue(refreshError, null);
+          isRefreshing = false;
+
+          // Clear credentials
+          localStorage.removeItem("user");
+          localStorage.removeItem("User");
+          localStorage.removeItem("token");
+          localStorage.removeItem(AUTH_STORAGE_KEYS.token);
+
+          // Force redirect if on a protected page
+          const path = window.location.pathname;
+          if (path.startsWith("/student") || path.startsWith("/alumni")) {
+            window.location.href = "/role-selector";
+          }
+          return Promise.reject(refreshError);
+        }
+      }
+      return Promise.reject(error);
+    }
   );
 
   return client;

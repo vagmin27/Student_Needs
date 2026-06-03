@@ -94,6 +94,27 @@ const AlumniSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
+    otp: {
+        type: String,
+        default: null,
+    },
+    otpExpiry: {
+        type: Date,
+        default: null,
+    },
+    provider: {
+        type: String,
+        enum: ["local", "google", "github"],
+        default: "local",
+    },
+    refreshToken: {
+        type: String,
+        default: null,
+    },
 }, { timestamps: true }
 )   
 
