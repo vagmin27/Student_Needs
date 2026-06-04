@@ -167,6 +167,7 @@ const RecurringTransactions = React.lazy(
 );
 const Analytics = React.lazy(() => import("./pages/Expenses/Analytics"));
 const Settings = React.lazy(() => import("./pages/Expenses/Settings"));
+const BillHistory = React.lazy(() => import("./pages/Expenses/BillHistory"));
 import AppLayout from "./components/Expenses/layout/AppLayout";
 
 // ======================================================
@@ -626,9 +627,13 @@ const AttendanceRoutes = () => {
         />
         <Route
           path="/expenses-tracker/settings"
+          element={<Navigate to="/student/settings?tab=expenses" replace />}
+        />
+        <Route
+          path="/expenses-tracker/bills/history"
           element={
             <Suspense fallback={<DashboardSkeleton />}>
-              <Settings />
+              <BillHistory />
             </Suspense>
           }
         />

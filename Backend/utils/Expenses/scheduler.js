@@ -153,3 +153,174 @@ export const recurringTransactionScheduler = () => {
     }
   });
 };
+
+export const dailyBillReminderScheduler = () => {
+  if (process.env.NODE_ENV !== "production" && process.env.ENABLE_SCHEDULERS !== "true") {
+    return;
+  }
+  
+  cron.schedule("0 0 * * *", async () => {
+    try {
+      console.log("⏰ Running Daily Bill Reminder Scheduler at midnight...");
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // Import models dynamically to prevent circular dependencies
+      const { default: billModel } = await import("../../models/Expenses/billModel.js");
+      const { default: userModel } = await import("../../models/Expenses/userModel.js");
+      const { notificationService } = await import("../../services/NotificationService.js");
+      const { default: nodemailer } = await import("nodemailer");
+
+      const bills = await billModel.find({ status: { $ne: "Paid" } });
+
+      for (const bill of bills) {
+        const user = await userModel.findById(bill.userId);
+        if (!user) continue;
+
+        const due = new Date(bill.dueDate);
+        due.setHours(0, 0, 0, 0);
+
+        const diffTime = due.getTime() - today.getTime();
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+          },
+          tls: {
+            rejectUnauthorized: false,
+          },
+        });
+
+        // 2 days before
+        if (diffDays === 2 && !bill.sent2DayReminder) {
+          const mailOptions = {
+            from: process.env.SMTP_USER,
+            to: user.email,
+            subject: "Upcoming Bill Due Reminder",
+            text: `Hello,
+
+This is a reminder that your bill is due in 2 days.
+
+Bill: ${bill.billName}
+Amount: ₹${bill.amount}
+Due Date: ${due.toLocaleDateString()}
+
+Please complete the payment before the due date.
+
+Expense Tracker Team`,
+          };
+
+          try {
+            await transporter.sendMail(mailOptions);
+            bill.sent2DayReminder = true;
+            await bill.save();
+            
+            await notificationService.createAndEmitNotification({
+              recipientId: bill.userId,
+              type: "EXPENSE",
+              title: "Bill Due Reminder",
+              message: `🔔 ${bill.billName} due in 2 days.`,
+              link: "/expenses-tracker",
+            });
+          } catch (e) {
+            console.error("Error sending 2-day reminder:", e.message);
+          }
+        }
+        // 1 day before
+        else if (diffDays === 1 && !bill.sent1DayReminder) {
+          const mailOptions = {
+            from: process.env.SMTP_USER,
+            to: user.email,
+            subject: "Upcoming Bill Due Reminder",
+            text: `Hello,
+
+This is a reminder that your bill is due tomorrow.
+
+Bill: ${bill.billName}
+Amount: ₹${bill.amount}
+Due Date: ${due.toLocaleDateString()}
+
+Please complete the payment before the due date.
+
+Expense Tracker Team`,
+          };
+
+          try {
+            await transporter.sendMail(mailOptions);
+            bill.sent1DayReminder = true;
+            await bill.save();
+
+            await notificationService.createAndEmitNotification({
+              recipientId: bill.userId,
+              type: "EXPENSE",
+              title: "Bill Due Reminder",
+              message: `🔔 ${bill.billName} due tomorrow.`,
+              link: "/expenses-tracker",
+            });
+          } catch (e) {
+            console.error("Error sending 1-day reminder:", e.message);
+          }
+        }
+        // due date morning
+        else if (diffDays === 0 && !bill.sentDueDayReminder) {
+          const mailOptions = {
+            from: process.env.SMTP_USER,
+            to: user.email,
+            subject: "Upcoming Bill Due Reminder",
+            text: `Hello,
+
+This is a reminder that your bill is due today.
+
+Bill: ${bill.billName}
+Amount: ₹${bill.amount}
+Due Date: ${due.toLocaleDateString()}
+
+Please complete the payment today.
+
+Expense Tracker Team`,
+          };
+
+          try {
+            await transporter.sendMail(mailOptions);
+            bill.sentDueDayReminder = true;
+            bill.status = "Due Today";
+            await bill.save();
+
+            await notificationService.createAndEmitNotification({
+              recipientId: bill.userId,
+              type: "EXPENSE",
+              title: "Bill Due Today",
+              message: `🔔 ${bill.billName} due today.`,
+              link: "/expenses-tracker",
+            });
+          } catch (e) {
+            console.error("Error sending due date reminder:", e.message);
+          }
+        }
+        // Overdue status check
+        else if (diffDays < 0 && bill.status !== "Overdue") {
+          bill.status = "Overdue";
+          await bill.save();
+
+          await notificationService.createAndEmitNotification({
+            recipientId: bill.userId,
+            type: "EXPENSE",
+            title: "Bill Overdue",
+            message: `🚨 ${bill.billName} is overdue.`,
+            link: "/expenses-tracker",
+          });
+        }
+        // Due today status check
+        else if (diffDays === 0 && bill.status !== "Due Today") {
+          bill.status = "Due Today";
+          await bill.save();
+        }
+      }
+    } catch (err) {
+      console.log("Daily bill reminder scheduler error:", err.message);
+    }
+  });
+};

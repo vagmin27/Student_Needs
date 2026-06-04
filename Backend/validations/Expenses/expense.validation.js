@@ -77,3 +77,37 @@ export const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
   password: z.string().min(1, "Password is required"),
 });
+
+export const expenseSettingsUpdateSchema = z.object({
+  monthlyBudget: z.coerce.number().min(0, "Monthly Budget cannot be negative"),
+  weeklyBudget: z.coerce.number().min(0, "Weekly Budget cannot be negative").optional().default(0),
+  dailyBudget: z.coerce.number().min(0, "Daily Budget cannot be negative").optional().default(0),
+  currency: z.enum(["INR", "USD", "EUR", "GBP"]).default("INR"),
+  savingsGoal: z.coerce.number().min(0, "Savings goal cannot be negative").optional().default(0),
+  categoryLimits: z.record(z.coerce.number().min(0)).optional().default({}),
+  notificationPreferences: z.object({
+    email: z.boolean().default(true),
+    push: z.boolean().default(true),
+    budgetAlerts: z.boolean().default(true),
+    billDueAlerts: z.boolean().default(true),
+    overdueAlerts: z.boolean().default(true),
+    savingsGoalAlerts: z.boolean().default(true),
+  }).optional(),
+  alertThresholds: z.object({
+    fifty: z.boolean().default(true),
+    seventyFive: z.boolean().default(true),
+    ninety: z.boolean().default(true),
+    hundred: z.boolean().default(true),
+  }).optional(),
+  allowLimitsExceedBudget: z.boolean().optional().default(false),
+});
+
+export const createBillSchema = z.object({
+  billName: z.string().min(1, "Bill Name is required"),
+  amount: z.coerce.number().positive("Amount must be positive"),
+  dueDate: z.string().min(1, "Due Date is required"),
+  priority: z.enum(["Low", "Medium", "High", "Critical"]).optional().default("Medium"),
+  isRecurring: z.boolean().optional().default(false),
+  recurringType: z.enum(["None", "Monthly", "Quarterly", "Semester", "Yearly"]).optional().default("None"),
+});
+

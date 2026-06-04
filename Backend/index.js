@@ -94,6 +94,9 @@ import budgetRouter from "./routes/Expenses/budgetRouter.js";
 import goalRouter from "./routes/Expenses/goalRouter.js";
 import analyticsRouter from "./routes/Expenses/analyticsRouter.js";
 import notificationRouter from "./routes/Expenses/notificationRouter.js";
+import expenseSettingsRouter from "./routes/Expenses/expenseSettingsRouter.js";
+import billRouter from "./routes/Expenses/billRouter.js";
+import reportRouter from "./routes/Expenses/reportRouter.js";
 
 import adminRoutes from "./routes/adminRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
@@ -107,6 +110,7 @@ import {
   smartReminderScheduler,
   monthlyAnalysisScheduler,
   recurringTransactionScheduler,
+  dailyBillReminderScheduler,
 } from "./utils/Expenses/scheduler.js";
 import { archiveCleanupScheduler } from "./utils/Referrals/scheduler.js";
 
@@ -400,6 +404,9 @@ app.use("/api/expenses/budgets", budgetRouter);
 app.use("/api/expenses/expenses", expenseRouter);
 app.use("/api/expenses/goals", goalRouter);
 app.use("/api/expenses/notifications", notificationRouter);
+app.use("/api/expenses/expense-settings", expenseSettingsRouter);
+app.use("/api/expenses/reports", reportRouter);
+app.use("/api/expenses", billRouter);
 
 // Legacy expense mounts removed for clean architecture.
 
@@ -503,6 +510,7 @@ const initializeServer = async () => {
     smartReminderScheduler();
     monthlyAnalysisScheduler();
     recurringTransactionScheduler();
+    dailyBillReminderScheduler();
 
     // Referral Archival Scheduler
     archiveCleanupScheduler();

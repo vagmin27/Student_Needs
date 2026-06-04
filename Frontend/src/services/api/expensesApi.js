@@ -59,5 +59,112 @@ export const expensesApi = {
     } catch (e) {
       return e.message;
     }
+  },
+
+  // Settings APIs
+  getSettings: async () => {
+    try {
+      const response = await expensesApiClient.get("/expense-settings");
+      return response.data.message;
+    } catch (e) {
+      return null;
+    }
+  },
+  updateSettings: async (settingsData) => {
+    try {
+      const response = await expensesApiClient.put("/expense-settings", settingsData);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+
+  // Bills APIs
+  getBills: async () => {
+    try {
+      const response = await expensesApiClient.get("/bills");
+      return response.data.message || [];
+    } catch (e) {
+      return [];
+    }
+  },
+  createBill: async (billData) => {
+    try {
+      const response = await expensesApiClient.post("/bills", billData);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+  updateBill: async (id, billData) => {
+    try {
+      const response = await expensesApiClient.put(`/bills/${id}`, billData);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+  deleteBill: async (id) => {
+    try {
+      const response = await expensesApiClient.delete(`/bills/${id}`);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+  payBill: async (id) => {
+    try {
+      const response = await expensesApiClient.patch(`/bills/${id}/pay`);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+  getBillHistory: async () => {
+    try {
+      const response = await expensesApiClient.get("/bill-history");
+      return response.data.message || [];
+    } catch (e) {
+      return [];
+    }
+  },
+  getDashboardSummary: async () => {
+    try {
+      const response = await expensesApiClient.get("/dashboard/expense-summary");
+      return response.data.message;
+    } catch (e) {
+      return null;
+    }
+  },
+  downloadReportPDF: async () => {
+    try {
+      const response = await expensesApiClient.get("/reports/pdf", { responseType: "blob" });
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "monthly_expense_report.pdf");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (e) {
+      toast.error("Failed to download PDF report");
+    }
+  },
+  downloadReportCSV: async () => {
+    try {
+      const response = await expensesApiClient.get("/reports/csv", { responseType: "blob" });
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "monthly_expense_report.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (e) {
+      toast.error("Failed to download CSV report");
+    }
   }
 };
+

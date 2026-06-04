@@ -75,10 +75,10 @@ const TopNavbar = () => {
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right">
             <p className="text-sm font-semibold text-foreground">{user?.username || user?.name || "User"}</p>
-            <Link to="/expenses-tracker/settings" className="text-xs text-brand-primary hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
+            <Link to="/student/settings?tab=expenses" className="text-xs text-brand-primary hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
           </div>
           
-          <Link to="/expenses-tracker/settings" className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-primary/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
+          <Link to="/student/settings?tab=expenses" className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-primary/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
             {(user?.username?.charAt(0) || user?.name?.charAt(0) || user?.fullName?.charAt(0) || 'U').toUpperCase()}
           </Link>
 

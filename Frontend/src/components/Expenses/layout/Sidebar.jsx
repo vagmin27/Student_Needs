@@ -6,6 +6,7 @@ import {
   MdSettings,
   MdPieChart,
   MdArrowBack,
+  MdHistory,
 } from "react-icons/md";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
@@ -24,8 +25,10 @@ const Sidebar = () => {
       icon: <MdAccountBalanceWallet size={24} />,
     },
     { name: "Analytics", path: "/expenses-tracker/analytics", icon: <MdPieChart size={24} /> },
-    { name: "Settings", path: "/expenses-tracker/settings", icon: <MdSettings size={24} /> },
+    { name: "Bill History", path: "/expenses-tracker/bills/history", icon: <MdHistory size={24} /> },
+    { name: "Settings", path: "/student/settings?tab=expenses", icon: <MdSettings size={24} /> },
   ];
+
 
   return (
     <div className={cn(
