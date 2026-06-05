@@ -9,10 +9,12 @@ const StatCard = ({ title, amount, icon, tendency, type }) => {
         <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brand-primary">
           {icon}
         </div>
-        <div className={`flex items-center gap-1 text-sm font-medium ${isPositive ? 'text-brand-accent' : tendency === 0 ? 'text-slate-400' : 'text-brand-danger'}`}>
-          {isPositive ? '↑' : tendency === 0 ? '-' : '↓'}
-          <span>{Math.abs(tendency)}%</span>
-        </div>
+        {tendency !== undefined && tendency !== null && !isNaN(Number(tendency)) && (
+          <div className={`flex items-center gap-1 text-sm font-medium ${isPositive ? 'text-brand-accent' : tendency === 0 ? 'text-slate-400' : 'text-brand-danger'}`}>
+            {isPositive ? '↑' : tendency === 0 ? '-' : '↓'}
+            <span>{Math.abs(tendency)}%</span>
+          </div>
+        )}
       </div>
       <div>
         <p className="text-slate-400 text-sm font-medium mb-1">{title}</p>

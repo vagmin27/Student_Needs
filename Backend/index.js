@@ -97,6 +97,8 @@ import notificationRouter from "./routes/Expenses/notificationRouter.js";
 import expenseSettingsRouter from "./routes/Expenses/expenseSettingsRouter.js";
 import billRouter from "./routes/Expenses/billRouter.js";
 import reportRouter from "./routes/Expenses/reportRouter.js";
+import recurringRuleRouter from "./routes/Expenses/recurringRuleRouter.js";
+
 
 import adminRoutes from "./routes/adminRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
@@ -406,6 +408,7 @@ app.use("/api/expenses/goals", goalRouter);
 app.use("/api/expenses/notifications", notificationRouter);
 app.use("/api/expenses/expense-settings", expenseSettingsRouter);
 app.use("/api/expenses/reports", reportRouter);
+app.use("/api/expenses/recurring-rules", recurringRuleRouter);
 app.use("/api/expenses", billRouter);
 
 // Legacy expense mounts removed for clean architecture.

@@ -4,15 +4,39 @@
 
 :root,
 .light-theme {
+  /* Colors */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Surface */
   --bg-primary: #f5f7fb;
   --bg-secondary: #ffffff;
   --card-bg: #ffffff;
   --sidebar-bg: linear-gradient(180deg, #1e4a8c 0%, #163d75 42%, #0f2847 100%);
   --navbar-bg: #ffffff;
+
+  /* Text */
   --text-primary: #111827;
   --text-secondary: #374151;
+
+  /* Borders */
   --border-color: #e5e7eb;
-  --accent-blue: #2563eb;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.12);
+
+  /* Retained/mapped from original */
+  --accent-blue: var(--primary);
   --accent-cyan: #0891b2;
   --accent-purple: #7c3aed;
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
@@ -35,27 +59,46 @@
   --text-black: #111827;
 }
 
+.dark,
 .dark-theme {
+  /* Colors */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Surface */
   --bg-primary: #070b1a;
   --bg-secondary: #0c1428;
   --card-bg: #1e293b;
   --sidebar-bg: rgba(10, 15, 35, 0.98);
   --navbar-bg: #0c1428;
+
+  /* Text */
   --text-primary: #F8FAFC;
   --text-secondary: #cbd5e1;
+
+  /* Borders */
   --border-color: rgba(34, 211, 238, 0.15);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.15);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.35);
+
+  /* Retained/mapped from original */
   --accent-blue: #6366f1;
   --accent-cyan: #22d3ee;
   --accent-purple: #a855f7;
   --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --shadow-glow:
-    0 0 24px rgba(34, 211, 238, 0.25), 0 0 48px rgba(168, 85, 247, 0.15);
-  --gradient-page: linear-gradient(
-    135deg,
-    #070b1a 0%,
-    #0c1428 45%,
-    #12082a 100%
-  );
+  --shadow-glow: 0 0 24px rgba(34, 211, 238, 0.25), 0 0 48px rgba(168, 85, 247, 0.15);
+  --gradient-page: linear-gradient(135deg, #070b1a 0%, #0c1428 45%, #12082a 100%);
   --glass-bg: rgba(15, 23, 42, 0.75);
   --glass-border: rgba(34, 211, 238, 0.2);
 

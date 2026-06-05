@@ -553,9 +553,14 @@ img {
 
 .uc-stat-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
   margin-bottom: 24px;
+}
+
+.uc-stat-grid article,
+.uc-stat-card {
+  height: 100%;
 }
 
 .uc-stat-grid article,
@@ -584,8 +589,8 @@ img {
 
 .uc-dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
   margin-bottom: 24px;
 }
 

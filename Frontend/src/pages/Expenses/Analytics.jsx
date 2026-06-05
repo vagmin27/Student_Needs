@@ -4,17 +4,19 @@ import { CategoryPieChart } from "../../components/Expenses/dashboard/CategoryPi
 import TrendChart from "../../components/Expenses/analytics/TrendChart";
 import WeeklySpendingChart from "../../components/Expenses/analytics/WeeklySpendingChart";
 import { MdTrendingUp, MdLightbulbOutline, MdSavings } from "react-icons/md";
+import { getUserId } from "../../utils/Expenses/authHelper";
 
 const Analytics = () => {
   const [userexp, setUserexp] = useState([]);
   const [viewType, setViewType] = useState("monthly");
   const [userdata] = useState(() => JSON.parse(localStorage.getItem("User")));
+  const userId = getUserId(userdata);
 
   useEffect(() => {
-    if (userdata?._id) {
-      expensesApi.getUserExpenses(userdata._id).then((data) => setUserexp(data || []));
+    if (userId) {
+      expensesApi.getUserExpenses(userId).then((data) => setUserexp(data || []));
     }
-  }, [userdata?._id]);
+  }, [userId]);
 
   // Insights computations
   const totalSpent = userexp.reduce((acc, curr) => acc + curr.amount, 0);

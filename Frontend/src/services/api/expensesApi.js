@@ -79,6 +79,40 @@ export const expensesApi = {
     }
   },
 
+  // Recurring Rules APIs
+  getRecurringRules: async () => {
+    try {
+      const response = await expensesApiClient.get("/recurring-rules");
+      return response.data.message || [];
+    } catch (e) {
+      return [];
+    }
+  },
+  createRecurringRule: async (ruleData) => {
+    try {
+      const response = await expensesApiClient.post("/recurring-rules", ruleData);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+  updateRecurringRule: async (id, ruleData) => {
+    try {
+      const response = await expensesApiClient.put(`/recurring-rules/${id}`, ruleData);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+  deleteRecurringRule: async (id) => {
+    try {
+      const response = await expensesApiClient.delete(`/recurring-rules/${id}`);
+      return response.data;
+    } catch (e) {
+      return e.response?.data || { success: false, message: e.message };
+    }
+  },
+
   // Bills APIs
   getBills: async () => {
     try {

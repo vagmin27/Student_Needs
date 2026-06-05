@@ -4,7 +4,9 @@ import mongoose from "mongoose";
 import userModel from "../../models/Expenses/userModel.js";
 import expenseModel from "../../models/Expenses/expenseModel.js";
 import Notification from "../../models/Expenses/notificationModel.js";
+import recurringRuleModel from "../../models/Expenses/recurringRuleModel.js";
 import sendEmailWithAttachment from "./emailSend.js";
+
 
 // ⏰ Smart reminder scheduler
 export const smartReminderScheduler = () => {
@@ -114,39 +116,57 @@ export const recurringTransactionScheduler = () => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      const recurringExpenses = await expenseModel.find({
-        isRecurring: true,
-        nextRecurringDate: { $lte: today },
+      const activeRules = await recurringRuleModel.find({
+        isActive: true,
+        isDeleted: { $ne: true },
+        nextDate: { $lte: today },
       });
 
-      for (const expense of recurringExpenses) {
-        const newExpense = await expenseModel.create({
-          userId: expense.userId,
-          title: expense.title,
-          amount: expense.amount,
-          category: expense.category,
+      for (const rule of activeRules) {
+        // Idempotency check: prevent duplicate transactions on multiple runs or crashes
+        const existingTx = await expenseModel.findOne({
+          userId: rule.userId,
+          title: rule.title,
+          amount: rule.amount,
+          category: rule.category,
           date: today,
-          type: expense.type,
-          paymentMethod: expense.paymentMethod,
-          note: expense.note,
-          isRecurring: true,
-          recurringType: expense.recurringType,
+          note: "Auto-generated from recurring rule",
         });
 
-        let nextDate = new Date(today);
-
-        if (expense.recurringType === "daily") {
-          nextDate.setDate(nextDate.getDate() + 1);
-        } else if (expense.recurringType === "weekly") {
-          nextDate.setDate(nextDate.getDate() + 7);
-        } else if (expense.recurringType === "monthly") {
-          nextDate.setMonth(nextDate.getMonth() + 1);
+        if (!existingTx) {
+          // Create actual transaction
+          await expenseModel.create({
+            userId: rule.userId,
+            title: rule.title,
+            amount: rule.amount,
+            category: rule.category,
+            date: today,
+            type: "expense",
+            paymentMethod: "UPI",
+            note: "Auto-generated from recurring rule",
+          });
+          console.log(`Auto recurring expense created: ${rule.title}`);
+        } else {
+          console.log(`Idempotency check passed: transaction for ${rule.title} already exists today. Skipping creation.`);
         }
 
-        expense.nextRecurringDate = nextDate;
-        await expense.save();
+        // Advance nextDate
+        const nextDate = new Date(rule.nextDate || today);
+        const freq = rule.frequency.toLowerCase();
+        if (freq === "daily") {
+          nextDate.setDate(nextDate.getDate() + 1);
+        } else if (freq === "weekly") {
+          nextDate.setDate(nextDate.getDate() + 7);
+        } else if (freq === "monthly") {
+          nextDate.setMonth(nextDate.getMonth() + 1);
+        } else if (freq === "yearly") {
+          nextDate.setFullYear(nextDate.getFullYear() + 1);
+        }
 
-        console.log(`Recurring expense created: ${newExpense.title}`);
+        rule.nextDate = nextDate;
+        await rule.save();
+
+        console.log(`Auto recurring expense created: ${rule.title}`);
       }
     } catch (err) {
       console.log("Recurring scheduler error:", err.message);

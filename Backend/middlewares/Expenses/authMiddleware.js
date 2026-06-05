@@ -31,8 +31,7 @@ export const verifyToken = (req, res, next) => {
       accountType: rawRole
     };
 
-    // Security: Ownership Validation
-    const requestedUserId = req.body.userId || req.query.userId || req.params.userId;
+    const requestedUserId = req.body?.userId || req.query?.userId || req.params?.userId;
     
     if (requestedUserId && requestedUserId.toString() !== unifiedUserId.toString()) {
       const response = error(403, "Access denied: You can only access your own data");
@@ -41,6 +40,7 @@ export const verifyToken = (req, res, next) => {
 
     next();
   } catch (err) {
+    console.error("verifyToken error:", err);
     const response = error(401, "Invalid or expired token");
     return res.status(response.statusCode).send(response);
   }

@@ -156,6 +156,13 @@
   }
 
   /* Global Table Styling */
+  .table-wrap,
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
   table {
     @apply w-full border-collapse text-left;
     color: var(--text-table);
