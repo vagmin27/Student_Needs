@@ -42,7 +42,7 @@ function Landing() {
                     </button>
                   </NavLink>
                   <NavLink to={TUTORIAL_PATHS.tutorLogin} className="ctaLink">
-                    <button type="button" className="bookBtn" style={{ background: "#475569" }}>
+                    <button type="button" className="bookBtn" style={{ background: "var(--neutral)" }}>
                       Tutor Login
                     </button>
                   </NavLink>

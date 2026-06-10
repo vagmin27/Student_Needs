@@ -33,8 +33,8 @@ const MonthlyExpenseChart = ({ exdata }) => {
   return (
     <div className="glass-panel p-6 flex flex-col h-full min-h-[300px]">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-bold text-white">Expense Overview</h3>
-        <select className="bg-brand-900 border border-white/10 text-slate-300 text-sm rounded-lg outline-none px-3 py-1 cursor-pointer">
+        <h3 className="text-xl font-bold text-foreground">Expense Overview</h3>
+        <select className="bg-secondary border border-border text-foreground text-sm rounded-lg outline-none px-3 py-1 cursor-pointer">
           <option>Last 6 Months</option>
           <option>This Year</option>
         </select>
@@ -42,16 +42,16 @@ const MonthlyExpenseChart = ({ exdata }) => {
       <div className="flex-1 w-full relative min-h-[220px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-            <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} />
-            <YAxis stroke="#64748b" tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value}`} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
+            <XAxis dataKey="name" stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
+            <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value}`} />
             <Tooltip 
-              cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-              contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
-              itemStyle={{ color: '#cbd5e1' }}
+              cursor={{ fill: 'var(--neutral-bg)' }}
+              contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+              itemStyle={{ color: 'var(--text-secondary)' }}
               formatter={(value) => `₹${value.toLocaleString()}`}
             />
-            <Bar dataKey="Expenses" fill="rgba(99, 102, 241, 0.8)" radius={[6, 6, 0, 0]} barSize={32} />
+            <Bar dataKey="Expenses" fill="var(--primary)" radius={[6, 6, 0, 0]} barSize={32} />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -30,21 +30,10 @@ function RemoveStudent() {
         <p>Permanently delete a student and their attendance records</p>
       </div>
 
-      <div className="card" style={{ maxWidth: 500 }}>
-        <div
-          style={{
-            background: "var(--danger-light)",
-            border: "1px solid var(--danger)",
-            borderRadius: "var(--radius-md)",
-            padding: "14px 18px",
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 10,
-            marginBottom: 24,
-          }}
-        >
-          <MdWarning size={20} color="var(--danger)" style={{ flexShrink: 0, marginTop: 1 }} />
-          <div style={{ fontSize: 13, color: "var(--danger)" }}>
+      <div className="card max-w-md">
+        <div className="bg-[var(--danger-bg)] border border-[var(--danger)] rounded-xl p-4 flex items-start gap-3 mb-6">
+          <MdWarning size={20} className="text-[var(--danger)] shrink-0 mt-0.5" />
+          <div className="text-sm text-[var(--danger)] font-medium">
             <strong>Warning:</strong> This action is irreversible. The student's record and all
             their attendance data will be permanently deleted.
           </div>
@@ -61,12 +50,11 @@ function RemoveStudent() {
               onChange={(e) => setRegister(e.target.value)}
             />
           </div>
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <div className="flex justify-end mt-6">
             <button
               type="submit"
-              className="btn btn-danger"
+              className="btn btn-danger min-w-[160px]"
               disabled={loading}
-              style={{ minWidth: 160 }}
             >
               {loading ? (
                 <><span className="spinner" /> Removing...</>

@@ -25,11 +25,11 @@ export function CategoryPieChart({ exdata }) {
 
   return (
     <div className="glass-panel p-6 flex flex-col h-full min-h-[300px]">
-      <h3 className="text-xl font-bold text-white mb-6">Expenses by Category</h3>
+      <h3 className="text-xl font-bold text-foreground mb-6">Expenses by Category</h3>
       <div className="flex-1 relative w-full h-full min-h-[220px]">
         {isEmpty ? (
           <div className="absolute inset-0 flex items-center justify-center">
-            <p className="text-slate-500 text-sm">No data available</p>
+            <p className="text-muted-foreground text-sm">No data available</p>
           </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
@@ -50,15 +50,15 @@ export function CategoryPieChart({ exdata }) {
               </Pie>
               <Tooltip 
                 formatter={(value) => `₹ ${value.toLocaleString()}`}
-                contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
-                itemStyle={{ color: '#cbd5e1' }}
+                contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+                itemStyle={{ color: 'var(--text-secondary)' }}
               />
               <Legend 
                 layout="vertical" 
                 verticalAlign="middle" 
                 align="right"
                 iconType="circle"
-                wrapperStyle={{ color: '#94a3b8', fontSize: '12px' }}
+                wrapperStyle={{ color: 'var(--text-secondary)', fontSize: '12px' }}
               />
             </PieChart>
           </ResponsiveContainer>

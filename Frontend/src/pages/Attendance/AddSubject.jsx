@@ -41,7 +41,7 @@ function AddSubject() {
         <p>Add a new subject to the system for attendance tracking</p>
       </div>
 
-      <div className="card" style={{ maxWidth: 560 }}>
+      <div className="card max-w-[560px]">
         <div className="card-title"><MdLibraryAdd /> Subject Details</div>
         <form onSubmit={addSubject}>
           <div className="form-group">
@@ -60,8 +60,8 @@ function AddSubject() {
             <label className="form-label">Year</label>
             <input name="year" className="form-input" placeholder="e.g. 2nd Year" value={formData.year} onChange={handleChange} />
           </div>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
-            <button type="submit" className="btn btn-primary" disabled={loading} style={{ minWidth: 160 }}>
+          <div className="flex justify-end mt-2">
+            <button type="submit" className="btn btn-primary min-w-[160px]" disabled={loading}>
               {loading ? <><span className="spinner" /> Adding...</> : <><MdCheckCircle /> Add Subject</>}
             </button>
           </div>

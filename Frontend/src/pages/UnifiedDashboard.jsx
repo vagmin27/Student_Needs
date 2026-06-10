@@ -21,6 +21,7 @@ import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import API, { ATTENDANCE_PATHS } from "@/services/Attendance/api";
 import { getBookings } from "@/services/api/tutorialsApi.js";
 import { expensesApi } from "@/services/api/expensesApi";
+import { getUserId } from "@/utils/Expenses/authHelper.js";
 import { opportunitiesApi } from "@/services/Referrals/opportunities.js";
 import { studentProfileApi } from "@/services/Referrals/studentProfile.js";
 import { DashboardSection } from "@/components/dashboard/shared/DashboardSection";
@@ -99,18 +100,19 @@ const UnifiedDashboard = () => {
     setLoading(true);
     try {
       const expenseUser = JSON.parse(localStorage.getItem("User") || "null");
+      const expenseUserId = getUserId(expenseUser);
 
       const [attendanceRes, expenseRes, bookingRes, opRes, profileRes, billsRes, summaryRes] =
         await Promise.allSettled([
           API.get(ATTENDANCE_PATHS.student),
-          expenseUser?._id
-            ? expensesApi.getUserExpenses(expenseUser._id)
+          expenseUserId
+            ? expensesApi.getUserExpenses(expenseUserId)
             : Promise.resolve([]),
           getBookings(),
           opportunitiesApi.getOpportunities(),
           studentProfileApi.getProfileStatus(),
-          expenseUser?._id ? expensesApi.getBills() : Promise.resolve([]),
-          expenseUser?._id ? expensesApi.getDashboardSummary() : Promise.resolve(null),
+          expenseUserId ? expensesApi.getBills() : Promise.resolve([]),
+          expenseUserId ? expensesApi.getDashboardSummary() : Promise.resolve(null),
         ]);
 
       if (attendanceRes.status === "fulfilled") {
@@ -268,13 +270,14 @@ const UnifiedDashboard = () => {
   const handleQuickAddExpenseSubmit = async (e) => {
     e.preventDefault();
     const expenseUser = JSON.parse(localStorage.getItem("User") || "null");
-    if (!expenseUser) {
+    const expenseUserId = getUserId(expenseUser);
+    if (!expenseUserId) {
       toast.error("Please login to your expense tracker first");
       return;
     }
     const res = await expensesApi.createExpense({
       ...quickExpenseForm,
-      userId: expenseUser._id,
+      userId: expenseUserId,
       amount: Number(quickExpenseForm.amount)
     });
     if (res) {
@@ -661,6 +664,7 @@ const UnifiedDashboard = () => {
               className="premium-input text-foreground h-10 w-full"
               placeholder="0.00"
               min="0.01"
+              step="0.01"
               required
             />
           </div>

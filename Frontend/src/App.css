@@ -251,20 +251,26 @@ img {
   justify-content: center;
   min-height: 42px;
   padding: 0 22px;
-  border-radius: 10px;
-  font-weight: 700;
-  transition: all 0.2s ease;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: background-color var(--transition-fast) var(--ease-standard),
+              transform var(--transition-normal) var(--ease-standard),
+              box-shadow var(--transition-normal) var(--ease-standard) !important;
 }
 
 .uc-primary-button {
   background: var(--primary);
-  color: var(--primary-foreground) !important;
+  color: #ffffff !important;
 }
 
 .uc-primary-button:hover {
-  opacity: 0.9;
+  background: var(--primary-hover);
   transform: translateY(-1px);
   box-shadow: var(--shadow-glow);
+}
+
+.uc-primary-button:active {
+  transform: translateY(0);
 }
 
 .uc-secondary-button {
@@ -274,8 +280,14 @@ img {
 }
 
 .uc-secondary-button:hover {
-  background: var(--bg-hover);
+  background: var(--bg-primary);
+  border-color: var(--primary);
+  color: var(--primary);
   transform: translateY(-1px);
+}
+
+.uc-secondary-button:active {
+  transform: translateY(0);
 }
 
 .uc-hero {
@@ -442,18 +454,21 @@ img {
   gap: 20px;
   min-height: 126px;
   padding: 22px;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   background: var(--card-bg);
   color: var(--text-primary);
-  transition: all 0.2s ease-in-out;
+  transition: background-color var(--transition-normal) var(--ease-standard),
+              border-color var(--transition-normal) var(--ease-standard),
+              transform var(--transition-normal) var(--ease-standard),
+              box-shadow var(--transition-normal) var(--ease-standard);
 }
 
 .uc-role-card:hover {
-  background: var(--bg-hover);
-  border-color: var(--accent-cyan);
+  background: var(--bg-secondary);
+  border-color: var(--primary);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-md);
 }
 
 .uc-role-card strong {
@@ -553,9 +568,14 @@ img {
 
 .uc-stat-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
   margin-bottom: 24px;
+}
+
+.uc-stat-grid article,
+.uc-stat-card {
+  height: 100%;
 }
 
 .uc-stat-grid article,
@@ -584,8 +604,8 @@ img {
 
 .uc-dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
   margin-bottom: 24px;
 }
 
@@ -743,14 +763,16 @@ img {
   min-height: 46px;
   padding: 0 14px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: var(--bg-secondary);
   color: var(--text-primary);
+  transition: border-color var(--transition-fast) var(--ease-standard),
+              box-shadow var(--transition-fast) var(--ease-standard);
 }
 
 .uc-field input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary)/20;
+  box-shadow: 0 0 0 3px var(--info-bg);
 }
 
 .uc-field small,

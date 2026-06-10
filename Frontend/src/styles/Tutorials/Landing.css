@@ -66,7 +66,7 @@ opacity: 0.9;
   padding: 0.9rem 2.2rem;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  background: var(--primary);
   color: var(--text-white);
   font-weight: 600;
   cursor: pointer;
@@ -75,8 +75,9 @@ opacity: 0.9;
 
 /* HOVER */
 .bookBtn:hover {
-transform: translateY(-3px);
-box-shadow: 0 10px 25px rgba(255, 122, 24, 0.4);
+  transform: translateY(-3px);
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* ACTIVE */
@@ -136,8 +137,9 @@ box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 
 /* ================= FOOTER ================= */
 .footer {
-  background: #0f172a;
-  color: var(--text-white);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-primary);
   padding: 2.5rem 1.5rem;
   text-align: center;
   margin-top: auto;
@@ -150,16 +152,16 @@ box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 
 .footerContent p {
   font-size: 0.95rem;
-  color: var(--text-white);
+  color: var(--text-secondary);
   opacity: 0.8;
   margin-bottom: 1.5rem;
 }
 
 .footerBottom {
   font-size: 0.85rem;
-  color: var(--text-white);
+  color: var(--text-secondary);
   opacity: 0.6;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid var(--border-color);
   padding-top: 1rem;
 }
 
@@ -183,6 +185,6 @@ padding: 3rem 1.5rem;
 }
 /* ================= FIX NAVBAR ON LANDING ================= */
 .navHome {
-  background: rgba(102, 122, 111, 0.95);  /* olive color */
+  background: var(--navbar-bg) !important;
   backdrop-filter: blur(8px);
 }

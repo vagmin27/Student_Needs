@@ -45,8 +45,8 @@ export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
         </Pie>
         <Tooltip 
           formatter={(value) => `₹ ${value.toLocaleString()}`}
-          contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
-          itemStyle={{ color: '#cbd5e1' }}
+          contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+          itemStyle={{ color: 'var(--text-secondary)' }}
           animationDuration={300}
         />
         <Legend 
@@ -54,7 +54,7 @@ export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
           verticalAlign="bottom" 
           align="center"
           iconType="circle"
-          wrapperStyle={{ color: '#94a3b8', fontSize: '12px', paddingTop: '10px' }}
+          wrapperStyle={{ color: 'var(--text-secondary)', fontSize: '12px', paddingTop: '10px' }}
         />
       </PieChart>
     </ChartContainer>

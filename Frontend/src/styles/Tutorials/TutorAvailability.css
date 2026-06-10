@@ -107,14 +107,14 @@
 }
 
 .availability-input:focus {
-  border-color: var(--accent-cyan, #ff7a2f);
+  border-color: var(--primary);
 }
 
 /* ➕ Add button */
 .add-btn {
   margin-top: 8px;
   padding: 10px 14px;
-  background: #4CAF50;
+  background: var(--success);
   color: var(--text-white);
   border: none;
   border-radius: 6px;
@@ -123,14 +123,14 @@
 }
 
 .add-btn:hover {
-  background: #3e9442;
+  opacity: 0.9;
 }
 
 /* 🔘 Submit button */
 .save-btn {
   margin-top: 20px;
   padding: 14px;
-  background: #ff7a2f;
+  background: var(--primary);
   border: none;
   color: var(--text-white);
   font-weight: bold;
@@ -140,7 +140,7 @@
 }
 
 .save-btn:hover {
-  background: #e66a20;
+  background: var(--primary-hover);
   transform: translateY(-2px);
 }
 

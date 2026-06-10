@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { expensesApi } from "../../services/api/expensesApi";
+import { getUserId } from "../../utils/Expenses/authHelper";
 import StatCard from "../../components/Expenses/dashboard/StatCard";
 import { CategoryPieChart } from "../../components/Expenses/dashboard/CategoryPieChart";
 import MonthlyExpenseChart from "../../components/Expenses/dashboard/MonthlyExpenseChart";
@@ -40,6 +41,7 @@ const STUDENT_CATEGORIES = [
 const Home = () => {
   const navigate = useNavigate();
   const [userdata] = useState(() => JSON.parse(localStorage.getItem("User")));
+  const userId = getUserId(userdata);
   const [userexp, setUserexp] = useState([]);
   const [bills, setBills] = useState([]);
   const [summary, setSummary] = useState(null);
@@ -81,7 +83,7 @@ const Home = () => {
 
     try {
       const [expData, billsData, summaryData, settingsData] = await Promise.all([
-        expensesApi.getUserExpenses(userdata._id),
+        expensesApi.getUserExpenses(userId),
         expensesApi.getBills(),
         expensesApi.getDashboardSummary(),
         expensesApi.getSettings()
@@ -106,7 +108,7 @@ const Home = () => {
     e.preventDefault();
     const res = await expensesApi.createExpense({
       ...expenseForm,
-      userId: userdata?._id,
+      userId: userId,
       amount: Number(expenseForm.amount),
       date: expenseForm.date.toISOString(),
       title: expenseForm.title || expenseForm.category
@@ -537,6 +539,7 @@ const Home = () => {
               className="premium-input text-foreground h-10 w-full"
               placeholder="0.00"
               min="0.01"
+              step="0.01"
               required
             />
           </div>

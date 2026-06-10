@@ -12,18 +12,18 @@ const TrendChart = ({ data, labels }) => {
       <AreaChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
         <defs>
           <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="rgba(99, 102, 241, 1)" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="rgba(99, 102, 241, 1)" stopOpacity={0}/>
+            <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="var(--primary)" stopOpacity={0}/>
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-        <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} />
-        <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
+        <XAxis dataKey="name" stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
+        <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
         <Tooltip 
-          contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
-          itemStyle={{ color: '#cbd5e1' }}
+          contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+          itemStyle={{ color: 'var(--text-secondary)' }}
         />
-        <Area type="monotone" dataKey="Amount" stroke="rgba(99, 102, 241, 1)" fillOpacity={1} fill="url(#colorAmount)" />
+        <Area type="monotone" dataKey="Amount" stroke="var(--primary)" fillOpacity={1} fill="url(#colorAmount)" />
       </AreaChart>
     </ResponsiveContainer>
   );

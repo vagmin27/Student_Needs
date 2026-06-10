@@ -25,7 +25,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
       {/* Backdrop */}
       <div 
-        className={`absolute inset-0 bg-brand-900/80 backdrop-blur-sm transition-opacity duration-300 ${animateIn ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity duration-300 ${animateIn ? 'opacity-100' : 'opacity-0'}`}
         onClick={onClose}
       />
 
@@ -34,11 +34,11 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         className={`relative w-full max-w-lg glass-panel max-h-[90vh] overflow-y-auto flex flex-col transition-all duration-300 transform ${animateIn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-white/10 bg-brand-800/90 backdrop-blur-md rounded-t-2xl">
-          <h2 className="text-xl font-bold text-white tracking-wide">{title}</h2>
+        <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-border bg-card/95 backdrop-blur-md rounded-t-2xl">
+          <h2 className="text-xl font-bold text-foreground tracking-wide">{title}</h2>
           <button 
             onClick={onClose}
-            className="p-2 -mr-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+            className="p-2 -mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

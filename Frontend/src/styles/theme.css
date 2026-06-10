@@ -2,82 +2,155 @@
    GLOBAL THEME TOKENS — Student Needs Platform
    ====================================================== */
 
+:root {
+  /* Global Animations */
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 350ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 :root,
 .light-theme {
-  --bg-primary: #f5f7fb;
+  /* Colors */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  
+  /* Semantic Status Colors (Light Theme) */
+  --success: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.08);
+  --warning: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.08);
+  --danger: #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.08);
+  --info: #3b82f6;
+  --info-bg: rgba(59, 130, 246, 0.08);
+  --neutral: #64748b;
+  --neutral-bg: rgba(100, 116, 139, 0.08);
+
+  /* Surface */
+  --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
   --card-bg: #ffffff;
   --sidebar-bg: linear-gradient(180deg, #1e4a8c 0%, #163d75 42%, #0f2847 100%);
   --navbar-bg: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --border-color: #e5e7eb;
-  --accent-blue: #2563eb;
-  --accent-cyan: #0891b2;
-  --accent-purple: #7c3aed;
-  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --shadow-glow: 0 4px 16px rgba(37, 99, 235, 0.2);
-  --gradient-page: #f5f7fb;
-  --glass-bg: #ffffff;
-  --glass-border: #e5e7eb;
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+
+  /* Borders */
+  --border-color: #e2e8f0;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+
+  /* Retained/mapped from original */
+  --accent-blue: var(--primary);
+  --accent-cyan: #0ea5e9;
+  --accent-purple: #8b5cf6;
+  --shadow-soft: var(--shadow-sm);
+  --shadow-glow: 0 4px 16px rgba(79, 70, 229, 0.15);
+  --gradient-page: #f8fafc;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(226, 232, 240, 0.8);
 
   /* Centralized Typography Variables */
-  --text-heading: #111827;
-  --text-paragraph: #374151;
-  --text-label: #111827;
-  --text-table: #111827;
-  --text-input: #111827;
-  --text-button: #111827;
-  --text-navbar: #111827;
+  --text-heading: #0f172a;
+  --text-paragraph: #475569;
+  --text-label: #0f172a;
+  --text-table: #0f172a;
+  --text-input: #0f172a;
+  --text-button: #0f172a;
+  --text-navbar: #0f172a;
   --text-sidebar: #ffffff;
-  --text-placeholder: #6b7280;
+  --text-placeholder: #94a3b8;
   --text-white: #ffffff;
-  --text-black: #111827;
+  --text-black: #0f172a;
 }
 
+.dark,
 .dark-theme {
-  --bg-primary: #070b1a;
-  --bg-secondary: #0c1428;
-  --card-bg: #1e293b;
-  --sidebar-bg: rgba(10, 15, 35, 0.98);
-  --navbar-bg: #0c1428;
-  --text-primary: #F8FAFC;
-  --text-secondary: #cbd5e1;
-  --border-color: rgba(34, 211, 238, 0.15);
+  /* Colors */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  
+  /* Semantic Status Colors (Dark Theme) */
+  --success: #34d399;
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --warning: #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --info: #60a5fa;
+  --info-bg: rgba(96, 165, 250, 0.12);
+  --neutral: #94a3b8;
+  --neutral-bg: rgba(148, 163, 184, 0.12);
+
+  /* Surface */
+  --bg-primary: #030712;
+  --bg-secondary: #090d16;
+  --card-bg: #0f172a;
+  --sidebar-bg: rgba(9, 13, 22, 0.98);
+  --navbar-bg: #090d16;
+
+  /* Text */
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+
+  /* Borders */
+  --border-color: #1f2937;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.25);
+
+  /* Retained/mapped from original */
   --accent-blue: #6366f1;
   --accent-cyan: #22d3ee;
   --accent-purple: #a855f7;
-  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --shadow-glow:
-    0 0 24px rgba(34, 211, 238, 0.25), 0 0 48px rgba(168, 85, 247, 0.15);
-  --gradient-page: linear-gradient(
-    135deg,
-    #070b1a 0%,
-    #0c1428 45%,
-    #12082a 100%
-  );
-  --glass-bg: rgba(15, 23, 42, 0.75);
-  --glass-border: rgba(34, 211, 238, 0.2);
+  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 24px rgba(34, 211, 238, 0.2), 0 0 48px rgba(168, 85, 247, 0.1);
+  --gradient-page: linear-gradient(135deg, #030712 0%, #090d16 45%, #0f172a 100%);
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(31, 41, 55, 0.7);
 
   /* Centralized Typography Variables */
-  --text-heading: #F8FAFC;
-  --text-paragraph: #cbd5e1;
-  --text-label: #F8FAFC;
-  --text-table: #F8FAFC;
-  --text-input: #F8FAFC;
-  --text-button: #F8FAFC;
-  --text-navbar: #F8FAFC;
-  --text-sidebar: #F8FAFC;
-  --text-placeholder: #94a3b8;
-  --text-white: #F8FAFC;
-  --text-black: #000000;
+  --text-heading: #f9fafb;
+  --text-paragraph: #9ca3af;
+  --text-label: #f9fafb;
+  --text-table: #f9fafb;
+  --text-input: #f9fafb;
+  --text-button: #f9fafb;
+  --text-navbar: #f9fafb;
+  --text-sidebar: #f9fafb;
+  --text-placeholder: #6b7280;
+  --text-white: #f9fafb;
+  --text-black: #030712;
 }
 
 /* Theme switch — only root, not every descendant */
 html {
   transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
+    background-color var(--transition-normal) var(--ease-standard),
+    color var(--transition-normal) var(--ease-standard);
 }
 
 html,
@@ -400,7 +473,7 @@ button {
   background: var(--sidebar-bg) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   color: #ffffff !important;
-  transition: all 0.3s ease;
+  transition: background-color var(--transition-normal) var(--ease-standard), border-color var(--transition-normal) var(--ease-standard);
 }
 
 /* Light mode gradient/glow */
@@ -438,7 +511,7 @@ button {
 .premium-sidebar nav a,
 .premium-sidebar nav button {
   color: #F8FAFC !important;
-  transition: all 0.2s ease-in-out;
+  transition: background-color var(--transition-fast) var(--ease-standard), color var(--transition-fast) var(--ease-standard), transform var(--transition-fast) var(--ease-standard);
 }
 
 .premium-sidebar nav a:hover,

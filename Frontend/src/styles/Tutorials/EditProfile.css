@@ -114,7 +114,7 @@ select.form-control {
   padding: 0.8rem 1.2rem;
   border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  background: var(--primary);
   color: var(--text-white);
   font-weight: 500;
   cursor: pointer;
@@ -124,12 +124,13 @@ select.form-control {
 /* 🔥 HOVER */
 .btnEditProfile:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(255, 122, 24, 0.3);
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* ❌ DELETE BUTTON FIX */
 #uploadProfileCard button:last-of-type {
-  background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
+  background: var(--danger);
 }
 
 /* 💾 SAVE BUTTON */

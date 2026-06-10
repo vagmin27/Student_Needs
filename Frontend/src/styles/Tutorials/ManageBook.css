@@ -47,8 +47,8 @@ transition: all 0.2s ease;
 
 /* 🔥 UPCOMING HIGHLIGHT */
 .scheduleDivBook.upcoming {
-border-left: 5px solid #2ecc71;
-background: rgba(46, 204, 113, 0.1);
+border-left: 5px solid var(--success);
+background: var(--success-bg);
 }
 
 /* HOVER EFFECT */
@@ -78,18 +78,18 @@ font-weight: 600;
 
 /* STATUS COLORS */
 .status-booked {
-background: #e6f9f0;
-color: #2ecc71;
+background: var(--success-bg);
+color: var(--success);
 }
 
 .status-completed {
-background: #e6f0ff;
-color: #3b82f6;
+background: var(--info-bg);
+color: var(--info);
 }
 
 .status-cancelled {
-background: #ffe6e6;
-color: #e63946;
+background: var(--danger-bg);
+color: var(--danger);
 }
 
 /* BUTTON GROUP */
@@ -112,24 +112,24 @@ transition: all 0.3s ease;
 
 /* DETAILS BUTTON */
 .checkClassBtn {
-  background: #4c6ef5;
+  background: var(--primary);
   color: var(--text-white);
 }
 
 .checkClassBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(76, 110, 245, 0.3);
+  background: var(--primary-hover);
 }
 
 /* DELETE BUTTON */
 .deleteBtnBook {
-  background: #e63946;
+  background: var(--danger);
   color: var(--text-white);
 }
 
 .deleteBtnBook:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(230, 57, 70, 0.3);
+  opacity: 0.9;
 }
 
 /* EMPTY STATE */

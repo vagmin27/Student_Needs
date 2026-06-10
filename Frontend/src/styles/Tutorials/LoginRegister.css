@@ -94,7 +94,7 @@ body {
 /* ✨ BUTTON HOVER */
 .btn:hover {
   transform: translateY(-2px);
-  background: var(--primary)/90;
+  background: var(--primary-hover);
 }
 
 /* 🔗 REGISTER LINK */

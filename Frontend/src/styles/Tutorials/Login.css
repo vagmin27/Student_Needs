@@ -95,7 +95,7 @@
 }
 
 .btn:hover {
-  background: var(--primary)/90;
+  background: var(--primary-hover);
 }
 
 /* 🔗 REGISTER */

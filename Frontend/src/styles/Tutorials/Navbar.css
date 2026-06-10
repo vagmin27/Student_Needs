@@ -13,11 +13,11 @@
 }
 
 .navAll {
-  background: #667a6f;
+  background: var(--navbar-bg);
 }
 
 .navbarActive {
-  background: #aec7bb;
+  background: var(--navbar-bg);
   backdrop-filter: blur(10px);
 }
 

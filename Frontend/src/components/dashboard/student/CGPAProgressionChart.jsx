@@ -22,34 +22,34 @@ export const CGPAProgressionChart = React.memo(({ data = [] }) => {
       <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
         <defs>
           <linearGradient id="colorCgpa" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="rgba(99, 102, 241, 1)" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="rgba(99, 102, 241, 1)" stopOpacity={0}/>
+            <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="var(--primary)" stopOpacity={0}/>
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
         <XAxis 
           dataKey="semester" 
-          stroke="#94a3b8" 
+          stroke="var(--text-secondary)" 
           tickLine={false} 
           axisLine={false} 
           tick={{ fontSize: 12 }} 
         />
         <YAxis 
-          stroke="#94a3b8" 
+          stroke="var(--text-secondary)" 
           tickLine={false} 
           axisLine={false} 
           domain={['dataMin - 0.5', 10]} 
           tick={{ fontSize: 12 }}
         />
         <Tooltip 
-          contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: 'none', color: '#fff', borderRadius: '8px' }}
-          itemStyle={{ color: '#cbd5e1' }}
+          contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+          itemStyle={{ color: 'var(--text-secondary)' }}
           animationDuration={300}
         />
         <Area 
           type="monotone" 
           dataKey="cgpa" 
-          stroke="rgba(99, 102, 241, 1)" 
+          stroke="var(--primary)" 
           strokeWidth={2}
           fillOpacity={1} 
           fill="url(#colorCgpa)" 

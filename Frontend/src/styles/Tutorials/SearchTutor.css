@@ -46,7 +46,7 @@
   width: 60px;
   height: 100%;
   border: none;
-  background: linear-gradient(135deg, #667a6f, #8c9f95);
+  background: var(--primary);
   color: var(--text-white);
   cursor: pointer;
   font-size: 18px;
@@ -55,7 +55,7 @@
 
 /* BUTTON HOVER */
 .searchButton:hover {
-  background: #5f6f66;
+  background: var(--primary-hover);
 }
 
 /* IMAGE SECTION */
@@ -94,7 +94,7 @@
 }
 
 .flash-warning {
-  border-left: 5px solid #ffc65a;
+  border-left: 5px solid var(--warning);
 }
 
 /* REMOVE OLD STYLES */

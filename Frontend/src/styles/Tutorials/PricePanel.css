@@ -55,15 +55,15 @@
 .pricing-features-items:last-child {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #4caf50;
+  color: var(--success);
   border-top: none;
   margin-top: 0.5rem;
 }
 
-/* REMOVE OLD BORDERS */
+/* KEEP CONSISTENT BORDERS ON ALL PLAN CARDS */
 .price-panelDiv:first-child,
 .price-panelDiv:last-child {
-  border: none;
+  border: 1px solid var(--border-color);
 }
 
 /* LIST RESET */

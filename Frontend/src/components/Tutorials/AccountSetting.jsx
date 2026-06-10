@@ -37,11 +37,11 @@ const STUDENT_CATEGORIES = [
   "Other"
 ];
 
-function AccountSetting() {
+function AccountSetting({ mode }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "profile";
+  const activeTab = mode === "expenses-only" ? "expenses" : (searchParams.get("tab") || "profile");
   const role = (user?.role || user?.accountType || "student").toLowerCase();
 
   // Settings State
@@ -275,71 +275,75 @@ function AccountSetting() {
   return (
     <main className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 animate-fade-in-up">
       {/* Title */}
-      <div>
-        <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
-          <span className="text-brand-primary">Settings Panel</span>
-        </h2>
-        <p className="text-muted-foreground text-sm mt-1">
-          Customize your profile, account preferences, theme options, notifications, and expense budgets.
-        </p>
-      </div>
+      {mode !== "expenses-only" && (
+        <div>
+          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
+            <span className="text-brand-primary">Settings Panel</span>
+          </h2>
+          <p className="text-muted-foreground text-sm mt-1">
+            Customize your profile, account preferences, theme options, notifications, and expense budgets.
+          </p>
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* Navigation Sidebar/Tabs */}
-        <div className="w-full lg:w-64 bg-card border border-border rounded-2xl p-4 flex flex-row lg:flex-col gap-2 overflow-x-auto shrink-0 select-none">
-          <button
-            onClick={() => handleTabChange("profile")}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
-              activeTab === "profile" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-            }`}
-          >
-            <User className="w-4 h-4" />
-            <span>Profile Settings</span>
-          </button>
-          
-          <button
-            onClick={() => handleTabChange("account")}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
-              activeTab === "account" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-            }`}
-          >
-            <SettingsIcon className="w-4 h-4" />
-            <span>Account Preference</span>
-          </button>
-
-          <button
-            onClick={() => handleTabChange("notifications")}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
-              activeTab === "notifications" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-            }`}
-          >
-            <Bell className="w-4 h-4" />
-            <span>Notifications</span>
-          </button>
-
-          {showExpenseTab && (
+        {mode !== "expenses-only" && (
+          <div className="w-full lg:w-64 bg-card border border-border rounded-2xl p-4 flex flex-row lg:flex-col gap-2 overflow-x-auto shrink-0 select-none">
             <button
-              onClick={() => handleTabChange("expenses")}
+              onClick={() => handleTabChange("profile")}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
-                activeTab === "expenses" 
+                activeTab === "profile" 
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
-              <Wallet className="w-4 h-4" />
-              <span>💰 Expense Tracker</span>
+              <User className="w-4 h-4" />
+              <span>Profile Settings</span>
             </button>
-          )}
-        </div>
+            
+            <button
+              onClick={() => handleTabChange("account")}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                activeTab === "account" 
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+              }`}
+            >
+              <SettingsIcon className="w-4 h-4" />
+              <span>Account Preference</span>
+            </button>
+
+            <button
+              onClick={() => handleTabChange("notifications")}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                activeTab === "notifications" 
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+              }`}
+            >
+              <Bell className="w-4 h-4" />
+              <span>Notifications</span>
+            </button>
+
+            {showExpenseTab && (
+              <button
+                onClick={() => handleTabChange("expenses")}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                  activeTab === "expenses" 
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                }`}
+              >
+                <Wallet className="w-4 h-4" />
+                <span>💰 Expense Tracker</span>
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Content Section */}
-        <div className="flex-1 w-full min-w-0">
+        <div className={mode === "expenses-only" ? "w-full" : "flex-1 w-full min-w-0"}>
           {/* Tab 1: Profile */}
           {activeTab === "profile" && (
             <div className="glass-panel p-6 bg-card border border-border rounded-2xl shadow-sm">
@@ -860,6 +864,7 @@ function AccountSetting() {
               className="premium-input text-foreground h-10 w-full"
               placeholder="0.00"
               min="0.01"
+              step="0.01"
               required
             />
           </div>

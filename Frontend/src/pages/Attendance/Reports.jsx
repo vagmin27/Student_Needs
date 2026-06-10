@@ -41,11 +41,11 @@ function Reports() {
         <p>Export attendance data as a CSV file for any date range</p>
       </div>
 
-      <div className="card" style={{ maxWidth: 560 }}>
+      <div className="card max-w-lg">
         <div className="card-title"><MdCalendarToday /> Select Date Range</div>
         <form onSubmit={downloadReport}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            <div className="form-group" style={{ marginBottom: 0 }}>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-group mb-0">
               <label className="form-label">Start Date</label>
               <input
                 type="date"
@@ -54,7 +54,7 @@ function Reports() {
                 onChange={(e) => setStart(e.target.value)}
               />
             </div>
-            <div className="form-group" style={{ marginBottom: 0 }}>
+            <div className="form-group mb-0">
               <label className="form-label">End Date</label>
               <input
                 type="date"
@@ -66,26 +66,16 @@ function Reports() {
           </div>
 
           {start && end && start <= end && (
-            <div
-              style={{
-                marginTop: 16,
-                padding: "10px 14px",
-                background: "var(--accent-light)",
-                borderRadius: "var(--radius-md)",
-                fontSize: 13,
-                color: "var(--accent)",
-              }}
-            >
+            <div className="mt-4 p-3 bg-[var(--accent-light)] text-[var(--accent)] text-sm rounded-xl font-medium">
               Downloading report from <strong>{start}</strong> to <strong>{end}</strong>
             </div>
           )}
 
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}>
+          <div className="flex justify-end mt-6">
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary min-w-[180px]"
               disabled={loading}
-              style={{ minWidth: 180 }}
             >
               {loading ? (
                 <><span className="spinner" /> Downloading...</>

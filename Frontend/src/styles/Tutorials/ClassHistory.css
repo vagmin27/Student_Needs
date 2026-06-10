@@ -77,7 +77,7 @@
   padding: 0.5rem 1rem;
   border-radius: 8px;
   border: none;
-  background: linear-gradient(135deg, #4c6ef5, #5c7cfa);
+  background: var(--primary);
   color: var(--text-white);
   font-weight: 500;
   cursor: pointer;
@@ -87,7 +87,8 @@
 /* BUTTON HOVER */
 .commentBtnHistory:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(76, 110, 245, 0.3);
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* MOBILE RESPONSIVE */

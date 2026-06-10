@@ -107,7 +107,7 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", paddingTop: 80 }}>
+      <div className="flex justify-center pt-20">
         <span className="spinner spinner-lg" />
       </div>
     );
@@ -136,7 +136,7 @@ function Dashboard() {
         <div className="stat-card">
           <div className="stat-info">
             <div className="stat-label">Present Today</div>
-            <div className="stat-value" style={{ color: "var(--success)" }}>{presentStudents.length}</div>
+            <div className="stat-value text-[var(--success)]">{presentStudents.length}</div>
             <div className="stat-sub">{presentPct}% attendance rate</div>
           </div>
           <div className="stat-icon green"><MdCheckCircle /></div>
@@ -144,7 +144,7 @@ function Dashboard() {
         <div className="stat-card">
           <div className="stat-info">
             <div className="stat-label">Absent Today</div>
-            <div className="stat-value" style={{ color: "var(--danger)" }}>{absentStudents.length}</div>
+            <div className="stat-value text-[var(--danger)]">{absentStudents.length}</div>
             <div className="stat-sub">For selected date</div>
           </div>
           <div className="stat-icon red"><MdCancel /></div>
@@ -152,7 +152,7 @@ function Dashboard() {
         <div className="stat-card">
           <div className="stat-info">
             <div className="stat-label">Latest Session</div>
-            <div className="stat-value" style={{ fontSize: 16, paddingTop: 6 }}>
+            <div className="stat-value text-base pt-1.5">
               {latestSubject || "—"}
             </div>
             <div className="stat-sub">{latestDate || "No sessions yet"}</div>
@@ -166,41 +166,40 @@ function Dashboard() {
         <div className="card-title"><MdCalendarToday /> View Attendance By Date</div>
         <input
           type="date"
-          className="form-input"
-          style={{ maxWidth: 220 }}
+          className="form-input max-w-[220px]"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
         />
       </div>
 
       {/* Present / Absent Lists */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginBottom: 20 }}>
-        <div className="card" style={{ borderLeft: "4px solid var(--success)", marginBottom: 0 }}>
-          <div className="card-title" style={{ color: "var(--success)" }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+        <div className="card border-l-4 border-l-[var(--success)] mb-0">
+          <div className="card-title text-[var(--success)]">
             <MdCheckCircle /> Present ({presentStudents.length})
           </div>
           {presentStudents.length > 0 ? (
             presentStudents?.map((s, i) => (
-              <div key={i} style={{ padding: "6px 0", borderBottom: "1px solid var(--border)", fontSize: 14, color: "var(--text-secondary)" }}>
+              <div key={i} className="py-1.5 border-b border-border text-sm text-muted-foreground">
                 {s}
               </div>
             ))
           ) : (
-            <p style={{ color: "var(--text-muted)", fontSize: 14 }}>No records for this date</p>
+            <p className="text-muted-foreground text-sm">No records for this date</p>
           )}
         </div>
-        <div className="card" style={{ borderLeft: "4px solid var(--danger)", marginBottom: 0 }}>
-          <div className="card-title" style={{ color: "var(--danger)" }}>
+        <div className="card border-l-4 border-l-[var(--danger)] mb-0">
+          <div className="card-title text-[var(--danger)]">
             <MdCancel /> Absent ({absentStudents.length})
           </div>
           {absentStudents.length > 0 ? (
             absentStudents?.map((s, i) => (
-              <div key={i} style={{ padding: "6px 0", borderBottom: "1px solid var(--border)", fontSize: 14, color: "var(--text-secondary)" }}>
+              <div key={i} className="py-1.5 border-b border-border text-sm text-muted-foreground">
                 {s}
               </div>
             ))
           ) : (
-            <p style={{ color: "var(--text-muted)", fontSize: 14 }}>No records for this date</p>
+            <p className="text-muted-foreground text-sm">No records for this date</p>
           )}
         </div>
       </div>
@@ -214,7 +213,7 @@ function Dashboard() {
       ) : (
         <div className="card">
           <div className="empty-state">
-            <MdBarChart style={{ fontSize: 48, display: "block", margin: "0 auto 12px", opacity: 0.3 }} />
+            <MdBarChart className="w-12 h-12 block mx-auto mb-3 opacity-30" />
             <p>No attendance data to display yet</p>
           </div>
         </div>

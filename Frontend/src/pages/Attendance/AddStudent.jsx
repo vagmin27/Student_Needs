@@ -7,7 +7,7 @@ function AddStudent() {
         <h1>Add Student</h1>
         <p>Register a new student into the attendance system</p>
       </div>
-      <div className="card" style={{ maxWidth: 720 }}>
+      <div className="card max-w-[720px]">
         <StudentForm />
       </div>
     </div>

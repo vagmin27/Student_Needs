@@ -76,7 +76,7 @@ function Attendance() {
       {/* Filters */}
       <div className="card">
         <div className="filter-row">
-          <div style={{ flex: 1, minWidth: 180 }}>
+          <div className="flex-1 min-w-[180px]">
             <label className="form-label">Subject</label>
             <select
               className="form-select"
@@ -89,7 +89,7 @@ function Attendance() {
               ))}
             </select>
           </div>
-          <div style={{ flex: 1, minWidth: 180 }}>
+          <div className="flex-1 min-w-[180px]">
             <label className="form-label">Date</label>
             <input
               type="date"
@@ -103,11 +103,11 @@ function Attendance() {
 
       {/* Student List */}
       <div className="card">
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <div className="card-title" style={{ marginBottom: 0 }}>
+        <div className="flex items-center justify-between mb-4">
+          <div className="card-title !mb-0">
             Students ({filtered.length})
             {markedCount > 0 && (
-              <span className="badge badge-indigo" style={{ marginLeft: 8 }}>{markedCount} marked</span>
+              <span className="badge badge-indigo ml-2">{markedCount} marked</span>
             )}
           </div>
         </div>
@@ -168,12 +168,11 @@ function Attendance() {
           </div>
         )}
 
-        <div style={{ marginTop: 20, display: "flex", justifyContent: "flex-end" }}>
+        <div className="mt-5 flex justify-end">
           <button
-            className="btn btn-primary"
+            className="btn btn-primary min-w-[180px]"
             onClick={submitAttendance}
             disabled={loading}
-            style={{ minWidth: 180 }}
           >
             {loading ? <><span className="spinner" /> Submitting...</> : "Submit Attendance"}
           </button>

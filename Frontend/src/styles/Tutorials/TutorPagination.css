@@ -31,25 +31,27 @@
 
 /* PREV BUTTON */
 .leftButton {
-  background: #f1f3f5;
+  background: var(--bg-secondary);
   color: var(--text-paragraph);
+  border: 1px solid var(--border-color);
 }
 
 /* NEXT BUTTON */
 .rightButton {
-  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  background: var(--primary);
   color: var(--text-white);
 }
 
-/* HOVER EFFECT */
+/* PREV BUTTON HOVER */
 .leftButton:hover {
-  background: #e9ecef;
+  background: var(--bg-hover);
   transform: translateY(-2px);
 }
 
 .rightButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(255, 122, 24, 0.3);
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* ICON SPACING */

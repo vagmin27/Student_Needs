@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../../components/Expenses/ui/Modal";
 import { AiOutlineEdit, AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { expensesApi } from "../../services/api/expensesApi";
+import { getUserId } from "../../utils/Expenses/authHelper";
+import { toast } from "react-hot-toast";
 
 const RecurringTransactions = () => {
-  // NEW: get userId
   const user = JSON.parse(localStorage.getItem("User"));
-  const userId = user?._id;
+  const userId = getUserId(user);
 
-  const [recurringData, setRecurringData] = useState(() => {
-    const saved = localStorage.getItem(`recurring_tx_${userId}`);
-    return saved ? JSON.parse(saved) : [];
-  });
-
+  const [recurringData, setRecurringData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
@@ -22,29 +21,96 @@ const RecurringTransactions = () => {
     nextDate: new Date().toISOString().substring(0, 10),
   });
 
-  // UPDATED: save per user
-  useEffect(() => {
-    localStorage.setItem(
-      `recurring_tx_${userId}`,
-      JSON.stringify(recurringData),
-    );
-  }, [recurringData, userId]);
-
-  const handleToggle = (id) => {
-    setRecurringData((prev) =>
-      prev?.map((tx) => (tx.id === id ? { ...tx, isActive: !tx.isActive } : tx)),
-    );
+  const fetchRules = async () => {
+    setIsLoading(true);
+    try {
+      const rules = await expensesApi.getRecurringRules();
+      setRecurringData(rules || []);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleDelete = (id) => {
+  const migrateLocalRules = async (rules) => {
+    try {
+      for (const rule of rules) {
+        await expensesApi.createRecurringRule({
+          title: rule.title,
+          amount: Number(rule.amount),
+          frequency: rule.frequency,
+          category: rule.category,
+          nextDate: rule.nextDate,
+          isActive: rule.isActive !== false,
+        });
+      }
+      localStorage.removeItem(`recurring_tx_${userId}`);
+    } catch (err) {
+      console.error("Migration failed:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      const fetchAndMigrate = async () => {
+        try {
+          const dbRules = await expensesApi.getRecurringRules();
+          const saved = localStorage.getItem(`recurring_tx_${userId}`);
+          const localRules = saved ? JSON.parse(saved) : [];
+          
+          if (localRules.length > 0 && dbRules.length === 0) {
+            await migrateLocalRules(localRules);
+            const updatedRules = await expensesApi.getRecurringRules();
+            setRecurringData(updatedRules || []);
+          } else {
+            setRecurringData(dbRules || []);
+          }
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchAndMigrate();
+    } else {
+      setIsLoading(false);
+    }
+  }, [userId]);
+
+  const handleToggle = async (id, currentActive) => {
+    try {
+      const res = await expensesApi.updateRecurringRule(id, { isActive: !currentActive });
+      if (res.statusCode === 200) {
+        toast.success("Rule status updated!");
+        fetchRules();
+      } else {
+        toast.error(res.message || "Failed to update rule status");
+      }
+    } catch (err) {
+      toast.error("Failed to update status.");
+    }
+  };
+
+  const handleDelete = async (id) => {
     if (window.confirm("Delete this recurring rule?")) {
-      setRecurringData((prev) => prev?.filter((tx) => tx.id !== id));
+      try {
+        const res = await expensesApi.deleteRecurringRule(id);
+        if (res.statusCode === 200) {
+          toast.success("Recurring rule deleted successfully!");
+          fetchRules();
+        } else {
+          toast.error(res.message || "Failed to delete rule");
+        }
+      } catch (err) {
+        toast.error("Failed to delete rule.");
+      }
     }
   };
 
   const openForm = (tx = null) => {
     if (tx) {
-      setEditingId(tx.id);
+      setEditingId(tx._id);
       setFormData({
         title: tx.title,
         amount: tx.amount,
@@ -65,32 +131,43 @@ const RecurringTransactions = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editingId) {
-      setRecurringData((prev) =>
-        prev?.map((tx) =>
-          tx.id === editingId
-            ? {
-                ...tx,
-                ...formData,
-                amount: Number(formData.amount),
-                nextDate: new Date(formData.nextDate).toISOString(),
-              }
-            : tx,
-        ),
-      );
-    } else {
-      const newTx = {
-        ...formData,
-        id: Date.now().toString(),
-        amount: Number(formData.amount),
-        nextDate: new Date(formData.nextDate).toISOString(),
-        isActive: true,
-      };
-      setRecurringData([...recurringData, newTx]);
+    try {
+      if (editingId) {
+        const res = await expensesApi.updateRecurringRule(editingId, {
+          title: formData.title,
+          amount: Number(formData.amount),
+          frequency: formData.frequency,
+          category: formData.category,
+          nextDate: new Date(formData.nextDate).toISOString(),
+        });
+        if (res.statusCode === 200) {
+          toast.success("Rule updated successfully!");
+          setIsModalOpen(false);
+          fetchRules();
+        } else {
+          toast.error(res.message || "Failed to update rule");
+        }
+      } else {
+        const res = await expensesApi.createRecurringRule({
+          title: formData.title,
+          amount: Number(formData.amount),
+          frequency: formData.frequency,
+          category: formData.category,
+          nextDate: new Date(formData.nextDate).toISOString(),
+        });
+        if (res.statusCode === 201) {
+          toast.success("Recurring rule created successfully!");
+          setIsModalOpen(false);
+          fetchRules();
+        } else {
+          toast.error(res.message || "Failed to create rule");
+        }
+      }
+    } catch (err) {
+      toast.error("Failed to save recurring rule.");
     }
-    setIsModalOpen(false);
   };
 
   const getStatus = (nextDateStr, isActive) => {
@@ -155,7 +232,7 @@ const RecurringTransactions = () => {
 
           return (
             <div
-              key={card.id}
+              key={card._id}
               className={`relative overflow-hidden rounded-2xl p-6 transition-transform hover:-translate-y-2 group ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-border"}`}
             >
               <div
@@ -239,7 +316,7 @@ const RecurringTransactions = () => {
                 const status = getStatus(tx.nextDate, tx.isActive);
                 return (
                   <tr
-                    key={tx.id}
+                    key={tx._id}
                     className="border-b border-border hover:bg-muted/10 transition-colors group"
                   >
                     <td className="px-6 py-4">
@@ -271,7 +348,7 @@ const RecurringTransactions = () => {
                     <td className="px-6 py-4 text-center">
                       {/* Premium Toggle Switch */}
                       <button
-                        onClick={() => handleToggle(tx.id)}
+                        onClick={() => handleToggle(tx._id, tx.isActive)}
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${tx.isActive ? "bg-brand-primary" : "bg-slate-600"}`}
                       >
                         <span
@@ -288,7 +365,7 @@ const RecurringTransactions = () => {
                           <AiOutlineEdit size={20} />
                         </button>
                         <button
-                          onClick={() => handleDelete(tx.id)}
+                          onClick={() => handleDelete(tx._id)}
                           className="p-2 text-muted-foreground hover:text-brand-danger hover:bg-brand-danger/10 rounded-lg transition-colors"
                         >
                           <AiOutlineDelete size={20} />
