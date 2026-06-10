@@ -218,7 +218,7 @@ router.post("/availability", async (req, res) => {
         time,
         isBooked: false,
         meetingLink: "",
-        subject: "",
+        subject: subjects.length > 0 ? subjects[0] : "",
       };
     });
 
@@ -251,7 +251,7 @@ router.get("/schedule", async (req, res) => {
     if (!tutorId && !studentId && req.headers.authorization?.startsWith("Bearer")) {
       try {
         const token = req.headers.authorization.split(" ")[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || "mySuperSecretKey123");
+        const decoded = jwt.verify(token, getJwtSecret());
         resolvedRole = (decoded.role || decoded.accountType || "student").toLowerCase();
 
         if (resolvedRole === "tutor" || resolvedRole === "teacher") {
@@ -283,9 +283,32 @@ router.get("/schedule", async (req, res) => {
         await tutor.save();
       }
 
+      // Attach booking status to slots
+      const scheduleWithStatus = await Promise.all(upcomingSlots.map(async (slot) => {
+        const slotObj = slot.toObject();
+        if (slotObj.isBooked) {
+          const booking = await Booking.findOne({ 
+            tutorId, 
+            date: slotObj.date, 
+            time: slotObj.time, 
+            status: { 
+              $in: [
+                "Booked",
+                "pending",
+                "accepted",
+                "upcoming",
+                "in_progress"
+              ] 
+            } 
+          }).sort({ createdAt: -1 });
+          if (booking) slotObj.bookingStatus = booking.status;
+        }
+        return slotObj;
+      }));
+
       return res.json({
         status: "ok",
-        data: { schedule: upcomingSlots },
+        data: { schedule: scheduleWithStatus },
       });
     }
 
@@ -493,8 +516,7 @@ router.get("/:id/availability", async (req, res) => {
       return res.status(404).json({ msg: "Tutor not found" });
     }
 
-    const availableSlots =
-      tutor.schedule.filter((slot) => !slot.isBooked) || [];
+    const availableSlots = tutor.schedule || [];
 
     res.json({
       schedule: availableSlots,
@@ -517,14 +539,37 @@ router.delete("/schedule/:slotId", async (req, res) => {
     const tutor = await Tutor.findById(tutorId);
     if (!tutor) return res.status(404).json({ message: "Tutor not found" });
 
-    const before = tutor.schedule.length;
-    tutor.schedule = tutor.schedule.filter(
-      (slot) => slot._id.toString() !== req.params.slotId
-    );
-
-    if (tutor.schedule.length === before) {
+    const slot = tutor.schedule.find(s => s._id.toString() === req.params.slotId);
+    if (!slot) {
       return res.status(404).json({ message: "Slot not found" });
     }
+
+    const activeBooking = await Booking.findOne({
+      tutorId,
+      date: slot.date,
+      time: slot.time,
+      status: {
+        $in: ["upcoming", "accepted", "in_progress", "Booked"]
+      }
+    });
+
+    if (activeBooking) {
+      return res.status(400).json({
+        msg: "Cannot delete an active scheduled class."
+      });
+    }
+
+    // Clean up any pending or declined bookings tied to this slot so they aren't orphaned
+    await Booking.deleteMany({
+      tutorId,
+      date: slot.date,
+      time: slot.time,
+      status: { $in: ["pending", "declined"] }
+    });
+
+    tutor.schedule = tutor.schedule.filter(
+      (s) => s._id.toString() !== req.params.slotId
+    );
 
     await tutor.save();
     res.json({ message: "Slot deleted successfully" });

@@ -85,7 +85,6 @@ function TutorAvailability() {
 
       <div
         className={isUnifiedLayout ? "" : "availability-page h-[calc(100vh-100px)] overflow-y-auto"}
-        style={{}}
         data-lenis-prevent={isUnifiedLayout ? "false" : "true"}
       >
         <div className="availability-container">

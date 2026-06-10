@@ -27,11 +27,8 @@ function TutorSchedulePage() {
   }, []);
 
   const deleteSlot = async (slotId) => {
-    const slot = schedule.find(s => s._id === slotId);
-    if (slot?.isBooked) {
-      toast.error("Cannot delete a booked slot. Cancel the booking first.");
-      return;
-    }
+    // The backend now determines if a slot can be safely deleted based on the active booking status.
+    // We defer the validation to the API endpoint to ensure up-to-date business logic.
 
     if (!window.confirm("Delete this slot? This cannot be undone.")) return;
 
@@ -45,7 +42,7 @@ function TutorSchedulePage() {
       toast.success("Slot deleted ✅");
     } catch (err) {
       console.error(err);
-      toast.error("Error deleting slot ❌");
+      toast.error(err.response?.data?.msg || err.response?.data?.message || "Error deleting slot ❌");
     }
   };
 
@@ -72,7 +69,7 @@ function TutorSchedulePage() {
               
               <p className="text-sm text-muted-foreground">
                 <strong>📖 Subject:</strong>{" "}
-                {item.subject || item.subjects || "N/A"}
+                {item.subject || item.subjects?.[0] || "N/A"}
               </p>
               
               {item.tutor && (
@@ -83,55 +80,74 @@ function TutorSchedulePage() {
               
               <p className="text-sm text-muted-foreground">
                 <strong>Status:</strong>{" "}
-                {item.isBooked ? "✅ Booked" : "⏳ Available"}
+                {item.bookingCount > 0 ? `👥 ${item.bookingCount} enrolled` : "⏳ Available"}
               </p>
 
-              <div className="mt-4 flex flex-col sm:flex-row gap-2">
-                <input
-                  type="text"
-                  placeholder="Paste Zoom / Google Meet link"
-                  value={item.meetingLink || ""}
-                  onChange={(e) => {
-                    const updated = [...schedule];
-                    updated[index].meetingLink = e.target.value;
-                    setSchedule(updated);
-                  }}
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                />
+              {[
+                "Booked",
+                "pending",
+                "accepted",
+                "upcoming",
+                "in_progress",
+              ].includes(item.bookingStatus) ? (
+                <>
+                  <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="text"
+                      placeholder="Paste Zoom / Google Meet link"
+                      value={item.meetingLink || ""}
+                      onChange={(e) => {
+                        const updated = [...schedule];
+                        updated[index].meetingLink = e.target.value;
+                        setSchedule(updated);
+                      }}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    />
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={async () => {
-                    try {
-                      await API.post("/tutor/save-link", {
-                        slotId: item._id,
-                        link: item.meetingLink,
-                      });
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={async () => {
+                        try {
+                          await API.post("/tutor/save-link", {
+                            slotId: item._id,
+                            link: item.meetingLink,
+                          });
 
-                      toast.success("Link saved ✅");
-                    } catch (err) {
-                      console.error(err);
-                      toast.error("Error ❌");
-                    }
-                  }}
-                >
-                  Save Link
-                </Button>
-              </div>
+                          toast.success("Link saved ✅");
+                        } catch (err) {
+                          console.error(err);
+                          toast.error("Error ❌");
+                        }
+                      }}
+                    >
+                      Save Link
+                    </Button>
+                  </div>
 
-              {item.meetingLink && (
-                <p className="text-sm mt-2">
-                  <a
-                    href={item.meetingLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    Join Class 🚀
-                  </a>
-                </p>
-              )}
+                  {item.meetingLink && (
+                    <div className="text-sm mt-2 flex gap-3">
+                      <a
+                        href={item.meetingLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-primary hover:underline font-bold"
+                      >
+                        🚀 Join Class (Open)
+                      </a>
+                      <button 
+                        onClick={() => {
+                          navigator.clipboard.writeText(item.meetingLink);
+                          toast.success("Link copied!");
+                        }}
+                        className="text-primary hover:underline"
+                      >
+                        📋 Copy Link
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : null}
 
               <div className="pt-2">
                 <Button

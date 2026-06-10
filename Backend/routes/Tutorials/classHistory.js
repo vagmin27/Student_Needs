@@ -43,9 +43,8 @@ router.post("/", async (req, res) => {
           "schedule.time": time,
         },
         {
-          $set: {
-            "schedule.$.isBooked": true,
-            "schedule.$.studentId": userId,
+          $inc: {
+            "schedule.$.bookingCount": 1
           },
         },
       );

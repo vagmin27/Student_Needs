@@ -128,7 +128,7 @@ function BookClass() {
 
         const availableSlots = (res.data.schedule || [])?.filter((slot) => {
           const slotDate = new Date(slot.date);
-          return slotDate >= today && !slot.isBooked;
+          return slotDate >= today;
         });
 
         setAvailability(availableSlots);
@@ -233,14 +233,27 @@ function BookClass() {
     } ${tutorProfile?.lName || tutorProfile?.last_name || ""}`.trim();
     const subject =
       selectedSlot.subject ||
-      (Array.isArray(tutorProfile?.subjects)
+      (Array.isArray(tutorProfile?.subjects) && tutorProfile.subjects.length > 0
         ? tutorProfile.subjects[0]
-        : tutorProfile?.subjects);
+        : tutorProfile?.subjects) ||
+      tutorProfile?.expertise ||
+      "General";
 
     try {
+      console.table({
+        tutorId,
+        studentId: user?.id || user?._id,
+        slotId: selectedSlot._id,
+        subject,
+        date: selectedSlot.date,
+        time: selectedSlot.time,
+      });
+
       const res = await API.post("/booking", {
         tutorId,
         tutorName,
+        studentId: user?.id || user?._id,
+        slotId: selectedSlot._id,
         subject,
         date: selectedSlot.date,
         time: selectedSlot.time,
@@ -258,6 +271,10 @@ function BookClass() {
       }
     } catch (err) {
       console.error("Booking error:", err);
+      if (err.response?.status === 409) {
+        alert("You already booked this slot. Please choose another available slot.");
+        return;
+      }
       alert(err.response?.data?.msg || err.message || "Booking failed ❌");
     }
   };

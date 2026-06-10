@@ -5,7 +5,6 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { DashboardSection } from "../../components/dashboard/shared/DashboardSection";
 import { DashboardCard } from "../../components/dashboard/shared/DashboardCard";
 import { BookingActivityTimeline } from "../../components/dashboard/tutor/BookingActivityTimeline";
-import { RecentRequestsFeed } from "../../components/dashboard/tutor/RecentRequestsFeed";
 import { apiClient } from "@/services/apiClient";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { Button } from "@/components/ui/button";
@@ -41,15 +40,6 @@ function TutorDashboard() {
     };
   }, [on, off, fetchAnalytics]);
 
-  const handleAcceptRequest = useCallback((id) => {
-    // TODO: implement accept logic
-    toast.error("Feature coming soon");
-  }, []);
-
-  const handleDeclineRequest = useCallback((id) => {
-    // TODO: implement decline logic
-    toast.error("Feature coming soon");
-  }, []);
 
   return (
     <DashboardLayout pageTitle="Tutor Dashboard" role="tutor">
@@ -123,19 +113,6 @@ function TutorDashboard() {
         </div>
 
         <div className="space-y-6">
-          <DashboardCard title="Pending Requests" description="Students waiting for your approval">
-            {analytics.recentRequests.length > 0 ? (
-              <RecentRequestsFeed 
-                requests={analytics.recentRequests} 
-                onAccept={handleAcceptRequest} 
-                onDecline={handleDeclineRequest} 
-              />
-            ) : (
-              <div className="flex h-32 items-center justify-center text-muted-foreground border border-dashed border-border rounded-lg bg-secondary/20 text-sm">
-                No pending requests.
-              </div>
-            )}
-          </DashboardCard>
 
           <DashboardCard title="Activity Timeline" description="Your recent booking activity">
             {analytics.activityTimeline.length > 0 ? (

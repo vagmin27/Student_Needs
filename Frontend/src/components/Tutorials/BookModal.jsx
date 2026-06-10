@@ -87,7 +87,6 @@ function BookModal({
                           key={`${date}-${slot.time}-${i}`}
                           type="button"
                           onClick={() => setSelectedSlot(slot)}
-                          disabled={slot.isBooked}
                           style={{
                             padding: "8px 16px",
                             borderRadius: "8px",
@@ -97,10 +96,15 @@ function BookModal({
                             background: isSelected ? "#fff3ec" : "#fff",
                             color: isSelected ? "#ff7a2f" : "#333",
                             fontWeight: isSelected ? "bold" : "normal",
-                            cursor: slot.isBooked ? "not-allowed" : "pointer",
+                            cursor: "pointer",
                           }}
                         >
-                          {slot.time}
+                          <div>{slot.time}</div>
+                          {slot.bookingCount > 0 && (
+                            <div style={{ fontSize: "12px", opacity: 0.8, marginTop: "4px" }}>
+                              👥 {slot.bookingCount} enrolled
+                            </div>
+                          )}
                         </button>
                       );
                     })}

@@ -96,15 +96,19 @@ function ManageBookingPage() {
                       <span
                         style={{
                           color:
-                            b.status === "Booked"
+                            b.status === "Booked" || b.status === "pending"
                               ? "orange"
-                              : b.status === "Completed"
-                                ? "green"
-                                : "red",
+                              : b.status === "upcoming" || b.status === "accepted"
+                                ? "blue"
+                                : b.status === "in_progress"
+                                  ? "green"
+                                  : b.status === "Completed" || b.status === "completed"
+                                    ? "#10b981"
+                                    : "red",
                           fontWeight: "bold",
                         }}
                       >
-                        {b.status || "Booked"}
+                        {b.status || "pending"}
                       </span>
                     </p>
 
@@ -122,7 +126,7 @@ function ManageBookingPage() {
 
                   {/* ACTION BUTTONS */}
                   <div className="actionButtons">
-                    {b.status === "Booked" && (
+                    {(b.status === "Booked" || b.status === "pending" || b.status === "upcoming" || b.status === "accepted") && (
                       <button
                         onClick={() => cancelBooking(b._id)}
                         style={{
@@ -138,6 +142,44 @@ function ManageBookingPage() {
                       >
                         ❌ Cancel Booking
                       </button>
+                    )}
+                    
+                    {(b.status === "upcoming" || b.status === "in_progress") && (
+                      <div style={{ marginTop: "10px" }}>
+                        {b.meetingLink ? (
+                          <button
+                            onClick={async () => {
+                              if (b.status === "upcoming") {
+                                try {
+                                  await API.patch(`/booking/${b._id}/status`, { status: "in_progress" });
+                                  setBookings((prev) =>
+                                    prev?.map((bk) => (bk._id === b._id ? { ...bk, status: "in_progress" } : bk)),
+                                  );
+                                } catch (err) {
+                                  console.error("Failed to update status to in_progress:", err);
+                                }
+                              }
+                              window.open(b.meetingLink, "_blank");
+                            }}
+                            style={{
+                              background: "#0d6efd",
+                              color: "#fff",
+                              border: "none",
+                              borderRadius: "8px",
+                              padding: "8px 18px",
+                              cursor: "pointer",
+                              fontWeight: "bold",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            🚀 Join Class
+                          </button>
+                        ) : (
+                          <p style={{ fontSize: "14px", color: "#6c757d", fontStyle: "italic", marginTop: "10px" }}>
+                            Waiting for tutor to publish meeting link
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>

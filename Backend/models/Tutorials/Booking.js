@@ -36,8 +36,12 @@ time: {
 
 status: {
   type: String,
-  enum: ["Booked", "Completed", "Cancelled"],
-  default: "Booked",
+  enum: ["pending", "accepted", "upcoming", "in_progress", "completed", "declined", "Booked", "Completed", "Cancelled"],
+  default: "pending",
+},
+meetingLink: {
+  type: String,
+  default: "",
 },
 
 },
