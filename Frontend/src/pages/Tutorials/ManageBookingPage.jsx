@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API, { getBookings } from "@/services/api/tutorialsApi.js";
 import "../../styles/Tutorials/ManageBook.css";
 import Navbar from "../../components/Tutorials/Navbar";
@@ -8,6 +9,7 @@ import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboar
 function ManageBookingPage() {
   const isUnifiedLayout = useContext(LayoutContext);
   const [bookings, setBookings] = useState([]);
+  const navigate = useNavigate();
 
   // ✅ FETCH BOOKINGS
   const fetchedRef = useRef(false);
@@ -127,21 +129,36 @@ function ManageBookingPage() {
                   {/* ACTION BUTTONS */}
                   <div className="actionButtons">
                     {(b.status === "Booked" || b.status === "pending" || b.status === "upcoming" || b.status === "accepted") && (
-                      <button
-                        onClick={() => cancelBooking(b._id)}
-                        style={{
-                          marginTop: "10px",
-                          background: "#dc3545",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "8px",
-                          padding: "8px 18px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        ❌ Cancel Booking
-                      </button>
+                      <div style={{ display: "flex", gap: "10px", marginTop: "10px", flexWrap: "wrap" }}>
+                        <button
+                          onClick={() => cancelBooking(b._id)}
+                          style={{
+                            background: "#dc3545",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "8px 18px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ❌ Cancel Booking
+                        </button>
+                        <button
+                          onClick={() => navigate(`/tutorials/chat?tutorId=${b.tutorId}`)}
+                          style={{
+                            background: "#10b981",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "8px 18px",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          💬 Message Tutor
+                        </button>
+                      </div>
                     )}
                     
                     {(b.status === "upcoming" || b.status === "in_progress") && (

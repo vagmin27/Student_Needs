@@ -45,8 +45,27 @@ export const ChatSidebar = ({
     setOpenMenuId(openMenuId === chatId ? null : chatId);
   };
 
+  // Deduplicate conversations (merging legacy duplicates by partner)
+  const deduplicatedChats = [];
+  const seenPartners = new Set();
+
+  chats.forEach((chat) => {
+    const partnerId = chat.partner?._id?.toString();
+    if (!partnerId) return;
+    if (!seenPartners.has(partnerId)) {
+      seenPartners.add(partnerId);
+      deduplicatedChats.push({ ...chat });
+    } else {
+      // Merge unread counts from legacy duplicates
+      const existing = deduplicatedChats.find(c => c.partner?._id?.toString() === partnerId);
+      if (existing) {
+        existing.unreadCount += (chat.unreadCount || 0);
+      }
+    }
+  });
+
   // Filter conversations
-  const filteredChats = chats.filter((chat) => {
+  const filteredChats = deduplicatedChats.filter((chat) => {
     const isArchived = !!chat.isArchived;
     const matchesTab = filterTab === "archived" ? isArchived : !isArchived;
     
@@ -58,6 +77,15 @@ export const ChatSidebar = ({
       chat.partner?.expertise?.toLowerCase().includes(search.toLowerCase());
 
     return matchesSearch;
+  });
+
+  // Apply sorting priority: Unread -> recent message -> recent booking
+  filteredChats.sort((a, b) => {
+    if (a.unreadCount > 0 && b.unreadCount === 0) return -1;
+    if (b.unreadCount > 0 && a.unreadCount === 0) return 1;
+    const dateA = a.latestAt ? new Date(a.latestAt).getTime() : 0;
+    const dateB = b.latestAt ? new Date(b.latestAt).getTime() : 0;
+    return dateB - dateA;
   });
 
   return (
@@ -158,7 +186,7 @@ export const ChatSidebar = ({
                 <div className="flex-1 min-w-0 flex flex-col gap-0.5">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[14px] font-semibold truncate text-foreground leading-tight">
-                      {chat.partner?.name}
+                      {chat.partner?.name || (chat.partner?.role === "student" ? "Unknown Student" : "Unknown Tutor")}
                     </span>
                     <span className="text-[10px] text-muted-foreground shrink-0 select-none">
                       {formatTime(chat.lastMessageTime || chat.updatedAt)}
@@ -166,7 +194,7 @@ export const ChatSidebar = ({
                   </div>
 
                   <span className="text-[11px] text-primary/80 font-medium truncate select-none leading-none">
-                    {chat.partner?.expertise || chat.partner?.role}
+                    {chat.partner?.role === "tutor" ? "Tutor" : "Student"} • {chat.booking?.subject || chat.partner?.expertise || "No Subjects"}
                   </span>
 
                   <div className="flex items-center justify-between gap-2 mt-1">
@@ -178,7 +206,7 @@ export const ChatSidebar = ({
                     >
                       {chat.lastMessage?.deleted
                         ? "This message was deleted"
-                        : chat.lastMessage?.message || (chat.lastMessage?.attachments?.length > 0 ? "sent attachment" : "") || "No messages yet"}
+                        : chat.lastMessage?.text || chat.lastMessage?.message || (chat.lastMessage?.attachments?.length > 0 ? "sent attachment" : "") || "No messages yet"}
                     </p>
 
                     {/* Unread Counter Badge */}

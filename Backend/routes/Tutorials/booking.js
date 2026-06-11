@@ -4,6 +4,8 @@ import Booking from "../../models/Tutorials/Booking.js";
 import Tutor from "../../models/Tutorials/Tutor.js";
 import { notificationService } from "../../services/NotificationService.js";
 import { resolveBookingStudentId } from "../../utils/Tutorials/resolveBookingStudentId.js";
+import TutorialConversation from "../../models/Tutorials/TutorialConversation.js";
+import TutorialMessage from "../../models/Tutorials/TutorialMessage.js";
 
 const router = express.Router();
 
@@ -73,6 +75,52 @@ router.post("/", async (req, res) => {
 
       await booking.save();
       console.log("booking saved");
+
+      try {
+        // Find or create 1:1 conversation
+        let conversation = await TutorialConversation.findOne({
+          "participants.userId": { $all: [finalUserId, tutorId] }
+        });
+
+        if (!conversation) {
+          conversation = new TutorialConversation({
+            participants: [
+              { userId: finalUserId, role: "student" },
+              { userId: tutorId, role: "tutor" }
+            ],
+            studentId: finalUserId,
+            studentModel: "User",
+            tutorId,
+            activeBookings: [booking._id],
+            latestBookingId: booking._id,
+            latestSubject: subject,
+          });
+        } else {
+          if (!conversation.activeBookings.includes(booking._id)) {
+            conversation.activeBookings.push(booking._id);
+          }
+          conversation.latestBookingId = booking._id;
+          conversation.latestSubject = subject;
+        }
+
+        const message = await TutorialMessage.create({
+          conversationId: conversation._id,
+          senderId: finalUserId,
+          receiverId: tutorId,
+          type: "system",
+          text: `Class request submitted • Subject: ${subject}`,
+        });
+
+        conversation.latestMessage = message._id;
+        conversation.latestAt = message.createdAt;
+        
+        // Ensure student unread count increments for tutor since student sent it
+        conversation.unreadCount.tutor += 1;
+
+        await conversation.save();
+      } catch (chatErr) {
+        console.error("auto chat creation failed", chatErr);
+      }
     } catch (e) {
       console.error("booking save failed", e);
       throw e;
@@ -287,6 +335,47 @@ router.patch("/:id/status", async (req, res) => {
     }
 
     await booking.save();
+
+    // Auto system message on status change
+    try {
+      const conversation = await TutorialConversation.findOne({
+        "participants.userId": { $all: [booking.userId, booking.tutorId] }
+      });
+      if (conversation) {
+        let systemMsgText = "";
+        let type = "system";
+
+        if (status === "accepted" || status === "upcoming") {
+           systemMsgText = "Class confirmed";
+           if (booking.meetingLink) {
+              type = "meeting_link";
+              systemMsgText = "Meeting link available";
+           }
+        } else if (status === "in_progress") {
+           systemMsgText = "Class started";
+        } else if (status === "completed") {
+           systemMsgText = "Class completed";
+        }
+
+        if (systemMsgText) {
+          const message = await TutorialMessage.create({
+            conversationId: conversation._id,
+            senderId: booking.tutorId, 
+            receiverId: booking.userId, 
+            type,
+            text: systemMsgText,
+          });
+
+          conversation.latestMessage = message._id;
+          conversation.latestAt = message.createdAt;
+          // Increment unread count for student
+          conversation.unreadCount.student += 1;
+          await conversation.save();
+        }
+      }
+    } catch (chatErr) {
+      console.error("Failed to auto-create chat message on status change", chatErr);
+    }
 
     if (booking) {
       await notificationService.createAndEmitNotification({
