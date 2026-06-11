@@ -52,7 +52,7 @@ export default function ChatPage() {
   const loadChats = async (selectFirst = false) => {
     try {
       setLoadingChats(true);
-      const { data } = await tutorsApiClient.get("/chat/conversations");
+      const { data } = await tutorsApiClient.get("/tutorial-chat/conversations");
       if (data?.success) {
         setChats(data.data);
 
@@ -73,17 +73,24 @@ export default function ChatPage() {
             handleSelectChat(target);
             return;
           } else if (currentRole === "student") {
-            // Auto create conversation if student opens a tutor profile chat directly
+            // Try to initialize the conversation if the user has a valid booking
             try {
-              const createRes = await tutorsApiClient.post("/chat/conversation", { tutorId: targetUserId });
-              if (createRes.data?.success) {
-                const newChat = createRes.data.data;
-                setChats(prev => [newChat, ...prev]);
-                handleSelectChat(newChat);
-                return;
+              const initRes = await tutorsApiClient.post("/tutorial-chat/init", { tutorId: targetUserId });
+              if (initRes.data?.success) {
+                // Reload chats to get the full formatted conversation object and select it
+                const refreshRes = await tutorsApiClient.get("/tutorial-chat/conversations");
+                if (refreshRes.data?.success) {
+                  setChats(refreshRes.data.data);
+                  const newTarget = refreshRes.data.data.find(c => c.partner?._id === targetUserId);
+                  if (newTarget) {
+                    handleSelectChat(newTarget);
+                    return;
+                  }
+                }
               }
             } catch (err) {
-              console.error("Auto-start conversation failed:", err);
+              // DO NOT auto create conversation without booking
+              toast.error(err.response?.data?.msg || "You can only chat with tutors you have booked.");
             }
           }
         }
@@ -134,10 +141,13 @@ export default function ChatPage() {
   const loadMessages = async (chatId, page = 1) => {
     if (page === 1) setLoadingMessages(true);
     try {
-      const { data } = await tutorsApiClient.get(`/chat/messages/${chatId}?page=${page}&limit=20`);
+      const { data } = await tutorsApiClient.get(`/tutorial-chat/${chatId}/messages?page=${page}&limit=20`);
       if (data?.success) {
         if (page === 1) {
-          setMessages(data.data);
+          setMessages(data.data.messages);
+          if (data.data.isReadOnly) {
+            setActiveChat(prev => ({ ...prev, booking: { ...prev.booking, isReadOnly: true, statusMessage: data.data.statusMessage }}));
+          }
         } else {
           // Append older messages to top of stack
           setMessages(prev => [...data.data, ...prev]);
@@ -254,8 +264,8 @@ export default function ChatPage() {
   // 4. Send Message HTTP Call
   const handleSendMessage = async (chatId, text) => {
     try {
-      // POST call to API, socket server will automatically relay but we also append for optimistic update
-      const { data } = await tutorsApiClient.post("/chat/message", { conversationId: chatId, message: text });
+      // POST call to API
+      const { data } = await tutorsApiClient.post(`/tutorial-chat/${chatId}/messages`, { text });
       if (data?.success) {
         const savedMsg = data.data;
         setMessages(prev => {
@@ -270,30 +280,10 @@ export default function ChatPage() {
 
   // 5. Upload Attachment HTTP Call
   const handleUploadAttachment = async (chatId, file, text) => {
-    try {
-      const formData = new FormData();
-      formData.append("conversationId", chatId);
-      formData.append("message", text || "");
-      formData.append("files", file); // Key matches backend require file
-
-      const { data } = await tutorsApiClient.post("/chat/message", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      if (data?.success) {
-        const savedMsg = data.data;
-        setMessages(prev => {
-          if (prev.some(m => m._id === savedMsg._id)) return prev;
-          return [...prev, savedMsg];
-        });
-        toast.success("Attachment sent successfully!");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "File upload failed.");
-      throw err;
-    }
+    toast.error("File upload is not yet supported in tutorial chat.");
+    // Implementation for attachment
   };
+
 
   // 6. Edit Message
   const handleEditMessage = async (messageId, text) => {

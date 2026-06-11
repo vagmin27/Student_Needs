@@ -134,10 +134,10 @@ export const ChatWindow = ({
 
           <div className="flex flex-col min-w-0">
             <span className="text-sm font-semibold text-foreground truncate leading-tight">
-              {chat.partner?.name}
+              {chat.partner?.name || (chat.partner?.role === "student" ? "Unknown Student" : "Unknown Tutor")}
             </span>
             <span className="text-[11px] text-muted-foreground/75 truncate select-none leading-none">
-              {chat.partner?.expertise || (isOnline ? "Online" : "Offline")}
+              {chat.booking?.subject || chat.partner?.expertise || (isOnline ? "Online" : "Offline")}
             </span>
           </div>
         </div>
@@ -204,6 +204,50 @@ export const ChatWindow = ({
         </div>
       </div>
 
+      {/* Meeting Link Banner */}
+      {chat.booking?.meetingLink && !chat.booking?.isReadOnly && (
+        <div className="bg-primary/10 border-b border-primary/20 px-4 py-3 flex flex-col md:flex-row gap-3 items-start md:items-center justify-between shrink-0">
+          <div className="flex items-center gap-2">
+            <Video className="w-5 h-5 text-primary" />
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold text-foreground">Class Meeting Link Available</span>
+              <span className="text-xs text-muted-foreground">Join your scheduled class here.</span>
+            </div>
+          </div>
+          <div className="flex gap-2 w-full md:w-auto">
+            {chat.partner?.role === "student" ? (
+              // Current user is tutor
+              <>
+                <button
+                  onClick={() => { navigator.clipboard.writeText(chat.booking.meetingLink); toast.success("Copied to clipboard!"); }}
+                  className="flex-1 md:flex-none justify-center px-3 py-1.5 bg-card hover:bg-slate-800 border border-border rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  📋 Copy
+                </button>
+                <a
+                  href={chat.booking.meetingLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 md:flex-none justify-center px-3 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5"
+                >
+                  🚀 Open
+                </a>
+              </>
+            ) : (
+              // Current user is student
+              <a
+                href={chat.booking.meetingLink}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full md:w-auto justify-center px-4 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 shadow-lg shadow-primary/20"
+              >
+                🚀 Join Class
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Messages Scroll Area */}
       <div
         ref={scrollRef}
@@ -241,13 +285,19 @@ export const ChatWindow = ({
         )}
       </div>
 
-      {/* Message Input bar */}
-      <MessageInput
-        onSendMessage={(text) => onSendMessage(chat._id, text)}
-        onUploadAttachment={(file, text) => onUploadAttachment(chat._id, file, text)}
-        onTypingStateChange={(typing) => onTypingStateChange(chat._id, typing)}
-        isBlocked={chat.isBlocked}
-      />
+      {/* Message Input bar or Read-only mode */}
+      {chat.booking?.isReadOnly ? (
+        <div className="p-4 text-center text-sm font-medium text-muted-foreground bg-card/40 border-t border-border/45 italic">
+          {chat.booking.statusMessage || "This chat is read-only."}
+        </div>
+      ) : (
+        <MessageInput
+          onSendMessage={(text) => onSendMessage(chat._id, text)}
+          onUploadAttachment={(file, text) => onUploadAttachment(chat._id, file, text)}
+          onTypingStateChange={(typing) => onTypingStateChange(chat._id, typing)}
+          isBlocked={chat.isBlocked}
+        />
+      )}
     </div>
   );
 };

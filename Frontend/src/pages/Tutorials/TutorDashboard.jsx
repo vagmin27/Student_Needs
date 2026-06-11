@@ -31,9 +31,11 @@ function TutorDashboard() {
 
   const fetchUnread = useCallback(async () => {
     try {
-      const { data } = await tutorsApiClient.get("/chat/conversations");
-      if (data?.success) {
-        const totalUnread = data.data.reduce((sum, chat) => sum + (chat.unreadCount || 0), 0);
+      const { data } = await tutorsApiClient.get("/tutorial-chat/conversations");
+      if (data?.success && data?.data) {
+        const totalUnread = data.data.reduce((acc, chat) => {
+          return acc + (chat.unreadCount || 0);
+        }, 0);
         setUnreadCount(totalUnread);
       }
     } catch (err) {

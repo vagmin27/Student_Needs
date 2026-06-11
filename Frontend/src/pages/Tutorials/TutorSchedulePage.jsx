@@ -149,7 +149,7 @@ function TutorSchedulePage() {
                 </>
               ) : null}
 
-              <div className="pt-2">
+              <div className="pt-2 flex gap-2">
                 <Button
                   variant="destructive"
                   size="sm"
@@ -157,6 +157,17 @@ function TutorSchedulePage() {
                 >
                   🗑️ Delete Slot
                 </Button>
+                
+                {item.studentId && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-green-500/10 text-green-600 hover:bg-green-500/20 hover:text-green-700 border-green-500/30"
+                    onClick={() => navigate(`/tutorials/chat?studentId=${item.studentId}`)}
+                  >
+                    💬 Message Student
+                  </Button>
+                )}
               </div>
             </div>
           ))

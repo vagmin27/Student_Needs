@@ -8,126 +8,125 @@ import bulb2 from "../../assets/images/bulb2.png";
 import API, { BASE_URL } from "@/services/api/tutorialsApi.js";
 
 function Profile() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const [profile, setProfile] = useState({
-username: "",
-fName: "",
-lName: "",
-email: "",
-subjects: "",
-location: "",
-});
+  const [profile, setProfile] = useState({
+    username: "",
+    fName: "",
+    lName: "",
+    email: "",
+    subjects: "",
+    location: "",
+  });
 
-const [preferredSchedule, setPreferredSchedule] = useState([]);
-const [pic, setPic] = useState(null);
+  const [preferredSchedule, setPreferredSchedule] = useState([]);
+  const [pic, setPic] = useState(null);
 
-useEffect(() => {
-const fetchExistData = async () => {
-try {
-      const { data } = await API.get("/profile");
+  useEffect(() => {
+    const fetchExistData = async () => {
+      try {
+        const { data } = await API.get("/profile");
 
-    if (data.user) {
-      const profileInDB = data.user.profile || {};
+        if (data.user) {
+          const profileInDB = data.user.profile || {};
 
-      const profileData = {
-        username: profileInDB.displayName || "",
-        fName: profileInDB.fName || "",
-        lName: profileInDB.lName || "",
-        email: profileInDB.email || "",
-        subjects: profileInDB.subjects || "",
-        location: profileInDB.location || "",
-      };
+          const profileData = {
+            username: profileInDB.displayName || "",
+            fName: profileInDB.fName || "",
+            lName: profileInDB.lName || "",
+            email: profileInDB.email || "",
+            subjects: profileInDB.subjects || "",
+            location: profileInDB.location || "",
+          };
 
-      setProfile(profileData);
-      setPreferredSchedule(data.user.schedule || []);
-      setPic(data.user.pic ? `${BASE_URL}/uploads/${data.user.pic}` : null);
-    }
+          setProfile(profileData);
+          setPreferredSchedule(data.user.schedule || []);
+          setPic(data.user.pic ? `${BASE_URL}/uploads/${data.user.pic}` : null);
+        }
+      } catch (err) {
+        console.error("❌ Error fetching profile:", err);
+      }
+    };
 
-  } catch (err) {
-    console.error("❌ Error fetching profile:", err);
-  }
-};
+    fetchExistData();
+  }, []);
 
-fetchExistData();
+  return (
+    <main className="container-profile">
+      {" "}
+      <div className="main-profile">
+        {" "}
+        <div className="welcome">
+          {/* LEFT SIDE */}
+          <div className="profileInnerDiv">
+            <h1 className="userName">
+              {profile.username
+                ? "Hi, " + profile.username
+                : "Welcome! Please proceed to edit your profile."}
+            </h1>
 
-}, []);
+            <br />
 
-return ( <main className="container-profile"> <div className="main-profile"> <div className="welcome">
+            <div>
+              <AiOutlineMail />{" "}
+              {profile.email
+                ? profile.email
+                : "Add your email in your edit profile settings."}
+            </div>
 
-      {/* LEFT SIDE */}
-      <div className="profileInnerDiv">
-        <h1 className="userName">
-          {profile.username
-            ? "Hi, " + profile.username
-            : "Welcome! Please proceed to edit your profile."}
-        </h1>
+            <br />
 
-        <br />
+            <div>
+              <FaRegCalendarCheck />{" "}
+              {preferredSchedule.length > 0
+                ? "My preferred schedule is " + preferredSchedule.join(", ")
+                : "Please select your preferred schedule in Edit Profile"}
+              .
+            </div>
 
-        <div>
-          <AiOutlineMail />{" "}
-          {profile.email
-            ? profile.email
-            : "Add your email in your edit profile settings."}
-        </div>
+            {/* 🔥 NEW BUTTONS */}
+            <div style={{ marginTop: "20px" }}>
+              <button
+                className="btnEditProfile"
+                onClick={() => navigate("/tutorials/profile/manageBooking")}
+              >
+                📚 View My Bookings
+              </button>
 
-        <br />
+              <button
+                className="btnEditProfile"
+                style={{ marginLeft: "10px" }}
+                onClick={() => navigate("/profile/editProfile")}
+              >
+                ✏️ Edit Profile
+              </button>
+            </div>
+          </div>
 
-        <div>
-          <FaRegCalendarCheck />{" "}
-          {preferredSchedule.length > 0
-            ? "My preferred schedule is " +
-              preferredSchedule.join(", ")
-            : "Please select your preferred schedule in Edit Profile"}
-          .
-        </div>
+          {/* RIGHT SIDE */}
+          <div className="secondDiv">
+            <img
+              className="img-account-profile"
+              src={pic || bulb2}
+              alt="Not Found"
+            />
 
-        {/* 🔥 NEW BUTTONS */}
-        <div style={{ marginTop: "20px" }}>
-          <button
-            className="btnEditProfile"
-            onClick={() => navigate("/profile/manageBooking")}
-          >
-            📚 View My Bookings
-          </button>
-
-          <button
-            className="btnEditProfile"
-            style={{ marginLeft: "10px" }}
-            onClick={() => navigate("/profile/editProfile")}
-          >
-            ✏️ Edit Profile
-          </button>
-        </div>
-      </div>
-
-      {/* RIGHT SIDE */}
-      <div className="secondDiv">
-        <img
-          className="img-account-profile"
-          src={pic || bulb2}
-          alt="Not Found"
-        />
-
-        <div className="policy">
-          <h2>Policy:</h2>
-          <MdOutlineFreeCancellation /> Lesson cancellation: 1 hour notice required
-
-          <div className="innerTextPolicy">
-            <AiOutlineSchedule />{" "}
-            <Link to="/tutorials/book" className="bookATrial">
-              Book a Trial
-            </Link>
+            <div className="policy">
+              <h2>Policy:</h2>
+              <MdOutlineFreeCancellation /> Lesson cancellation: 1 hour notice
+              required
+              <div className="innerTextPolicy">
+                <AiOutlineSchedule />{" "}
+                <Link to="/tutorials/book" className="bookATrial">
+                  Book a Trial
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-    </div>
-  </div>
-</main>
-
-);
+    </main>
+  );
 }
 
 export default Profile;

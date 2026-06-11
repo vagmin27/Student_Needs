@@ -55,10 +55,10 @@ export const MessageBubble = ({
     <div
       className={cn(
         "flex w-full mb-3.5 group",
-        isSelf ? "justify-end" : "justify-start"
+        message.type === "system" || message.type === "meeting_link" ? "justify-center" : isSelf ? "justify-end" : "justify-start"
       )}
     >
-      <div className={cn("flex flex-col max-w-[75%] md:max-w-[65%]", isSelf ? "items-end" : "items-start")}>
+      <div className={cn("flex flex-col", message.type === "system" || message.type === "meeting_link" ? "items-center w-full max-w-sm" : isSelf ? "items-end max-w-[75%] md:max-w-[65%]" : "items-start max-w-[75%] md:max-w-[65%]")}>
         {/* Sender Name tag for multi-party look or debug (optional) */}
         
         {/* Message body container */}
@@ -85,12 +85,16 @@ export const MessageBubble = ({
 
           <div
             className={cn(
-              "px-4 py-2.5 rounded-2xl border backdrop-blur-md shadow-sm",
-              message.deleted
+              message.type === "system" || message.type === "meeting_link"
+                ? "bg-transparent border-transparent text-muted-foreground/80"
+                : "px-4 py-2.5 rounded-2xl border backdrop-blur-md shadow-sm",
+              message.type !== "system" && message.type !== "meeting_link" && message.deleted
                 ? "bg-slate-900/40 border-slate-800 text-muted-foreground/60 italic"
-                : isSelf
+                : message.type !== "system" && message.type !== "meeting_link" && isSelf
                 ? "bg-primary/20 border-primary/30 text-foreground rounded-tr-none"
-                : "bg-card border-border/40 text-foreground rounded-tl-none"
+                : message.type !== "system" && message.type !== "meeting_link"
+                ? "bg-card border-border/40 text-foreground rounded-tl-none"
+                : ""
             )}
           >
             {/* Inline editing mode */}
@@ -120,7 +124,13 @@ export const MessageBubble = ({
             ) : (
               <div className="flex flex-col gap-1.5">
                 {/* Text Message */}
-                {message.message && <p className="text-[14.5px] leading-relaxed break-words whitespace-pre-wrap">{message.message}</p>}
+                {message.type === "system" || message.type === "meeting_link" ? (
+                  <div className="text-[12.5px] text-center italic opacity-80 break-words whitespace-pre-wrap px-4 py-1">
+                    {message.message || message.text}
+                  </div>
+                ) : (
+                  (message.message || message.text) && <p className="text-[14.5px] leading-relaxed break-words whitespace-pre-wrap">{message.message || message.text}</p>
+                )}
 
                 {/* Attachments rendering */}
                 {message.attachments && message.attachments.length > 0 && (
@@ -186,11 +196,13 @@ export const MessageBubble = ({
         </div>
 
         {/* Timestamp and ticks status indicators */}
-        <div className={cn("flex items-center gap-1.5 mt-1 px-1.5 text-[10px] text-muted-foreground select-none")}>
-          <span>{formatTime(message.createdAt)}</span>
-          {message.isEdited && <span>• Edited</span>}
-          {renderStatusTicks()}
-        </div>
+        {message.type !== "system" && message.type !== "meeting_link" && (
+          <div className={cn("flex items-center gap-1.5 mt-1 px-1.5 text-[10px] text-muted-foreground select-none")}>
+            <span>{formatTime(message.createdAt)}</span>
+            {message.isEdited && <span>• Edited</span>}
+            {renderStatusTicks()}
+          </div>
+        )}
       </div>
     </div>
   );
