@@ -18,8 +18,12 @@ const tutorialMessageSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["text", "meeting_link", "system", "file"],
+      enum: ["text", "meeting_link", "system", "file", "call"],
       default: "text",
+    },
+    metadata: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
     },
     text: {
       type: String,

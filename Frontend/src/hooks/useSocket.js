@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useWebSocket } from "./useWebSocket.js";
 
 export const useSocket = () => {
-  const { isConnected, error, emit, on, off, socket } = useWebSocket();
+  const { isConnected, error, emit, on, off, socket, waitForSocket } = useWebSocket();
   const [onlineUsers, setOnlineUsers] = useState(new Set());
 
   // Listen for global online/offline broadcasts
@@ -119,6 +119,7 @@ export const useSocket = () => {
     on,
     off,
     emit,
+    waitForSocket,
   };
 };
 export default useSocket;

@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
-import { ArrowLeft, Phone, Video, Bot, Ban, AlertCircle, MoreHorizontal } from "lucide-react";
+import { ArrowLeft, Phone, Video, Bot, Ban, AlertCircle, MoreHorizontal, Loader2 } from "lucide-react";
 import MessageBubble from "./MessageBubble.jsx";
 import MessageInput from "./MessageInput.jsx";
 import TypingIndicator from "./TypingIndicator.jsx";
 import OnlineBadge from "./OnlineBadge.jsx";
 import { cn } from "@/lib/utils.js";
 import toast from "react-hot-toast";
+import VideoCallModal from "../Tutorials/calls/VideoCallModal.jsx";
+import AIAssistantDrawer from "./AIAssistantDrawer.jsx";
 
 export const ChatWindow = ({
   chat,
@@ -28,10 +30,61 @@ export const ChatWindow = ({
   onStartCall, // Video/audio call callback stub
   onAskAiTutor, // AI tutoring callback stub
   currentUserId,
+  socket,
 }) => {
   const scrollRef = useRef(null);
   const topObserverRef = useRef(null);
   const [headerMenuOpen, setHeaderMenuOpen] = useState(false);
+
+  // AI Drawer state
+  const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
+
+  // WebRTC Call state
+  const [callState, setCallState] = useState(null); // 'incoming', 'calling', 'active', null
+  const [incomingCallData, setIncomingCallData] = useState(null);
+  const [isCallLoading, setIsCallLoading] = useState(false);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handleIncomingCall = (data) => {
+      // Only show incoming if we are not already in a call
+      if (!callState) {
+        setIncomingCallData(data);
+        setCallState("incoming");
+      } else {
+        // Emit busy or handled silently
+      }
+    };
+    
+    const handleCallAccepted = (data) => {
+      setIsCallLoading(false);
+      setCallState("active");
+    };
+
+    const handleCallDeclined = (data) => {
+      setIsCallLoading(false);
+      setCallState(null);
+      toast.error("Call was declined.");
+    };
+
+    const handleCallError = (data) => {
+      setIsCallLoading(false);
+      setCallState(null);
+      toast.error(data.message || "Call error.");
+    };
+
+    socket.on("call:incoming", handleIncomingCall);
+    socket.on("call:accepted", handleCallAccepted);
+    socket.on("call:declined", handleCallDeclined);
+    socket.on("call:error", handleCallError);
+
+    return () => {
+      socket.off("call:incoming", handleIncomingCall);
+      socket.off("call:accepted", handleCallAccepted);
+      socket.off("call:declined", handleCallDeclined);
+      socket.off("call:error", handleCallError);
+    };
+  }, [socket, callState]);
 
   // Auto scroll to bottom on new messages
   useEffect(() => {
@@ -85,19 +138,19 @@ export const ChatWindow = ({
   const isOnline = onlineUsersList.has(chat.partner?._id?.toString());
 
   const handleStartCall = (type) => {
-    toast.success(`Calling ${chat.partner?.name}... (Initializing video/audio channels)`);
-    if (typeof onStartCall === "function") {
-      onStartCall(chat.partner?._id, type);
-    }
+    if (!socket || !chat?.partner?._id) return;
+    setIsCallLoading(true);
+    setIncomingCallData({ type }); // store our own intent
+    socket.emit("call:start", {
+      conversationId: chat._id,
+      receiverId: chat.partner._id,
+      type
+    });
+    setCallState("calling");
   };
 
   const handleAskAi = () => {
-    const question = window.prompt("Ask the AI Tutor a conceptual question based on your chat:");
-    if (!question || question.trim() === "") return;
-    toast.success("Query sent to AI Tutor...");
-    if (typeof onAskAiTutor === "function") {
-      onAskAiTutor(question, chat.partner?.expertise);
-    }
+    setIsAiDrawerOpen(true);
   };
 
   return (
@@ -146,27 +199,30 @@ export const ChatWindow = ({
         <div className="flex items-center gap-1.5 md:gap-2 shrink-0">
           <button
             onClick={() => handleStartCall("audio")}
-            disabled={chat.isBlocked}
-            className="p-2.5 hover:bg-slate-850 rounded-xl text-slate-400 hover:text-foreground transition-all duration-200 cursor-pointer disabled:opacity-40"
+            disabled={chat.isBlocked || isCallLoading}
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-xl text-xs font-medium text-slate-300 hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
             title="Audio call tutor"
           >
-            <Phone className="w-4 h-4" />
+            {isCallLoading && incomingCallData?.type === "audio" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Phone className="w-3.5 h-3.5" />}
+            <span className="hidden lg:inline">Audio Call</span>
           </button>
           <button
             onClick={() => handleStartCall("video")}
-            disabled={chat.isBlocked}
-            className="p-2.5 hover:bg-slate-850 rounded-xl text-slate-400 hover:text-foreground transition-all duration-200 cursor-pointer disabled:opacity-40"
+            disabled={chat.isBlocked || isCallLoading}
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-xl text-xs font-medium text-slate-300 hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
             title="Video consult tutor"
           >
-            <Video className="w-4.5 h-4.5" />
+            {isCallLoading && incomingCallData?.type === "video" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Video className="w-4 h-4" />}
+            <span className="hidden lg:inline">Video Session</span>
           </button>
           <button
             onClick={handleAskAi}
             disabled={chat.isBlocked}
-            className="p-2.5 hover:bg-slate-850 rounded-xl text-slate-400 hover:text-foreground transition-all duration-200 cursor-pointer disabled:opacity-40"
+            className="flex items-center gap-1.5 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer disabled:opacity-40 border border-primary/20 shadow-sm"
             title="Concept check with AI Tutor"
           >
-            <Bot className="w-4.5 h-4.5" />
+            <Bot className="w-4 h-4" />
+            <span className="hidden md:inline">✨ AI Study Assistant</span>
           </button>
 
           <div className="relative">
@@ -298,6 +354,33 @@ export const ChatWindow = ({
           isBlocked={chat.isBlocked}
         />
       )}
+
+      {/* AI Assistant Drawer */}
+      <AIAssistantDrawer 
+        isOpen={isAiDrawerOpen}
+        onClose={() => setIsAiDrawerOpen(false)}
+        chatContext={{ messages, booking: chat.booking }}
+      />
+
+      {/* Video Call Modal */}
+      <VideoCallModal 
+        socket={socket}
+        conversationId={chat._id}
+        currentUserId={currentUserId}
+        callState={callState}
+        incomingCallData={incomingCallData}
+        onAccept={() => setCallState("active")}
+        onClose={() => {
+          setCallState(null);
+          setIncomingCallData(null);
+          setIsCallLoading(false);
+        }}
+        onSwitchToBrowser={() => {
+          // Fallback to meetingLink or generated route
+          window.open(chat.booking?.meetingLink || `/tutorials/live/${chat._id}`, '_blank');
+        }}
+        meetingLink={chat.booking?.meetingLink}
+      />
     </div>
   );
 };

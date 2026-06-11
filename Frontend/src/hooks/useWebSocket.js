@@ -95,7 +95,28 @@ export const useWebSocket = () => {
     }
   };
 
-  return { isConnected, error, emit, on, off, socket: socketRef.current };
+  const waitForSocket = () => {
+    return new Promise((resolve, reject) => {
+      if (socketRef.current && socketRef.current.connected) {
+        return resolve(true);
+      }
+      
+      let attempts = 0;
+      const interval = setInterval(() => {
+        attempts++;
+        if (socketRef.current && socketRef.current.connected) {
+          clearInterval(interval);
+          resolve(true);
+        } else if (attempts >= 50) { // 5s timeout (50 * 100ms)
+          clearInterval(interval);
+          console.warn("[SOCKET] waitForSocket timed out after 5s");
+          resolve(false); // resolve false instead of reject to avoid unhandled rejections
+        }
+      }, 100);
+    });
+  };
+
+  return { isConnected, error, emit, on, off, socket: socketRef.current, waitForSocket };
 };
 
 // Call this function explicitly on user logout to destroy the session

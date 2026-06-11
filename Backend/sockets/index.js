@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./auth.js";
 import { registerChatHandlers } from "./chat.js";
 import { registerTutorChatHandlers } from "../socket/socketServer.js";
+import { registerTutorCallHandlers } from "./tutorialCallSocket.js";
 
 let io;
 
@@ -38,6 +39,7 @@ export const initSocket = (server) => {
     // Register Chat Handlers
     registerChatHandlers(io, socket);
     registerTutorChatHandlers(io, socket);
+    registerTutorCallHandlers(io, socket);
   });
 
   console.log("✅ WebSocket Server Initialized");

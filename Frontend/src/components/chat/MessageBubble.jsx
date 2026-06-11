@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Check, CheckCheck, Trash2, Edit2, FileText, Download, X, Save } from "lucide-react";
 import { cn } from "@/lib/utils.js";
+import CallHistoryCard from "./CallHistoryCard.jsx";
 
 export const MessageBubble = ({
   message,
@@ -9,9 +10,42 @@ export const MessageBubble = ({
   onDeleteMessage,
   onOpenAttachment,
 }) => {
-  const isSelf = message.senderId?.toString() === currentUserId?.toString();
+  // Normalize legacy JSON system call messages to the new 'call' format for rendering
+  let normalizedMessage = { ...message };
+  if (normalizedMessage.type === "system" && normalizedMessage.text && (normalizedMessage.text.includes("audio_call") || normalizedMessage.text.includes("video_call"))) {
+    try {
+      const parsed = JSON.parse(normalizedMessage.text);
+      if (parsed.action) {
+        normalizedMessage.type = "call";
+        const isVideo = parsed.action === "video_call";
+        normalizedMessage.metadata = {
+          callType: isVideo ? "video" : "audio",
+          status: parsed.duration > 0 ? "completed" : "missed",
+          duration: parsed.duration,
+          startedAt: parsed.startedAt,
+          endedAt: parsed.endedAt,
+          initiatedBy: normalizedMessage.senderId
+        };
+      }
+    } catch (e) {
+      // Ignore parse errors, just render as normal system text
+    }
+  }
+
+  // Determine visual direction
+  // For normal messages, it's based on senderId
+  // For calls, it's based on metadata.initiatedBy
+  let isOutgoing = false;
+  if (normalizedMessage.type === "call" && normalizedMessage.metadata) {
+    isOutgoing = normalizedMessage.metadata.initiatedBy?.toString() === currentUserId?.toString();
+  } else {
+    isOutgoing = normalizedMessage.senderId?.toString() === currentUserId?.toString();
+  }
+  
+  const isSelf = isOutgoing; // For backward compatibility with other features
+
   const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(message.message || "");
+  const [editText, setEditText] = useState(normalizedMessage.message || normalizedMessage.text || "");
 
   const formatTime = (dateStr) => {
     if (!dateStr) return "";
@@ -25,12 +59,12 @@ export const MessageBubble = ({
 
   const handleEditSubmit = () => {
     if (editText.trim() === "") return;
-    onEditMessage(message._id, editText);
+    onEditMessage(normalizedMessage._id, editText);
     setIsEditing(false);
   };
 
   const handleCancelEdit = () => {
-    setEditText(message.message || "");
+    setEditText(normalizedMessage.message || normalizedMessage.text || "");
     setIsEditing(false);
   };
 
@@ -42,9 +76,9 @@ export const MessageBubble = ({
   const renderStatusTicks = () => {
     if (!isSelf) return null;
     
-    if (message.seen) {
+    if (normalizedMessage.seen) {
       return <CheckCheck className="w-3.5 h-3.5 text-cyan-400" title="Seen" />;
-    } else if (message.delivered) {
+    } else if (normalizedMessage.delivered) {
       return <CheckCheck className="w-3.5 h-3.5 text-slate-400" title="Delivered" />;
     } else {
       return <Check className="w-3.5 h-3.5 text-slate-400" title="Sent" />;
@@ -55,16 +89,16 @@ export const MessageBubble = ({
     <div
       className={cn(
         "flex w-full mb-3.5 group",
-        message.type === "system" || message.type === "meeting_link" ? "justify-center" : isSelf ? "justify-end" : "justify-start"
+        normalizedMessage.type === "system" || normalizedMessage.type === "meeting_link" ? "justify-center" : isSelf ? "justify-end" : "justify-start"
       )}
     >
-      <div className={cn("flex flex-col", message.type === "system" || message.type === "meeting_link" ? "items-center w-full max-w-sm" : isSelf ? "items-end max-w-[75%] md:max-w-[65%]" : "items-start max-w-[75%] md:max-w-[65%]")}>
+      <div className={cn("flex flex-col", normalizedMessage.type === "system" || normalizedMessage.type === "meeting_link" ? "items-center w-full max-w-sm" : isSelf ? "items-end max-w-[75%] md:max-w-[65%]" : "items-start max-w-[75%] md:max-w-[65%]")}>
         {/* Sender Name tag for multi-party look or debug (optional) */}
         
         {/* Message body container */}
         <div className="relative flex items-center">
           {/* Action button overlay on hover for self messages */}
-          {isSelf && !message.deleted && !isEditing && (
+          {isSelf && !normalizedMessage.deleted && !isEditing && (
             <div className="opacity-0 group-hover:opacity-100 flex gap-1.5 mr-2 transition-opacity duration-200">
               <button
                 onClick={() => setIsEditing(true)}
@@ -74,7 +108,7 @@ export const MessageBubble = ({
                 <Edit2 className="w-3.5 h-3.5" />
               </button>
               <button
-                onClick={() => onDeleteMessage(message._id)}
+                onClick={() => onDeleteMessage(normalizedMessage._id)}
                 className="p-1.5 bg-slate-800 hover:bg-red-950/80 text-slate-300 hover:text-red-400 rounded-lg border border-slate-700 hover:border-red-900 transition-colors"
                 title="Delete message"
               >
@@ -85,14 +119,16 @@ export const MessageBubble = ({
 
           <div
             className={cn(
-              message.type === "system" || message.type === "meeting_link"
+              normalizedMessage.type === "system" || normalizedMessage.type === "meeting_link"
                 ? "bg-transparent border-transparent text-muted-foreground/80"
+                : normalizedMessage.type === "call"
+                ? "bg-transparent border-transparent p-0" // Call card has its own styling
                 : "px-4 py-2.5 rounded-2xl border backdrop-blur-md shadow-sm",
-              message.type !== "system" && message.type !== "meeting_link" && message.deleted
+              normalizedMessage.type !== "system" && normalizedMessage.type !== "meeting_link" && normalizedMessage.type !== "call" && normalizedMessage.deleted
                 ? "bg-slate-900/40 border-slate-800 text-muted-foreground/60 italic"
-                : message.type !== "system" && message.type !== "meeting_link" && isSelf
+                : normalizedMessage.type !== "system" && normalizedMessage.type !== "meeting_link" && normalizedMessage.type !== "call" && isSelf
                 ? "bg-primary/20 border-primary/30 text-foreground rounded-tr-none"
-                : message.type !== "system" && message.type !== "meeting_link"
+                : normalizedMessage.type !== "system" && normalizedMessage.type !== "meeting_link" && normalizedMessage.type !== "call"
                 ? "bg-card border-border/40 text-foreground rounded-tl-none"
                 : ""
             )}
@@ -123,19 +159,23 @@ export const MessageBubble = ({
               </div>
             ) : (
               <div className="flex flex-col gap-1.5">
-                {/* Text Message */}
-                {message.type === "system" || message.type === "meeting_link" ? (
+                {/* Text / System / Call Message */}
+                {normalizedMessage.type === "call" ? (
+                  <div title={`Call started: ${formatTime(normalizedMessage.metadata?.startedAt)}\nCall ended: ${formatTime(normalizedMessage.metadata?.endedAt)}`}>
+                    <CallHistoryCard message={normalizedMessage} currentUserId={currentUserId} />
+                  </div>
+                ) : normalizedMessage.type === "system" || normalizedMessage.type === "meeting_link" ? (
                   <div className="text-[12.5px] text-center italic opacity-80 break-words whitespace-pre-wrap px-4 py-1">
-                    {message.message || message.text}
+                    {normalizedMessage.message || normalizedMessage.text}
                   </div>
                 ) : (
-                  (message.message || message.text) && <p className="text-[14.5px] leading-relaxed break-words whitespace-pre-wrap">{message.message || message.text}</p>
+                  (normalizedMessage.message || normalizedMessage.text) && <p className="text-[14.5px] leading-relaxed break-words whitespace-pre-wrap">{normalizedMessage.message || normalizedMessage.text}</p>
                 )}
 
                 {/* Attachments rendering */}
-                {message.attachments && message.attachments.length > 0 && (
+                {normalizedMessage.attachments && normalizedMessage.attachments.length > 0 && (
                   <div className="flex flex-col gap-2 mt-1">
-                    {message.attachments.map((att, idx) => (
+                    {normalizedMessage.attachments.map((att, idx) => (
                       <div key={idx} className="overflow-hidden rounded-xl">
                         {isImage(att.mimeType) ? (
                           <div 
@@ -188,7 +228,7 @@ export const MessageBubble = ({
           </div>
 
           {/* Action button overlay on hover for received messages */}
-          {!isSelf && !message.deleted && (
+          {!isSelf && !normalizedMessage.deleted && (
             <div className="opacity-0 group-hover:opacity-100 flex gap-1.5 ml-2 transition-opacity duration-200">
               {/* Optional: Add quick reply or report flags */}
             </div>
@@ -196,10 +236,10 @@ export const MessageBubble = ({
         </div>
 
         {/* Timestamp and ticks status indicators */}
-        {message.type !== "system" && message.type !== "meeting_link" && (
+        {normalizedMessage.type !== "system" && normalizedMessage.type !== "meeting_link" && (
           <div className={cn("flex items-center gap-1.5 mt-1 px-1.5 text-[10px] text-muted-foreground select-none")}>
-            <span>{formatTime(message.createdAt)}</span>
-            {message.isEdited && <span>• Edited</span>}
+            <span>{formatTime(normalizedMessage.createdAt)}</span>
+            {normalizedMessage.isEdited && <span>• Edited</span>}
             {renderStatusTicks()}
           </div>
         )}

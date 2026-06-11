@@ -204,9 +204,21 @@ export const ChatSidebar = ({
                         hasUnread ? "text-foreground font-semibold" : "text-muted-foreground"
                       )}
                     >
-                      {chat.lastMessage?.deleted
-                        ? "This message was deleted"
-                        : chat.lastMessage?.text || chat.lastMessage?.message || (chat.lastMessage?.attachments?.length > 0 ? "sent attachment" : "") || "No messages yet"}
+                      {(() => {
+                        if (chat.lastMessage?.deleted) return "This message was deleted";
+                        if (chat.lastMessage?.type === "call" && chat.lastMessage?.metadata) {
+                          const m = chat.lastMessage.metadata;
+                          const icon = m.status === "missed" ? "🔴" : (m.callType === "video" ? "📹" : "📞");
+                          let textStr = chat.lastMessage.text || chat.lastMessage.message || "Call";
+                          if (m.duration > 0) {
+                            const mins = Math.floor(m.duration / 60);
+                            const durationStr = mins > 0 ? `${mins}m` : `${m.duration}s`;
+                            return `${icon} ${textStr} • ${durationStr}`;
+                          }
+                          return `${icon} ${textStr}`;
+                        }
+                        return chat.lastMessage?.text || chat.lastMessage?.message || (chat.lastMessage?.attachments?.length > 0 ? "sent attachment" : "") || "No messages yet";
+                      })()}
                     </p>
 
                     {/* Unread Counter Badge */}

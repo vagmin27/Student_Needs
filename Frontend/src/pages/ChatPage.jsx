@@ -26,6 +26,8 @@ export default function ChatPage() {
     on,
     off,
     emit,
+    socket,
+    waitForSocket,
   } = useSocket();
 
   const [chats, setChats] = useState([]);
@@ -152,7 +154,7 @@ export default function ChatPage() {
           // Append older messages to top of stack
           setMessages(prev => [...data.data, ...prev]);
         }
-        setHasMoreMessages(data.pagination.hasMore);
+        setHasMoreMessages(data.pagination?.hasMore ?? false);
         setMessagePage(page);
       }
     } catch (err) {
@@ -162,7 +164,7 @@ export default function ChatPage() {
     }
   };
 
-  const handleSelectChat = (chat) => {
+  const handleSelectChat = async (chat) => {
     if (activeChatRef.current) {
       leaveConversation(activeChatRef.current._id);
     }
@@ -173,6 +175,7 @@ export default function ChatPage() {
     navigate(`/tutorials/chat/${chat._id}`);
 
     // Join room
+    await waitForSocket();
     joinConversation(chat._id);
 
     // Load history
@@ -428,6 +431,7 @@ export default function ChatPage() {
           onLoadMore={handleLoadMoreMessages}
           hasMore={hasMoreMessages}
           currentUserId={user?.id || user?._id}
+          socket={socket}
         />
       </div>
 
