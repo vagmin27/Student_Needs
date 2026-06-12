@@ -13,7 +13,7 @@ const LandingPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
 
         {/* Tutorial Card */}
-        <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 hover:scale-105 transition cursor-pointer">
+        <div className="bg-gray-900 border border-gray-700 rounded-[var(--radius-md)] p-6 hover:scale-105 transition cursor-pointer">
           <h2 className="text-xl font-semibold mb-2">Tutorial</h2>
           <p className="text-gray-400">
             Learn how to use the platform (Coming Soon)
@@ -23,7 +23,7 @@ const LandingPage = () => {
         {/* Referral Card */}
         <div
           onClick={() => navigate("/role-selector")}
-          className="bg-gray-900 border border-green-500 rounded-xl p-6 hover:scale-105 transition cursor-pointer"
+          className="bg-gray-900 border border-green-500 rounded-[var(--radius-md)] p-6 hover:scale-105 transition cursor-pointer"
         >
           <h2 className="text-xl font-semibold mb-2 text-green-400">
             Referral
@@ -34,7 +34,7 @@ const LandingPage = () => {
         </div>
 
         {/* Expense Tracker Card */}
-        <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 hover:scale-105 transition cursor-pointer">
+        <div className="bg-gray-900 border border-gray-700 rounded-[var(--radius-md)] p-6 hover:scale-105 transition cursor-pointer">
           <h2 className="text-xl font-semibold mb-2">Expense Tracker</h2>
           <p className="text-gray-400">
             Manage your finances (Coming Soon)

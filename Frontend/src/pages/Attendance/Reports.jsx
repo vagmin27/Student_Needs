@@ -66,7 +66,7 @@ function Reports() {
           </div>
 
           {start && end && start <= end && (
-            <div className="mt-4 p-3 bg-[var(--accent-light)] text-[var(--accent)] text-sm rounded-xl font-medium">
+            <div className="mt-4 p-3 bg-[var(--accent-light)] text-[var(--accent)] text-sm rounded-[var(--radius-md)] font-medium">
               Downloading report from <strong>{start}</strong> to <strong>{end}</strong>
             </div>
           )}

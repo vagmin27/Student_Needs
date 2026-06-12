@@ -5,9 +5,9 @@ import {
   MessageSquare, User, Settings, LogOut, ArrowLeft,
   ChevronLeft, ChevronRight, Home, GraduationCap
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/GlobalAuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
+import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { label: "Home", path: "/tutorials/home", icon: Home },
@@ -26,79 +26,128 @@ const TutorialSidebar = () => {
   const { isCollapsed, setIsCollapsed, closeMobileMenu } = useSidebar();
 
   return (
-    <div className="flex flex-col h-full w-full bg-card">
+    <div
+      className={cn(
+        "flex flex-col h-full bg-card overflow-y-auto overflow-x-hidden select-none sidebar-transition",
+        isCollapsed ? "px-2 py-6" : "p-4"
+      )}
+    >
       {/* Brand / Logo */}
-      <div className="h-16 flex items-center px-4 border-b border-border shrink-0">
-        <div className="flex items-center gap-3 overflow-hidden w-full">
-          <div className="w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center shrink-0 shadow-sm">
-            <GraduationCap className="w-5 h-5" />
-          </div>
-          {!isCollapsed && (
-            <span className="font-bold text-lg whitespace-nowrap tracking-tight animate-fade-in">
-              UniConnect <span className="text-primary font-black">Tutorials</span>
-            </span>
-          )}
+      <div className={cn("flex items-center gap-3 mb-8 px-2 shrink-0", isCollapsed ? "justify-center" : "")}>
+        <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-primary text-primary-foreground flex items-center justify-center shrink-0 shadow-sm">
+          <GraduationCap className="w-5 h-5" />
         </div>
+        {!isCollapsed && (
+          <span className="text-xl font-bold tracking-tight text-foreground whitespace-nowrap">
+            UniConnect <span className="text-primary font-black">Tutorials</span>
+          </span>
+        )}
       </div>
 
-      <div className="flex-1 overflow-y-auto py-6 space-y-1 px-3">
+      {/* Navigation */}
+      <nav className={cn(
+        "flex flex-col flex-1",
+        isCollapsed ? "items-center gap-3" : "space-y-1.5"
+      )}>
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
             onClick={closeMobileMenu}
-            className={({ isActive }) => `
-              flex items-center gap-3 px-3 py-2.5 rounded-md transition-all duration-200
-              ${isActive ? "bg-primary text-primary-foreground font-medium shadow-sm" : "text-muted-foreground hover:bg-secondary hover:text-foreground"}
-              ${isCollapsed ? "justify-center" : ""}
-            `}
-            title={isCollapsed ? item.label : undefined}
+            className={({ isActive }) => cn(
+              "group relative flex items-center transition-all duration-200 sidebar-link-btn",
+              isCollapsed 
+                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
+                : "gap-3 px-3 py-2.5 rounded-[var(--radius-md)]",
+              isActive ? "active-link" : ""
+            )}
           >
-            <item.icon className={`w-5 h-5 flex-shrink-0 ${isCollapsed ? "mx-auto" : ""}`} />
+            <item.icon className="w-5 h-5 shrink-0" />
             {!isCollapsed && <span className="whitespace-nowrap">{item.label}</span>}
+            {isCollapsed && (
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+                {item.label}
+              </div>
+            )}
           </NavLink>
         ))}
-      </div>
 
-      <div className="p-3 border-t space-y-1 shrink-0 bg-card/50">
-        <button
-          onClick={() => {
-            navigate("/student/dashboard");
-            closeMobileMenu();
-          }}
-          className={`flex items-center gap-3 px-3 py-2.5 w-full rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground transition-all duration-200 ${isCollapsed ? "justify-center" : ""}`}
-          title={isCollapsed ? "Back to Dashboard" : undefined}
-        >
-          <ArrowLeft className={`w-5 h-5 flex-shrink-0 ${isCollapsed ? "mx-auto" : ""}`} />
-          {!isCollapsed && <span className="whitespace-nowrap">Back to Dashboard</span>}
-        </button>
-        
-        <button
-          onClick={() => {
-            if (logout) {
-              logout();
-            } else {
-              navigate("/login");
-            }
-          }}
-          className={`flex items-center gap-3 px-3 py-2.5 w-full rounded-md text-red-500 hover:bg-red-500/10 transition-all duration-200 ${isCollapsed ? "justify-center" : ""}`}
-          title={isCollapsed ? "Logout" : undefined}
-        >
-          <LogOut className={`w-5 h-5 flex-shrink-0 ${isCollapsed ? "mx-auto" : ""}`} />
-          {!isCollapsed && <span className="whitespace-nowrap">Logout</span>}
-        </button>
-      </div>
+        <div className={cn(
+          "pt-4 border-t border-border/50 flex flex-col",
+          isCollapsed ? "items-center gap-3" : "space-y-1.5"
+        )}>
+          <button
+            onClick={() => {
+              navigate("/student/dashboard");
+              closeMobileMenu();
+            }}
+            className={cn(
+              "group relative flex items-center transition-colors sidebar-link-btn text-muted-foreground hover:text-foreground cursor-pointer",
+              isCollapsed 
+                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
+                : "gap-3 px-3 py-2.5 rounded-[var(--radius-md)] w-full"
+            )}
+          >
+            <ArrowLeft className="w-5 h-5 shrink-0" />
+            {!isCollapsed && <span className="whitespace-nowrap">Back to Dashboard</span>}
+            {isCollapsed && (
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+                Back to Dashboard
+              </div>
+            )}
+          </button>
+          
+          <button
+            onClick={() => {
+              if (logout) {
+                logout();
+              } else {
+                navigate("/login");
+              }
+            }}
+            className={cn(
+              "group relative flex items-center transition-colors text-destructive hover:bg-destructive/10 cursor-pointer",
+              isCollapsed 
+                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
+                : "gap-3 px-3 py-2.5 rounded-[var(--radius-md)] w-full"
+            )}
+          >
+            <LogOut className="w-5 h-5 shrink-0 text-destructive" />
+            {!isCollapsed && <span className="whitespace-nowrap font-medium text-destructive">Logout</span>}
+            {isCollapsed && (
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+                Logout
+              </div>
+            )}
+          </button>
+        </div>
+      </nav>
 
       {/* Collapse Toggle (Desktop only) */}
-      <div className="hidden md:flex p-2 border-t shrink-0">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="w-full flex justify-center text-muted-foreground hover:bg-secondary"
+      <div className={cn("hidden md:flex shrink-0 border-t border-border/50 pt-4", isCollapsed ? "justify-center" : "")}>
+        <button
           onClick={() => setIsCollapsed(!isCollapsed)}
+          className={cn(
+            "group relative flex items-center text-muted-foreground hover:bg-secondary hover:text-foreground transition-all duration-200 cursor-pointer",
+            isCollapsed ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" : "w-full gap-3 px-3 py-2.5 rounded-[var(--radius-md)]"
+          )}
+          aria-label={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
-          {isCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
-        </Button>
+          <svg
+            className={cn("w-5 h-5 shrink-0 transform transition-transform duration-300", isCollapsed ? "rotate-180" : "")}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+          </svg>
+          {!isCollapsed && <span className="sidebar-label">Collapse</span>}
+          {isCollapsed && (
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              Expand
+            </div>
+          )}
+        </button>
       </div>
     </div>
   );

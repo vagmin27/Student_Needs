@@ -38,7 +38,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           <h2 className="text-xl font-bold text-foreground tracking-wide">{title}</h2>
           <button 
             onClick={onClose}
-            className="p-2 -mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all"
+            className="p-2 -mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-all"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

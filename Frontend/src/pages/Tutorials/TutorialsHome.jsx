@@ -93,7 +93,7 @@ function TutorialsHome() {
               <Card className="h-full hover:border-primary/50 transition-colors">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary relative">
+                    <div className="p-2 rounded-[var(--radius-sm)] bg-primary/10 text-primary relative">
                       <Icon className="w-5 h-5" />
                       {action.title === "Tutor Chats" && unreadCount > 0 && (
                         <span className="absolute -top-1.5 -right-1.5 h-4 min-w-[16px] px-1 flex items-center justify-center text-[9px] font-bold text-white bg-primary rounded-full animate-pulse">

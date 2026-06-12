@@ -213,7 +213,7 @@ const RecurringTransactions = () => {
         </div>
         <button
           onClick={() => openForm()}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
         >
           <AiOutlinePlus size={20} /> New Rule
         </button>
@@ -233,7 +233,7 @@ const RecurringTransactions = () => {
           return (
             <div
               key={card._id}
-              className={`relative overflow-hidden rounded-2xl p-6 transition-transform hover:-translate-y-2 group ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-border"}`}
+              className={`relative overflow-hidden rounded-[var(--radius-lg)] p-6 transition-transform hover:-translate-y-2 group ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-border"}`}
             >
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${bgGradient} opacity-20 group-hover:opacity-30 transition-opacity`}
@@ -262,7 +262,7 @@ const RecurringTransactions = () => {
                     Auto Debit Amount
                   </p>
                   <div className="flex justify-between items-end">
-                    <p className="text-3xl font-handjet font-bold text-[var(--text-white)] tracking-widest">
+                    <p className="text-3xl font-sans font-bold text-[var(--text-white)] tracking-tight">
                       ₹ {card.amount.toLocaleString()}
                     </p>
                     <p
@@ -282,7 +282,7 @@ const RecurringTransactions = () => {
           );
         })}
         {upcomingCards.length === 0 && (
-          <div className="col-span-full py-8 text-center text-muted-foreground border border-dashed border-border rounded-2xl">
+          <div className="col-span-full py-8 text-center text-muted-foreground border border-dashed border-border rounded-[var(--radius-lg)]">
             No active subscriptions upcoming.
           </div>
         )}
@@ -323,11 +323,11 @@ const RecurringTransactions = () => {
                       <p className="text-foreground font-medium">{tx.title}</p>
                       <p className="text-muted-foreground text-xs">{tx.category}</p>
                     </td>
-                    <td className="px-6 py-4 font-handjet text-xl text-foreground tracking-wider">
+                    <td className="px-6 py-4 font-sans font-semibold text-foreground">
                       ₹ {tx.amount.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className="px-3 py-1 bg-muted/10 border border-border rounded-lg text-muted-foreground text-sm">
+                      <span className="px-3 py-1 bg-muted/10 border border-border rounded-[var(--radius-sm)] text-muted-foreground text-sm">
                         {tx.frequency}
                       </span>
                     </td>
@@ -360,13 +360,13 @@ const RecurringTransactions = () => {
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => openForm(tx)}
-                          className="p-2 text-muted-foreground hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
+                          className="p-2 text-muted-foreground hover:text-brand-primary hover:bg-brand-primary/10 rounded-[var(--radius-sm)] transition-colors"
                         >
                           <AiOutlineEdit size={20} />
                         </button>
                         <button
                           onClick={() => handleDelete(tx._id)}
-                          className="p-2 text-muted-foreground hover:text-brand-danger hover:bg-brand-danger/10 rounded-lg transition-colors"
+                          className="p-2 text-muted-foreground hover:text-brand-danger hover:bg-brand-danger/10 rounded-[var(--radius-sm)] transition-colors"
                         >
                           <AiOutlineDelete size={20} />
                         </button>
@@ -425,7 +425,7 @@ const RecurringTransactions = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, amount: e.target.value })
                 }
-                className="premium-input font-handjet tracking-wider text-xl"
+                className="premium-input text-base"
                 placeholder="119"
               />
             </div>
@@ -507,13 +507,13 @@ const RecurringTransactions = () => {
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              className="px-6 py-2.5 rounded-xl border border-border text-foreground font-medium hover:bg-muted/10 transition-colors"
+              className="px-6 py-2.5 rounded-[var(--radius-md)] border border-border text-foreground font-medium hover:bg-muted/10 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
+              className="px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
             >
               Save Rule
             </button>

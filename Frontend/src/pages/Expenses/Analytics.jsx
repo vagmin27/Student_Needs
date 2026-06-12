@@ -91,10 +91,10 @@ const Analytics = () => {
         </div>
 
         {/* Monthly / Yearly Toggle */}
-        <div className="bg-brand-800/80 border border-border rounded-xl p-1 flex">
+        <div className="bg-brand-800/80 border border-border rounded-[var(--radius-md)] p-1 flex">
           <button
             onClick={() => setViewType("monthly")}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium ${
+            className={`px-4 py-1.5 rounded-[var(--radius-sm)] text-sm font-medium ${
               viewType === "monthly"
                 ? "bg-muted/30 text-foreground"
                 : "text-muted-foreground hover:text-foreground"
@@ -105,7 +105,7 @@ const Analytics = () => {
 
           <button
             onClick={() => setViewType("yearly")}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium ${
+            className={`px-4 py-1.5 rounded-[var(--radius-sm)] text-sm font-medium ${
               viewType === "yearly"
                 ? "bg-muted/30 text-foreground"
                 : "text-muted-foreground hover:text-foreground"
@@ -119,7 +119,7 @@ const Analytics = () => {
       {/* Smart Insights */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="glass-panel p-6 flex flex-col justify-between hover:border-amber-500/30 transition-colors group">
-          <div className="p-3 bg-amber-500/10 text-amber-500 w-fit rounded-xl mb-4 group-hover:scale-110 transition-transform">
+          <div className="p-3 bg-amber-500/10 text-amber-500 w-fit rounded-[var(--radius-md)] mb-4 group-hover:scale-110 transition-transform">
             <MdLightbulbOutline size={24} />
           </div>
 
@@ -131,7 +131,7 @@ const Analytics = () => {
         </div>
 
         <div className="glass-panel p-6 flex flex-col justify-between hover:border-emerald-500/30 transition-colors group">
-          <div className="p-3 bg-emerald-500/10 text-emerald-500 w-fit rounded-xl mb-4 group-hover:scale-110 transition-transform">
+          <div className="p-3 bg-emerald-500/10 text-emerald-500 w-fit rounded-[var(--radius-md)] mb-4 group-hover:scale-110 transition-transform">
             <MdSavings size={24} />
           </div>
 
@@ -143,7 +143,7 @@ const Analytics = () => {
         </div>
 
         <div className="glass-panel p-6 flex flex-col justify-between hover:border-brand-primary/30 transition-colors group">
-          <div className="p-3 bg-brand-primary/10 text-brand-primary w-fit rounded-xl mb-4 group-hover:scale-110 transition-transform">
+          <div className="p-3 bg-brand-primary/10 text-brand-primary w-fit rounded-[var(--radius-md)] mb-4 group-hover:scale-110 transition-transform">
             <MdTrendingUp size={24} />
           </div>
 

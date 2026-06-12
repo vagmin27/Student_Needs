@@ -57,8 +57,8 @@ const Sidebar = () => {
           className={cn(
             "group relative flex items-center transition-all duration-200 sidebar-link-btn",
             isCollapsed 
-              ? "w-12 h-12 justify-center p-0 rounded-2xl mb-4" 
-              : "gap-4 px-4 py-3 mb-4 rounded-xl"
+              ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)] mb-4" 
+              : "gap-4 px-4 py-3 mb-4 rounded-[var(--radius-md)]"
           )}
         >
           <div className="flex-shrink-0 transition-transform group-hover:-translate-x-1 duration-200">
@@ -66,7 +66,7 @@ const Sidebar = () => {
           </div>
           {!isCollapsed && <span>Back to Dashboard</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-md px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Back to Dashboard
             </div>
           )}
@@ -82,8 +82,8 @@ const Sidebar = () => {
               cn(
                 "group relative flex items-center transition-all duration-200 sidebar-link-btn",
                 isCollapsed 
-                  ? "w-12 h-12 justify-center p-0 rounded-2xl" 
-                  : "gap-4 px-4 py-3 rounded-xl",
+                  ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
+                  : "gap-4 px-4 py-3 rounded-[var(--radius-md)]",
                 isActive ? "active-link" : ""
               )
             }
@@ -93,7 +93,7 @@ const Sidebar = () => {
             </div>
             {!isCollapsed && <span>{item.name}</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-md px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 {item.name}
               </div>
             )}
@@ -108,7 +108,7 @@ const Sidebar = () => {
       )}>
         {/* User Card */}
         <div className={cn(
-          "flex items-center rounded-2xl bg-secondary/35 border border-border/50 transition-all duration-200 overflow-hidden",
+          "flex items-center rounded-[var(--radius-lg)] bg-secondary/35 border border-border/50 transition-all duration-200 overflow-hidden",
           isCollapsed ? "w-12 h-12 justify-center p-0" : "gap-3 p-3"
         )}>
           {/* Avatar */}
@@ -141,7 +141,7 @@ const Sidebar = () => {
           onClick={toggleSidebar}
           className={cn(
             "group relative flex items-center text-muted-foreground hover:bg-secondary hover:text-foreground transition-all duration-200 w-full cursor-pointer",
-            isCollapsed ? "w-12 h-12 justify-center p-0 rounded-2xl" : "gap-3 px-3 py-2.5 rounded-xl"
+            isCollapsed ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" : "gap-3 px-3 py-2.5 rounded-[var(--radius-md)]"
           )}
           aria-label={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
@@ -155,7 +155,7 @@ const Sidebar = () => {
           </svg>
           {!isCollapsed && <span className="sidebar-label">Collapse</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-md px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Expand
             </div>
           )}

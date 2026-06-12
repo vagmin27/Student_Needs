@@ -438,7 +438,7 @@ export function UnifiedLanding() {
         <div className="uc-hero-visual" aria-hidden="true">
           <div className="uc-floating-board">
             <div className="floating-card c-tutorials">
-              <span className="card-dot text-indigo-500">📚</span>
+              <span className="card-dot text-[var(--primary)]">📚</span>
               <div>
                 <strong>Tutorials</strong>
                 <small>Find online tutors & book sessions</small>
@@ -466,7 +466,7 @@ export function UnifiedLanding() {
               </div>
             </div>
             <div className="floating-card c-alumni">
-              <span className="card-dot text-purple-400">🎓</span>
+              <span className="card-dot text-[var(--primary)]">🎓</span>
               <div>
                 <strong>Alumni Hub</strong>
                 <small>Mentorship & career networking</small>
@@ -498,7 +498,7 @@ export function UnifiedLanding() {
         <div className="uc-features-grid">
           {/* Card 1: Tutorials */}
           <div className="uc-feature-card glass-panel">
-            <div className="icon-wrapper bg-indigo-500/10 text-indigo-500">
+            <div className="icon-wrapper bg-[var(--primary)]/10 text-[var(--primary)]">
               <BookOpen className="w-6 h-6" />
             </div>
             <h3>Tutorials</h3>
@@ -558,7 +558,7 @@ export function UnifiedLanding() {
 
           {/* Card 5: Student Dashboard */}
           <div className="uc-feature-card glass-panel">
-            <div className="icon-wrapper bg-purple-500/10 text-purple-500">
+            <div className="icon-wrapper bg-[var(--primary)]/10 text-[var(--primary)]">
               <LayoutDashboard className="w-6 h-6" />
             </div>
             <h3>Student Dashboard</h3>
@@ -706,19 +706,19 @@ export function UnifiedLanding() {
         <div className="flex justify-center gap-3 mb-8">
           <button 
             onClick={() => setActivePreviewTab("laptop")}
-            className={cn("px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "laptop" ? "bg-primary text-white" : "bg-card text-foreground")}
+            className={cn("px-4 py-2 rounded-[var(--radius-sm)] text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "laptop" ? "bg-primary text-white" : "bg-card text-foreground")}
           >
             <Laptop className="w-4 h-4" /> Laptop: Dashboard
           </button>
           <button 
             onClick={() => setActivePreviewTab("tablet")}
-            className={cn("px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "tablet" ? "bg-primary text-white" : "bg-card text-foreground")}
+            className={cn("px-4 py-2 rounded-[var(--radius-sm)] text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "tablet" ? "bg-primary text-white" : "bg-card text-foreground")}
           >
             <Tablet className="w-4 h-4" /> Tablet: Tutorials & Chat
           </button>
           <button 
             onClick={() => setActivePreviewTab("mobile")}
-            className={cn("px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "mobile" ? "bg-primary text-white" : "bg-card text-foreground")}
+            className={cn("px-4 py-2 rounded-[var(--radius-sm)] text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "mobile" ? "bg-primary text-white" : "bg-card text-foreground")}
           >
             <Smartphone className="w-4 h-4" /> Mobile: Referrals & Expenses
           </button>
@@ -754,24 +754,24 @@ export function UnifiedLanding() {
                   </div>
                   
                   <div className="grid grid-cols-3 gap-3">
-                    <div className="p-3 bg-slate-800/60 rounded-lg border border-border/10">
+                    <div className="p-3 bg-slate-800/60 rounded-[var(--radius-sm)] border border-border/10">
                       <span className="text-[10px] text-slate-400">Class Attendance</span>
                       <strong className="block text-sm text-emerald-400 mt-1">84.5%</strong>
                       <span className="text-[8px] text-slate-500">Above criteria target (75%)</span>
                     </div>
-                    <div className="p-3 bg-slate-800/60 rounded-lg border border-border/10">
+                    <div className="p-3 bg-slate-800/60 rounded-[var(--radius-sm)] border border-border/10">
                       <span className="text-[10px] text-slate-400">Active Bookings</span>
-                      <strong className="block text-sm text-indigo-400 mt-1">3 Upcoming</strong>
+                      <strong className="block text-sm text-[var(--primary)] mt-1">3 Upcoming</strong>
                       <span className="text-[8px] text-slate-500">Next class tomorrow at 3 PM</span>
                     </div>
-                    <div className="p-3 bg-slate-800/60 rounded-lg border border-border/10">
+                    <div className="p-3 bg-slate-800/60 rounded-[var(--radius-sm)] border border-border/10">
                       <span className="text-[10px] text-slate-400">Remaining Budget</span>
                       <strong className="block text-sm text-rose-400 mt-1">$245.50</strong>
                       <span className="text-[8px] text-slate-500">Goal alert: 82% spent</span>
                     </div>
                   </div>
                   
-                  <div className="mt-4 p-3 bg-slate-800/40 rounded-lg border border-border/10">
+                  <div className="mt-4 p-3 bg-slate-800/40 rounded-[var(--radius-sm)] border border-border/10">
                     <h5 className="font-semibold text-white mb-2 text-[11px]">🔔 System Alerts & Notifications</h5>
                     <div className="space-y-1.5">
                       <div className="p-1.5 bg-slate-900/60 rounded text-[9px] flex justify-between border-l-2 border-l-indigo-500">
@@ -793,7 +793,7 @@ export function UnifiedLanding() {
 
           {/* Tablet Mockup */}
           {activePreviewTab === "tablet" && (
-            <div className="tablet-mockup w-[80%] max-w-lg bg-slate-900 border-[8px] border-slate-700 rounded-3xl overflow-hidden shadow-2xl relative">
+            <div className="tablet-mockup w-[80%] max-w-lg bg-slate-900 border-[8px] border-slate-700 rounded-[var(--radius-xl)] overflow-hidden shadow-2xl relative">
               {/* Speaker & camera dots */}
               <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-slate-800 rounded-full"></div>
               
@@ -810,9 +810,9 @@ export function UnifiedLanding() {
                 <div className="grid grid-cols-5 gap-3">
                   {/* Left contacts list */}
                   <div className="col-span-2 border-r border-border/10 pr-2 space-y-1.5">
-                    <div className="p-1.5 bg-indigo-500/20 text-white rounded text-[10px] font-semibold">
+                    <div className="p-1.5 bg-[var(--primary)]/20 text-white rounded text-[10px] font-semibold">
                       Dr. Rohan Mehta
-                      <span className="block text-[7px] text-indigo-400 font-normal">Active Class Session</span>
+                      <span className="block text-[7px] text-[var(--primary)] font-normal">Active Class Session</span>
                     </div>
                     <div className="p-1.5 bg-slate-800/40 rounded text-[10px]">
                       Prof. Priya Nair
@@ -821,12 +821,12 @@ export function UnifiedLanding() {
                   </div>
 
                   {/* Right Chat Area */}
-                  <div className="col-span-3 flex flex-col justify-between h-[180px] bg-slate-950/45 p-2 rounded-lg border border-border/10">
+                  <div className="col-span-3 flex flex-col justify-between h-[180px] bg-slate-950/45 p-2 rounded-[var(--radius-sm)] border border-border/10">
                     <div className="chat-messages space-y-2 overflow-y-auto">
                       <div className="p-1.5 bg-slate-800/80 rounded max-w-[85%] text-[9px] self-start">
                         Hi Anaya, did you review the tutorial notes on recursion algorithms?
                       </div>
-                      <div className="p-1.5 bg-indigo-600 rounded max-w-[85%] text-[9px] text-white self-end ml-auto text-right">
+                      <div className="p-1.5 bg-[var(--primary)] rounded max-w-[85%] text-[9px] text-white self-end ml-auto text-right">
                         Yes Prof, I checked the PDF slides. Can we schedule a doubt session?
                       </div>
                     </div>
@@ -837,7 +837,7 @@ export function UnifiedLanding() {
                   </div>
                 </div>
 
-                <div className="mt-4 p-2 bg-slate-800/50 rounded-lg border border-border/10">
+                <div className="mt-4 p-2 bg-slate-800/50 rounded-[var(--radius-sm)] border border-border/10">
                   <div className="flex justify-between items-center text-[10px]">
                     <strong>Recent Booked Classes</strong>
                     <span className="text-[8px] text-emerald-400 font-semibold">ALL COMPLETED</span>
@@ -875,14 +875,14 @@ export function UnifiedLanding() {
                   <div className="p-2 bg-slate-800/80 rounded border border-border/10">
                     <div className="flex justify-between items-start">
                       <strong className="text-[10px] text-white">UI/UX Associate</strong>
-                      <span className="text-[7px] bg-purple-500/20 text-purple-400 px-1 rounded border border-purple-400/25">Stripe</span>
+                      <span className="text-[7px] bg-[var(--primary)]/20 text-[var(--primary)] px-1 rounded border border-[var(--primary)]/30/25">Stripe</span>
                     </div>
                     <p className="text-[8px] text-slate-400 mt-1">Verified alumni referral available from Rahul K.</p>
                   </div>
                 </div>
 
                 {/* Expenses logger widget */}
-                <div className="p-2 bg-slate-950/60 rounded-lg border border-border/10">
+                <div className="p-2 bg-slate-950/60 rounded-[var(--radius-sm)] border border-border/10">
                   <strong className="text-[9px] text-white block mb-1">💰 Spend Log</strong>
                   <div className="flex justify-between text-[8px] border-b border-border/5 py-1">
                     <span>Dinner at Cafeteria</span>
@@ -994,27 +994,27 @@ export function UnifiedLanding() {
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 bg-secondary/10 border border-border/30 rounded-xl">
+              <div className="p-4 bg-secondary/10 border border-border/30 rounded-[var(--radius-md)]">
                 <h4 className="font-bold text-sm text-foreground flex items-center gap-1.5">
-                  <Smile className="w-4 h-4 text-indigo-500" /> Simplicity
+                  <Smile className="w-4 h-4 text-[var(--primary)]" /> Simplicity
                 </h4>
                 <p className="text-[11px] text-muted-foreground mt-1">An elegant student-tutor workflow dashboard designed to operate smoothly.</p>
               </div>
-              <div className="p-4 bg-secondary/10 border border-border/30 rounded-xl">
+              <div className="p-4 bg-secondary/10 border border-border/30 rounded-[var(--radius-md)]">
                 <h4 className="font-bold text-sm text-foreground flex items-center gap-1.5">
                   <Heart className="w-4 h-4 text-rose-500" /> Accessibility
                 </h4>
                 <p className="text-[11px] text-muted-foreground mt-1">A highly accessible interface with WCAG AA compliance and light/dark theme toggles.</p>
               </div>
-              <div className="p-4 bg-secondary/10 border border-border/30 rounded-xl">
+              <div className="p-4 bg-secondary/10 border border-border/30 rounded-[var(--radius-md)]">
                 <h4 className="font-bold text-sm text-foreground flex items-center gap-1.5">
                   <Lightbulb className="w-4 h-4 text-cyan-400" /> Innovation
                 </h4>
                 <p className="text-[11px] text-muted-foreground mt-1">Real-time socket alerts, custom charts, and direct verifier referral channels.</p>
               </div>
-              <div className="p-4 bg-secondary/10 border border-border/30 rounded-xl">
+              <div className="p-4 bg-secondary/10 border border-border/30 rounded-[var(--radius-md)]">
                 <h4 className="font-bold text-sm text-foreground flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-purple-400" /> Community
+                  <Users className="w-4 h-4 text-[var(--primary)]" /> Community
                 </h4>
                 <p className="text-[11px] text-muted-foreground mt-1">Bringing students, faculty tutors, and alumni together into a single hub.</p>
               </div>
@@ -1023,37 +1023,37 @@ export function UnifiedLanding() {
 
           {/* Stats grid triggered by viewport count-up hook */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-5 bg-card border border-border rounded-xl text-center shadow-sm">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-primary">
                 {studentsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Students Supported</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-xl text-center shadow-sm">
-              <strong className="block text-2xl sm:text-3xl font-extrabold text-indigo-500">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
+              <strong className="block text-2xl sm:text-3xl font-extrabold text-[var(--primary)]">
                 {tutorsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Vetted Tutors</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-xl text-center shadow-sm col-span-2">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm col-span-2">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-emerald-400">
                 {sessionsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Tutorial Sessions Booked</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-xl text-center shadow-sm">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-cyan-400">
                 {referralsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Referrals Shared</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-xl text-center shadow-sm">
-              <strong className="block text-2xl sm:text-3xl font-extrabold text-purple-400">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
+              <strong className="block text-2xl sm:text-3xl font-extrabold text-[var(--primary)]">
                 {satisfactionCount}%
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">User Satisfaction</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-xl text-center shadow-sm col-span-2">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm col-span-2">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-amber-500">
                 {mentorsCount}+
               </strong>
@@ -1076,7 +1076,7 @@ export function UnifiedLanding() {
             const isOpen = openFaq === idx;
             return (
               <div 
-                className="faq-panel border border-border rounded-xl overflow-hidden bg-card transition-all"
+                className="faq-panel border border-border rounded-[var(--radius-md)] overflow-hidden bg-card transition-all"
                 key={idx}
               >
                 <button
@@ -1107,7 +1107,7 @@ export function UnifiedLanding() {
 
       {/* 🚀 CTA: TRANSFORM YOUR STUDENT JOURNEY */}
       <section className="uc-section uc-cta">
-        <div className="cta-gradient-box glass-panel p-8 sm:p-12 max-w-4xl mx-auto text-center relative overflow-hidden rounded-2xl border border-primary/25">
+        <div className="cta-gradient-box glass-panel p-8 sm:p-12 max-w-4xl mx-auto text-center relative overflow-hidden rounded-[var(--radius-lg)] border border-primary/25">
           {/* Animated gradient blob background */}
           <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-indigo-500/5 to-cyan-500/10 z-0 pointer-events-none"></div>
           
@@ -1316,7 +1316,7 @@ function RoleAuthShell({
                     <div className="flex justify-end mt-1">
                       <Link
                         to={`/forgot-password?role=${role}`}
-                        className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
+                        className="text-xs text-[var(--primary)] hover:text-indigo-300 font-semibold transition-colors"
                       >
                         Forgot Password?
                       </Link>
@@ -1333,7 +1333,7 @@ function RoleAuthShell({
               <label className="flex items-center gap-2 mt-2 mb-4 text-sm text-slate-400 cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-indigo-950/60 bg-indigo-950/20 text-indigo-600 focus:ring-indigo-500/50 cursor-pointer"
+                  className="w-4 h-4 rounded border-indigo-950/60 bg-indigo-950/20 text-[var(--primary)] focus:ring-[var(--primary)]/20/50 cursor-pointer"
                 />
                 <span>Remember me</span>
               </label>
@@ -1356,7 +1356,7 @@ function RoleAuthShell({
                 <button
                   type="button"
                   onClick={() => window.location.href = `http://localhost:8000/api/v1/student/auth/google?role=${role}`}
-                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-xl border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-slate-300 hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-slate-300 hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -1369,7 +1369,7 @@ function RoleAuthShell({
                 <button
                   type="button"
                   onClick={() => window.location.href = `http://localhost:8000/api/v1/student/auth/github?role=${role}`}
-                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-xl border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-slate-300 hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-slate-300 hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z" />

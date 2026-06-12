@@ -317,7 +317,7 @@ export default function TutorProfileView() {
   return (
     <div className="container-xl px-4 mt-4">
       {/* Header and Toggle Edit Mode */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-xl p-4 border border-border/40 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] p-4 border border-border/40 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Tutor Profile</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
@@ -338,7 +338,7 @@ export default function TutorProfileView() {
             <button
               onClick={handleCancel}
               className="btnEditProfile"
-              style={{ background: "#4a5568", color: "#fff", margin: 0 }}
+              style={{ background: "var(--neutral)", color: "var(--text-white)", margin: 0 }}
             >
               Cancel
             </button>
@@ -379,7 +379,7 @@ export default function TutorProfileView() {
           />
         </div>
         {liveMissingFields.length > 0 && (
-          <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/30 p-2.5 rounded-lg border border-border/20">
+          <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/30 p-2.5 rounded-[var(--radius-sm)] border border-border/20">
             <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
             <div>
               <span className="font-semibold text-foreground">Missing items:</span>{" "}
@@ -562,7 +562,7 @@ export default function TutorProfileView() {
                 <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Social Links</h4>
                 <div className="flex flex-wrap gap-4">
                   {profile.linkedinUrl ? (
-                    <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-blue-400 hover:underline">
+                    <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-[var(--primary)] hover:underline">
                       <Linkedin className="w-4 h-4" />
                       LinkedIn
                     </a>
@@ -591,7 +591,7 @@ export default function TutorProfileView() {
               {profile.bio && (
                 <div>
                   <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Bio</h4>
-                  <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/20 p-3 rounded-lg border border-border/30">
+                  <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/20 p-3 rounded-[var(--radius-sm)] border border-border/30">
                     {profile.bio}
                   </p>
                 </div>

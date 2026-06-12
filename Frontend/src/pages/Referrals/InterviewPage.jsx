@@ -397,7 +397,7 @@ export default function InterviewPage() {
                 toast.dismiss();
                 navigate(`/referrals/chat?chatId=${chatId}`);
               }}
-              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-lg shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
+              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-[var(--radius-sm)] shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
             >
               Message Alumni
             </button>
@@ -476,13 +476,13 @@ export default function InterviewPage() {
         </div>
       </div>
 
-      <div className="flex-1 flex gap-3 p-6 relative overflow-hidden border rounded-2xl">
+      <div className="flex-1 flex gap-3 p-6 relative overflow-hidden border rounded-[var(--radius-lg)]">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
         
         <div className="relative w-96 flex-shrink-0 space-y-4">
-          <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-xl p-6">
+          <div className="bg-card/50 backdrop-blur-sm rounded-[var(--radius-lg)] border border-border/50 shadow-xl p-6">
             <div className="flex items-start gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 flex items-center justify-center flex-shrink-0">
                 <Building2 className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
@@ -491,7 +491,7 @@ export default function InterviewPage() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 flex items-center justify-center flex-shrink-0">
                 <Briefcase className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
@@ -504,7 +504,7 @@ export default function InterviewPage() {
           {(profileScore !== null || interviewScore !== null) && (
             <div className="space-y-4">
               {profileScore !== null && (
-                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 shadow-lg">
+                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-[var(--radius-md)] p-4 shadow-lg">
                   <div className="flex items-center gap-3 mb-2">
                     <TrendingUp className="w-5 h-5 text-primary" />
                     <p className="text-sm font-medium text-muted-foreground">Profile Match</p>
@@ -515,7 +515,7 @@ export default function InterviewPage() {
               )}
               
               {interviewScore !== null && (
-                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-4 shadow-lg">
+                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-[var(--radius-md)] p-4 shadow-lg">
                   <div className="flex items-center gap-3 mb-2">
                     <Award className="w-5 h-5 text-primary" />
                     <p className="text-sm font-medium text-muted-foreground">Interview Score</p>
@@ -637,7 +637,7 @@ export default function InterviewPage() {
         </div>
 
         <div className="relative w-[28rem] flex-shrink-0">
-          <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-xl h-full flex flex-col">
+          <div className="bg-card/50 backdrop-blur-sm rounded-[var(--radius-lg)] border border-border/50 shadow-xl h-full flex flex-col">
             <div className="flex items-center justify-between p-4 border-b border-border/50">
               <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />

@@ -40,7 +40,7 @@ export function ExternalJobsList({ jobs = [], loading }) {
   // Loading State
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto bg-card rounded-lg p-12 border border-border/50 text-center">
+      <div className="max-w-7xl mx-auto bg-card rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
         <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4 animate-pulse" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           Loading Jobs...
@@ -55,7 +55,7 @@ export function ExternalJobsList({ jobs = [], loading }) {
   // Empty State
   if (jobs.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto bg-card rounded-lg p-12 border border-border/50 text-center">
+      <div className="max-w-7xl mx-auto bg-card rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
         <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Jobs Available
@@ -78,7 +78,7 @@ export function ExternalJobsList({ jobs = [], loading }) {
         return (
           <div
             key={job.slug}
-            className="bg-card rounded-lg p-6 border border-border/50 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
+            className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
           >
             <div className="flex-1">
               {/* Job Title */}
@@ -137,7 +137,7 @@ export function ExternalJobsList({ jobs = [], loading }) {
                   {job.job_types?.map((type, index) => (
                     <span
                       key={index}
-                      className="inline-block px-2 py-1 rounded-md text-xs font-medium bg-secondary/50 text-secondary-foreground"
+                      className="inline-block px-2 py-1 rounded-[var(--radius-sm)] text-xs font-medium bg-secondary/50 text-secondary-foreground"
                     >
                       {type}
                     </span>

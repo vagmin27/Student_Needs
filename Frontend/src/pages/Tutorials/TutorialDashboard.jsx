@@ -16,7 +16,7 @@ const MetricCard = ({ title, value, icon: Icon, colorClass }) => (
     <CardContent className="p-6 flex flex-col justify-between h-full">
       <div className="flex items-start justify-between mb-4">
         <p className="text-sm font-medium text-muted-foreground">{title}</p>
-        <div className={`p-2 rounded-md bg-opacity-10 ${colorClass} bg-current`}>
+        <div className={`p-2 rounded-[var(--radius-sm)] bg-opacity-10 ${colorClass} bg-current`}>
           <Icon className="w-4 h-4" />
         </div>
       </div>
@@ -31,7 +31,7 @@ const QuickAction = ({ title, icon: Icon, to, primary }) => (
   <Link to={to} className="block h-full">
     <Card className={`h-full hover:scale-105 transition-all duration-300 ${primary ? 'bg-primary text-primary-foreground border-primary' : 'hover:border-primary/50 bg-card'}`}>
       <CardContent className="p-4 flex flex-col items-center justify-center gap-2 h-full text-center">
-        <div className={`p-2 rounded-md ${primary ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-primary/10 text-primary'}`}>
+        <div className={`p-2 rounded-[var(--radius-sm)] ${primary ? 'bg-primary-foreground/20 text-primary-foreground' : 'bg-primary/10 text-primary'}`}>
           <Icon className="w-5 h-5" />
         </div>
         <span className="font-medium text-xs sm:text-sm">{title}</span>
@@ -47,14 +47,14 @@ const LoadingSkeleton = () => (
       <Skeleton className="h-5 w-96" />
     </div>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-32 w-full rounded-xl" />)}
+      {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-32 w-full rounded-[var(--radius-md)]" />)}
     </div>
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-      {[1, 2, 3, 4, 5, 6].map(i => <Skeleton key={i} className="h-24 w-full rounded-xl" />)}
+      {[1, 2, 3, 4, 5, 6].map(i => <Skeleton key={i} className="h-24 w-full rounded-[var(--radius-md)]" />)}
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <Skeleton className="h-64 w-full rounded-xl" />
-      <Skeleton className="h-64 w-full rounded-xl" />
+      <Skeleton className="h-64 w-full rounded-[var(--radius-md)]" />
+      <Skeleton className="h-64 w-full rounded-[var(--radius-md)]" />
     </div>
   </div>
 );
@@ -106,7 +106,7 @@ export default function TutorialDashboard() {
               title="Upcoming Bookings" 
               value={metrics.upcomingBookings} 
               icon={Calendar} 
-              colorClass="text-blue-500" 
+              colorClass="text-[var(--primary)]" 
             />
             <MetricCard 
               title="Completed Classes" 
@@ -208,7 +208,7 @@ export default function TutorialDashboard() {
                     <div className="divide-y border-transparent">
                       {recentActivity.map((activity, i) => (
                         <div key={i} className="flex items-start gap-4 p-4 hover:bg-muted/30 transition-colors">
-                          <div className={`p-2 rounded-full bg-muted/50 ${activity.type === 'chat' ? 'text-pink-500' : 'text-blue-500'}`}>
+                          <div className={`p-2 rounded-full bg-muted/50 ${activity.type === 'chat' ? 'text-pink-500' : 'text-[var(--primary)]'}`}>
                             {activity.type === 'chat' ? <MessageSquare className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
                           </div>
                           <div className="flex-1 min-w-0">

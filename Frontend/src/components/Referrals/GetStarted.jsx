@@ -18,7 +18,7 @@ export function GetStarted() {
       <Button
         variant="gradient"
         onClick={handleGetStarted}
-        className="gap-2 rounded-md border border-primary/30 px-6 py-2.5 text-sm font-medium hover:border-primary/50 transition-colors"
+        className="gap-2 rounded-[var(--radius-sm)] border border-primary/30 px-6 py-2.5 text-sm font-medium hover:border-primary/50 transition-colors"
       >
         Get Started
       </Button>

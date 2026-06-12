@@ -133,7 +133,7 @@ function Register() {
               <small style={{ color: "var(--text-secondary)", opacity: 0.8, display: "block" }}>
                 We will never share your email.
               </small>
-              {error.email && <span style={{ color: "var(--destructive)", fontSize: "12px" }}>{error.email}</span>}
+              {error.email && <span className="text-xs text-destructive">{error.email}</span>}
 
               <label className="uc-field">
                 <span>Password</span>
@@ -160,7 +160,7 @@ function Register() {
                 />
               </label>
               {error.confirmedPassword && (
-                <span style={{ color: "var(--destructive)", fontSize: "12px" }}>{error.confirmedPassword}</span>
+                <span className="text-xs text-destructive">{error.confirmedPassword}</span>
               )}
 
               <button type="submit" className="uc-login-submit">
@@ -175,7 +175,7 @@ function Register() {
 
           {step === "otp" && (
             <form className="uc-login-form" onSubmit={verifyOtp}>
-              <p style={{ color: "green", marginBottom: "12px" }}>{message}</p>
+              <p className="text-sm text-success mb-3">{message}</p>
               <label className="uc-field">
                 <span>Enter 6-digit OTP sent to {user.email}</span>
                 <input
@@ -187,13 +187,13 @@ function Register() {
                   required
                 />
               </label>
-              {error.otp && <span style={{ color: "var(--destructive)", fontSize: "12px" }}>{error.otp}</span>}
+              {error.otp && <span className="text-xs text-destructive">{error.otp}</span>}
 
               <button type="submit" className="uc-login-submit">
                 Verify and Register
               </button>
 
-              <button type="button" className="uc-login-submit" style={{ background: "transparent", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} onClick={resendOtp}>
+              <button type="button" className="uc-secondary-button w-full" onClick={resendOtp}>
                 Resend OTP
               </button>
             </form>

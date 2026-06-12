@@ -80,9 +80,9 @@
   background: var(--card-bg);
   color: var(--text-primary);
   padding: 35px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-lg);
 }
 
 /* 🧾 Form */
@@ -101,7 +101,7 @@
 /* 📝 Input */
 .availability-input {
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--bg-secondary);
   caret-color: var(--text-primary);
@@ -171,7 +171,7 @@
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   font-size: 14px;
 }
 
@@ -203,7 +203,7 @@
   border: none;
   color: var(--bg-primary);
   font-weight: bold;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }

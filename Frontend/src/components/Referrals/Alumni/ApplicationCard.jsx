@@ -68,7 +68,7 @@ export function ApplicationCard({
   };
 
   return (
-    <div className="bg-card/40 backdrop-blur-md rounded-xl p-5 border border-border/50 shadow-lg hover:border-primary/30 transition-all duration-300">
+    <div className="bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] p-5 border border-border/50 shadow-lg hover:border-primary/30 transition-all duration-300">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start gap-4">
           {/* Profile Image */}
@@ -114,7 +114,7 @@ export function ApplicationCard({
 
             {/* Resume Details with Download Button */}
             {application.resumeSnapshot?.fileName && (
-              <div className="flex items-center gap-2 mt-2 bg-muted/40 px-2.5 py-1.5 rounded-md border border-border/30 w-fit">
+              <div className="flex items-center gap-2 mt-2 bg-muted/40 px-2.5 py-1.5 rounded-[var(--radius-sm)] border border-border/30 w-fit">
                 <span className="text-xs text-muted-foreground max-w-[150px] truncate" title={application.resumeSnapshot.fileName}>
                   📄 {application.resumeSnapshot.fileName}
                 </span>
@@ -150,7 +150,7 @@ export function ApplicationCard({
         </div>
         <span className={cn(
           "text-xs px-2.5 py-1 rounded-full font-medium border capitalize",
-          isPending && "bg-blue-500/10 text-blue-400 border-blue-500/20",
+          isPending && "bg-[var(--primary)]/10 text-[var(--primary)] border-[var(--primary)]/30/20",
           isApproved && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
           isRejected && "bg-rose-500/10 text-rose-400 border-rose-500/20"
         )}>
@@ -160,7 +160,7 @@ export function ApplicationCard({
 
       {/* Profile Completeness */}
       {student.profileCompleteness !== undefined && (
-        <div className="flex items-center gap-2.5 mt-3 mb-4 bg-muted/20 p-2 rounded-lg border border-border/20">
+        <div className="flex items-center gap-2.5 mt-3 mb-4 bg-muted/20 p-2 rounded-[var(--radius-sm)] border border-border/20">
           <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Completeness</span>
           <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
             <div

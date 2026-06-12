@@ -96,7 +96,7 @@ const About = () => {
             return (
               <div
                 key={index}
-                className="bg-card rounded-lg p-6 border border-border/50 text-center hover:border-primary/50 transition-all"
+                className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 text-center hover:border-primary/50 transition-all"
               >
                 <Icon className="w-8 h-8 text-primary mx-auto mb-3" />
                 <p className="text-3xl font-bold text-foreground mb-1">{stat.value}</p>
@@ -133,7 +133,7 @@ const About = () => {
                 By leveraging the power of the Aptos blockchain, we ensure that every resume is verified by authorized college authorities, creating a trustworthy ecosystem where alumni can confidently provide referrals.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-primary/5 via-student/5 to-alumni/5 rounded-lg p-8 border border-border/50">
+            <div className="bg-gradient-to-br from-primary/5 via-student/5 to-alumni/5 rounded-[var(--radius-sm)] p-8 border border-border/50">
               <div className="space-y-4">
                 {features?.map((feature, index) => {
                   const Icon = feature.icon;
@@ -144,9 +144,9 @@ const About = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
-                      className="flex items-start gap-4 bg-card/50 rounded-xl p-4 backdrop-blur-sm"
+                      className="flex items-start gap-4 bg-card/50 rounded-[var(--radius-md)] p-4 backdrop-blur-sm"
                     >
-                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 flex items-center justify-center">
                         <Icon className="w-5 h-5 text-primary" />
                       </div>
                       <div>
@@ -190,9 +190,9 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-card rounded-lg p-8 border border-border/50 hover:border-primary/50 transition-all text-center"
+                className="bg-card rounded-[var(--radius-sm)] p-8 border border-border/50 hover:border-primary/50 transition-all text-center"
               >
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto mb-6">
+                <div className="w-16 h-16 rounded-[var(--radius-lg)] bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mx-auto mb-6">
                   <Icon className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-3">{value.title}</h3>
@@ -251,7 +251,7 @@ const About = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="relative"
               >
-                <div className={`bg-gradient-to-br ${item.color} rounded-lg p-8 border border-border/50 h-full`}>
+                <div className={`bg-gradient-to-br ${item.color} rounded-[var(--radius-sm)] p-8 border border-border/50 h-full`}>
                   <div className="text-5xl font-bold text-primary/20 mb-4">{item.step}</div>
                   <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{item.description}</p>
@@ -272,7 +272,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto bg-gradient-to-br from-primary/10 via-student/5 to-alumni/10 rounded-xl p-12 border border-primary/20 text-center"
+          className="max-w-4xl mx-auto bg-gradient-to-br from-primary/10 via-student/5 to-alumni/10 rounded-[var(--radius-md)] p-12 border border-primary/20 text-center"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             <span className="gradient-text2">Ready to Transform </span>
@@ -283,7 +283,7 @@ const About = () => {
           </p>
           <button
             onClick={() => window.location.href = '/'}
-            className="px-8 py-4 bg-gradient-to-r from-primary to-student rounded-lg text-background font-semibold hover:shadow-lg transition-all"
+            className="px-8 py-4 bg-gradient-to-r from-primary to-student rounded-[var(--radius-sm)] text-background font-semibold hover:shadow-lg transition-all"
           >
             Get Started Now
           </button>

@@ -57,7 +57,7 @@ function TutorSchedulePage() {
           <p>No schedule found ❌</p>
         ) : (
           schedule?.map((item, index) => (
-            <div key={item._id || index} className="rounded-xl border border-border bg-card p-5 shadow-sm space-y-3">
+            <div key={item._id || index} className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-sm space-y-3">
               
               <p className="text-sm text-muted-foreground">
                 <strong>📅 Date:</strong> {item.date}
@@ -101,7 +101,7 @@ function TutorSchedulePage() {
                         updated[index].meetingLink = e.target.value;
                         setSchedule(updated);
                       }}
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      className="w-full rounded-[var(--radius-sm)] border border-input bg-background px-3 py-2 text-sm"
                     />
 
                     <Button

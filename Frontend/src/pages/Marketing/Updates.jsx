@@ -18,7 +18,7 @@ const versionsData = [
     version: "v1.1",
     title: "Referrals & Placements Hub",
     date: "April 2026",
-    color: "bg-indigo-500 border-indigo-500",
+    color: "bg-[var(--primary)] border-[var(--primary)]/30",
     changes: [
       "Created Alumni registration and company validation portals",
       "Added referral posting and resume upload check pipelines",

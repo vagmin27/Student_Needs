@@ -5,11 +5,11 @@ import { EmptyState } from "../shared/EmptyState";
 import { Wallet } from "lucide-react";
 
 const COLORS = [
-  'rgba(99, 102, 241, 0.8)',  // Indigo
-  'rgba(251, 146, 60, 0.8)',  // Orange
-  'rgba(52, 211, 153, 0.8)',  // Emerald
-  'rgba(251, 113, 133, 0.8)', // Rose
-  'rgba(148, 163, 184, 0.8)', // Slate
+  '#D4A373', // Primary Gold
+  '#E6C594', // Soft Gold
+  '#B88654', // Muted Amber
+  '#FAEDCD', // Warm Sand
+  '#8B949E', // Refined Slate
 ];
 
 export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
@@ -45,8 +45,14 @@ export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
         </Pie>
         <Tooltip 
           formatter={(value) => `₹ ${value.toLocaleString()}`}
-          contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
-          itemStyle={{ color: 'var(--text-secondary)' }}
+          contentStyle={{ 
+            backgroundColor: 'var(--bg-secondary)', 
+            border: '1px solid var(--border-color)', 
+            color: 'var(--text-primary)', 
+            borderRadius: 'var(--radius-md)',
+            boxShadow: "var(--shadow-md)"
+          }}
+          itemStyle={{ color: 'var(--text-primary)' }}
           animationDuration={300}
         />
         <Legend 

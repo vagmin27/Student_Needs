@@ -11,7 +11,7 @@ const TutorialStudentLayout = () => {
   return (
     <div className="flex flex-col md:flex-row gap-6 h-full min-h-[calc(100vh-10rem)]">
       {/* Mobile Header / Trigger */}
-      <div className="md:hidden flex items-center justify-between bg-card p-4 rounded-lg border shadow-sm">
+      <div className="md:hidden flex items-center justify-between bg-card p-4 rounded-[var(--radius-sm)] border shadow-sm">
         <span className="font-semibold text-lg">Tutorials Menu</span>
         <Button variant="ghost" size="icon" onClick={() => setIsMobileOpen(!isMobileOpen)}>
           <Menu className="w-6 h-6" />
@@ -27,7 +27,7 @@ const TutorialStudentLayout = () => {
       />
 
       {/* Main Content */}
-      <div className="flex-1 bg-card rounded-lg border shadow-sm p-4 md:p-6 overflow-x-hidden min-h-[50vh]">
+      <div className="flex-1 bg-card rounded-[var(--radius-sm)] border shadow-sm p-4 md:p-6 overflow-x-hidden min-h-[50vh]">
         <Outlet />
       </div>
     </div>

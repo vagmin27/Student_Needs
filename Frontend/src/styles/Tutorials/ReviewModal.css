@@ -5,7 +5,7 @@
   max-height: 85vh;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -71,7 +71,7 @@
 /* TEXTAREA */
 .form-control {
   width: 100%;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--secondary);
   color: var(--text-primary);
@@ -81,7 +81,7 @@
 }
 
 .form-control:focus {
-  border-color: var(--accent-blue);
+  border-color: var(--primary);
   outline: none;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
@@ -101,7 +101,7 @@
 /* BUTTON */
 .reviewBtn {
   padding: 0.7rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
   background: var(--primary);
   color: var(--text-white);

@@ -103,7 +103,7 @@ const About = () => {
             return (
               <div
                 key={stat.label}
-                className="bg-card p-6 rounded-lg border text-center"
+                className="bg-card p-6 rounded-[var(--radius-sm)] border text-center"
               >
                 <Icon className="w-8 h-8 text-primary mx-auto mb-2" />
                 <p className="text-2xl font-bold">{stat.value}</p>
@@ -140,7 +140,7 @@ const About = () => {
             return (
               <div
                 key={feature.title}
-                className="flex gap-4 p-4 bg-card rounded-lg"
+                className="flex gap-4 p-4 bg-card rounded-[var(--radius-sm)]"
               >
                 <Icon className="w-5 h-5 text-primary" />
                 <div>
@@ -163,7 +163,7 @@ const About = () => {
           {values.map((value) => {
             const Icon = value.icon;
             return (
-              <div key={value.title} className="bg-card p-6 rounded-lg border">
+              <div key={value.title} className="bg-card p-6 rounded-[var(--radius-sm)] border">
                 <Icon className="w-8 h-8 text-primary mx-auto mb-4" />
                 <h3 className="font-bold">{value.title}</h3>
                 <p className="text-muted-foreground text-sm">
@@ -186,7 +186,7 @@ const About = () => {
 
         <button
           onClick={() => navigate("/")}
-          className="px-6 py-3 bg-primary text-white rounded-lg"
+          className="px-6 py-3 bg-primary text-white rounded-[var(--radius-sm)]"
         >
           Get Started
         </button>

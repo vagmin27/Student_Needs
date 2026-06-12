@@ -31,7 +31,7 @@ function RemoveStudent() {
       </div>
 
       <div className="card max-w-md">
-        <div className="bg-[var(--danger-bg)] border border-[var(--danger)] rounded-xl p-4 flex items-start gap-3 mb-6">
+        <div className="bg-[var(--danger-bg)] border border-[var(--danger)] rounded-[var(--radius-md)] p-4 flex items-start gap-3 mb-6">
           <MdWarning size={20} className="text-[var(--danger)] shrink-0 mt-0.5" />
           <div className="text-sm text-[var(--danger)] font-medium">
             <strong>Warning:</strong> This action is irreversible. The student's record and all

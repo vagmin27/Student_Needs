@@ -56,7 +56,7 @@ function Signup() {
           Back to role selection
         </Link>
         
-        <LoadingBar color="#10B981" ref={ref} height={3} />
+        <LoadingBar color="var(--primary)" ref={ref} height={3} />
 
         <section className="uc-login-panel">
           <div className="uc-login-icon">

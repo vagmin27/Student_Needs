@@ -245,7 +245,7 @@ const StudentDashboard = () => {
       <BackToStudentDashboard />
 
       {loadError && (
-        <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center justify-between gap-3">
+        <div className="p-4 rounded-[var(--radius-sm)] bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center justify-between gap-3">
           <span className="text-sm">{loadError}</span>
           <Button variant="outline" size="sm" onClick={loadData}>
             Retry
@@ -282,7 +282,7 @@ const StudentDashboard = () => {
       </div>
 
       {lowAttendance.length > 0 && (
-        <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center gap-3">
+        <div className="p-4 rounded-[var(--radius-sm)] bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center gap-3">
           <MdWarning size={20} className="shrink-0" />
           <span className="text-sm font-medium">
             Low attendance (&lt; {MIN_ATTENDANCE}%):{" "}
@@ -345,7 +345,7 @@ const StudentDashboard = () => {
                   return (
                     <div
                       key={s.subjectId}
-                      className="p-4 rounded-lg border border-border bg-card dark:bg-secondary/20"
+                      className="p-4 rounded-[var(--radius-sm)] border border-border bg-card dark:bg-secondary/20"
                     >
                       <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold text-sm">{s.subjectName}</span>
@@ -394,7 +394,7 @@ const StudentDashboard = () => {
               {subjects.map((s) => (
                 <li
                   key={s._id}
-                  className="flex items-center justify-between gap-2 p-3 rounded-lg border border-border"
+                  className="flex items-center justify-between gap-2 p-3 rounded-[var(--radius-sm)] border border-border"
                 >
                   <span className="font-medium text-sm">{s.subjectName}</span>
                   <div className="flex gap-1">
@@ -420,7 +420,7 @@ const StudentDashboard = () => {
       <DashboardCard title="Attendance history" description="Filter, edit, or delete records" contentClassName="pt-0">
         <div className="flex flex-wrap gap-3 mb-4">
           <select
-            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
             value={filterSubject}
             onChange={(e) => setFilterSubject(e.target.value)}
           >
@@ -433,14 +433,14 @@ const StudentDashboard = () => {
           </select>
           <input
             type="date"
-            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
             value={filterFrom}
             onChange={(e) => setFilterFrom(e.target.value)}
             placeholder="From"
           />
           <input
             type="date"
-            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
             value={filterTo}
             onChange={(e) => setFilterTo(e.target.value)}
           />
@@ -515,7 +515,7 @@ const StudentDashboard = () => {
             </DialogTitle>
           </DialogHeader>
           <input
-            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="w-full h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
             placeholder="Subject name"
             value={subjectModal.name}
             onChange={(e) => setSubjectModal((m) => ({ ...m, name: e.target.value }))}
@@ -543,7 +543,7 @@ const StudentDashboard = () => {
             <div>
               <label className="text-sm font-medium mb-1 block">Subject</label>
               <select
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="w-full h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
                 value={markModal.subjectId}
                 onChange={(e) => setMarkModal((m) => ({ ...m, subjectId: e.target.value }))}
               >
@@ -559,7 +559,7 @@ const StudentDashboard = () => {
               <label className="text-sm font-medium mb-1 block">Date</label>
               <input
                 type="date"
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="w-full h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
                 value={markModal.date}
                 onChange={(e) => setMarkModal((m) => ({ ...m, date: e.target.value }))}
               />
@@ -609,7 +609,7 @@ const StudentDashboard = () => {
             <div>
               <label className="text-sm font-medium mb-1 block">Subject</label>
               <select
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="w-full h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
                 value={editRecordModal.subjectId}
                 onChange={(e) =>
                   setEditRecordModal((m) => ({ ...m, subjectId: e.target.value }))
@@ -626,7 +626,7 @@ const StudentDashboard = () => {
               <label className="text-sm font-medium mb-1 block">Date</label>
               <input
                 type="date"
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="w-full h-10 rounded-[var(--radius-sm)] border border-input bg-background px-3 text-sm"
                 value={editRecordModal.date}
                 onChange={(e) => setEditRecordModal((m) => ({ ...m, date: e.target.value }))}
               />

@@ -4,14 +4,14 @@ export function ChatSkeleton() {
   return (
     <div className="w-full h-full flex flex-col space-y-4 p-4 animate-pulse">
       {/* Search Bar Skeleton */}
-      <div className="h-10 bg-muted/40 rounded-lg w-full border border-border/20" />
+      <div className="h-10 bg-muted/40 rounded-[var(--radius-sm)] w-full border border-border/20" />
       
       {/* Active Chats List Skeleton */}
       <div className="space-y-3 flex-1 overflow-hidden">
         {[1, 2, 3, 4, 5].map((i) => (
           <div
             key={i}
-            className="flex items-center gap-3 p-3 rounded-xl border border-border/10 bg-card/20"
+            className="flex items-center gap-3 p-3 rounded-[var(--radius-md)] border border-border/10 bg-card/20"
           >
             {/* Avatar skeleton */}
             <div className="w-12 h-12 bg-muted/50 rounded-full flex-shrink-0" />
@@ -48,7 +48,7 @@ export function MessageSkeleton() {
             
             {/* Bubble skeleton */}
             <div
-              className={`rounded-2xl p-4 border border-border/10 ${
+              className={`rounded-[var(--radius-lg)] p-4 border border-border/10 ${
                 isRight
                   ? "bg-primary/10 rounded-br-none"
                   : "bg-muted/30 rounded-bl-none"

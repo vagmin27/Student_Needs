@@ -677,12 +677,12 @@ export function AlumniDashboard() {
         </div>
         <div className="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
           <Button variant="alumni" onClick={() => setShowCreateJob(true)}
-          className='text-background rounded-md hover:bg-muted-foreground bg-primary text-sm sm:text-base'>
+          className='text-background rounded-[var(--radius-sm)] hover:bg-muted-foreground bg-primary text-sm sm:text-base'>
             <Briefcase className="w-4 h-4" />
             Post Job
           </Button>
           <Button variant="success" onClick={() => setShowCreateReferral(true)}
-          className='text-background rounded-md bg-muted-foreground hover:bg-primary text-sm sm:text-base'>
+          className='text-background rounded-[var(--radius-sm)] bg-muted-foreground hover:bg-primary text-sm sm:text-base'>
             <Star className="w-4 h-4" />
             Post Referral
           </Button>
@@ -697,7 +697,7 @@ export function AlumniDashboard() {
         <div className="space-y-4 sm:space-y-6">
           {isAuthenticated && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-card rounded-xl border border-border/50 p-4">
+              <div className="bg-card rounded-[var(--radius-md)] border border-border/50 p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-foreground">
                     {activeTab === 'jobs' ? 'My Posted Jobs' : 'My Posted Referrals'}
@@ -717,7 +717,7 @@ export function AlumniDashboard() {
                   actionLabel="Edit"
                 />
               </div>
-              <div className="bg-card rounded-xl border border-border/50">
+              <div className="bg-card rounded-[var(--radius-md)] border border-border/50">
                 {selectedBackendOpportunity ? (
                   <div className="p-4 sm:p-6">
                     <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 truncate">
@@ -757,7 +757,7 @@ export function AlumniDashboard() {
 
       {activeTab === 'applications' && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-xl border border-border/50 p-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] border border-border/50 p-4">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Pending Applications</h3>
               <p className="text-xs text-muted-foreground">Review applications grouped dynamically by role</p>
@@ -797,7 +797,7 @@ export function AlumniDashboard() {
               ))}
             </div>
           ) : (
-            <div className="bg-card rounded-xl p-6 sm:p-8 md:p-12 border border-border/50 text-center">
+            <div className="bg-card rounded-[var(--radius-md)] p-6 sm:p-8 md:p-12 border border-border/50 text-center">
               <FileText className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
                 No Pending Applications
@@ -812,7 +812,7 @@ export function AlumniDashboard() {
 
       {activeTab === 'candidates' && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-xl border border-border/50 p-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] border border-border/50 p-4">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Verified Candidates</h3>
               <p className="text-xs text-muted-foreground">Candidates approved for referral grouped dynamically by role</p>
@@ -851,7 +851,7 @@ export function AlumniDashboard() {
               ))}
             </div>
           ) : (
-            <div className="bg-card rounded-xl p-6 sm:p-8 md:p-12 border border-border/50 text-center">
+            <div className="bg-card rounded-[var(--radius-md)] p-6 sm:p-8 md:p-12 border border-border/50 text-center">
               <Users className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
                 No Verified Candidates Yet

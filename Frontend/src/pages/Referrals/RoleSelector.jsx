@@ -75,11 +75,11 @@ export function RoleSelector() {
                 transition={{ delay: index * 0.1 }}
                 onClick={() => handleRoleSelect(role.id)}
                 className={cn(
-                  "group relative p-2 rounded-xl bg-card border-2 border-border/50",
+                  "group relative p-2 rounded-[var(--radius-md)] bg-card border-2 border-border/50",
                   "hover:border-primary/50 hover:shadow-lg transition-all duration-300"
                 )}
               >
-                <div className="relative bg-background rounded-lg overflow-hidden border-2 min-h-[350px] sm:min-h-[400px] flex flex-col justify-end">
+                <div className="relative bg-background rounded-[var(--radius-sm)] overflow-hidden border-2 min-h-[350px] sm:min-h-[400px] flex flex-col justify-end">
                   {/* Image */}
                   <div className="absolute inset-0 w-full h-full">
                     <img
@@ -110,7 +110,7 @@ export function RoleSelector() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-6 sm:mt-8 w-full sm:w-fit h-fit p-3 sm:p-4 rounded-md bg-muted/50 mx-auto"
+          className="mt-6 sm:mt-8 w-full sm:w-fit h-fit p-3 sm:p-4 rounded-[var(--radius-sm)] bg-muted/50 mx-auto"
         >
           <p className="text-xs sm:text-sm text-muted-foreground text-center">
             <strong className="text-primary">Choose Your Role:</strong> Select

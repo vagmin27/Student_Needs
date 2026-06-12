@@ -28,7 +28,7 @@ export const CallOverlay = ({ connectionState, duration, onSwitchToBrowser }) =>
           </p>
           <button
             onClick={onSwitchToBrowser}
-            className="flex items-center gap-2 px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl transition-all shadow-lg"
+            className="flex items-center gap-2 px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-[var(--radius-md)] transition-all shadow-lg"
           >
             <AlertTriangle className="w-4 h-4" />
             Switch to Browser Meeting

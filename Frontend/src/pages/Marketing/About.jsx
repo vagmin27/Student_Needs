@@ -88,13 +88,13 @@ export default function About() {
         
         <div className="glass-card-modern p-8 bg-gradient-to-tr from-indigo-500/5 via-transparent to-transparent flex flex-col justify-between">
           <div>
-            <span className="text-xs font-black text-indigo-500 uppercase tracking-wider bg-indigo-500/10 px-2.5 py-0.5 rounded">Our Vision</span>
+            <span className="text-xs font-black text-[var(--primary)] uppercase tracking-wider bg-[var(--primary)]/10 px-2.5 py-0.5 rounded">Our Vision</span>
             <h3 className="text-xl font-extrabold text-foreground mt-4 mb-3">Bridge the Career Placement Divide</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               To build a seamless, community-driven channel where students collaborate with verified alumni mentors to refine resumes, conduct interview pre-screenings, and secure corporate placement.
             </p>
           </div>
-          <div className="flex gap-2 items-center text-xs font-bold text-indigo-500 pt-4 select-none">
+          <div className="flex gap-2 items-center text-xs font-bold text-[var(--primary)] pt-4 select-none">
             Alumni Endorsement Pipelines <ArrowRight className="w-3.5 h-3.5" />
           </div>
         </div>
@@ -125,7 +125,7 @@ export default function About() {
           ].map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div key={idx} className="p-5 bg-card border border-border rounded-xl space-y-3 hover:border-primary/45 transition-colors">
+              <div key={idx} className="p-5 bg-card border border-border rounded-[var(--radius-md)] space-y-3 hover:border-primary/45 transition-colors">
                 <Icon className="w-6 h-6 text-primary" />
                 <h4 className="font-bold text-xs text-foreground uppercase tracking-wider">{item.title}</h4>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
@@ -136,7 +136,7 @@ export default function About() {
       </section>
 
       {/* 🚀 INTERACTIVE TECH STACK EXPLORER */}
-      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-3xl p-8 shadow-sm">
+      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-[var(--radius-xl)] p-8 shadow-sm">
         <div className="text-center mb-8 max-w-lg mx-auto space-y-2">
           <h2 className="text-2xl md:text-3xl font-black text-foreground tracking-tight">Interactive Platform Stack</h2>
           <p className="text-xs text-muted-foreground">Click a layer to inspect how the technology powers our operations.</p>
@@ -149,7 +149,7 @@ export default function About() {
               <button 
                 key={key}
                 onClick={() => setSelectedTech(key)}
-                className={`w-full text-left px-4 py-3 rounded-lg border text-xs font-bold transition-all flex items-center justify-between ${selectedTech === key ? "bg-primary text-white border-primary shadow" : "bg-card border-border/50 text-foreground hover:border-primary/50"}`}
+                className={`w-full text-left px-4 py-3 rounded-[var(--radius-sm)] border text-xs font-bold transition-all flex items-center justify-between ${selectedTech === key ? "bg-primary text-white border-primary shadow" : "bg-card border-border/50 text-foreground hover:border-primary/50"}`}
               >
                 <span>{techStack[key].name}</span>
                 <ArrowRight className="w-3.5 h-3.5 opacity-80" />
@@ -166,7 +166,7 @@ export default function About() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
-                className="p-8 bg-card border border-border rounded-2xl min-h-[180px] flex flex-col justify-between text-left"
+                className="p-8 bg-card border border-border rounded-[var(--radius-lg)] min-h-[180px] flex flex-col justify-between text-left"
               >
                 <div>
                   <span className="text-[10px] font-black uppercase text-primary tracking-widest">{techStack[selectedTech].role}</span>
@@ -194,8 +194,8 @@ export default function About() {
           ].map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div key={idx} className="p-6 bg-card border border-border/75 rounded-2xl text-left space-y-3 relative">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
+              <div key={idx} className="p-6 bg-card border border-border/75 rounded-[var(--radius-lg)] text-left space-y-3 relative">
+                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
                   <Icon className="w-5 h-5" />
                 </div>
                 <h4 className="font-extrabold text-xs text-foreground uppercase tracking-wider">{item.title}</h4>

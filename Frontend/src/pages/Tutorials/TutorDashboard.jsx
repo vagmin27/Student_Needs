@@ -73,7 +73,7 @@ function TutorDashboard() {
           <DashboardSection title="Quick Actions">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <DashboardCard className="border-l-4 border-l-primary" contentClassName="flex flex-col items-start p-6">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 flex items-center justify-center text-primary mb-4">
                   <Calendar className="w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Availability</h3>
@@ -84,7 +84,7 @@ function TutorDashboard() {
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-blue-500" contentClassName="flex flex-col items-start p-6">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 mb-4">
+                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] mb-4">
                   <User className="w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Profile</h3>
@@ -95,7 +95,7 @@ function TutorDashboard() {
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-emerald-500" contentClassName="flex flex-col items-start p-6">
-                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4">
+                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4">
                   <BookOpen className="w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Schedule</h3>
@@ -106,7 +106,7 @@ function TutorDashboard() {
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-amber-500" contentClassName="flex flex-col items-start p-6">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 mb-4">
+                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-amber-500/10 flex items-center justify-center text-amber-500 mb-4">
                   <Inbox className="w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Manage Requests</h3>
@@ -117,7 +117,7 @@ function TutorDashboard() {
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-purple-500" contentClassName="flex flex-col items-start p-6">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 mb-4">
+                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] mb-4">
                   <BookOpen className="w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">Attendance Management</h3>
@@ -128,7 +128,7 @@ function TutorDashboard() {
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-pink-500" contentClassName="flex flex-col items-start p-6">
-                <div className="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 mb-4 relative">
+                <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-pink-500/10 flex items-center justify-center text-pink-500 mb-4 relative">
                   <MessageSquare className="w-5 h-5" />
                   {unreadCount > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 h-4 min-w-[16px] px-1 flex items-center justify-center text-[9px] font-bold text-white bg-primary rounded-full animate-pulse">
@@ -151,7 +151,7 @@ function TutorDashboard() {
             {analytics.activityTimeline.length > 0 ? (
               <BookingActivityTimeline activities={analytics.activityTimeline} />
             ) : (
-              <div className="flex h-32 items-center justify-center text-muted-foreground border border-dashed border-border rounded-lg bg-secondary/20 text-sm">
+              <div className="flex h-32 items-center justify-center text-muted-foreground border border-dashed border-border rounded-[var(--radius-sm)] bg-secondary/20 text-sm">
                 No recent activity.
               </div>
             )}

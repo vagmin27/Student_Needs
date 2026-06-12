@@ -47,16 +47,16 @@ export default function HowItWorks() {
 
       {/* Mode Selector Toggle */}
       <div className="flex justify-center mb-12 select-none">
-        <div className="flex bg-secondary p-1 rounded-xl border border-border/60">
+        <div className="flex bg-secondary p-1 rounded-[var(--radius-md)] border border-border/60">
           <button
             onClick={() => setJourneyMode("student")}
-            className={`px-6 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${journeyMode === "student" ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
+            className={`px-6 py-2 rounded-[var(--radius-sm)] text-xs font-bold transition-all cursor-pointer ${journeyMode === "student" ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
           >
             STUDENT PATHWAY
           </button>
           <button
             onClick={() => setJourneyMode("tutor")}
-            className={`px-6 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${journeyMode === "tutor" ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
+            className={`px-6 py-2 rounded-[var(--radius-sm)] text-xs font-bold transition-all cursor-pointer ${journeyMode === "tutor" ? "bg-primary text-white" : "text-muted-foreground hover:text-foreground"}`}
           >
             TUTOR PATHWAY
           </button>
@@ -87,7 +87,7 @@ export default function HowItWorks() {
         </div>
 
         {/* Selected Step Description Details */}
-        <div className="md:col-span-7 p-6 bg-card border border-border rounded-2xl shadow-sm min-h-[180px] flex flex-col justify-between">
+        <div className="md:col-span-7 p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm min-h-[180px] flex flex-col justify-between">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeStep + journeyMode}

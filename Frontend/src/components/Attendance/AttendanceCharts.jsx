@@ -19,7 +19,7 @@ const COLORS = ["#6366f1", "#22c55e", "#ef4444", "#f59e0b", "#38bdf8", "#a855f7"
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-lg border border-border bg-card px-3 py-2 text-sm shadow-md">
+    <div className="rounded-[var(--radius-sm)] border border-border bg-card px-3 py-2 text-sm shadow-md">
       <p className="font-semibold mb-1">{label}</p>
       {payload.map((p, i) => (
         <p key={i} style={{ color: p.color }}>

@@ -94,13 +94,13 @@ const BillHistory = () => {
         <div className="flex gap-2 shrink-0">
           <button
             onClick={() => expensesApi.downloadReportCSV()}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-secondary text-foreground border border-border text-xs font-bold hover:bg-secondary/80 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-[var(--radius-md)] bg-secondary text-foreground border border-border text-xs font-bold hover:bg-secondary/80 transition-colors cursor-pointer"
           >
             <MdOutlineFileDownload /> Export CSV
           </button>
           <button
             onClick={() => expensesApi.downloadReportPDF()}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-primary to-indigo-600 text-white text-xs font-bold shadow hover:shadow-lg transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-[var(--radius-md)] bg-gradient-to-r from-primary to-indigo-600 text-white text-xs font-bold shadow hover:shadow-lg transition-colors cursor-pointer"
           >
             <MdOutlineFileDownload /> Export PDF
           </button>
@@ -108,9 +108,9 @@ const BillHistory = () => {
       </div>
 
       {/* Filter Toolbar */}
-      <div className="glass-panel p-4 bg-card border border-border rounded-2xl flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+      <div className="glass-panel p-4 bg-card border border-border rounded-[var(--radius-lg)] flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
         {/* Search */}
-        <div className="flex-1 flex items-center bg-secondary/40 border border-border/60 rounded-xl px-3 py-2">
+        <div className="flex-1 flex items-center bg-secondary/40 border border-border/60 rounded-[var(--radius-md)] px-3 py-2">
           <MdSearch size={20} className="text-muted-foreground mr-2 shrink-0" />
           <input
             type="text"
@@ -122,7 +122,7 @@ const BillHistory = () => {
         </div>
 
         {/* Month Selector */}
-        <div className="flex items-center bg-secondary/40 border border-border/60 rounded-xl px-3 py-2 sm:w-64">
+        <div className="flex items-center bg-secondary/40 border border-border/60 rounded-[var(--radius-md)] px-3 py-2 sm:w-64">
           <MdCalendarToday size={18} className="text-muted-foreground mr-2 shrink-0" />
           <select
             value={selectedMonth}
@@ -138,7 +138,7 @@ const BillHistory = () => {
       </div>
 
       {/* Data Table */}
-      <div className="glass-panel bg-card border border-border rounded-2xl overflow-hidden">
+      <div className="glass-panel bg-card border border-border rounded-[var(--radius-lg)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -185,7 +185,7 @@ const BillHistory = () => {
                           : item.priority === "High" 
                           ? "bg-amber-500 text-white" 
                           : item.priority === "Medium"
-                          ? "bg-blue-500 text-white"
+                          ? "bg-[var(--primary)] text-white"
                           : "bg-secondary text-muted-foreground"
                       }`}>
                         {item.priority}

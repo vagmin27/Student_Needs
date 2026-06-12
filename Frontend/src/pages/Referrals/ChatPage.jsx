@@ -484,7 +484,7 @@ export default function ChatPage() {
       )}
 
       <div className={cn(
-        "flex bg-card border border-border/45 rounded-2xl overflow-hidden glass-panel relative",
+        "flex bg-card border border-border/45 rounded-[var(--radius-lg)] overflow-hidden glass-panel relative",
         currentRole === "student" && !isReferralRoute
           ? "h-[calc(100vh-270px)] md:h-[calc(100vh-320px)]"
           : "h-[calc(100vh-130px)] md:h-[calc(100vh-160px)]"
@@ -554,7 +554,7 @@ export default function ChatPage() {
             <img 
               src={lightbox.url} 
               alt={lightbox.name} 
-              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10"
+              className="max-w-full max-h-[85vh] object-contain rounded-[var(--radius-sm)] shadow-2xl border border-white/10"
             />
             <p className="text-white/60 text-xs mt-3 select-none">{lightbox.name}</p>
           </div>

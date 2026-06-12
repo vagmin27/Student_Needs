@@ -52,7 +52,7 @@ const AppLayoutContent = () => {
           className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900/80 dark:bg-slate-950/80 backdrop-blur-xl border border-white/10 dark:border-cyan-500/20 text-slate-300 hover:text-white shadow-lg hover:shadow-cyan-500/10 hover:scale-105 transition-all duration-300 text-sm font-semibold cursor-pointer"
           title="Back to Student Dashboard"
         >
-          <ArrowLeft className="w-4 h-4 text-indigo-400" />
+          <ArrowLeft className="w-4 h-4 text-[var(--primary)]" />
           <span>Dashboard</span>
         </Link>
       </div>

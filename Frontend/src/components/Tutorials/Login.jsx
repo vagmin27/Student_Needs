@@ -174,7 +174,7 @@ const styles = {
     background: "var(--card-bg)",
     padding: "35px",
     borderRadius: "20px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+    boxShadow: "var(--shadow-md)",
   },
 
   form: {

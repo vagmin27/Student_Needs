@@ -150,7 +150,7 @@ export default function MarketingLayout() {
           </Link>
           <button 
             onClick={() => setMobileMenuOpen(true)}
-            className="p-2 text-muted-foreground hover:text-foreground rounded-lg bg-secondary/50 md:hidden transition-colors border border-border/40"
+            className="p-2 text-muted-foreground hover:text-foreground rounded-[var(--radius-sm)] bg-secondary/50 md:hidden transition-colors border border-border/40"
             aria-label="Open menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -205,7 +205,7 @@ export default function MarketingLayout() {
                   <Brand />
                   <button 
                     onClick={() => setMobileMenuOpen(false)} 
-                    className="p-1.5 text-muted-foreground hover:text-foreground rounded-lg bg-secondary/50 border border-border/40 transition-colors"
+                    className="p-1.5 text-muted-foreground hover:text-foreground rounded-[var(--radius-sm)] bg-secondary/50 border border-border/40 transition-colors"
                     aria-label="Close menu"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -254,7 +254,7 @@ export default function MarketingLayout() {
                 </div>
                 <Link 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center block py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary-hover transition-colors shadow-md" 
+                  className="w-full text-center block py-2.5 bg-primary text-white rounded-[var(--radius-sm)] text-sm font-semibold hover:bg-primary-hover transition-colors shadow-md" 
                   to="/role-selection"
                 >
                   Get Started
@@ -299,7 +299,7 @@ export default function MarketingLayout() {
             <h5 className="font-bold text-foreground text-sm uppercase tracking-wider">Quick FAQs</h5>
             <div className="space-y-1.5">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="border border-border/50 rounded-lg overflow-hidden bg-background/50">
+                <div key={idx} className="border border-border/50 rounded-[var(--radius-sm)] overflow-hidden bg-background/50">
                   <button
                     onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                     className="w-full flex items-center justify-between px-3 py-2 text-left font-semibold text-[11px] text-foreground hover:bg-secondary/40 transition-colors"
@@ -339,7 +339,7 @@ export default function MarketingLayout() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex flex-col justify-center bg-background/40 border border-border/40 p-2.5 rounded-lg"
+                    className="absolute inset-0 flex flex-col justify-center bg-background/40 border border-border/40 p-2.5 rounded-[var(--radius-sm)]"
                   >
                     <div className="flex gap-1 mb-1">
                       {[...Array(5)].map((_, i) => (

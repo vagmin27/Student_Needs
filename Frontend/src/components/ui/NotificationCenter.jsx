@@ -105,7 +105,7 @@ export const NotificationCenter = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl border border-border bg-card shadow-2xl overflow-hidden z-50 animate-in slide-in-from-top-2 duration-200">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-[var(--radius-md)] border border-border bg-card shadow-2xl overflow-hidden z-50 animate-in slide-in-from-top-2 duration-200">
           <div className="flex items-center justify-between p-4 border-b border-border bg-secondary/30">
             <h3 className="font-semibold text-foreground tracking-tight">Notifications</h3>
             {unreadCount > 0 && (

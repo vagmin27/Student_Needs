@@ -125,7 +125,7 @@ function TutorInfo({ tutorProfile, returnToSearch, handleModal }) {
               Book Class with {firstName}
             </button>
             <button 
-              className="px-6 py-3.5 rounded-xl border border-primary text-primary hover:bg-primary/10 transition-all font-semibold flex items-center gap-2 cursor-pointer text-sm"
+              className="px-6 py-3.5 rounded-[var(--radius-md)] border border-primary text-primary hover:bg-primary/10 transition-all font-semibold flex items-center gap-2 cursor-pointer text-sm"
               onClick={() => {
                 navigate(`/tutorials/chat?tutorId=${tutorProfile._id}`);
               }}

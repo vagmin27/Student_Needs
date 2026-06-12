@@ -24,7 +24,7 @@ export function JobPostsList({ jobs = [], selectedJob, onSelectJob, onCreateJob 
 
   if (jobs.length === 0) {
     return (
-      <div className="bg-card rounded-lg p-12 border border-border/50 text-center">
+      <div className="bg-card rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
         <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Jobs Posted Yet
@@ -49,7 +49,7 @@ export function JobPostsList({ jobs = [], selectedJob, onSelectJob, onCreateJob 
           animate={{ opacity: 1, y: 0 }}
           onClick={() => onSelectJob(job)}
           className={cn(
-            'w-full bg-card rounded-lg p-4 border-2 text-left transition-all',
+            'w-full bg-card rounded-[var(--radius-sm)] p-4 border-2 text-left transition-all',
             selectedJob?.id === job.id
               ? 'border-alumni shadow-md'
               : 'border-border/50 hover:border-alumni/50'

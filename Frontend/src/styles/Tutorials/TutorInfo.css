@@ -5,7 +5,7 @@
   margin: 2rem auto;
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   box-shadow: var(--shadow-soft);
 }
@@ -23,7 +23,7 @@
   max-width: 280px;
   height: 220px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   margin-top: 1rem;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
@@ -67,7 +67,7 @@
 }
 .div2::-webkit-scrollbar-thumb {
   background: var(--border-color);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
 }
 
 /* REVIEW TITLE */
@@ -82,7 +82,7 @@
 .review-base {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   padding: 1rem;
   margin-bottom: 1rem;
   font-size: 0.9rem;
@@ -115,7 +115,7 @@
 
 .bookBtnTutor {
   padding: 0.7rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
   background: var(--primary);
   color: var(--text-white);
@@ -139,7 +139,7 @@
 
 .backBtn {
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--bg-secondary);
   color: var(--text-paragraph);

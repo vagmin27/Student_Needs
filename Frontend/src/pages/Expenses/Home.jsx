@@ -225,13 +225,13 @@ const Home = () => {
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setIsAddBillOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-secondary text-foreground border border-border font-bold hover:bg-secondary/80 transition-all cursor-pointer text-sm"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-secondary text-foreground border border-border font-bold hover:bg-secondary/80 transition-all cursor-pointer text-sm"
           >
             <MdAdd size={18} /> Add Bill
           </button>
           <button
             onClick={() => setIsAddExpenseOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 transition-all hover:-translate-y-0.5 cursor-pointer text-sm"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 transition-all hover:-translate-y-0.5 cursor-pointer text-sm"
           >
             <MdAdd size={18} /> Add Expense
           </button>
@@ -277,7 +277,7 @@ const Home = () => {
           {isLoading ? (
             <Skeleton type="card" lines={3} />
           ) : (
-            <div className={`glass-panel p-6 border rounded-2xl flex flex-col justify-between h-full bg-card ${budgetPercentage > 90 ? "border-rose-500/50 shadow-lg shadow-rose-500/5" : "border-border"}`}>
+            <div className={`glass-panel p-6 border rounded-[var(--radius-lg)] flex flex-col justify-between h-full bg-card ${budgetPercentage > 90 ? "border-rose-500/50 shadow-lg shadow-rose-500/5" : "border-border"}`}>
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="text-foreground font-bold text-sm uppercase tracking-wide">Budget Prediction</h4>
@@ -301,7 +301,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="bg-secondary/30 p-2.5 rounded-xl border border-border/40 text-[11px] text-muted-foreground">
+              <div className="bg-secondary/30 p-2.5 rounded-[var(--radius-md)] border border-border/40 text-[11px] text-muted-foreground">
                 Expected month-end savings: <span className="font-bold text-foreground">{currencySymbol}{(summary?.savingsGoal - (summary?.projectedSpend || 0)) > 0 ? (summary?.savingsGoal - (summary?.projectedSpend || 0)).toLocaleString() : "0"}</span>. Target was: <span className="font-semibold text-foreground">{currencySymbol}{summary?.savingsGoal?.toLocaleString()}</span>
               </div>
             </div>
@@ -315,7 +315,7 @@ const Home = () => {
         <div className="xl:col-span-2 space-y-6">
           {/* Charts Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="glass-panel p-6 bg-card border border-border rounded-2xl flex flex-col h-[320px]">
+            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] flex flex-col h-[320px]">
               <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
                 <MdShowChart className="text-brand-primary" /> Monthly Expense Trend
               </h3>
@@ -330,7 +330,7 @@ const Home = () => {
               )}
             </div>
 
-            <div className="glass-panel p-6 bg-card border border-border rounded-2xl flex flex-col h-[320px]">
+            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] flex flex-col h-[320px]">
               <h3 className="text-base font-bold text-foreground mb-4">Category Breakdown</h3>
               {isLoading ? (
                 <Skeleton type="chart" />
@@ -345,7 +345,7 @@ const Home = () => {
           </div>
 
           {/* Recent Transactions Table */}
-          <div className="glass-panel p-6 bg-card border border-border rounded-2xl">
+          <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)]">
             <h3 className="text-lg font-bold text-foreground mb-4">Recent Transactions</h3>
             {isLoading ? (
               <Skeleton type="table" lines={5} />
@@ -362,18 +362,18 @@ const Home = () => {
         <div className="xl:col-span-1 space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl border border-border bg-card text-center">
+            <div className="p-4 rounded-[var(--radius-md)] border border-border bg-card text-center">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Due Today</span>
               <span className="block text-2xl font-extrabold text-amber-500 mt-1">{summary?.dueTodayCount || 0}</span>
             </div>
-            <div className="p-4 rounded-xl border border-border bg-card text-center">
+            <div className="p-4 rounded-[var(--radius-md)] border border-border bg-card text-center">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Overdue Bills</span>
               <span className="block text-2xl font-extrabold text-rose-500 mt-1">{summary?.overdueCount || 0}</span>
             </div>
           </div>
 
           {/* Active Bills List */}
-          <div className="glass-panel p-6 bg-card border border-border rounded-2xl space-y-4">
+          <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] space-y-4">
             <div className="flex justify-between items-center border-b border-border/40 pb-2">
               <h3 className="text-base font-bold text-foreground">Active Bills</h3>
               <span className="text-xs font-semibold px-2 py-0.5 rounded bg-secondary text-muted-foreground">
@@ -390,7 +390,7 @@ const Home = () => {
                 {bills.map((bill) => (
                   <div
                     key={bill._id}
-                    className={`p-3.5 rounded-xl border flex flex-col justify-between gap-3 bg-secondary/15 ${
+                    className={`p-3.5 rounded-[var(--radius-md)] border flex flex-col justify-between gap-3 bg-secondary/15 ${
                       bill.status === "Overdue" 
                         ? "border-rose-500/30 bg-rose-500/5" 
                         : bill.status === "Due Today" 
@@ -425,7 +425,7 @@ const Home = () => {
                             : bill.priority === "High" 
                             ? "bg-amber-500 text-white" 
                             : bill.priority === "Medium"
-                            ? "bg-blue-500 text-white"
+                            ? "bg-[var(--primary)] text-white"
                             : "bg-secondary text-muted-foreground"
                         }`}>
                           {bill.priority}
@@ -435,7 +435,7 @@ const Home = () => {
                             ? "text-rose-500 bg-rose-500/10" 
                             : bill.status === "Due Today" 
                             ? "text-amber-500 bg-amber-500/10" 
-                            : "text-blue-500 bg-blue-500/10"
+                            : "text-[var(--primary)] bg-[var(--primary)]/10"
                         }`}>
                           {bill.status}
                         </span>
@@ -478,7 +478,7 @@ const Home = () => {
           </div>
 
           {/* Quick PDF/CSV Export buttons card */}
-          <div className="glass-panel p-4 bg-card border border-border rounded-2xl flex items-center justify-between gap-4">
+          <div className="glass-panel p-4 bg-card border border-border rounded-[var(--radius-lg)] flex items-center justify-between gap-4">
             <span className="text-xs font-bold text-foreground">Monthly Reports</span>
             <div className="flex gap-2">
               <button 
@@ -599,13 +599,13 @@ const Home = () => {
             <button
               type="button"
               onClick={() => setIsAddExpenseOpen(false)}
-              className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
             >
               Confirm
             </button>
@@ -696,13 +696,13 @@ const Home = () => {
             <button
               type="button"
               onClick={() => setIsAddBillOpen(false)}
-              className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
             >
               Confirm
             </button>
@@ -798,13 +798,13 @@ const Home = () => {
                   setIsEditBillOpen(false);
                   setEditingBill(null);
                 }}
-                className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+                className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
               >
                 Save Changes
               </button>

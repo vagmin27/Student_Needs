@@ -96,14 +96,14 @@ export default function ContactMessagesAdmin() {
         </div>
         <button
           onClick={loadMessages}
-          className="px-4 py-2 bg-secondary border border-border rounded-lg text-xs font-semibold text-foreground hover:bg-secondary/80 cursor-pointer"
+          className="px-4 py-2 bg-secondary border border-border rounded-[var(--radius-sm)] text-xs font-semibold text-foreground hover:bg-secondary/80 cursor-pointer"
         >
           Refresh Feeds
         </button>
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-xl text-xs flex items-center gap-2 mb-6">
+        <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-[var(--radius-md)] text-xs flex items-center gap-2 mb-6">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
@@ -121,7 +121,7 @@ export default function ContactMessagesAdmin() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search inquiries name, email, text..."
-            className="w-full pl-9 pr-4 py-2 bg-card border border-border rounded-lg text-xs text-foreground focus:outline-none focus:border-primary"
+            className="w-full pl-9 pr-4 py-2 bg-card border border-border rounded-[var(--radius-sm)] text-xs text-foreground focus:outline-none focus:border-primary"
           />
         </div>
 
@@ -131,7 +131,7 @@ export default function ContactMessagesAdmin() {
             <button
               key={status}
               onClick={() => setFilterRead(status)}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider border cursor-pointer transition-all ${filterRead === status ? "bg-primary text-white border-primary" : "bg-card text-muted-foreground border-border/60 hover:text-foreground"}`}
+              className={`px-4 py-1.5 rounded-[var(--radius-sm)] text-xs font-semibold uppercase tracking-wider border cursor-pointer transition-all ${filterRead === status ? "bg-primary text-white border-primary" : "bg-card text-muted-foreground border-border/60 hover:text-foreground"}`}
             >
               {status}
             </button>
@@ -144,10 +144,10 @@ export default function ContactMessagesAdmin() {
         {loading ? (
           <div className="text-center py-12 text-muted-foreground text-xs">Fetching message logs...</div>
         ) : filteredMessages.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground text-xs bg-card border border-border rounded-xl">No contact inquiries found.</div>
+          <div className="text-center py-12 text-muted-foreground text-xs bg-card border border-border rounded-[var(--radius-md)]">No contact inquiries found.</div>
         ) : (
           filteredMessages.map((msg) => (
-            <div key={msg._id} className={`p-6 bg-card border rounded-xl relative ${msg.isRead ? "border-border/60 opacity-85" : "border-primary/45 shadow-[0_0_12px_rgba(99,102,241,0.06)]"}`}>
+            <div key={msg._id} className={`p-6 bg-card border rounded-[var(--radius-md)] relative ${msg.isRead ? "border-border/60 opacity-85" : "border-primary/45 shadow-[0_0_12px_rgba(99,102,241,0.06)]"}`}>
               {/* Top info */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/30 pb-3 mb-3">
                 <div className="flex items-center gap-2">

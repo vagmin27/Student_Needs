@@ -129,7 +129,7 @@ function TutorProfile({
                     </div>
                     <div className="cardlink flex gap-2.5 mt-3 select-none">
                       <button
-                        className="flex-1 py-2.5 bg-primary text-white hover:bg-primary/95 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                        className="flex-1 py-2.5 bg-primary text-white hover:bg-primary/95 rounded-[var(--radius-sm)] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                         onClick={(e) => {
                           e.stopPropagation();
                           searchProfile(tutorProfile);
@@ -138,7 +138,7 @@ function TutorProfile({
                         Details
                       </button>
                       <button
-                        className="flex-1 py-2.5 bg-secondary/80 hover:bg-secondary border border-border/50 text-foreground hover:text-primary rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                        className="flex-1 py-2.5 bg-secondary/80 hover:bg-secondary border border-border/50 text-foreground hover:text-primary rounded-[var(--radius-sm)] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/tutorials/chat?tutorId=${tutorProfile._id}`);

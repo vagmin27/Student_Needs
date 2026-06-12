@@ -19,7 +19,7 @@ export const RecentRequestsFeed = React.memo(({ requests = [], onAccept, onDecli
       {requests?.map((request) => (
         <div 
           key={request.id} 
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-lg border border-border bg-secondary/40 gap-4"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-[var(--radius-sm)] border border-border bg-secondary/40 gap-4"
         >
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">

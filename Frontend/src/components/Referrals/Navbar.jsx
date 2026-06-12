@@ -89,11 +89,11 @@ const Navbar = () => {
         
         {/* Logo Section */}
         <div ref={logoRef} className="flex items-center gap-2 sm:gap-3" style={{ opacity: 0 }}>
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-sm gradient-primary flex items-center justify-center">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-[var(--radius-sm)] gradient-primary flex items-center justify-center">
             <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-secondary" />
           </div>
           <div>
-            <h1 className="font-bold text-[#979797] text-xl sm:text-2xl">
+            <h1 className="font-bold text-foreground text-xl sm:text-2xl">
               NextRef.
             </h1>
           </div>
@@ -102,7 +102,7 @@ const Navbar = () => {
         {/* Navigation Links - Centered Pill */}
         <div 
           ref={navLinksRef} 
-          className="hidden sm:flex absolute left-1/2 -translate-x-1/2 mt-2 items-center space-x-4 md:space-x-8 bg-secondary px-3 md:px-5 py-[8px] md:py-[10px] rounded-lg border" 
+          className="hidden sm:flex absolute left-1/2 -translate-x-1/2 mt-2 items-center space-x-4 md:space-x-8 bg-secondary px-3 md:px-5 py-[8px] md:py-[10px] rounded-[var(--radius-sm)] border" 
           style={{ opacity: 0 }}
         >
           {hasAuth ? (
@@ -139,7 +139,7 @@ const Navbar = () => {
           <ThemeToggle size="sm" />
           {isAuthenticated && user ? (
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="hidden xs:flex items-center gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-secondary rounded-lg border">
+              <div className="hidden xs:flex items-center gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-secondary rounded-[var(--radius-sm)] border">
                 <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
                 <span className="text-xs sm:text-sm font-medium">{user.firstName}</span>
               </div>

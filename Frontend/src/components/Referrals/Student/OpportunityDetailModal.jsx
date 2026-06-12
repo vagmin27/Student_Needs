@@ -57,7 +57,7 @@ export function OpportunityDetailModal({
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative bg-card border border-border rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl"
+          className="relative bg-card border border-border rounded-[var(--radius-md)] w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl"
         >
           {/* Header */}
           <div className="sticky top-0 bg-card border-b border-border p-6 flex items-start justify-between z-10">
@@ -97,22 +97,22 @@ export function OpportunityDetailModal({
           <div className="p-6 space-y-6">
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-muted/50 rounded-lg p-3 text-center">
+              <div className="bg-muted/50 rounded-[var(--radius-sm)] p-3 text-center">
                 <Target className="w-5 h-5 mx-auto mb-1 text-primary" />
                 <p className="text-xs text-muted-foreground uppercase">Experience</p>
                 <p className="font-semibold text-foreground">{opportunity.experienceLevel}</p>
               </div>
-              <div className="bg-muted/50 rounded-lg p-3 text-center">
+              <div className="bg-muted/50 rounded-[var(--radius-sm)] p-3 text-center">
                 <Users className="w-5 h-5 mx-auto mb-1 text-primary" />
                 <p className="text-xs text-muted-foreground uppercase">Referrals</p>
                 <p className="font-semibold text-foreground">{referralsGiven}/{opportunity.numberOfReferrals}</p>
               </div>
-              <div className="bg-muted/50 rounded-lg p-3 text-center">
+              <div className="bg-muted/50 rounded-[var(--radius-sm)] p-3 text-center">
                 <TrendingUp className="w-5 h-5 mx-auto mb-1 text-success" />
                 <p className="text-xs text-muted-foreground uppercase">Slots Left</p>
                 <p className="font-semibold text-foreground">{referralsLeft}</p>
               </div>
-              <div className="bg-muted/50 rounded-lg p-3 text-center">
+              <div className="bg-muted/50 rounded-[var(--radius-sm)] p-3 text-center">
                 <Calendar className="w-5 h-5 mx-auto mb-1 text-primary" />
                 <p className="text-xs text-muted-foreground uppercase">Posted</p>
                 <p className="font-semibold text-foreground">
@@ -127,7 +127,7 @@ export function OpportunityDetailModal({
                 <Briefcase className="w-5 h-5 text-primary" />
                 Role Description
               </h3>
-              <div className="bg-muted/30 rounded-lg p-4">
+              <div className="bg-muted/30 rounded-[var(--radius-sm)] p-4">
                 <p className="text-foreground whitespace-pre-wrap leading-relaxed text-sm">
                   {opportunity.roleDescription}
                 </p>
@@ -160,7 +160,7 @@ export function OpportunityDetailModal({
                 <Users className="w-5 h-5 text-primary" />
                 About the Referrer
               </h3>
-              <div className="bg-muted/30 rounded-lg p-4 flex items-center gap-4">
+              <div className="bg-muted/30 rounded-[var(--radius-sm)] p-4 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                   <span className="text-lg font-bold text-primary">
                     {opportunity.postedBy?.firstName?.[0]}{opportunity.postedBy?.lastName?.[0]}

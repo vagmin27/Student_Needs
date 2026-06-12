@@ -17,7 +17,7 @@ export default function Blog() {
         We are preparing articles, engineering writeups, study tips, and referral strategies. Stay tuned for insights from our student and alumni developer team.
       </p>
       
-      <div className="p-4 bg-secondary/35 border border-border/80 rounded-xl mb-8 select-none">
+      <div className="p-4 bg-secondary/35 border border-border/80 rounded-[var(--radius-md)] mb-8 select-none">
         <span className="text-xs font-bold text-primary uppercase tracking-widest animate-pulse">
           🚀 coming soon • updates launching next week
         </span>

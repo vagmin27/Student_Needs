@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API, { getBookings } from "@/services/api/tutorialsApi.js";
 import "../../styles/Tutorials/ManageBook.css";
+import { Button } from "@/components/ui/button";
 import Navbar from "../../components/Tutorials/Navbar";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
 
@@ -99,14 +100,14 @@ function ManageBookingPage() {
                         style={{
                           color:
                             b.status === "Booked" || b.status === "pending"
-                              ? "orange"
+                              ? "var(--warning)"
                               : b.status === "upcoming" || b.status === "accepted"
-                                ? "blue"
+                                ? "var(--info)"
                                 : b.status === "in_progress"
-                                  ? "green"
+                                  ? "var(--success)"
                                   : b.status === "Completed" || b.status === "completed"
-                                    ? "#10b981"
-                                    : "red",
+                                    ? "var(--success)"
+                                    : "var(--danger)",
                           fontWeight: "bold",
                         }}
                       >
@@ -129,42 +130,28 @@ function ManageBookingPage() {
                   {/* ACTION BUTTONS */}
                   <div className="actionButtons">
                     {(b.status === "Booked" || b.status === "pending" || b.status === "upcoming" || b.status === "accepted") && (
-                      <div style={{ display: "flex", gap: "10px", marginTop: "10px", flexWrap: "wrap" }}>
-                        <button
+                      <div className="flex gap-[10px] mt-[10px] flex-wrap">
+                        <Button
+                          variant="destructive"
                           onClick={() => cancelBooking(b._id)}
-                          style={{
-                            background: "#dc3545",
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: "8px",
-                            padding: "8px 18px",
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                          }}
                         >
                           ❌ Cancel Booking
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                          variant="success"
                           onClick={() => navigate(`/tutorials/chat?tutorId=${b.tutorId}`)}
-                          style={{
-                            background: "#10b981",
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: "8px",
-                            padding: "8px 18px",
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                          }}
                         >
                           💬 Message Tutor
-                        </button>
+                        </Button>
                       </div>
                     )}
                     
                     {(b.status === "upcoming" || b.status === "in_progress") && (
-                      <div style={{ marginTop: "10px" }}>
+                      <div className="mt-[10px]">
                         {b.meetingLink ? (
-                          <button
+                          <Button
+                            variant="default"
+                            className="ml-[10px]"
                             onClick={async () => {
                               if (b.status === "upcoming") {
                                 try {
@@ -178,21 +165,11 @@ function ManageBookingPage() {
                               }
                               window.open(b.meetingLink, "_blank");
                             }}
-                            style={{
-                              background: "#0d6efd",
-                              color: "#fff",
-                              border: "none",
-                              borderRadius: "8px",
-                              padding: "8px 18px",
-                              cursor: "pointer",
-                              fontWeight: "bold",
-                              marginLeft: "10px",
-                            }}
                           >
                             🚀 Join Class
-                          </button>
+                          </Button>
                         ) : (
-                          <p style={{ fontSize: "14px", color: "#6c757d", fontStyle: "italic", marginTop: "10px" }}>
+                          <p className="text-sm text-muted-foreground italic mt-[10px]">
                             Waiting for tutor to publish meeting link
                           </p>
                         )}

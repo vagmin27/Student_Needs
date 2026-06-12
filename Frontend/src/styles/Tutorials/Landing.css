@@ -1,7 +1,7 @@
 /* ================= GLOBAL RESET ================= */
 
 * {
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
@@ -64,7 +64,7 @@ opacity: 0.9;
 /* CTA BUTTON */
 .bookBtn {
   padding: 0.9rem 2.2rem;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: none;
   background: var(--primary);
   color: var(--text-white);
@@ -112,7 +112,7 @@ margin: 0 auto;
 .featureCard {
 background: var(--card-bg);
 padding: 2rem;
-border-radius: 16px;
+border-radius: var(--radius-md);
 transition: all 0.3s ease;
 border: 1px solid var(--border-color);
 box-shadow: var(--shadow-soft);
@@ -131,8 +131,8 @@ font-size: 0.95rem;
 
 /* HOVER EFFECT */
 .featureCard:hover {
-transform: translateY(-8px);
-box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+transform: translateY(-4px) scale(1.01);
+box-shadow: var(--shadow-lg);
 }
 
 /* ================= FOOTER ================= */

@@ -26,24 +26,30 @@ export const CGPAProgressionChart = React.memo(({ data = [] }) => {
             <stop offset="95%" stopColor="var(--primary)" stopOpacity={0}/>
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" opacity={0.3} vertical={false} />
         <XAxis 
           dataKey="semester" 
           stroke="var(--text-secondary)" 
           tickLine={false} 
           axisLine={false} 
-          tick={{ fontSize: 12 }} 
+          tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} 
         />
         <YAxis 
           stroke="var(--text-secondary)" 
           tickLine={false} 
           axisLine={false} 
           domain={['dataMin - 0.5', 10]} 
-          tick={{ fontSize: 12 }}
+          tick={{ fontSize: 12, fill: 'var(--text-secondary)' }}
         />
         <Tooltip 
-          contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
-          itemStyle={{ color: 'var(--text-secondary)' }}
+          contentStyle={{ 
+            backgroundColor: 'var(--bg-secondary)', 
+            border: '1px solid var(--border-color)', 
+            color: 'var(--text-primary)', 
+            borderRadius: 'var(--radius-md)',
+            boxShadow: "var(--shadow-md)"
+          }}
+          itemStyle={{ color: 'var(--text-primary)' }}
           animationDuration={300}
         />
         <Area 

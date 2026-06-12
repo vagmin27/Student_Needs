@@ -242,7 +242,7 @@ export default function ModuleDetail() {
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
             {/* Tutor Booking Panel */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl space-y-4 flex flex-col justify-between">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] space-y-4 flex flex-col justify-between">
               <div>
                 <h4 className="text-sm font-bold text-foreground flex items-center gap-2 mb-2">
                   <Star className="w-4 h-4 text-amber-500 fill-amber-500" /> Tutor Selection Board
@@ -253,7 +253,7 @@ export default function ModuleDetail() {
                     { id: "marcus", name: "Dr. Marcus Aurelius", dept: "Computer Science", rating: "5.0" },
                     { id: "chen", name: "Sarah Chen, MSc", dept: "React Architecture", rating: "4.9" }
                   ].map((tutor) => (
-                    <div key={tutor.id} className={`p-3 border rounded-lg flex items-center justify-between transition-colors ${bookedTutor === tutor.id ? "border-primary bg-primary/5" : "border-border/50 bg-secondary/20"}`}>
+                    <div key={tutor.id} className={`p-3 border rounded-[var(--radius-sm)] flex items-center justify-between transition-colors ${bookedTutor === tutor.id ? "border-primary bg-primary/5" : "border-border/50 bg-secondary/20"}`}>
                       <div className="text-left">
                         <span className="text-xs font-bold text-foreground block">{tutor.name}</span>
                         <span className="text-[10px] text-muted-foreground">{tutor.dept} • ★ {tutor.rating}</span>
@@ -270,7 +270,7 @@ export default function ModuleDetail() {
               </div>
               
               {bookedTutor && (
-                <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-left">
+                <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-[var(--radius-sm)] text-left">
                   <span className="text-[10px] text-emerald-500 font-bold block">✓ Matches Confirmed!</span>
                   <span className="text-[9.5px] text-muted-foreground">Session locked for Today 4:30 PM. Meet room active.</span>
                 </div>
@@ -278,7 +278,7 @@ export default function ModuleDetail() {
             </div>
 
             {/* Chat Simulator Panel */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl flex flex-col justify-between h-[300px]">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] flex flex-col justify-between h-[300px]">
               <div>
                 <h4 className="text-sm font-bold text-foreground flex items-center gap-2 border-b border-border/60 pb-2.5">
                   <MessageSquare className="w-4 h-4 text-primary" /> Active Room Conversation
@@ -286,7 +286,7 @@ export default function ModuleDetail() {
                 <div className="space-y-2 mt-3 overflow-y-auto max-h-[160px] pr-1">
                   {chatMessages.map((msg, idx) => (
                     <div key={idx} className={`flex ${msg.sender === "student" ? "justify-end" : "justify-start"}`}>
-                      <div className={`p-2 rounded-lg text-[10.5px] max-w-[80%] text-left ${msg.sender === "student" ? "bg-primary text-white rounded-br-none" : "bg-secondary text-foreground rounded-bl-none border border-border/40"}`}>
+                      <div className={`p-2 rounded-[var(--radius-sm)] text-[10.5px] max-w-[80%] text-left ${msg.sender === "student" ? "bg-primary text-white rounded-br-none" : "bg-secondary text-foreground rounded-bl-none border border-border/40"}`}>
                         {msg.text}
                       </div>
                     </div>
@@ -324,7 +324,7 @@ export default function ModuleDetail() {
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
             {/* Company Selection Panel */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl space-y-4 text-left">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] space-y-4 text-left">
               <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Select Company Listing</h4>
               <div className="grid grid-cols-3 gap-2">
                 {["Stripe", "Google", "Vercel"].map((comp) => (
@@ -334,20 +334,20 @@ export default function ModuleDetail() {
                       setReferredCompany(comp);
                       setActivePipelineStage(1);
                     }}
-                    className={`p-3.5 border rounded-lg font-bold text-[11px] text-center transition-all ${referredCompany === comp ? "border-primary bg-primary/10 text-primary" : "border-border/50 bg-secondary/20 hover:border-primary/50 text-foreground"}`}
+                    className={`p-3.5 border rounded-[var(--radius-sm)] font-bold text-[11px] text-center transition-all ${referredCompany === comp ? "border-primary bg-primary/10 text-primary" : "border-border/50 bg-secondary/20 hover:border-primary/50 text-foreground"}`}
                   >
                     {comp}
                   </button>
                 ))}
               </div>
-              <div className="p-3 bg-secondary/35 border border-border/40 rounded-lg space-y-1">
+              <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-sm)] space-y-1">
                 <span className="text-[10px] font-bold text-foreground">Stripe - Software Engineer Intern</span>
                 <p className="text-[9.5px] text-muted-foreground leading-snug">Verifier: Priya S. (Alumni '23, Backend Lead at Stripe)</p>
               </div>
             </div>
 
             {/* Pipeline Stage Tracker */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl flex flex-col justify-between text-left">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] flex flex-col justify-between text-left">
               <h4 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
                 <Award className="w-4.5 h-4.5 text-cyan-400" /> Pipeline Application Tracker
               </h4>
@@ -378,7 +378,7 @@ export default function ModuleDetail() {
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
             {/* Log Panel */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left space-y-4">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left space-y-4">
               <h4 className="text-sm font-bold text-foreground flex items-center gap-1.5">
                 <Calendar className="w-4.5 h-4.5 text-emerald-500" /> Log Today's Lecture
               </h4>
@@ -403,7 +403,7 @@ export default function ModuleDetail() {
                   Mark Absent (Skipped)
                 </button>
               </div>
-              <div className="flex justify-between items-center bg-secondary/35 p-3 rounded-lg border border-border/40">
+              <div className="flex justify-between items-center bg-secondary/35 p-3 rounded-[var(--radius-sm)] border border-border/40">
                 <span className="text-xs text-muted-foreground">Attendance Percentage</span>
                 <span className="text-base font-black text-emerald-500">
                   {((csAttendance.filter(a => a.status === "Present").length / csAttendance.length) * 100).toFixed(1)}%
@@ -412,12 +412,12 @@ export default function ModuleDetail() {
             </div>
 
             {/* Matrix logs feed */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left flex flex-col justify-between">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left flex flex-col justify-between">
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">CS-301 Audit Ledger</h4>
                 <div className="space-y-1.5 overflow-y-auto max-h-[160px] pr-1">
                   {csAttendance.map((log, idx) => (
-                    <div key={idx} className="flex justify-between items-center p-2 bg-background border border-border/50 rounded-lg">
+                    <div key={idx} className="flex justify-between items-center p-2 bg-background border border-border/50 rounded-[var(--radius-sm)]">
                       <span className="text-[10px] font-bold text-foreground">{log.date} Lecture</span>
                       <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${log.status === "Present" ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" : "bg-rose-500/10 text-rose-500 border border-rose-500/20"}`}>
                         {log.status}
@@ -444,7 +444,7 @@ export default function ModuleDetail() {
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
             {/* Add transaction form */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left space-y-3 flex flex-col justify-between">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left space-y-3 flex flex-col justify-between">
               <div>
                 <h4 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-2">
                   <Plus className="w-4.5 h-4.5 text-rose-500" /> Log Spent Cost
@@ -482,7 +482,7 @@ export default function ModuleDetail() {
             </div>
 
             {/* Finances logs list */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left flex flex-col justify-between">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-center border-b border-border/40 pb-2 mb-3">
                   <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Term Balance Sheet</span>
@@ -519,14 +519,14 @@ export default function ModuleDetail() {
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
             {/* Mentors roster */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left space-y-3.5">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left space-y-3.5">
               <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Verified Mentor Profiles</h4>
               <div className="space-y-2.5">
                 {[
                   { name: "Marcus Aurelius", title: "Staff Tech Lead @ Linear", batch: "Class of '18" },
                   { name: "Diana Prince", title: "Principal PM @ Stripe", batch: "Class of '20" }
                 ].map((mentor) => (
-                  <div key={mentor.name} className={`p-3 border rounded-lg flex justify-between items-center transition-all ${selectedMentor === mentor.name ? "border-primary bg-primary/5" : "border-border/50 bg-secondary/20"}`}>
+                  <div key={mentor.name} className={`p-3 border rounded-[var(--radius-sm)] flex justify-between items-center transition-all ${selectedMentor === mentor.name ? "border-primary bg-primary/5" : "border-border/50 bg-secondary/20"}`}>
                     <div className="text-left">
                       <span className="text-xs font-bold text-foreground block">{mentor.name}</span>
                       <span className="text-[9.5px] text-muted-foreground">{mentor.title} • {mentor.batch}</span>
@@ -546,7 +546,7 @@ export default function ModuleDetail() {
             </div>
 
             {/* Request center */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left flex flex-col justify-between">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left flex flex-col justify-between">
               <div>
                 <h4 className="text-sm font-bold text-foreground mb-2">Mentorship Request Center</h4>
                 <p className="text-[10.5px] text-muted-foreground leading-normal mb-4">Request 1-on-1 career guidance or a resume critique from your selected mentor: <span className="font-bold text-primary">{selectedMentor}</span>.</p>
@@ -564,13 +564,13 @@ export default function ModuleDetail() {
                 )}
 
                 {mentorshipStatus === "requested" && (
-                  <div className="p-4 bg-secondary border border-border rounded-lg text-center py-6 animate-pulse">
+                  <div className="p-4 bg-secondary border border-border rounded-[var(--radius-sm)] text-center py-6 animate-pulse">
                     <span className="text-[11px] font-bold text-muted-foreground">Verifying profile credentials on database...</span>
                   </div>
                 )}
 
                 {mentorshipStatus === "matched" && (
-                  <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-left space-y-1">
+                  <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-[var(--radius-sm)] text-left space-y-1">
                     <span className="text-emerald-500 text-xs font-bold flex items-center gap-1">✓ Mentorship Request Accepted!</span>
                     <p className="text-[10px] text-muted-foreground leading-snug">Marcus Aurelius approved your project review. CS-301 room link sent to your campus inbox.</p>
                   </div>
@@ -590,7 +590,7 @@ export default function ModuleDetail() {
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch w-full max-w-4xl mx-auto">
             {/* Quick Actions Console */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left space-y-4">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left space-y-4">
               <h4 className="text-sm font-bold text-foreground flex items-center gap-1.5">
                 <LayoutDashboard className="w-4.5 h-4.5 text-primary" /> Workspace Command Console
               </h4>
@@ -598,7 +598,7 @@ export default function ModuleDetail() {
               <div className="space-y-2">
                 <button 
                   onClick={() => setDashStats({ ...dashStats, bookings: dashStats.bookings + 1 })}
-                  className="w-full py-2 bg-indigo-500 text-white rounded text-xs font-bold hover:bg-indigo-600 transition-colors"
+                  className="w-full py-2 bg-[var(--primary)] text-white rounded text-xs font-bold hover:bg-[var(--primary)] transition-colors"
                 >
                   Increment Scheduled Booking (+1)
                 </button>
@@ -612,24 +612,24 @@ export default function ModuleDetail() {
             </div>
 
             {/* Dashboard Workspace Mock */}
-            <div className="p-5 bg-card border border-border/80 rounded-xl text-left flex flex-col justify-between">
+            <div className="p-5 bg-card border border-border/80 rounded-[var(--radius-md)] text-left flex flex-col justify-between">
               <div>
                 <h4 className="text-xs font-black uppercase tracking-wider text-muted-foreground mb-3">Live Environment Widgets</h4>
                 <div className="grid grid-cols-3 gap-2 text-center mb-4">
-                  <div className="p-2.5 bg-secondary/35 border border-border/40 rounded-lg">
+                  <div className="p-2.5 bg-secondary/35 border border-border/40 rounded-[var(--radius-sm)]">
                     <span className="text-[8px] text-muted-foreground block font-bold uppercase">Bookings</span>
-                    <strong className="text-sm font-black text-indigo-400 mt-1 block">{dashStats.bookings} Slots</strong>
+                    <strong className="text-sm font-black text-[var(--primary)] mt-1 block">{dashStats.bookings} Slots</strong>
                   </div>
-                  <div className="p-2.5 bg-secondary/35 border border-border/40 rounded-lg">
+                  <div className="p-2.5 bg-secondary/35 border border-border/40 rounded-[var(--radius-sm)]">
                     <span className="text-[8px] text-muted-foreground block font-bold uppercase">Attendance</span>
                     <strong className="text-sm font-black text-emerald-400 mt-1 block">{dashStats.attendance}</strong>
                   </div>
-                  <div className="p-2.5 bg-secondary/35 border border-border/40 rounded-lg">
+                  <div className="p-2.5 bg-secondary/35 border border-border/40 rounded-[var(--radius-sm)]">
                     <span className="text-[8px] text-muted-foreground block font-bold uppercase">Budget Left</span>
                     <strong className="text-sm font-black text-foreground mt-1 block">${dashStats.budget.toFixed(2)}</strong>
                   </div>
                 </div>
-                <div className="p-3 bg-secondary/30 border border-border/40 rounded-lg flex items-center gap-2">
+                <div className="p-3 bg-secondary/30 border border-border/40 rounded-[var(--radius-sm)] flex items-center gap-2">
                   <CheckCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                   <span className="text-[9.5px] text-muted-foreground font-medium">All database channels synced (latency: 12ms)</span>
                 </div>
@@ -675,7 +675,7 @@ export default function ModuleDetail() {
       {/* ========================================================
           2. INTERACTIVE PREVIEW SANDBOX (THE CORE SANDBOX)
          ======================================================== */}
-      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-3xl p-8 text-center relative overflow-hidden shadow-sm">
+      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-[var(--radius-xl)] p-8 text-center relative overflow-hidden shadow-sm">
         <div className="max-w-2xl mx-auto text-center mb-8 space-y-2.5">
           <h2 className="text-2xl md:text-3xl font-black text-foreground tracking-tight">Interactive Sandbox Preview</h2>
           <p className="text-xs text-muted-foreground leading-relaxed">
@@ -690,7 +690,7 @@ export default function ModuleDetail() {
         
         {/* Decorative backdrop blobs */}
         <div className="absolute top-10 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-[var(--primary)]/5 rounded-full blur-2xl pointer-events-none" />
       </section>
 
       {/* ========================================================
@@ -700,7 +700,7 @@ export default function ModuleDetail() {
         <h2 className="text-2xl md:text-4xl font-extrabold text-center text-foreground tracking-tight mb-10">How the Workflow Operates</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {data.workflow.map((item, idx) => (
-            <div key={idx} className="p-6 bg-card border border-border rounded-2xl text-left relative overflow-hidden group hover:border-primary/50 transition-colors">
+            <div key={idx} className="p-6 bg-card border border-border rounded-[var(--radius-lg)] text-left relative overflow-hidden group hover:border-primary/50 transition-colors">
               <span className="absolute top-2 right-4 text-5xl font-black text-primary/10 select-none group-hover:text-primary/15 transition-colors">{item.step}</span>
               <h4 className="font-extrabold text-sm text-foreground mb-2">{item.title}</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
@@ -725,7 +725,7 @@ export default function ModuleDetail() {
             ))}
           </div>
         </div>
-        <div className="p-8 bg-card border border-border/80 rounded-2xl text-left shadow-sm space-y-4 relative overflow-hidden">
+        <div className="p-8 bg-card border border-border/80 rounded-[var(--radius-lg)] text-left shadow-sm space-y-4 relative overflow-hidden">
           <h4 className="text-xs font-black uppercase tracking-wider text-primary">System Compliance Details</h4>
           <p className="text-[11.5px] text-muted-foreground leading-relaxed">
             Our modules adhere to college administrative verification rules. Direct logs connect student accounts with alumni verifiers and tutor records, locking updates against manual manipulation.
@@ -759,7 +759,7 @@ export default function ModuleDetail() {
           {data.faqs.map((faq, idx) => {
             const isOpen = openFaqIdx === idx;
             return (
-              <div key={idx} className="border border-border/60 rounded-xl overflow-hidden bg-card transition-colors hover:border-primary/40">
+              <div key={idx} className="border border-border/60 rounded-[var(--radius-md)] overflow-hidden bg-card transition-colors hover:border-primary/40">
                 <button
                   onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
                   className="w-full px-6 py-4.5 text-left flex justify-between items-center font-bold text-sm text-foreground cursor-pointer focus:outline-none select-none"
@@ -792,7 +792,7 @@ export default function ModuleDetail() {
           7. MODULE CTA BANNER
          ======================================================== */}
       <section className="mb-12">
-        <div className="p-10 md:p-14 bg-gradient-to-r from-primary via-indigo-600 to-indigo-900 rounded-3xl text-center relative overflow-hidden shadow-xl text-white">
+        <div className="p-10 md:p-14 bg-gradient-to-r from-primary via-indigo-600 to-indigo-900 rounded-[var(--radius-xl)] text-center relative overflow-hidden shadow-xl text-white">
           <div className="relative z-10 max-w-xl mx-auto space-y-6">
             <h3 className="text-xl md:text-3xl font-black tracking-tight">Ready to leverage this module?</h3>
             <p className="text-slate-200 text-xs leading-relaxed max-w-md mx-auto">
@@ -801,13 +801,13 @@ export default function ModuleDetail() {
             <div className="flex justify-center gap-3">
               <Link 
                 to="/role-selection" 
-                className="px-6 py-2.5 bg-white text-primary rounded-lg text-xs font-bold hover:bg-slate-100 transition-colors shadow-lg"
+                className="px-6 py-2.5 bg-white text-primary rounded-[var(--radius-sm)] text-xs font-bold hover:bg-slate-100 transition-colors shadow-lg"
               >
                 Log In to Workspace
               </Link>
               <Link 
                 to="/features" 
-                className="px-6 py-2.5 bg-transparent border border-white/20 hover:bg-white/10 rounded-lg text-xs font-bold transition-all"
+                className="px-6 py-2.5 bg-transparent border border-white/20 hover:bg-white/10 rounded-[var(--radius-sm)] text-xs font-bold transition-all"
               >
                 View Other Modules
               </Link>

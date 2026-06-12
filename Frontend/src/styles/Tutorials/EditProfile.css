@@ -14,16 +14,16 @@
   display: flex;
   gap: 2.5rem;
   padding: 2.5rem;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   background: var(--bg-card);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
 }
 
 /* 📌 LEFT PROFILE CARD */
 #uploadProfileCard {
   width: 320px;
   background: var(--bg-main);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: 2rem;
   text-align: center;
   border: 1px solid var(--border-color);
@@ -61,7 +61,7 @@
 .card-body {
   background: var(--bg-main);
   padding: 2rem;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
 }
 
@@ -89,7 +89,7 @@
 .form-control {
   width: 100%;
   padding: 0.85rem 1rem;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--bg-card);
   color: var(--text-main);
@@ -112,7 +112,7 @@ select.form-control {
 /* 🔘 BUTTON */
 .btnEditProfile {
   padding: 0.8rem 1.2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   border: none;
   background: var(--primary);
   color: var(--text-white);

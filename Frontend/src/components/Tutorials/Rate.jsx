@@ -27,8 +27,8 @@ function Rate() {
               className="star"
               color={
                 ratingValue <= (hover || rating)
-                  ? "rgb(243, 224, 49)"
-                  : "#C0C2C9"
+                  ? "var(--warning)"
+                  : "var(--border-color)"
               }
               size={40}
               onMouseEnter={() => setHover(ratingValue)}

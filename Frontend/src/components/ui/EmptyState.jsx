@@ -20,7 +20,7 @@ const EmptyState = ({
       {actionLabel && onAction && (
         <button 
           onClick={onAction}
-          className="px-6 py-2.5 rounded-xl border border-primary/50 text-primary font-semibold hover:bg-primary/10 transition-colors"
+          className="px-6 py-2.5 rounded-[var(--radius-md)] border border-primary/50 text-primary font-semibold hover:bg-primary/10 transition-colors"
         >
           {actionLabel}
         </button>

@@ -123,7 +123,7 @@ const LandingHero = React.memo(() => {
       <div ref={heroRef} className="upperHero container mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={badgeRef}
-          className="inline-flex items-center gap-2 px-3 sm:px-4 py-[6px] rounded-full bg-[#248f74]/5 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6 border relative overflow-hidden"
+          className="inline-flex items-center gap-2 px-3 sm:px-4 py-[6px] rounded-full bg-primary/5 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6 border relative overflow-hidden"
           style={{ opacity: 0 }}
         >
           <BorderBeam
@@ -179,9 +179,9 @@ const LandingHero = React.memo(() => {
       >
         <div
           ref={imageContainerRef}
-          className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] rounded-xl sm:rounded-2xl border-2 border-background/20 bg-border mt-20 sm:mt-32 md:mt-44 relative p-0.5 sm:p-1 will-change-transform"
+          className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] rounded-[var(--radius-md)] sm:rounded-[var(--radius-lg)] border-2 border-background/20 bg-border mt-20 sm:mt-32 md:mt-44 relative p-0.5 sm:p-1 will-change-transform"
         >
-          <div className="w-full h-full rounded-lg sm:rounded-xl overflow-hidden border-[1px] border-background/20 bg-background">
+          <div className="w-full h-full rounded-[var(--radius-sm)] sm:rounded-[var(--radius-md)] overflow-hidden border-[1px] border-background/20 bg-background">
             <img
               src={theme === "dark" ? "/P1.png" : "/P2.png"}
               alt="Product Preview"

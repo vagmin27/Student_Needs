@@ -9,14 +9,14 @@ const screenshotsData = [
     category: "dashboard",
     desc: "Overview of student progress logs, pending tutorials chat counters, and threshold warnings.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-lg text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
         <div className="flex justify-between border-b border-border/10 pb-1.5 mb-3">
           <strong>👨‍🎓 Student Dashboard</strong>
           <span className="text-[8px] bg-primary/20 text-primary px-1.5 rounded">Anaya Sharma</span>
         </div>
         <div className="grid grid-cols-3 gap-2 mb-3">
           <div className="p-1.5 bg-slate-800 rounded"><span>Attendance</span><strong className="block text-emerald-400">84.5%</strong></div>
-          <div className="p-1.5 bg-slate-800 rounded"><span>Bookings</span><strong className="block text-indigo-400">3 Upcoming</strong></div>
+          <div className="p-1.5 bg-slate-800 rounded"><span>Bookings</span><strong className="block text-[var(--primary)]">3 Upcoming</strong></div>
           <div className="p-1.5 bg-slate-800 rounded"><span>Budget left</span><strong className="block text-rose-400">$245.50</strong></div>
         </div>
         <div className="p-2 bg-slate-950 rounded text-[8px] border-l-2 border-l-primary">
@@ -32,7 +32,7 @@ const screenshotsData = [
     category: "tutorials",
     desc: "List of certified on-demand campus tutors grouped by academic subjects.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-lg text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
         <div className="flex justify-between border-b border-border/10 pb-1.5 mb-2">
           <strong>📚 Search Tutors</strong>
           <span className="text-[7px] text-slate-500">24 active tutors</span>
@@ -62,14 +62,14 @@ const screenshotsData = [
     category: "chat",
     desc: "Real-time communication panel linking students and tutors with typing status.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-lg text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
         <div className="border-b border-border/10 pb-1.5 mb-3 flex justify-between">
           <strong>💬 Dr. Rajesh Kumar</strong>
           <span className="text-[7px] text-emerald-400">typing...</span>
         </div>
         <div className="space-y-2 mb-3 h-[90px] overflow-y-auto">
           <div className="p-1.5 bg-slate-800 rounded w-4/5">Hi Anaya, did you check the algorithm slides?</div>
-          <div className="p-1.5 bg-indigo-600 text-white rounded w-4/5 ml-auto text-right">Yes, I checked them. Let's schedule tomorrow.</div>
+          <div className="p-1.5 bg-[var(--primary)] text-white rounded w-4/5 ml-auto text-right">Yes, I checked them. Let's schedule tomorrow.</div>
         </div>
         <div className="p-1 bg-slate-950 rounded flex justify-between">
           <span className="text-slate-500">Type message...</span>
@@ -84,7 +84,7 @@ const screenshotsData = [
     category: "attendance",
     desc: "Progress checklist tracking college thresholds and monthly logs.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-lg text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
         <strong className="block mb-2">📊 Attendance tracking</strong>
         <div className="space-y-1.5">
           <div className="p-1.5 bg-slate-800 rounded flex justify-between border-l-2 border-l-emerald-500">
@@ -103,7 +103,7 @@ const screenshotsData = [
     category: "expenses",
     desc: "Student personal budgeting sheet detailing transaction categories and limits.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-lg text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
         <strong className="block border-b border-border/10 pb-1 mb-2">💰 Spend Tracker</strong>
         <div className="space-y-1">
           <div className="flex justify-between py-1 border-b border-border/5"><span>Dinner at Cafeteria</span><span className="text-rose-400">-$12.40</span></div>
@@ -118,7 +118,7 @@ const screenshotsData = [
     category: "referrals",
     desc: "Direct alumni-posted corporate opportunities board.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-lg text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
         <strong className="block mb-2">💼 Careers verifier listings</strong>
         <div className="p-2 bg-slate-800 rounded border border-border/5">
           <div className="flex justify-between"><span className="text-white font-semibold">Software Intern</span><span className="bg-cyan-500/20 text-cyan-400 px-1 rounded">Google</span></div>
@@ -170,9 +170,9 @@ export default function Gallery() {
           <div
             key={item.id}
             onClick={() => setLightboxIndex(idx)}
-            className="p-4 bg-card border border-border rounded-2xl hover:border-primary hover:shadow-glow cursor-pointer transition-all flex flex-col justify-between"
+            className="p-4 bg-card border border-border rounded-[var(--radius-lg)] hover:border-primary hover:shadow-glow cursor-pointer transition-all flex flex-col justify-between"
           >
-            <div className="bg-slate-950 p-2 rounded-xl mb-4 overflow-hidden select-none border border-border/10">
+            <div className="bg-slate-950 p-2 rounded-[var(--radius-md)] mb-4 overflow-hidden select-none border border-border/10">
               {item.renderScreen()}
             </div>
             <div>
@@ -192,7 +192,7 @@ export default function Gallery() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-background/90 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
           >
-            <div className="relative w-full max-w-lg bg-card p-6 border border-border rounded-2xl shadow-xl text-left">
+            <div className="relative w-full max-w-lg bg-card p-6 border border-border rounded-[var(--radius-lg)] shadow-xl text-left">
               <button
                 onClick={() => setLightboxIndex(null)}
                 className="absolute top-4 right-4 text-muted-foreground hover:text-primary cursor-pointer focus:outline-none"
@@ -206,7 +206,7 @@ export default function Gallery() {
                 Category: {filtered[lightboxIndex]?.category}
               </span>
 
-              <div className="bg-slate-950 p-4 rounded-xl border border-border/10 mb-4 select-none">
+              <div className="bg-slate-950 p-4 rounded-[var(--radius-md)] border border-border/10 mb-4 select-none">
                 {filtered[lightboxIndex]?.renderScreen()}
               </div>
 

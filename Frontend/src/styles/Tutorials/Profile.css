@@ -1,6 +1,6 @@
 /* GLOBAL */
 * {
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,7 +19,7 @@
 .main-profile {
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   box-shadow: var(--shadow-soft);
 }
@@ -38,7 +38,7 @@
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   padding: 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   font-size: 1rem;
   color: var(--text-secondary);
   box-shadow: var(--shadow-soft);
@@ -58,7 +58,7 @@
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   padding: 2rem 1.5rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   text-align: center;
   color: var(--text-secondary);
   box-shadow: var(--shadow-soft);
@@ -94,7 +94,7 @@
   width: 80%;
   max-width: 220px;
   padding: 0.6rem 1rem;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   border: none;
   background: var(--primary);
   color: var(--text-white);

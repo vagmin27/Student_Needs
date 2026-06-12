@@ -47,19 +47,19 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
   };
 
   return (
-    <header className="h-16 border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6">
+    <header className="h-16 border-b border-border/40 bg-background/70 backdrop-blur-[20px] sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 transition-all duration-300">
       <div className="flex items-center gap-3 min-w-0">
         <button
           onClick={handleHamburgerClick}
-          className="p-2 -ml-2 rounded-md text-muted-foreground hover:bg-secondary shrink-0 cursor-pointer"
+          className="p-2 -ml-2 rounded-[var(--radius-sm)] text-muted-foreground hover:bg-secondary shrink-0 cursor-pointer"
           aria-label="Toggle Sidebar"
         >
-          <Menu className="w-5 h-5 text-[#111827] dark:text-[#F8FAFC]" />
+          <Menu className="w-5 h-5 text-foreground" />
         </button>
         {shouldShowBack && (
           <Link
             to="/student/dashboard"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors shrink-0"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-[var(--primary)] transition-colors shrink-0"
             aria-label="Back to Dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -72,12 +72,12 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="relative hidden md:block w-64">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
+        <div className="relative hidden md:block w-64 md:w-[420px] transition-all duration-300">
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground" />
+          <input
             type="search"
             placeholder="Search anything..."
-            className="w-full bg-secondary/50 border-none pl-9 h-9 rounded-full focus-visible:ring-1 focus-visible:ring-primary"
+            className="w-full bg-white/[0.03] dark:bg-white/[0.02] border border-border/80 pl-10 h-10 rounded-full text-sm placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 transition-all"
           />
         </div>
 

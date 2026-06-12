@@ -57,7 +57,7 @@ const styles = {
     backgroundColor: "#1e293b",
     padding: "2rem",
     borderRadius: "1rem",
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+    boxShadow: "var(--shadow-md)",
     border: "1px solid #334155",
     display: "flex",
     flexDirection: "column",
@@ -87,7 +87,7 @@ const styles = {
     border: "1px solid #7f1d1d"
   },
   button: {
-    backgroundColor: "#3b82f6",
+    backgroundColor: "var(--primary)",
     color: "white",
     border: "none",
     padding: "0.75rem 1.5rem",

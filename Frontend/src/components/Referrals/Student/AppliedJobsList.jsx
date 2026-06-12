@@ -22,9 +22,9 @@ const getStatusConfig = (status) => {
     case 'applied':
       return {
         icon: Clock,
-        color: 'text-blue-500',
-        bgColor: 'bg-blue-500/10',
-        borderColor: 'border-blue-500/20',
+        color: 'text-[var(--primary)]',
+        bgColor: 'bg-[var(--primary)]/10',
+        borderColor: 'border-[var(--primary)]/30/20',
         label: 'Applied',
       };
     case 'shortlisted':
@@ -73,7 +73,7 @@ export function AppliedJobsList({ applications = [], loading }) {
   // Loading State
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto bg-card rounded-lg p-12 border border-border/50 text-center">
+      <div className="max-w-4xl mx-auto bg-card rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
         <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4 animate-pulse" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           Loading Applications...
@@ -88,7 +88,7 @@ export function AppliedJobsList({ applications = [], loading }) {
   // Empty State
   if (applications.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto bg-card rounded-lg p-12 border border-border/50 text-center">
+      <div className="max-w-4xl mx-auto bg-card rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
         <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Applications Yet
@@ -113,13 +113,13 @@ export function AppliedJobsList({ applications = [], loading }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-card rounded-xl p-6 border border-border/50 hover:border-primary/30 transition-all"
+            className="bg-card rounded-[var(--radius-md)] p-6 border border-border/50 hover:border-primary/30 transition-all"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               {/* Job Info Section */}
               <div className="flex-1">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-primary/10">
+                  <div className="p-2 rounded-[var(--radius-sm)] bg-primary/10">
                     <Briefcase className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
@@ -135,7 +135,7 @@ export function AppliedJobsList({ applications = [], loading }) {
                       </span>
                     </div>
                     <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1 px-2 py-1 rounded-md bg-secondary/50">
+                      <span className="flex items-center gap-1 px-2 py-1 rounded-[var(--radius-sm)] bg-secondary/50">
                         <Target className="w-3 h-3" />
                         {application.opportunity.experienceLevel}
                       </span>

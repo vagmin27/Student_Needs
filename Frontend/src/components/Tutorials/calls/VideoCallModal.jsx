@@ -485,7 +485,7 @@ export const VideoCallModal = ({
   if (internalCallState === "incoming") {
     return createPortal(
       <div className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center">
-        <div className="bg-slate-900 border border-slate-700 p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center animate-in zoom-in-95 duration-200">
+        <div className="bg-slate-900 border border-slate-700 p-6 rounded-[var(--radius-lg)] shadow-2xl max-w-sm w-full text-center animate-in zoom-in-95 duration-200">
           <div className="w-20 h-20 bg-slate-800 rounded-full mx-auto flex items-center justify-center mb-4 text-2xl font-bold text-primary animate-pulse">
             {incomingCallData?.callerInfo?.name?.[0] || "U"}
           </div>
@@ -495,14 +495,14 @@ export const VideoCallModal = ({
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={handleDecline}
-              className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-colors cursor-pointer"
+              className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-[var(--radius-md)] font-medium transition-colors cursor-pointer"
             >
               Decline
             </button>
             <button
               onClick={handleAccept}
               disabled={acceptingRef.current}
-              className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-colors cursor-pointer disabled:opacity-50"
+              className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-[var(--radius-md)] font-medium transition-colors cursor-pointer disabled:opacity-50"
             >
               Accept
             </button>
@@ -516,7 +516,7 @@ export const VideoCallModal = ({
   // Render Active Call (connecting, connected, accepting)
   return createPortal(
     <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center ${isFullscreen ? "p-0" : "p-4 md:p-8"}`}>
-      <div className={`relative w-full h-full max-w-6xl mx-auto rounded-3xl overflow-hidden bg-slate-950 shadow-2xl border border-slate-800 flex items-center justify-center`}>
+      <div className={`relative w-full h-full max-w-6xl mx-auto rounded-[var(--radius-xl)] overflow-hidden bg-slate-950 shadow-2xl border border-slate-800 flex items-center justify-center`}>
         
         {/* Remote Video (Main) */}
         {remoteStream ? (
@@ -540,7 +540,7 @@ export const VideoCallModal = ({
         )}
 
         {/* Local Video (PIP) */}
-        <div className={`absolute top-6 right-6 w-32 md:w-48 aspect-[3/4] md:aspect-video bg-slate-900 rounded-2xl overflow-hidden border-2 border-slate-700/50 shadow-xl transition-all z-10 ${isVideoMuted ? "flex items-center justify-center" : ""}`}>
+        <div className={`absolute top-6 right-6 w-32 md:w-48 aspect-[3/4] md:aspect-video bg-slate-900 rounded-[var(--radius-lg)] overflow-hidden border-2 border-slate-700/50 shadow-xl transition-all z-10 ${isVideoMuted ? "flex items-center justify-center" : ""}`}>
           {isVideoMuted ? (
             <span className="text-slate-500 text-sm">Camera Off</span>
           ) : (

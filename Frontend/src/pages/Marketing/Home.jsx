@@ -64,10 +64,10 @@ export default function Home() {
             UniConnect integrates everything you need to study better, manage your schedule, plan finances, and secure corporate job referrals in one unified platform.
           </p>
           <div className="uc-actions flex flex-wrap gap-4 select-none pt-2">
-            <Link className="uc-btn-primary px-8 py-4 text-white rounded-lg text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-primary/20" to="/role-selection">
+            <Link className="uc-btn-primary px-8 py-4 text-white rounded-[var(--radius-sm)] text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-primary/20" to="/role-selection">
               Get Started Now <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link className="uc-btn-secondary px-8 py-4 rounded-lg text-sm font-bold transition-all" to="/features">
+            <Link className="uc-btn-secondary px-8 py-4 rounded-[var(--radius-sm)] text-sm font-bold transition-all" to="/features">
               Explore Features
             </Link>
           </div>
@@ -82,7 +82,7 @@ export default function Home() {
           aria-hidden="true"
         >
           {/* Central Live Environment Container */}
-          <div className="w-full max-w-[500px] bg-card/60 border border-border/80 rounded-2xl p-5 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-md">
+          <div className="w-full max-w-[500px] bg-card/60 border border-border/80 rounded-[var(--radius-lg)] p-5 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-md">
             
             {/* Window bar */}
             <div className="flex items-center justify-between border-b border-border/60 pb-3 mb-1.5">
@@ -97,7 +97,7 @@ export default function Home() {
             {/* Student Profile & Attendance Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Profile Widget */}
-              <div className="p-3 bg-secondary/35 border border-border/40 rounded-xl flex items-center gap-3">
+              <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-black text-primary shrink-0">
                   AR
                 </div>
@@ -108,7 +108,7 @@ export default function Home() {
               </div>
 
               {/* Attendance Indicator */}
-              <div className="p-3 bg-secondary/35 border border-border/40 rounded-xl flex items-center justify-between">
+              <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center justify-between">
                 <div className="text-left">
                   <h4 className="text-[9.5px] uppercase font-bold text-muted-foreground">Attendance</h4>
                   <p className="text-base font-black text-emerald-500">94.2% Rate</p>
@@ -124,7 +124,7 @@ export default function Home() {
             </div>
 
             {/* Expense Budget Indicator */}
-            <div className="p-3 bg-secondary/35 border border-border/40 rounded-xl space-y-2">
+            <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] space-y-2">
               <div className="flex justify-between items-center text-left">
                 <div>
                   <h4 className="text-[9.5px] uppercase font-bold text-muted-foreground">Monthly Budget</h4>
@@ -145,8 +145,8 @@ export default function Home() {
             </div>
 
             {/* Tutor Booking Slot */}
-            <div className="p-3 bg-secondary/35 border border-border/40 rounded-xl flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center shrink-0 border border-indigo-500/20">
+            <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center shrink-0 border border-[var(--primary)]/30/20">
                 <BookOpen className="w-4 h-4" />
               </div>
               <div className="text-left flex-grow min-w-0">
@@ -154,12 +154,12 @@ export default function Home() {
                 <p className="text-xs font-bold text-foreground truncate">CS-301 Algorithms with Dr. Marcus</p>
                 <p className="text-[9.5px] text-primary font-bold">Today at 4:30 PM (Online Match)</p>
               </div>
-              <span className="text-[8px] px-2 py-0.5 bg-indigo-500/15 text-indigo-500 rounded font-black uppercase shrink-0 border border-indigo-500/20">Pending</span>
+              <span className="text-[8px] px-2 py-0.5 bg-[var(--primary)]/15 text-[var(--primary)] rounded font-black uppercase shrink-0 border border-[var(--primary)]/30/20">Pending</span>
             </div>
 
             {/* Referral Alert Match */}
-            <div className="p-3 bg-secondary/35 border border-border/40 rounded-xl flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-500 flex items-center justify-center shrink-0 border border-cyan-500/20">
+            <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-cyan-500/10 text-cyan-500 flex items-center justify-center shrink-0 border border-cyan-500/20">
                 <Briefcase className="w-4 h-4" />
               </div>
               <div className="text-left flex-grow min-w-0">
@@ -171,7 +171,7 @@ export default function Home() {
             </div>
             
             {/* Glowing Accent Ring */}
-            <div className="absolute -inset-px rounded-2xl border border-primary/20 pointer-events-none" />
+            <div className="absolute -inset-px rounded-[var(--radius-lg)] border border-primary/20 pointer-events-none" />
           </div>
         </motion.div>
       </section>
@@ -197,7 +197,7 @@ export default function Home() {
           <p className="uc-subheading max-w-xl mx-auto">A unified student journey designed to support you from registration to graduation and career placement.</p>
         </div>
 
-        <div className="ecosystem-flow-wrapper flex justify-center items-center flex-wrap gap-4 max-w-4xl mx-auto p-6 bg-card border border-border rounded-2xl mb-12">
+        <div className="ecosystem-flow-wrapper flex justify-center items-center flex-wrap gap-4 max-w-4xl mx-auto p-6 bg-card border border-border rounded-[var(--radius-lg)] mb-12">
           <Link to="/features/tutorials" className="eco-node">Tutorials</Link>
           <div className="eco-arrow font-bold text-muted-foreground">→</div>
           <Link to="/features/attendance" className="eco-node">Attendance</Link>
@@ -248,7 +248,7 @@ export default function Home() {
               className="glass-card-modern p-8 text-left flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mb-6 shadow-sm"><BookOpen className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-6 shadow-sm"><BookOpen className="w-6 h-6" /></div>
                 <h3 className="text-xl font-bold text-foreground mb-3">Tutorials</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">Connect with vetted student tutors and request bookings instantly.</p>
               </div>
@@ -263,7 +263,7 @@ export default function Home() {
               className="glass-card-modern p-8 text-left flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-6 shadow-sm"><Briefcase className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-6 shadow-sm"><Briefcase className="w-6 h-6" /></div>
                 <h3 className="text-xl font-bold text-foreground mb-3">Referrals & Internships</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">Accelerate your career search with job boards powered by verified alumni.</p>
               </div>
@@ -278,7 +278,7 @@ export default function Home() {
               className="glass-card-modern p-8 text-left flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6 shadow-sm"><ClipboardList className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6 shadow-sm"><ClipboardList className="w-6 h-6" /></div>
                 <h3 className="text-xl font-bold text-foreground mb-3">Attendance Management</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">Monitor your attendance limits and sync class lists automatically.</p>
               </div>
@@ -291,19 +291,19 @@ export default function Home() {
       {/* 🚀 STATISTICS PREVIEW */}
       <section ref={statsRef} className="w-full py-24 px-6 max-w-5xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-          <div className="p-8 bg-card border border-border rounded-2xl shadow-sm">
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
             <strong className="block text-4xl font-extrabold text-primary">{studentsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Active Students</span>
           </div>
-          <div className="p-8 bg-card border border-border rounded-2xl shadow-sm">
-            <strong className="block text-4xl font-extrabold text-indigo-500">{tutorsCount.toLocaleString()}+</strong>
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+            <strong className="block text-4xl font-extrabold text-[var(--primary)]">{tutorsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Certified Tutors</span>
           </div>
-          <div className="p-8 bg-card border border-border rounded-2xl shadow-sm">
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
             <strong className="block text-4xl font-extrabold text-emerald-500">{sessionsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Sessions Completed</span>
           </div>
-          <div className="p-8 bg-card border border-border rounded-2xl shadow-sm">
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
             <strong className="block text-4xl font-extrabold text-cyan-400">{referralsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Job Referrals</span>
           </div>
@@ -312,7 +312,7 @@ export default function Home() {
 
       {/* 🚀 CTA SECTION */}
       <section className="w-full px-6 py-20 max-w-6xl mx-auto mb-16">
-        <div className="premium-cta-banner p-12 sm:p-20 text-center rounded-3xl relative overflow-hidden shadow-2xl">
+        <div className="premium-cta-banner p-12 sm:p-20 text-center rounded-[var(--radius-xl)] relative overflow-hidden shadow-2xl">
           {/* Animated Blobs */}
           <div className="cta-blobs-container">
             <div className="cta-blob cta-blob-1"></div>
@@ -326,10 +326,10 @@ export default function Home() {
               Join thousands of university students matching with verified tutors, tracking schedules, budgeting, and securing corporate job referrals.
             </p>
             <div className="flex justify-center gap-4 select-none">
-              <Link className="uc-btn-primary px-8 py-4 text-white rounded-lg text-sm font-bold flex items-center gap-1.5" to="/role-selection">
+              <Link className="uc-btn-primary px-8 py-4 text-white rounded-[var(--radius-sm)] text-sm font-bold flex items-center gap-1.5" to="/role-selection">
                 Get Started Now <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link className="uc-btn-secondary px-8 py-4 text-white border border-white/20 rounded-lg text-sm font-bold hover:bg-white/10 transition-colors" to="/features">
+              <Link className="uc-btn-secondary px-8 py-4 text-white border border-white/20 rounded-[var(--radius-sm)] text-sm font-bold hover:bg-white/10 transition-colors" to="/features">
                 Explore Features
               </Link>
             </div>

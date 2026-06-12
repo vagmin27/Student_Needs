@@ -34,7 +34,7 @@ const MonthlyExpenseChart = ({ exdata }) => {
     <div className="glass-panel p-6 flex flex-col h-full min-h-[300px]">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-foreground">Expense Overview</h3>
-        <select className="bg-secondary border border-border text-foreground text-sm rounded-lg outline-none px-3 py-1 cursor-pointer">
+        <select className="bg-secondary border border-border text-foreground text-sm rounded-[var(--radius-sm)] outline-none px-3 py-1 cursor-pointer">
           <option>Last 6 Months</option>
           <option>This Year</option>
         </select>

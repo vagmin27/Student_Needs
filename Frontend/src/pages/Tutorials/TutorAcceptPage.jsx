@@ -61,7 +61,7 @@ function TutorAcceptPage() {
           bookings?.map((b) => (
             <div
               key={b._id}
-              className="rounded-xl border border-border bg-card p-5 shadow-sm space-y-2"
+              className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-sm space-y-2"
             >
               <p><strong>📖 Subject:</strong> {b.subject}</p>
               <p><strong>📅 Date:</strong> {b.date}</p>
@@ -75,7 +75,7 @@ function TutorAcceptPage() {
                     b.status === "Booked" || b.status === "pending"
                       ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
                       : b.status === "upcoming" || b.status === "accepted"
-                        ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                        ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-[var(--primary)]/10 text-blue-700 dark:bg-blue-900/30 dark:text-[var(--primary)]"
                         : b.status === "in_progress"
                           ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
                           : b.status === "Completed" || b.status === "completed"

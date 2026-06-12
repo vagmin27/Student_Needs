@@ -258,7 +258,7 @@ export default function TutorAttendanceAnalytics() {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     disabled={loadingSubjects}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <option value="">Select a subject...</option>
                     {subjects.map((s) => (
@@ -278,7 +278,7 @@ export default function TutorAttendanceAnalytics() {
                     type="date"
                     value={dateFrom}
                     onChange={(e) => setDateFrom(e.target.value)}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
 
@@ -291,7 +291,7 @@ export default function TutorAttendanceAnalytics() {
                     type="date"
                     value={dateTo}
                     onChange={(e) => setDateTo(e.target.value)}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
 
@@ -305,7 +305,7 @@ export default function TutorAttendanceAnalytics() {
                     placeholder="Student name..."
                     value={searchStudent}
                     onChange={(e) => setSearchStudent(e.target.value)}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
               </div>

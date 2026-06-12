@@ -32,38 +32,38 @@ export const TutorialAssistantDrawer = ({ isOpen, onClose, chatContext }) => {
         </div>
 
         <div className="grid grid-cols-1 gap-2">
-          <button onClick={() => handleAction("summarize")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-xl text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
-            <MessageSquare className="w-4 h-4 text-blue-400" /> Summarize Chat
+          <button onClick={() => handleAction("summarize")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-[var(--radius-md)] text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
+            <MessageSquare className="w-4 h-4 text-[var(--primary)]" /> Summarize Chat
           </button>
-          <button onClick={() => handleAction("explain")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-xl text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
+          <button onClick={() => handleAction("explain")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-[var(--radius-md)] text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
             <HelpCircle className="w-4 h-4 text-green-400" /> Generate Explanation
           </button>
-          <button onClick={() => handleAction("notes")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-xl text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
+          <button onClick={() => handleAction("notes")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-[var(--radius-md)] text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
             <FileText className="w-4 h-4 text-yellow-400" /> Create Notes
           </button>
-          <button onClick={() => handleAction("action_items")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-xl text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
-            <List className="w-4 h-4 text-purple-400" /> Extract Action Items
+          <button onClick={() => handleAction("action_items")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-[var(--radius-md)] text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
+            <List className="w-4 h-4 text-[var(--primary)]" /> Extract Action Items
           </button>
-          <button onClick={() => handleAction("assignment")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-xl text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
+          <button onClick={() => handleAction("assignment")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-[var(--radius-md)] text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
             <PenTool className="w-4 h-4 text-red-400" /> Generate Assignment
           </button>
-          <button onClick={() => handleAction("follow_up")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-xl text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
+          <button onClick={() => handleAction("follow_up")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-[var(--radius-md)] text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
             <HelpCircle className="w-4 h-4 text-teal-400" /> Suggest Questions
           </button>
-          <button onClick={() => handleAction("next_steps")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-xl text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
+          <button onClick={() => handleAction("next_steps")} disabled={isGenerating} className="flex items-center gap-3 p-3 bg-muted/50 hover:bg-accent rounded-[var(--radius-md)] text-sm font-medium text-foreground transition-colors border border-border/50 disabled:opacity-50">
             <Sparkles className="w-4 h-4 text-orange-400" /> Next Session Plan
           </button>
         </div>
 
         {isGenerating && (
-          <div className="mt-6 p-4 rounded-xl bg-muted/30 border border-border/30 flex flex-col items-center justify-center gap-3">
+          <div className="mt-6 p-4 rounded-[var(--radius-md)] bg-muted/30 border border-border/30 flex flex-col items-center justify-center gap-3">
             <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
             <span className="text-xs text-muted-foreground animate-pulse">Analyzing context...</span>
           </div>
         )}
 
         {error && !isGenerating && (
-          <div className="mt-6 p-4 rounded-xl bg-red-900/20 border border-red-900/50 flex flex-col items-center justify-center gap-2">
+          <div className="mt-6 p-4 rounded-[var(--radius-md)] bg-red-900/20 border border-red-900/50 flex flex-col items-center justify-center gap-2">
             <AlertCircle className="w-5 h-5 text-red-400" />
             <span className="text-xs text-red-300 text-center">{error}</span>
             <button 
@@ -84,7 +84,7 @@ export const TutorialAssistantDrawer = ({ isOpen, onClose, chatContext }) => {
               </span>
             </div>
             
-            <div className="p-4 rounded-xl bg-primary/10 border border-primary/20 text-sm text-foreground whitespace-pre-wrap leading-relaxed shadow-inner overflow-hidden relative">
+            <div className="p-4 rounded-[var(--radius-md)] bg-primary/10 border border-primary/20 text-sm text-foreground whitespace-pre-wrap leading-relaxed shadow-inner overflow-hidden relative">
               {aiResponse.content}
             </div>
 

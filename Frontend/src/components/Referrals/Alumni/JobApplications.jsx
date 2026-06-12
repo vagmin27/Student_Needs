@@ -39,7 +39,7 @@ export function JobApplications({
 
   if (!selectedJob) {
     return (
-      <div className="bg-card rounded-lg border border-border/50 shadow-sm">
+      <div className="bg-card rounded-[var(--radius-sm)] border border-border/50 shadow-sm">
         <div className="p-12 text-center">
           <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <p className="text-muted-foreground">Select a job to view applications</p>
@@ -49,7 +49,7 @@ export function JobApplications({
   }
 
   return (
-    <div className="bg-card rounded-lg border border-border/50 shadow-sm overflow-hidden">
+    <div className="bg-card rounded-[var(--radius-sm)] border border-border/50 shadow-sm overflow-hidden">
       <div className="p-4 border-b border-border/50">
         <h3 className="font-semibold text-foreground">
           Applications for {selectedJob.title}

@@ -38,7 +38,7 @@ export const CallHistoryCard = ({ message, currentUserId }) => {
   const bgClass = isOutgoing ? "bg-primary/20 border-primary/30" : "bg-card border-border/40";
 
   return (
-    <div className={cn("flex flex-col p-3 rounded-2xl border backdrop-blur-md shadow-sm min-w-[200px]", bgClass, isOutgoing ? "rounded-tr-none" : "rounded-tl-none")}>
+    <div className={cn("flex flex-col p-3 rounded-[var(--radius-lg)] border backdrop-blur-md shadow-sm min-w-[200px]", bgClass, isOutgoing ? "rounded-tr-none" : "rounded-tl-none")}>
       <div className="flex items-center gap-3">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 text-lg">
           {icon}

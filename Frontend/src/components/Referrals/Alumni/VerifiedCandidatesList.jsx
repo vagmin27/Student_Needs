@@ -14,7 +14,7 @@ export function VerifiedCandidatesList({
   onSelectStudent,
 }) {
   return (
-    <div className="bg-card rounded-lg border border-border/50 shadow-sm overflow-hidden">
+    <div className="bg-card rounded-[var(--radius-sm)] border border-border/50 shadow-sm overflow-hidden">
       {/* Header with Count */}
       <div className="p-4 border-b border-border/50">
         <h3 className="font-semibold text-foreground flex items-center gap-2">
