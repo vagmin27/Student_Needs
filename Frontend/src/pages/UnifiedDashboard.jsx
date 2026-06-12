@@ -58,7 +58,7 @@ const QUICK_ACTIONS = [
   {
     label: "Referrals",
     description: "Browse opportunities",
-    to: "/student/referrals",
+    to: "/referrals/browse-referrals",
     icon: Briefcase,
   },
 ];
@@ -561,7 +561,7 @@ const UnifiedDashboard = () => {
             description="Recommended opportunities"
             action={
               <Button variant="outline" size="sm" asChild>
-                <Link to="/student/referrals">Browse all</Link>
+                <Link to="/referrals/browse-referrals">Browse all</Link>
               </Button>
             }
           >

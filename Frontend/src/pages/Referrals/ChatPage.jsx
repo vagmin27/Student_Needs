@@ -448,16 +448,18 @@ export default function ChatPage() {
 
   const totalUnreads = chats.reduce((acc, c) => acc + (c.unreadCount || 0), 0);
 
+  const isReferralRoute = location.pathname.startsWith("/referrals");
+
   return (
     <div
       className={cn(
-        currentRole === "student" ? "space-y-4 sm:space-y-6 px-4 sm:px-6 md:px-8" : "",
-        currentRole === "student" ? (isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24") : ""
+        currentRole === "student" && !isReferralRoute ? "space-y-4 sm:space-y-6 px-4 sm:px-6 md:px-8" : "",
+        currentRole === "student" && !isReferralRoute ? (isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24") : ""
       )}
     >
-      {currentRole === "student" && isUnifiedLayout && <BackToStudentDashboard />}
+      {currentRole === "student" && isUnifiedLayout && !isReferralRoute && <BackToStudentDashboard />}
 
-      {currentRole === "student" && (
+      {currentRole === "student" && !isReferralRoute && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex flex-col items-start justify-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight text-foreground">
@@ -472,7 +474,7 @@ export default function ChatPage() {
         </div>
       )}
 
-      {currentRole === "student" && (
+      {currentRole === "student" && !isReferralRoute && (
         <TabNavigation
           activeTab="chat"
           student={student}
@@ -483,7 +485,7 @@ export default function ChatPage() {
 
       <div className={cn(
         "flex bg-card border border-border/45 rounded-2xl overflow-hidden glass-panel relative",
-        currentRole === "student"
+        currentRole === "student" && !isReferralRoute
           ? "h-[calc(100vh-270px)] md:h-[calc(100vh-320px)]"
           : "h-[calc(100vh-130px)] md:h-[calc(100vh-160px)]"
       )}>

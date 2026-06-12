@@ -21,6 +21,7 @@ const STUDENT_MODULE_PATHS = [
   "/student/applied",
   "/student/interview",
   "/student/chat",
+  "/referrals",
 ];
 
 const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {

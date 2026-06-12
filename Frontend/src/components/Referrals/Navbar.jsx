@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { NavLink } from '@/components/Referrals/NavLink.jsx';
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { Button } from '@/components/Referrals/ui/button.jsx';
-import { LogOut, User, GraduationCap } from 'lucide-react';
+import { User, GraduationCap } from 'lucide-react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GetStarted } from "./GetStarted";
@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
  * and authenticated state handling.
  */
 const Navbar = () => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -75,10 +75,6 @@ const Navbar = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
 
   return (
     <header 
@@ -147,14 +143,6 @@ const Navbar = () => {
                 <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
                 <span className="text-xs sm:text-sm font-medium">{user.firstName}</span>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleLogout}
-                className="text-muted-foreground hover:text-foreground p-1.5 sm:p-2"
-              >
-                <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </Button>
             </div>
           ) : (
             <GetStarted />

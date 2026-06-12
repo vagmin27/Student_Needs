@@ -191,7 +191,7 @@ if (process.env.NODE_ENV !== 'production') {
       ':id :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
       {
         stream: winstonLogger.stream,
-        skip: (req, res) => res.statusCode < 400,
+        skip: (req, res) => res.statusCode < 400 || res.statusCode === 429,
       }
     )
   );
@@ -233,6 +233,7 @@ const authLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req, res) => process.env.NODE_ENV !== 'production',
 });
 
 const generalLimiter = rateLimit({
@@ -244,6 +245,7 @@ const generalLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req, res) => process.env.NODE_ENV !== 'production',
 });
 
 
@@ -546,7 +548,15 @@ const initializeServer = async () => {
 
     const gracefulShutdown = () => {
       console.log('SIGTERM/SIGINT signal received. Shutting down gracefully...');
+      
+      // Force exit after a timeout to prevent hanging on active WebSocket/keep-alive connections
+      const forceTimeout = setTimeout(() => {
+        console.log('Forced shutdown complete.');
+        process.exit(0);
+      }, 1000);
+
       server.close(async () => {
+        clearTimeout(forceTimeout);
         console.log('HTTP server closed.');
         try {
           await mongoose.disconnect();

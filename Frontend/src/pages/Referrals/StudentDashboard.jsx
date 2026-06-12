@@ -77,13 +77,14 @@ export function StudentDashboard() {
   // Determine active tab from URL
   const getActiveTab = () => {
     if (location.pathname.includes('/profile')) return 'profile';
-    if (location.pathname.includes('/jobs')) return 'jobs';
+    if (location.pathname.includes('/jobs') || location.pathname.includes('/browse-jobs')) return 'jobs';
     if (location.pathname.includes('/qrcode')) return 'qrcode';
-    if (location.pathname.includes('/applied')) return 'applied';
+    if (location.pathname.includes('/applied') || location.pathname.includes('/applied-jobs')) return 'applied';
     return 'referrals';
   };
 
   const activeTab = getActiveTab();
+  const isReferralRoute = location.pathname.startsWith("/referrals");
 
   const { isConnected, on, off } = useWebSocket();
   const [unreadChatsCount, setUnreadChatsCount] = useState(0);
@@ -297,7 +298,7 @@ export function StudentDashboard() {
             <button
               onClick={() => {
                 toast.dismiss();
-                navigate(`/student/chat?chatId=${chatId}`);
+                navigate(`/referrals/chat?chatId=${chatId}`);
               }}
               className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-lg shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
             >
@@ -316,6 +317,7 @@ export function StudentDashboard() {
       setAppliedOpportunities(prev => [...prev, jobId]);
       await fetchOpportunities();
       await fetchAppliedOpportunities();
+      window.dispatchEvent(new CustomEvent("opportunity_applied"));
 
     } catch (error) {
       dismissToast(toastId);
@@ -342,31 +344,25 @@ export function StudentDashboard() {
     <div
       className={cn(
         "space-y-4 sm:space-y-6 px-4 sm:px-6 md:px-8",
-        isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24",
+        (isUnifiedLayout || isReferralRoute) ? "mt-0" : "mt-20 sm:mt-24",
       )}
     >
-      {isUnifiedLayout && <BackToStudentDashboard />}
+      {isUnifiedLayout && !isReferralRoute && <BackToStudentDashboard />}
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex flex-col items-start justify-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight text-foreground">
-            <span className="gradient-text2">Student </span>
-            <span className="gradient-text3">Dashboard</span>
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            Upload your resume and apply for referrals
-          </p>
+      {!isReferralRoute && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex flex-col items-start justify-center">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight text-foreground">
+              <span className="gradient-text2">Student </span>
+              <span className="gradient-text3">Dashboard</span>
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Upload your resume and apply for referrals
+            </p>
+          </div>
+          {student && <StatusBadge status={student.resumeStatus} />}
         </div>
-        {student && <StatusBadge status={student.resumeStatus} />}
-      </div>
-
-      {/* Tabs */}
-      <TabNavigation
-        activeTab={activeTab}
-        student={student}
-        appliedCount={myApplications.length}
-        unreadChatsCount={unreadChatsCount}
-      />
+      )}
 
       {/* Profile Tab */}
       {activeTab === "profile" && (

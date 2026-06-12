@@ -409,139 +409,52 @@ const AttendanceRoutes = () => {
           }
         />
 
-        {/* Referrals Routes */}
-        <Route
-          path="/student/referrals"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/jobs"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/profile"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/qrcode"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/applied"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/interview"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsInterviewPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/chat"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ChatPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student"
-          element={<Navigate to="/student/dashboard" replace />}
-        />
-        <Route
-          path="/referrals/*"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <Index />
-            </Suspense>
-          }
-        />
-
-        {/* Referrals */}
-        <Route
-          path="/student/referrals"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/jobs"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/profile"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/qrcode"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/applied"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/interview"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsInterviewPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/chat"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ChatPage />
-            </Suspense>
-          }
-        />
         <Route
           path="/student"
           element={<Navigate to="/student/dashboard" replace />}
         />
 
       </Route>
+
+      {/* Referrals Routes (rendered standalone with their own layout) */}
+      <Route
+        path="/referrals/*"
+        element={
+          <Suspense fallback={<DashboardSkeleton />}>
+            <Index />
+          </Suspense>
+        }
+      />
+
+      {/* Backward Compatibility Redirects for Referrals */}
+      <Route
+        path="/student/referrals"
+        element={<Navigate to="/referrals/browse-referrals" replace />}
+      />
+      <Route
+        path="/student/jobs"
+        element={<Navigate to="/referrals/browse-jobs" replace />}
+      />
+      <Route
+        path="/student/profile"
+        element={<Navigate to="/referrals/profile" replace />}
+      />
+      <Route
+        path="/student/qrcode"
+        element={<Navigate to="/referrals/qrcode" replace />}
+      />
+      <Route
+        path="/student/applied"
+        element={<Navigate to="/referrals/applied-jobs" replace />}
+      />
+      <Route
+        path="/student/interview"
+        element={<Navigate to="/referrals/interview" replace />}
+      />
+      <Route
+        path="/student/chat"
+        element={<Navigate to="/referrals/chat" replace />}
+      />
 
       {/* ======================================================
                         STUDENT TUTORIALS MODULE (WORKSPACE)

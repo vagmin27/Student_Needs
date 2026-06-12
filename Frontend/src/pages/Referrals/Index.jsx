@@ -7,15 +7,15 @@ import { StudentDashboard } from '@/pages/Referrals/StudentDashboard.jsx';
 import InterviewPage from '@/pages/Referrals/InterviewPage.jsx';
 import NotFound from '@/pages/Referrals/NotFound.jsx';
 import { RoleSelector } from '@/pages/Referrals/RoleSelector.jsx';
-import { useAuth } from '@/contexts/GlobalAuthContext.jsx';
 import { StudentLoginPage } from '@/components/Referrals/Student/Auth/StudentLogin.jsx';
 import { StudentSignupPage } from '@/components/Referrals/Student/Auth/StudentSignup.jsx';
 import { AlumniLoginPage } from '@/components/Referrals/Alumni/Auth/AlumniLogin.jsx';
 import { AlumniSignupPage } from '@/components/Referrals/Alumni/Auth/AlumniSignup.jsx';
 
 import LandingPage from "@/pages/Referrals/LandingPage";
-import DashboardLayout from '@/components/layouts/DashboardLayout.jsx';
 import GlobalProtectedRoute from "@/components/GlobalProtectedRoute.jsx";
+import ReferralsLayout from '@/layouts/ReferralsLayout.jsx';
+import ChatPage from '@/pages/Referrals/ChatPage.jsx';
 
 function AppContent() {
   return (
@@ -36,113 +36,24 @@ function AppContent() {
       <Route path="/auth/alumni/signup" element={<AlumniSignupPage />} />
       <Route path="/landing" element={<LandingPage />} />
 
-      {/* Explicit Student Referral Routes */}
-      {/* <Route
-        path="/student/referrals"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <DashboardLayout role="student" pageTitle="Student Referrals">
-              <StudentDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
+      {/* Student Referral Module Layout */}
       <Route
-        path="/student/jobs"
         element={
           <GlobalProtectedRoute allowedRoles={["student"]}>
-            <DashboardLayout role="student" pageTitle="Student Jobs">
-              <StudentDashboard />
-            </DashboardLayout>
+            <ReferralsLayout />
           </GlobalProtectedRoute>
         }
-      />
-      <Route
-        path="/student/profile"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <DashboardLayout role="student" pageTitle="Student Profile">
-              <StudentDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-      <Route
-        path="/student/qrcode"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <DashboardLayout role="student" pageTitle="QR Code">
-              <StudentDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-      <Route
-        path="/student/applied"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <DashboardLayout role="student" pageTitle="Applied Jobs">
-              <StudentDashboard />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      />
-      <Route
-        path="/student/interview"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <DashboardLayout role="student" pageTitle="Interviews">
-              <InterviewPage />
-            </DashboardLayout>
-          </GlobalProtectedRoute>
-        }
-      /> */}
+      >
+        <Route index element={<Navigate to="browse-referrals" replace />} />
+        <Route path="applied-jobs" element={<StudentDashboard />} />
+        <Route path="browse-jobs" element={<StudentDashboard />} />
+        <Route path="browse-referrals" element={<StudentDashboard />} />
+        <Route path="profile" element={<StudentDashboard />} />
+        <Route path="qrcode" element={<StudentDashboard />} />
+        <Route path="chat" element={<ChatPage />} />
+      </Route>
 
-      <Route
-        index
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <StudentDashboard />
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="jobs"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <StudentDashboard />
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="profile"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <StudentDashboard />
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="qrcode"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <StudentDashboard />
-          </GlobalProtectedRoute>
-        }
-      />
-
-      <Route
-        path="applied"
-        element={
-          <GlobalProtectedRoute allowedRoles={["student"]}>
-            <StudentDashboard />
-          </GlobalProtectedRoute>
-        }
-      />
-
+      {/* Standalone Interview Page (Full Screen Focused Flow) */}
       <Route
         path="interview"
         element={

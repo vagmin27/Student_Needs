@@ -115,7 +115,7 @@ const studentModules = [
   { title: "Find Tutor", text: "Search tutors, view profiles and book classes.", icon: UserRound, to: "/tutorials/home" },
   { title: "Attendance", text: "View attendance status and class records.", icon: CheckSquare, to: "/student/attendance" },
   { title: "Expense Tracker", text: "Add, categorize and track monthly spending.", icon: ReceiptText, to: "/student/expenses" },
-  { title: "Internships & Referrals", text: "Apply to alumni-posted opportunities.", icon: UsersRound, to: "/student/referrals" },
+  { title: "Internships & Referrals", text: "Apply to alumni-posted opportunities.", icon: UsersRound, to: "/referrals/browse-referrals" },
   { title: "Grade Management", text: "Review academic progress and reports.", icon: ClipboardList, to: "/attendance/reports" },
 ];
 
@@ -124,7 +124,7 @@ const sidebarItems = [
   { label: "Find Tutor", icon: Search, to: "/tutorials/home" },
   { label: "Attendance", icon: CheckSquare, to: "/student/attendance" },
   { label: "Expenses", icon: ReceiptText, to: "/student/expenses" },
-  { label: "Internships & Referrals", icon: Briefcase, to: "/student/referrals" },
+  { label: "Internships & Referrals", icon: Briefcase, to: "/referrals/browse-referrals" },
   { label: "Grades", icon: ClipboardList, to: "/attendance/reports" },
   { label: "Calendar", icon: CalendarDays, to: "/tutorials/profile/classHistory" },
   { label: "Messages", icon: MessageSquare, to: "/referrals" },

@@ -395,7 +395,7 @@ export default function InterviewPage() {
             <button
               onClick={() => {
                 toast.dismiss();
-                navigate(`/student/chat?chatId=${chatId}`);
+                navigate(`/referrals/chat?chatId=${chatId}`);
               }}
               className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-lg shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
             >
@@ -412,7 +412,7 @@ export default function InterviewPage() {
       }
 
       setTimeout(() => {
-        navigate('/student/applied');
+        navigate('/referrals/applied-jobs');
       }, 2000);
     } catch (error) {
       addLog(`Error submitting application: ${error.message}`);
