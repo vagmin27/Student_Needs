@@ -66,7 +66,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
             <span className="hidden sm:inline">Dashboard</span>
           </Link>
         )}
-        <h1 className="text-lg font-semibold text-foreground tracking-tight truncate">
+        <h1 className="text-lg font-serif font-semibold text-foreground tracking-tight truncate">
           {pageTitle}
         </h1>
       </div>
@@ -77,7 +77,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
           <input
             type="search"
             placeholder="Search anything..."
-            className="w-full bg-white/[0.03] dark:bg-white/[0.02] border border-border/80 pl-10 h-10 rounded-full text-sm placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 transition-all"
+            className="w-full bg-[var(--bg-secondary)] border border-border pl-10 h-10 rounded-full text-sm placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 transition-all text-[var(--text-primary)]"
           />
         </div>
 

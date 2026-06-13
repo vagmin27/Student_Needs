@@ -24,7 +24,7 @@ export function CategoryPieChart({ exdata }) {
   const isEmpty = chartData.length === 0;
 
   return (
-    <div className="glass-panel p-6 flex flex-col h-full min-h-[300px]">
+    <div className="glass-card flex flex-col h-[320px]">
       <h3 className="text-xl font-bold text-foreground mb-6">Expenses by Category</h3>
       <div className="flex-1 relative w-full h-full min-h-[220px]">
         {isEmpty ? (

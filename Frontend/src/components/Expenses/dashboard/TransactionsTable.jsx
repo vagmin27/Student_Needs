@@ -154,7 +154,7 @@ const TransactionsTable = ({ transactions, onUpdate }) => {
   };
 
   return (
-    <div className="glass-panel overflow-hidden w-full flex flex-col">
+    <div className="table-responsive flex flex-col">
       {/* Header & Controls */}
       <div className="p-6 border-b border-border space-y-4">
         <div className="flex justify-between items-center">

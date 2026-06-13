@@ -17,6 +17,7 @@ import { StudentProfileModal } from '@/components/Referrals/Alumni/StudentProfil
 import { ApplicationCard } from '@/components/Referrals/Alumni/ApplicationCard.jsx';
 import { Briefcase, Plus, ArrowLeft, Star, Eye, Users, FileText, User, Trash2, Upload, TrendingUp, Globe, Edit3, Loader2 } from 'lucide-react';
 import AlumniProfileView from "@/components/profile/AlumniProfileView.jsx";
+import { PageLayout, SectionContainer, PremiumCard, PremiumButton, DashboardGrid } from "@/components/dashboard/shared/Primitives";
 
 const Linkedin = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
@@ -661,34 +662,41 @@ export function AlumniDashboard() {
       acc[roleName] = filteredList;
     }
     return acc;
-  }, {});
-
-  return (
-    <div className={cn("space-y-4 sm:space-y-6", isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24 px-4 sm:px-6 md:px-8")}>
+  }, {});  return (
+    <PageLayout
+      className={cn(
+        "pb-8",
+        isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24"
+      )}
+    >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex flex-col items-start justify-center">
-            <h1 className="dashboard-title text-foreground tracking-tight mb-2">
-              <span className="gradient-text2">Alumni </span> 
-              <span className="gradient-text3">Dashboard</span>
-            </h1>
-            <p className="text-muted-foreground description-text">
-              {user ? `Welcome back, ${alumniName}!` : 'Create jobs and provide signed referrals to verified students'}
-            </p>
+          <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">
+            Alumni Referral Dashboard
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            {user ? `Welcome back, ${alumniName}!` : 'Create jobs and provide signed referrals to verified students'}
+          </p>
         </div>
         <div className="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
-          <Button variant="alumni" onClick={() => setShowCreateJob(true)}
-          className='text-background rounded-[var(--radius-sm)] hover:bg-muted-foreground bg-primary text-sm sm:text-base'>
-            <Briefcase className="w-4 h-4" />
+          <PremiumButton
+            variant="primary"
+            onClick={() => setShowCreateJob(true)}
+            leftIcon={Briefcase}
+            className="text-sm font-semibold animate-fade-in"
+          >
             Post Job
-          </Button>
-          <Button variant="success" onClick={() => setShowCreateReferral(true)}
-          className='text-background rounded-[var(--radius-sm)] bg-muted-foreground hover:bg-primary text-sm sm:text-base'>
-            <Star className="w-4 h-4" />
+          </PremiumButton>
+          <PremiumButton
+            variant="success"
+            onClick={() => setShowCreateReferral(true)}
+            leftIcon={Star}
+            className="text-sm font-semibold animate-fade-in"
+          >
             Post Referral
-          </Button>
+          </PremiumButton>
         </div>
       </div>
-
       <AlumniStats backendOpportunities={backendOpportunities} />
 
       <AlumniTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -914,6 +922,6 @@ export function AlumniDashboard() {
         student={selectedStudentProfile}
         loading={loadingStudentProfile}
       />
-    </div>
+    </PageLayout>
   );
 }

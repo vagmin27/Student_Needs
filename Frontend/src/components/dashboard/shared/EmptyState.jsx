@@ -13,7 +13,7 @@ export const EmptyState = React.memo(({ icon: Icon, title, description, action, 
         {title}
       </h3>
       {description && (
-        <p className="text-sm text-muted-foreground mb-4 max-w-sm">
+        <p className="text-sm text-muted-foreground mb-4 max-w-md">
           {description}
         </p>
       )}

@@ -289,7 +289,7 @@ const RecurringTransactions = () => {
       </div>
 
       {/* Main Recurring List Table */}
-      <div className="glass-panel overflow-hidden w-full">
+      <div className="table-responsive w-full">
         <div className="p-6 border-b border-border flex justify-between items-center bg-brand-800/80">
           <h3 className="text-xl font-bold text-[var(--primary-foreground)]">Active Rules</h3>
         </div>

@@ -101,7 +101,7 @@ export default function HowItWorks() {
                 Stage {activeSteps[activeStep]?.step} Detail
               </span>
               <h3 className="text-xl font-bold text-foreground">{activeSteps[activeStep]?.title}</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed uc-long-form-text-audit">
                 {activeSteps[activeStep]?.desc}
               </p>
             </motion.div>

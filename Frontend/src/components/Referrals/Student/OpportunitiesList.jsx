@@ -58,7 +58,7 @@ export function OpportunitiesList({
   // Loading State
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto bg-card rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
+      <div className="max-w-7xl mx-auto bg-card rounded-[var(--radius-lg)] p-12 border border-border text-center">
         <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4 animate-pulse" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           Loading Opportunities...
@@ -73,7 +73,7 @@ export function OpportunitiesList({
   // Empty State
   if (opportunities.length === 0) {
     return (
-      <div className="bg-card max-w-7xl mx-auto rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
+      <div className="bg-card max-w-7xl mx-auto rounded-[var(--radius-lg)] p-12 border border-border text-center">
         <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Referral Opportunities Yet
@@ -96,7 +96,7 @@ export function OpportunitiesList({
         return (
           <div
             key={opportunity._id}
-            className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
+            className="bg-card rounded-[var(--radius-lg)] p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
           >
             <div className="flex-1">
               {/* Header with Referral Count */}

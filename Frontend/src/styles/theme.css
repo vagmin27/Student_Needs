@@ -2,56 +2,45 @@
    GLOBAL THEME TOKENS — Student Needs Platform
    ====================================================== */
 
-:root {
-  /* Unified Motion System */
-  --transition-fast: 150ms;
-  --transition-normal: 250ms;
-  --transition-slow: 350ms;
-  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
 :root,
 .light-theme {
-  /* Primary Accent: Premium SaaS Gold */
-  --primary: #B88654;
-  --primary-hover: #a07044;
+  /* Primary Accent: Muted Bronze */
+  --primary: #8C6239;
+  --primary-hover: #734e2c;
   
   /* Semantic Status Colors (Light Theme) */
-  --success: #1a7f37;
-  --success-bg: rgba(26, 127, 55, 0.08);
-  --warning: #9a6700;
-  --warning-bg: rgba(154, 103, 0, 0.08);
-  --danger: #cf222e;
-  --danger-bg: rgba(207, 34, 46, 0.08);
-  --info: #B88654;
-  --info-bg: rgba(184, 134, 84, 0.08);
-  --neutral: #656d76;
-  --neutral-bg: rgba(101, 109, 118, 0.08);
+  --success: #2C6E49;
+  --success-bg: rgba(44, 110, 73, 0.08);
+  --warning: #A67C00;
+  --warning-bg: rgba(166, 124, 0, 0.08);
+  --danger: #9B2226;
+  --danger-bg: rgba(155, 34, 38, 0.08);
+  --info: #8C6239;
+  --info-bg: rgba(140, 98, 57, 0.08);
+  --neutral: #5C6773;
+  --neutral-bg: rgba(92, 103, 115, 0.08);
 
-  /* Surface System (Luxury Light Inspired) */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fb;
-  --card-bg: #ffffff;
-  --sidebar-bg: #f8f9fb;
-  --navbar-bg: #ffffff;
+  /* Surface System (Warm Ivory) */
+  --background: #FDFBF7;
+  --bg-primary: #FDFBF7;
+  --bg-secondary: #F5F1E6;
+  --card-bg: #FDFBF7;
+  --sidebar-bg: #F5F1E6;
+  --navbar-bg: #FDFBF7;
 
   /* Text System */
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
+  --text-primary: #1A2530;
+  --text-secondary: #4A5868;
 
-  /* Borders */
-  --border-color: rgba(184, 134, 84, 0.15);
-
-  /* Radius (Standardized premium layouts) */
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
+  /* Borders: Soft neutral tone */
+  --border-color: rgba(140, 98, 57, 0.18);
+  --border: rgba(140, 98, 57, 0.18);
+  --input: rgba(140, 98, 57, 0.18);
 
   /* Shadows (Three-tier elevation/shadow system - Light Mode) */
-  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --elevation-2: 0 8px 24px rgba(184, 134, 84, 0.08);
-  --elevation-3: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 30px rgba(184, 134, 84, 0.1);
+  --elevation-1: 0 1px 3px rgba(26, 37, 48, 0.05);
+  --elevation-2: 0 8px 24px rgba(140, 98, 57, 0.06);
+  --elevation-3: 0 20px 40px rgba(26, 37, 48, 0.08);
   
   --shadow-sm: var(--elevation-1);
   --shadow-md: var(--elevation-2);
@@ -59,76 +48,72 @@
   --shadow-xl: var(--elevation-3);
 
   /* Centralized Typography Variables */
-  --text-heading: #111827;
-  --text-paragraph: #4b5563;
-  --text-label: #111827;
-  --text-table: #111827;
-  --text-input: #111827;
-  --text-button: #ffffff;
-  --text-navbar: #111827;
-  --text-sidebar: #111827;
-  --text-placeholder: #9ca3af;
+  --text-heading: #1A2530;
+  --text-paragraph: #1A2530;
+  --text-label: #1A2530;
+  --text-table: #1A2530;
+  --text-input: #1A2530;
+  --text-button: #FDFBF7;
+  --text-navbar: #1A2530;
+  --text-sidebar: #1A2530;
+  --text-placeholder: #7C8B9C;
   --text-white: #ffffff;
-  --text-black: #111827;
+  --text-black: #1A2530;
 
-  /* Mappings */
-  --accent-blue: var(--primary);
-  --accent-cyan: #b88654;
-  --accent-purple: #c3591c;
-  --shadow-soft: var(--shadow-sm);
-  --shadow-glow: 0 2px 8px rgba(184, 134, 84, 0.1);
-  --gradient-page: #ffffff;
-  
   /* Glassmorphism system variables for light mode */
-  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-bg: rgba(253, 251, 247, 0.85);
   --glass-blur: blur(24px);
-  --glass-border: rgba(184, 134, 84, 0.12);
-  --glass-shadow: 0 8px 32px rgba(184, 134, 84, 0.06);
-  --card-border-gradient: linear-gradient(135deg, rgba(184, 134, 84, 0.3), transparent, rgba(184, 134, 84, 0.1));
+  --glass-border: rgba(140, 98, 57, 0.22);
+  --glass-shadow: 0 8px 32px rgba(140, 98, 57, 0.04);
+  --card-border-gradient: linear-gradient(135deg, rgba(140, 98, 57, 0.2), transparent, rgba(140, 98, 57, 0.05));
+
+  /* Image controls */
+  --image-filter: none;
+  --image-border-radius: var(--radius-md);
+
+  /* Sidebar configuration mapping */
+  --sidebar-link-color: #4A5868;
 }
 
 .dark,
 .dark-theme {
-  /* Primary Accent: Premium SaaS Gold */
-  --primary: #D4A373;
-  --primary-hover: #faedcd;
+  /* Primary Accent: Soft Gold */
+  --primary: #C5A059;
+  --primary-hover: #D8B774;
   
   /* Semantic Status Colors (Dark Theme) */
-  --success: #3fb950;
-  --success-bg: rgba(63, 185, 80, 0.12);
-  --warning: #d29922;
-  --warning-bg: rgba(210, 153, 34, 0.12);
-  --danger: #f85149;
-  --danger-bg: rgba(248, 81, 73, 0.12);
-  --info: #D4A373;
-  --info-bg: rgba(212, 163, 115, 0.12);
-  --neutral: #9ca3af;
-  --neutral-bg: rgba(156, 163, 175, 0.12);
+  --success: #469A6C;
+  --success-bg: rgba(70, 154, 108, 0.12);
+  --warning: #EBB134;
+  --warning-bg: rgba(235, 177, 52, 0.12);
+  --danger: #E2585B;
+  --danger-bg: rgba(226, 88, 91, 0.12);
+  --info: #C5A059;
+  --info-bg: rgba(197, 160, 89, 0.12);
+  --neutral: #8390A1;
+  --neutral-bg: rgba(131, 144, 161, 0.12);
 
-  /* Surface System (Luxury Dark Inspired) */
-  --bg-primary: #0d1117;
-  --bg-secondary: #161b22;
-  --card-bg: #1e252f;
-  --sidebar-bg: #0a0e13;
-  --navbar-bg: #161b22;
+  /* Surface System (Deep Navy & Deep slate surface) */
+  --background: #0F1A24;
+  --bg-primary: #0F1A24;
+  --bg-secondary: #162431;
+  --card-bg: #162431;
+  --sidebar-bg: #162431;
+  --navbar-bg: #0F1A24;
 
   /* Text System */
-  --text-primary: #f8fafc;
-  --text-secondary: #9ca3af;
+  --text-primary: #EAE5DA;
+  --text-secondary: #B1B8C0;
 
-  /* Borders */
-  --border-color: rgba(212, 163, 115, 0.15);
-
-  /* Radius */
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
+  /* Borders: Subtle transparent light borders */
+  --border-color: rgba(234, 229, 218, 0.22);
+  --border: rgba(234, 229, 218, 0.22);
+  --input: rgba(234, 229, 218, 0.22);
 
   /* Shadows (Three-tier elevation/shadow system - Dark Mode) */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --elevation-2: 0 8px 28px rgba(0, 0, 0, 0.45);
-  --elevation-3: 0 24px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 163, 115, 0.15);
+  --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --elevation-3: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(197, 160, 89, 0.1);
   
   --shadow-sm: var(--elevation-1);
   --shadow-md: var(--elevation-2);
@@ -136,513 +121,53 @@
   --shadow-xl: var(--elevation-3);
 
   /* Centralized Typography Variables */
-  --text-heading: #f8fafc;
-  --text-paragraph: #9ca3af;
-  --text-label: #f8fafc;
-  --text-table: #f8fafc;
-  --text-input: #f8fafc;
-  --text-button: #ffffff;
-  --text-navbar: #f8fafc;
-  --text-sidebar: #f8fafc;
-  --text-placeholder: #9ca3af;
-  --text-white: #f8fafc;
-  --text-black: #0d1117;
+  --text-heading: #EAE5DA;
+  --text-paragraph: #EAE5DA;
+  --text-label: #EAE5DA;
+  --text-table: #EAE5DA;
+  --text-input: #EAE5DA;
+  --text-button: #0F1A24;
+  --text-navbar: #EAE5DA;
+  --text-sidebar: #EAE5DA;
+  --text-placeholder: #626F7D;
+  --text-white: #EAE5DA;
+  --text-black: #0F1A24;
 
-  /* Mappings */
-  --accent-blue: #d4a373;
-  --accent-cyan: #faedcd;
-  --accent-purple: #c3591c;
-  --shadow-soft: var(--shadow-sm);
-  --shadow-glow: 0 2px 8px rgba(212, 163, 115, 0.15);
-  --gradient-page: #0d1117;
-  
   /* Glassmorphism system variables for dark mode */
-  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg: rgba(22, 36, 49, 0.7);
   --glass-blur: blur(24px);
-  --glass-border: rgba(212, 163, 115, 0.15);
-  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-  --card-border-gradient: linear-gradient(135deg, rgba(212, 163, 115, 0.4), transparent, rgba(212, 163, 115, 0.2));
+  --glass-border: rgba(234, 229, 218, 0.25);
+  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  --card-border-gradient: linear-gradient(135deg, rgba(234, 229, 218, 0.2), transparent, rgba(234, 229, 218, 0.05));
+
+  /* Dark mode archival image adjustments */
+  --image-filter: brightness(0.85) sepia(0.15) contrast(0.95);
+  --image-border-radius: var(--radius-md);
+
+  /* Sidebar configuration mapping */
+  --sidebar-link-color: #B1B8C0;
 }
 
-/* Theme switch — standard smooth fade */
+/* Theme transition adjustments */
 html {
-  transition:
-    background-color var(--transition-normal) var(--ease-standard),
-    color var(--transition-normal) var(--ease-standard);
-}
-
-html,
-body {
-  min-height: 100%;
-}
-
-#root {
-  min-height: 100%;
-  opacity: 1;
-}
-
-body {
+  transition: background-color var(--transition-normal) var(--ease-standard),
+              color var(--transition-normal) var(--ease-standard);
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
-/* ======================================================
-   LIGHT THEME OVERRIDES — Clean Structured SaaS
-   ====================================================== */
-
-.light-theme body,
-.light-theme #root {
-  background: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-  opacity: 1 !important;
-  filter: none !important;
-}
-
-.light-theme .app-dashboard-layout,
-.light-theme .app-dashboard-layout main,
-.light-theme .expenses-layout,
-.light-theme .expenses-main,
-.light-theme .expenses-content {
+body {
   background-color: var(--bg-primary) !important;
-  opacity: 1 !important;
-  filter: none !important;
-}
-
-.light-theme [class*="backdrop-blur"],
-.light-theme header,
-.light-theme aside {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-/* Navbar: Crisp Light Surface */
-.light-theme .app-dashboard-layout header {
-  background: var(--bg-secondary) !important;
-  border-bottom: 1px solid var(--border-color) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-.light-theme .app-dashboard-layout header h1 {
   color: var(--text-primary) !important;
 }
 
-/* Sidebar: Crisp Light Surface */
-.light-theme .app-dashboard-layout aside {
-  background: var(--bg-secondary) !important;
-  border-right: 1px solid var(--border-color) !important;
-  color: var(--text-primary) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-.light-theme .app-dashboard-layout aside .text-foreground,
-.light-theme .app-dashboard-layout aside .text-xl {
-  color: var(--text-primary) !important;
-}
-
-.light-theme .app-dashboard-layout aside .text-muted-foreground {
-  color: var(--text-secondary) !important;
-}
-
-.light-theme .app-dashboard-layout aside a:not([class*="active-link"]) {
-  color: var(--text-secondary) !important;
-}
-
-.light-theme .app-dashboard-layout aside a:not([class*="active-link"]):hover {
-  background: var(--neutral-bg) !important;
-  color: var(--text-primary) !important;
-}
-
-.light-theme .app-dashboard-layout aside .border-border,
-.light-theme .app-dashboard-layout aside .border-t {
-  border-color: var(--border-color) !important;
-}
-
-/* Mobile scrim */
-.light-theme .app-dashboard-layout .fixed.inset-0 {
-  background: rgba(31, 35, 40, 0.4) !important;
-}
-
-/* Cards & panels: Structured light card background */
-.light-theme .bg-card,
-.light-theme .premium-card,
-.light-theme .rounded-xl.border.bg-card {
-  background-color: var(--bg-secondary) !important;
-  opacity: 1 !important;
-  border-color: var(--border-color) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-.light-theme .glass-panel {
-  background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-color) !important;
-  box-shadow: var(--shadow-sm) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  opacity: 1 !important;
-}
-
-.light-theme .text-foreground {
-  color: var(--text-primary) !important;
-}
-
-.light-theme .text-muted-foreground {
-  color: var(--text-secondary) !important;
-}
-
-.light-theme .text-card-foreground {
-  color: var(--text-primary) !important;
-}
-
-/* Inputs & Forms */
-.light-theme .app-dashboard-layout input[type="search"],
-.light-theme .app-dashboard-layout input,
-.light-theme select,
-.light-theme textarea {
+/* Ensure clean themes apply to specific wrapper nodes */
+.light-theme, .light {
   background-color: var(--bg-primary) !important;
-  border: 1px solid var(--border-color) !important;
-  color: var(--text-primary) !important;
-  opacity: 1 !important;
-}
-
-.light-theme .app-dashboard-layout input::placeholder {
-  color: var(--text-placeholder) !important;
-}
-
-/* Tables */
-.light-theme table,
-.light-theme th,
-.light-theme td {
-  opacity: 1;
-  color: var(--text-primary);
-}
-
-.light-theme thead {
-  background: var(--bg-primary) !important;
-}
-
-.light-theme tbody tr:hover {
-  background: var(--neutral-bg) !important;
-}
-
-/* Expense tracker layout */
-.light-theme .expenses-layout {
-  background: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
 
-.light-theme .expenses-layout .glass-panel {
-  background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-color) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-.light-theme .expenses-layout h1,
-.light-theme .expenses-layout h2,
-.light-theme .expenses-layout h3,
-.light-theme .expenses-layout h4 {
+.dark-theme, .dark {
+  background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
-}
-
-.light-theme .expenses-layout .text-white {
-  color: var(--text-primary) !important;
-}
-
-.light-theme .expenses-layout .text-slate-400 {
-  color: var(--text-secondary) !important;
-}
-
-.light-theme .expenses-layout header {
-  background: var(--bg-secondary) !important;
-  border-bottom: 1px solid var(--border-color) !important;
-}
-
-/* Attendance module */
-.light-theme {
-  --bg-base: #f6f8fa;
-  --bg-surface: #ffffff;
-  --bg-card: #ffffff;
-  --bg-hover: #f3f4f6;
-  --border: #d0d7de;
-  --border-light: #d8dee4;
-  --text-primary: #1f2328;
-  --text-secondary: #656d76;
-  --text-muted: #8c959f;
-}
-
-/* ======================================================
-   DARK THEME OVERRIDES — Modern Structured Deep Slate
-   ====================================================== */
-
-.dark-theme .premium-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary);
-}
-
-.dark-theme .glass-panel {
-  background: var(--bg-secondary);
-  border-color: var(--border-color);
-  box-shadow: var(--shadow-sm);
-}
-
-.dark-theme .glass-panel:hover {
-  border-color: var(--primary);
-}
-
-.dark-theme .expenses-layout {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-}
-
-.dark-theme .expenses-layout .glass-panel {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-}
-
-.dark-theme .expenses-layout .glass-panel.hoverable:hover,
-.dark-theme .expenses-layout .glass-card:hover {
-  border-color: var(--primary);
-}
-
-.dark-theme {
-  --bg-base: #0d1117;
-  --bg-surface: #161b22;
-  --bg-card: #21262d;
-  --bg-hover: #21262d;
-  --border: #30363d;
-  --border-light: #30363d;
-}
-
-.dark-theme .auth-page {
-  background: var(--bg-primary);
-}
-
-/* Tutorials navbar background */
-.light-theme #mainNavbar,
-.light-theme #mainNavbar.navAll,
-.light-theme #mainNavbar.navbarActive,
-.light-theme #mainNavbar.navHome {
-  background: var(--bg-secondary) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-/* Marketing background adjustments */
-.light-theme header.fixed {
-  background: transparent !important;
-}
-
-.light-theme header.fixed > .container {
-  opacity: 1;
-}
-
-.dark-theme .uc-page {
-  background: var(--bg-primary) !important;
-}
-
-.dark-theme .uc-student-card {
-  background: var(--bg-secondary) !important;
-  border-color: var(--border-color) !important;
-}
-
-.dark-theme .uc-floating-icon {
-  background: var(--bg-secondary) !important;
-  color: var(--primary) !important;
-  border-color: var(--border-color) !important;
-}
-
-/* Hero copy gradient text */
-.uc-hero-copy h1 span {
-  background: linear-gradient(135deg, var(--primary), var(--accent-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ======================================================
-   GLOBAL TYPOGRAPHY SYNCHRONIZATION
-   ====================================================== */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--text-heading);
-}
-
-p,
-li {
-  color: var(--text-paragraph);
-}
-
-label {
-  color: var(--text-label);
-}
-
-input::placeholder,
-textarea::placeholder,
-select::placeholder {
-  color: var(--text-placeholder) !important;
-  opacity: 0.65 !important;
-}
-
-button {
-  color: var(--text-button);
-}
-
-/* ======================================================
-   PREMIUM SIDEBAR SYSTEM
-   ====================================================== */
-.premium-sidebar {
-  background: var(--sidebar-bg) !important;
-  border-right: 1px solid var(--border-color) !important;
-  color: var(--text-primary) !important;
-  transition: background-color var(--transition-normal) var(--ease-standard),
-              border-color var(--transition-normal) var(--ease-standard);
-}
-
-/* Light mode sidebar */
-.light-theme .premium-sidebar {
-  background: var(--bg-secondary) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-/* Dark mode sidebar */
-.dark-theme .premium-sidebar {
-  background: var(--bg-secondary) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-.premium-sidebar h1,
-.premium-sidebar h2,
-.premium-sidebar h3,
-.premium-sidebar span,
-.premium-sidebar a,
-.premium-sidebar button {
-  color: var(--text-primary) !important;
-}
-
-.premium-sidebar .text-muted-foreground {
-  color: var(--text-secondary) !important;
-}
-
-.premium-sidebar nav a,
-.premium-sidebar nav button {
-  color: var(--text-secondary) !important;
-  transition: background-color var(--transition-fast) var(--ease-standard),
-              color var(--transition-fast) var(--ease-standard),
-              transform var(--transition-fast) var(--ease-standard);
-}
-
-.premium-sidebar nav a:hover,
-.premium-sidebar nav button:hover {
-  background: var(--neutral-bg) !important;
-  color: var(--text-primary) !important;
-}
-
-.premium-sidebar nav a.active {
-  background: var(--primary) !important;
-  color: #ffffff !important;
-}
-
-/* ======================================================
-   THEME SYNCHRONIZATION OVERRIDES
-   ====================================================== */
-
-input,
-select,
-textarea {
-  color: var(--text-input);
-  background-color: var(--bg-secondary);
-  border-color: var(--border-color);
-  transition: border-color var(--transition-fast) var(--ease-standard),
-              box-shadow var(--transition-fast) var(--ease-standard);
-}
-
-input::placeholder,
-textarea::placeholder,
-select::placeholder {
-  color: var(--text-placeholder) !important;
-  opacity: 0.65 !important;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-text-fill-color: var(--text-primary) !important;
-  -webkit-box-shadow: 0 0 0 1000px var(--bg-secondary) inset !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-/* ======================================================
-   DARK THEME SYNCHRONIZATION OVERRIDES FOR TUTORIALS
-   ====================================================== */
-
-.dark-theme .main-profile,
-.dark-theme .innerDivHistory,
-.dark-theme .innerDivBook,
-.dark-theme #cardimage2,
-.dark-theme #signupCard,
-.dark-theme .secondDiv {
-  background: var(--bg-primary) !important;
-  border: 1px solid var(--border-color) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .profileInnerDiv,
-.dark-theme .scheduleDivHistory,
-.dark-theme .scheduleDivBook,
-.dark-theme .review-base,
-.dark-theme .cardimage,
-.dark-theme .price-panel-card,
-.dark-theme .tutor-info-card,
-.dark-theme .tutor-availability-card,
-.dark-theme .tutor-schedule-card,
-.dark-theme .tutor-dashboard-card,
-.dark-theme .account-setting-card {
-  background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-color) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .titleBook,
-.dark-theme .titleHistory,
-.dark-theme .userName,
-.dark-theme .card-title2,
-.dark-theme .card-title-tutor,
-.dark-theme .searchRes,
-.dark-theme .searchHeader {
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .card-text,
-.dark-theme .card-text2,
-.dark-theme .datep,
-.dark-theme .timep,
-.dark-theme .tutorp,
-.dark-theme .subjectp,
-.dark-theme .back,
-.dark-theme .backBtn {
-  color: var(--text-secondary) !important;
-}
-
-.dark-theme .backBtn {
-  background: var(--bg-secondary) !important;
-  border-color: var(--border-color) !important;
-  transition: background-color var(--transition-fast) var(--ease-standard),
-              color var(--transition-fast) var(--ease-standard);
-}
-
-.dark-theme .backBtn:hover {
-  background: var(--neutral-bg) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .searchTerm {
-  background: var(--bg-secondary) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .searchTerm:focus {
-  background: var(--bg-primary) !important;
 }

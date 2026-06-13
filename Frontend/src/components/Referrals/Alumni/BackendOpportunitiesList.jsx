@@ -33,7 +33,7 @@ export function BackendOpportunitiesList({
   // Empty state handling
   if (opportunities.length === 0) {
     return (
-      <div className="bg-card rounded-[var(--radius-md)] p-12 border border-border/50 text-center">
+      <div className="bg-card rounded-[var(--radius-lg)] p-12 border border-border text-center">
         <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Opportunities Posted Yet
@@ -73,10 +73,10 @@ export function BackendOpportunitiesList({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className={cn(
-              'w-full bg-card rounded-[var(--radius-md)] p-4 border-2 transition-all cursor-pointer',
+              'w-full bg-card rounded-[var(--radius-lg)] p-6 border transition-all cursor-pointer',
               selectedOpportunity?._id === opportunity._id
                 ? 'border-alumni shadow-md'
-                : 'border-border/50 hover:border-alumni/50'
+                : 'border-border hover:border-alumni/50'
             )}
             onClick={() => onSelectOpportunity(opportunity)}
           >

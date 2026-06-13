@@ -4,7 +4,7 @@ const StatCard = ({ title, amount, icon, tendency, type }) => {
   const isPositive = tendency > 0;
   
   return (
-    <div className="glass-panel p-6 flex flex-col justify-between transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-xl">
+    <div className="glass-card flex flex-col justify-between">
       <div className="flex justify-between items-start mb-4">
         <div className="p-3 rounded-[var(--radius-md)] bg-secondary border border-border text-primary">
           {icon}

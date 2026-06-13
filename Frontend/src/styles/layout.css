@@ -1,0 +1,139 @@
+/* ======================================================
+   LAYOUT & CONTAINER SYSTEMS
+   ====================================================== */
+
+/* Main layout wrapper */
+.app-dashboard-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* Page Containers - Responsive Spacing Pass */
+.page-container,
+.dashboard-container,
+.content-wrapper,
+.settings-container,
+.management-container,
+.analytics-container,
+.profile-container,
+.expenses-content,
+.attendance-module,
+.main-profile {
+  width: 100%;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: padding var(--transition-normal) var(--ease-standard);
+}
+
+@media (min-width: 1024px) {
+  .page-container,
+  .dashboard-container,
+  .content-wrapper,
+  .settings-container,
+  .management-container,
+  .analytics-container,
+  .profile-container,
+  .expenses-content,
+  .attendance-module,
+  .main-profile {
+    padding: 32px !important;
+  }
+  
+  /* Sidebar Content Desktop Separation */
+  .content-expanded-offset {
+    margin-left: calc(var(--sidebar-w-expanded) + 24px) !important;
+  }
+  .content-collapsed-offset {
+    margin-left: calc(var(--sidebar-w-collapsed) + 24px) !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page-container,
+  .dashboard-container,
+  .content-wrapper,
+  .settings-container,
+  .management-container,
+  .analytics-container,
+  .profile-container,
+  .expenses-content,
+  .attendance-module,
+  .main-profile {
+    padding: 24px !important;
+  }
+  
+  /* Sidebar Content Tablet Separation */
+  .content-expanded-offset {
+    margin-left: calc(var(--sidebar-w-expanded) + 16px) !important;
+  }
+  .content-collapsed-offset {
+    margin-left: calc(var(--sidebar-w-collapsed) + 16px) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-container,
+  .dashboard-container,
+  .content-wrapper,
+  .settings-container,
+  .management-container,
+  .analytics-container,
+  .profile-container,
+  .expenses-content,
+  .attendance-module,
+  .main-profile {
+    padding: 16px !important;
+  }
+}
+
+/* Sidebar Sizing Constants */
+:root {
+  --sidebar-w-expanded: 280px;
+  --sidebar-w-collapsed: 80px;
+}
+
+.sidebar-expanded {
+  width: var(--sidebar-w-expanded) !important;
+  min-width: var(--sidebar-w-expanded) !important;
+  max-width: var(--sidebar-w-expanded) !important;
+}
+
+.sidebar-collapsed {
+  width: var(--sidebar-w-collapsed) !important;
+  min-width: var(--sidebar-w-collapsed) !important;
+  max-width: var(--sidebar-w-collapsed) !important;
+}
+
+
+
+/* Sidebar transition speed */
+.sidebar-transition {
+  transition: width var(--transition-normal) var(--ease-standard), 
+              margin-left var(--transition-normal) var(--ease-standard), 
+              transform var(--transition-normal) var(--ease-standard),
+              background-color var(--transition-normal) var(--ease-standard),
+              border-color var(--transition-normal) var(--ease-standard) !important;
+}
+
+/* Grid wrappers */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+  .dashboard-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dashboard-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dashboard-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

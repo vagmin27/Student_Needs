@@ -8,6 +8,7 @@ import { BookingActivityTimeline } from "../../components/dashboard/tutor/Bookin
 import { apiClient, tutorsApiClient } from "@/services/apiClient";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { Button } from "@/components/ui/button";
+import { PremiumButton } from "../../components/dashboard/shared/Primitives";
 import { Calendar, User, BookOpen, Inbox, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 
@@ -63,68 +64,68 @@ function TutorDashboard() {
     <DashboardLayout pageTitle="Tutor Dashboard" role="tutor">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="dashboard-title text-foreground tracking-tight">👨‍🏫 Tutor Dashboard</h1>
-          <p className="text-muted-foreground description-text mt-1">Manage your teaching schedule and students</p>
+          <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">Tutor Dashboard</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage your teaching schedule and students</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+        <div className="lg:col-span-2 space-y-md">
           <DashboardSection title="Quick Actions">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <DashboardCard className="border-l-4 border-l-primary" contentClassName="flex flex-col items-start p-6">
                 <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 flex items-center justify-center text-primary mb-4">
                   <Calendar className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Availability</h3>
-                <p className="text-sm text-muted-foreground mb-4">Set your working hours and days</p>
-                <Button className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/availability")}>
+                <h3 className="font-semibold text-base mb-1 text-foreground">Availability</h3>
+                <p className="text-xs text-muted-foreground mb-4">Set your working hours and days</p>
+                <PremiumButton size="sm" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/availability")}>
                   Set Availability
-                </Button>
+                </PremiumButton>
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-blue-500" contentClassName="flex flex-col items-start p-6">
                 <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] mb-4">
                   <User className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Profile</h3>
-                <p className="text-sm text-muted-foreground mb-4">View and update your public tutor profile</p>
-                <Button variant="outline" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/editProfile")}>
+                <h3 className="font-semibold text-base mb-1 text-foreground">Profile</h3>
+                <p className="text-xs text-muted-foreground mb-4">View and update your public tutor profile</p>
+                <PremiumButton variant="outline" size="sm" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/editProfile")}>
                   View Profile
-                </Button>
+                </PremiumButton>
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-emerald-500" contentClassName="flex flex-col items-start p-6">
                 <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4">
                   <BookOpen className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Schedule</h3>
-                <p className="text-sm text-muted-foreground mb-4">Check your upcoming classes and bookings</p>
-                <Button variant="outline" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/schedule")}>
+                <h3 className="font-semibold text-base mb-1 text-foreground">Schedule</h3>
+                <p className="text-xs text-muted-foreground mb-4">Check your upcoming classes and bookings</p>
+                <PremiumButton variant="outline" size="sm" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/schedule")}>
                   View Schedule
-                </Button>
+                </PremiumButton>
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-amber-500" contentClassName="flex flex-col items-start p-6">
                 <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-amber-500/10 flex items-center justify-center text-amber-500 mb-4">
                   <Inbox className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Manage Requests</h3>
-                <p className="text-sm text-muted-foreground mb-4">Accept or decline new student requests</p>
-                <Button className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/accept")}>
+                <h3 className="font-semibold text-base mb-1 text-foreground">Manage Requests</h3>
+                <p className="text-xs text-muted-foreground mb-4">Accept or decline new student requests</p>
+                <PremiumButton size="sm" className="w-full mt-auto" onClick={() => navigate("/tutorials/tutor/accept")}>
                   View All Requests
-                </Button>
+                </PremiumButton>
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-purple-500" contentClassName="flex flex-col items-start p-6">
                 <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] mb-4">
                   <BookOpen className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Attendance Management</h3>
-                <p className="text-sm text-muted-foreground mb-4">Manage students, subjects, and attendance</p>
-                <Button variant="outline" className="w-full mt-auto" onClick={() => navigate("/tutorials/attendance")}>
+                <h3 className="font-semibold text-base mb-1 text-foreground">Attendance Management</h3>
+                <p className="text-xs text-muted-foreground mb-4">Manage students, subjects, and attendance</p>
+                <PremiumButton variant="outline" size="sm" className="w-full mt-auto" onClick={() => navigate("/tutorials/attendance")}>
                   Open Attendance Hub
-                </Button>
+                </PremiumButton>
               </DashboardCard>
 
               <DashboardCard className="border-l-4 border-l-pink-500" contentClassName="flex flex-col items-start p-6">
@@ -136,11 +137,11 @@ function TutorDashboard() {
                     </span>
                   )}
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Chat / Messages</h3>
-                <p className="text-sm text-muted-foreground mb-4">Chat with your students in real-time</p>
-                <Button variant="outline" className="w-full mt-auto font-medium" onClick={() => navigate("/tutorials/chat")}>
+                <h3 className="font-semibold text-base mb-1 text-foreground">Chat / Messages</h3>
+                <p className="text-xs text-muted-foreground mb-4">Chat with your students in real-time</p>
+                <PremiumButton variant="outline" size="sm" className="w-full mt-auto font-medium" onClick={() => navigate("/tutorials/chat")}>
                   Open Chat Room
-                </Button>
+                </PremiumButton>
               </DashboardCard>
             </div>
           </DashboardSection>

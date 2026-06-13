@@ -16,7 +16,7 @@ const TutorialTopbar = () => {
         <Button variant="ghost" size="icon" onClick={toggleMobileMenu} className="md:hidden">
           <Menu className="w-5 h-5" />
         </Button>
-        <h1 className="text-xl font-bold tracking-tight hidden sm:block">Tutorials</h1>
+        <h1 className="text-xl font-serif font-bold tracking-tight hidden sm:block">Tutorials</h1>
       </div>
 
       <div className="flex-1 max-w-md px-4 hidden md:block">
@@ -25,7 +25,7 @@ const TutorialTopbar = () => {
           <input
             type="text"
             placeholder="Search tutorials..."
-            className="w-full pl-9 pr-4 py-2 text-sm bg-muted/50 border border-transparent rounded-full focus:outline-none focus:border-border focus:ring-1 focus:ring-primary/20 transition-all"
+            className="w-full pl-9 pr-4 py-2 text-sm bg-[var(--bg-secondary)] border border-border rounded-full focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 transition-all text-[var(--text-primary)]"
           />
         </div>
       </div>

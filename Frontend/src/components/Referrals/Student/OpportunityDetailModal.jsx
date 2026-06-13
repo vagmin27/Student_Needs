@@ -57,7 +57,7 @@ export function OpportunityDetailModal({
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative bg-card border border-border rounded-[var(--radius-md)] w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl"
+          className="relative bg-card border border-border rounded-[var(--radius-md)] w-full max-w-2xl modal-core-container max-h-[90vh] overflow-y-auto shadow-xl flex flex-col"
         >
           {/* Header */}
           <div className="sticky top-0 bg-card border-b border-border p-6 flex items-start justify-between z-10">
@@ -94,7 +94,7 @@ export function OpportunityDetailModal({
           </div>
 
           {/* Body Content */}
-          <div className="p-6 space-y-6">
+          <div className="p-6 space-y-6 modal-body w-full flex-grow flex-1">
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="bg-muted/50 rounded-[var(--radius-sm)] p-3 text-center">

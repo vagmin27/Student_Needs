@@ -410,6 +410,15 @@ const AttendanceRoutes = () => {
         />
 
         <Route
+          path="/student/settings"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <Settings />
+            </Suspense>
+          }
+        />
+
+        <Route
           path="/student"
           element={<Navigate to="/student/dashboard" replace />}
         />
@@ -575,6 +584,28 @@ const AttendanceRoutes = () => {
         <Route
           path="/alumni/*"
           element={<Navigate to="/alumni/dashboard" replace />}
+        />
+      </Route>
+
+      {/* Admin Protected Group */}
+      <Route
+        element={
+          <GlobalProtectedRoute allowedRoles={["admin"]}>
+            <DashboardLayout role="admin" />
+          </GlobalProtectedRoute>
+        }
+      >
+        <Route
+          path="/admin/settings"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <Settings />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={<Navigate to="/admin/settings" replace />}
         />
       </Route>
 

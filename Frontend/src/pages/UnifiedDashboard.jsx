@@ -40,6 +40,8 @@ import {
   PremiumInput,
   AnimatedCounter,
   EmptyState,
+  PageLayout,
+  DashboardGrid,
 } from "@/components/dashboard/shared/Primitives";
 import { DashboardWideSkeleton } from "@/components/dashboard/shared/Skeleton";
 
@@ -392,52 +394,11 @@ const UnifiedDashboard = () => {
       animate="show"
       className="space-y-8 relative pb-16"
     >
-      {/* 🚀 Larger Premium Hero Section with blurred gold orb lighting */}
-      <motion.div variants={itemVariants} className="w-full">
-        <div className="relative overflow-hidden rounded-[24px] border border-[var(--border-color)] bg-gradient-to-br from-[#161B22]/90 to-[#0D1117]/60 p-8 md:p-10 shadow-[var(--elevation-3)]">
-          {/* Ambient blurred gold orb lighting nodes */}
-          <div className="absolute -right-10 -bottom-10 w-72 h-72 rounded-full bg-[var(--primary)]/15 blur-[120px] pointer-events-none z-0" />
-          <div className="absolute left-1/4 -top-20 w-56 h-56 rounded-full bg-[#FAEDCD]/5 blur-[90px] pointer-events-none z-0" />
-
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-4 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 shadow-sm backdrop-blur-md">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Student Hub Dashboard</span>
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight leading-tight">
-                Good day, {user?.name || user?.firstName || "Student"}
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
-                Manage your student lifestyle in one premium console. Track course attendance, visualize transactions, connect with academic tutors, or apply for verified alumni referrals.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3 shrink-0">
-              <PremiumButton
-                variant="default"
-                onClick={() => setIsQuickAddExpenseOpen(true)}
-                leftIcon={Plus}
-              >
-                Quick Expense
-              </PremiumButton>
-              <PremiumButton
-                variant="outline"
-                onClick={() => navigate(TUTORIAL_PATHS.unifiedEntry)}
-                leftIcon={Search}
-              >
-                Find Tutor
-              </PremiumButton>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
       {/* 📊 Summary Metrics Grid */}
       <motion.div variants={itemVariants}>
         <SectionHeader title="Overview" description="Real-time summaries across active modules" />
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <DashboardGrid cols={4} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <PremiumCard glow={true}>
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-muted-foreground">Class Attendance</span>
@@ -509,7 +470,7 @@ const UnifiedDashboard = () => {
               </p>
             </div>
           </PremiumCard>
-        </div>
+        </DashboardGrid>
       </motion.div>
 
       {/* 💰 Expense Tracker Quick Insights */}
@@ -529,7 +490,7 @@ const UnifiedDashboard = () => {
           }
         />
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        <DashboardGrid cols={5} className="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-sm">
             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Monthly Budget</span>
             <span className="block text-xl font-bold text-foreground mt-1">
@@ -564,11 +525,11 @@ const UnifiedDashboard = () => {
               <AnimatedCounter value={expenseSummary?.overdueCount || 0} />
             </span>
           </div>
-        </div>
+        </DashboardGrid>
       </motion.div>
 
       {/* Grid Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <DashboardGrid cols={3} className="grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           {/* Upcoming Classes */}
           <motion.div variants={itemVariants}>
@@ -586,13 +547,29 @@ const UnifiedDashboard = () => {
               }
             >
               {upcomingClasses.length === 0 ? (
-                <EmptyState
-                  icon={Clock}
-                  title="No Scheduled Sessions"
-                  description="You don't have any upcoming tutorial classes booked. Search for a tutor to schedule one."
-                  actionLabel="Book a Tutor"
-                  onAction={() => navigate(TUTORIAL_PATHS.unifiedEntry)}
-                />
+                <div className="flex flex-col items-center justify-center text-center p-6 min-h-[290px] w-full max-w-[420px] mx-auto select-none">
+                  {/* Icon */}
+                  <div className="w-14 h-14 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5 shrink-0 border border-[var(--primary)]/20 shadow-sm">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  {/* Heading */}
+                  <h4 className="font-serif text-base font-bold text-foreground tracking-tight mb-2 text-center">
+                    No Scheduled Sessions
+                  </h4>
+                  {/* Description */}
+                  <p className="text-xs text-muted-foreground leading-relaxed text-center mb-6 max-w-sm">
+                    You don't have any upcoming tutorial classes booked. Search for a tutor to schedule one.
+                  </p>
+                  {/* CTA */}
+                  <PremiumButton
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(TUTORIAL_PATHS.unifiedEntry)}
+                    className="border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/10"
+                  >
+                    Book a Tutor
+                  </PremiumButton>
+                </div>
               ) : (
                 <UpcomingTasks tasks={upcomingClasses} />
               )}
@@ -808,7 +785,7 @@ const UnifiedDashboard = () => {
             </PremiumCard>
           </motion.div>
         </div>
-      </div>
+      </DashboardGrid>
 
       {/* Global floating action button on bottom right of student dashboard */}
       <div className="fixed bottom-8 right-8 z-50">

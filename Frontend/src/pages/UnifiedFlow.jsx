@@ -1130,7 +1130,7 @@ export function UnifiedLanding() {
 
       {/* 🚀 EXPANDED FOOTER SECTION */}
       <footer className="uc-footer bg-card border-t border-border mt-16 px-6 py-12">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-left text-xs mb-8">
+        <div className="max-w-5xl mx-auto uc-footer-grid-audit gap-8 text-left text-xs mb-8">
           
           {/* Col 1 Brand */}
           <div className="space-y-4">

@@ -356,94 +356,86 @@ export default function Features() {
         <div className="h-px bg-border/40" />
 
         {/* ========================================================
-            3. ATTENDANCE: CENTERED SECTION
+            3. ATTENDANCE: 2-COLUMN LAYOUT
            ======================================================== */}
-        <section className="w-full text-center max-w-4xl mx-auto space-y-8 py-8">
-          <div className="space-y-4 max-w-2xl mx-auto">
-            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 mx-auto">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+          <div className="space-y-6">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-emerald-500 bg-emerald-500/10 border border-emerald-500/20">
               <ClipboardList className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Class Attendance Tracker</h2>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="uc-body-text text-muted-foreground text-sm">
               Never get locked out of credits. Monitor your university attendance requirements automatically, log classes with a single tap, and sync lists with tutor classrooms.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pt-4">
-            <div className="space-y-4 text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
-                <h4 className="text-xs font-bold text-foreground">75% Credit Limit Warning</h4>
-                <p className="text-[11px] text-muted-foreground">Triggers automatic warning notifications as attendance drops below required margins.</p>
+                <h4 className="text-xs font-bold text-foreground">⚠️ 75% Credit Limit Warning</h4>
+                <p className="text-[10px] text-muted-foreground leading-normal">Triggers automatic warning notifications as attendance drops below required margins.</p>
               </div>
               <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
-                <h4 className="text-xs font-bold text-foreground">Attendance Synchronization</h4>
-                <p className="text-[11px] text-muted-foreground">Tutor bookings automatically update attendance states in the central dashboard databases.</p>
+                <h4 className="text-xs font-bold text-foreground">🔄 Attendance Sync</h4>
+                <p className="text-[10px] text-muted-foreground leading-normal">Tutor bookings automatically update attendance states in the central dashboard databases.</p>
+              </div>
+              <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
+                <h4 className="text-xs font-bold text-foreground">📊 Automated Reports</h4>
+                <p className="text-[10px] text-muted-foreground leading-normal">Download formal PDF report tables representing class logs for university verifications.</p>
+              </div>
+              <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
+                <h4 className="text-xs font-bold text-foreground">🏫 Multi-Class Support</h4>
+                <p className="text-[10px] text-muted-foreground leading-normal">Manage complex block structures and laboratory schedules under one dashboard.</p>
               </div>
             </div>
-            
-            <div className="flex justify-center">
-              <TabletFrame>
-                <AttendancePreview />
-              </TabletFrame>
-            </div>
-
-            <div className="space-y-4 text-left">
-              <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
-                <h4 className="text-xs font-bold text-foreground">Automated Reports</h4>
-                <p className="text-[11px] text-muted-foreground">Download formal PDF report tables representing class logs for university verifications.</p>
-              </div>
-              <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
-                <h4 className="text-xs font-bold text-foreground">Multi-Class Support</h4>
-                <p className="text-[11px] text-muted-foreground">Manage complex block structures and laboratory schedules under one dashboard.</p>
-              </div>
+            <div className="pt-4">
+              <Link to="/features/attendance" className="uc-btn-primary bg-gradient-to-r from-emerald-500 to-teal-500">
+                Launch Attendance Module <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              </Link>
             </div>
           </div>
-
-          <div className="pt-4">
-            <Link to="/features/attendance" className="uc-btn-primary bg-gradient-to-r from-emerald-500 to-teal-500">
-              Launch Attendance Module <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-            </Link>
+          <div>
+            <TabletFrame>
+              <AttendancePreview />
+            </TabletFrame>
           </div>
         </section>
 
         <div className="h-px bg-border/40" />
 
         {/* ========================================================
-            4. EXPENSES: CARD GRID
+            4. EXPENSES: 2-COLUMN LAYOUT
            ======================================================== */}
-        <section className="space-y-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-4 text-left max-w-xl">
-              <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-rose-500 bg-rose-500/10 border border-rose-500/20">
-                <ReceiptText className="w-6 h-6" />
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+          <div className="space-y-6">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-rose-500 bg-rose-500/10 border border-rose-500/20">
+              <ReceiptText className="w-6 h-6" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Smart Expenses & Budgeting</h2>
+            <p className="uc-body-text text-muted-foreground text-sm">
+              Control your academic term spending. Map out student category budgets, set strict limits, and visualize remaining allocations using responsive, real-time charts.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+              <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
+                <h4 className="text-xs font-bold text-foreground">💰 Spend Logs</h4>
+                <p className="text-[10px] text-muted-foreground leading-normal">Log expenses instantly on-the-go categorized by Food, Books, Transit.</p>
               </div>
-              <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Smart Expenses & Budgeting</h2>
-              <p className="text-muted-foreground text-sm">
-                Control your academic term spending. Map out student category budgets, set strict limits, and visualize remaining allocations using responsive, real-time charts.
-              </p>
+              <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
+                <h4 className="text-xs font-bold text-foreground">📊 Analytics</h4>
+                <p className="text-[10px] text-muted-foreground leading-normal">Responsive category breakdowns showing monthly trends and budget variances.</p>
+              </div>
+              <div className="p-4 bg-card border border-border rounded-[var(--radius-md)] space-y-1">
+                <h4 className="text-xs font-bold text-foreground">🔔 Limit Alerts</h4>
+                <p className="text-[10px] text-muted-foreground leading-normal">Receive push notices as specific categories approach customized caps.</p>
+              </div>
             </div>
-            <Link to="/features/expenses" className="uc-btn-primary shrink-0 bg-gradient-to-r from-rose-500 to-amber-500">
-              Manage Expenses <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-            </Link>
+            <div className="pt-4">
+              <Link to="/features/expenses" className="uc-btn-primary bg-gradient-to-r from-rose-500 to-amber-500">
+                Explore Expenses System <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              </Link>
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="glass-card-modern p-6 space-y-3 text-left">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">💰 Transaction Logs</h3>
-              <p className="text-[11px] text-muted-foreground">Log expenses instantly on-the-go. Categorize by Food, Transportation, Textbooks, and rent.</p>
-            </div>
-            <div className="glass-card-modern p-6 space-y-3 text-left">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">📊 Analytics Breakdown</h3>
-              <p className="text-[11px] text-muted-foreground">Responsive category breakdowns showing monthly trends and budget variances.</p>
-            </div>
-            <div className="glass-card-modern p-6 space-y-3 text-left">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">🔔 Limit Alerts</h3>
-              <p className="text-[11px] text-muted-foreground">Receive push notices as specific categories approach 90% of their customized caps.</p>
-            </div>
-            <div className="glass-card-modern p-6 space-y-3 text-left">
-              {/* Inline mini widget */}
+          <div>
+            <TabletFrame>
               <ExpensesPreview />
-            </div>
+            </TabletFrame>
           </div>
         </section>
 

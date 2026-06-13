@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import API, { ATTENDANCE_PATHS } from "../../services/Attendance/api";
 import { MdDeleteForever, MdWarning } from "react-icons/md";
+import { PageLayout, SectionContainer, PremiumCard, PremiumButton } from "../../components/dashboard/shared/Primitives";
 
 function RemoveStudent() {
   const [register, setRegister] = useState("");
@@ -24,48 +25,50 @@ function RemoveStudent() {
   };
 
   return (
-    <div className="attendance-module">
+    <PageLayout className="attendance-module">
       <div className="page-header">
-        <h1>Remove Student</h1>
-        <p>Permanently delete a student and their attendance records</p>
+        <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">Remove Student</h1>
+        <p className="text-sm text-muted-foreground mt-1">Permanently delete a student and their attendance records</p>
       </div>
 
-      <div className="card max-w-md">
-        <div className="bg-[var(--danger-bg)] border border-[var(--danger)] rounded-[var(--radius-md)] p-4 flex items-start gap-3 mb-6">
-          <MdWarning size={20} className="text-[var(--danger)] shrink-0 mt-0.5" />
-          <div className="text-sm text-[var(--danger)] font-medium">
-            <strong>Warning:</strong> This action is irreversible. The student's record and all
-            their attendance data will be permanently deleted.
-          </div>
+      <SectionContainer>
+        <div className="max-w-md">
+          <PremiumCard hoverEffect={false}>
+            <div className="bg-[var(--danger-bg)] border border-[var(--danger)]/20 rounded-[var(--radius-md)] p-4 flex items-start gap-3 mb-6">
+              <MdWarning size={20} className="text-[var(--danger)] shrink-0 mt-0.5" />
+              <div className="text-sm text-[var(--danger)] font-medium">
+                <strong>Warning:</strong> This action is irreversible. The student's record and all
+                their attendance data will be permanently deleted.
+              </div>
+            </div>
+
+            <form onSubmit={removeStudent}>
+              <div className="form-group">
+                <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Register Number</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Enter student register number"
+                  value={register}
+                  onChange={(e) => setRegister(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-end mt-6">
+                <PremiumButton
+                  type="submit"
+                  variant="destructive"
+                  isLoading={loading}
+                  leftIcon={MdDeleteForever}
+                  className="min-w-[160px]"
+                >
+                  Remove Student
+                </PremiumButton>
+              </div>
+            </form>
+          </PremiumCard>
         </div>
-
-        <form onSubmit={removeStudent}>
-          <div className="form-group">
-            <label className="form-label">Register Number</label>
-            <input
-              type="text"
-              className="form-input"
-              placeholder="Enter student register number"
-              value={register}
-              onChange={(e) => setRegister(e.target.value)}
-            />
-          </div>
-          <div className="flex justify-end mt-6">
-            <button
-              type="submit"
-              className="btn btn-danger min-w-[160px]"
-              disabled={loading}
-            >
-              {loading ? (
-                <><span className="spinner" /> Removing...</>
-              ) : (
-                <><MdDeleteForever size={18} /> Remove Student</>
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+      </SectionContainer>
+    </PageLayout>
   );
 }
 

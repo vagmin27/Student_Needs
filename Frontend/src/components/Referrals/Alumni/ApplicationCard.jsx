@@ -68,7 +68,7 @@ export function ApplicationCard({
   };
 
   return (
-    <div className="bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] p-5 border border-border/50 shadow-lg hover:border-primary/30 transition-all duration-300">
+    <div className="bg-card/40 backdrop-blur-md rounded-[var(--radius-lg)] p-6 border border-border shadow-lg hover:border-primary/30 transition-all duration-300">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start gap-4">
           {/* Profile Image */}

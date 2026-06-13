@@ -150,7 +150,7 @@ const LandingHero = React.memo(() => {
 
         <p
           ref={descRef}
-          className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl md:max-w-2xl mx-auto mb-8 sm:mb-10 tracking-tight px-4"
+          className="text-sm sm:text-base md:text-lg text-muted-foreground uc-hero-desc-audit mx-auto mb-8 sm:mb-10 tracking-tight px-4"
           style={{ opacity: 0 }}
         >
           Streamline your hiring with referrals backed by verified student

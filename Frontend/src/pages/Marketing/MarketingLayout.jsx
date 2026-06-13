@@ -267,7 +267,7 @@ export default function MarketingLayout() {
 
       {/* 🚀 CONSOLIDATED COMPACT PREMIUM FOOTER (280px-350px height) */}
       <footer className="uc-footer bg-card border-t border-border mt-16 px-6 py-8 w-full text-xs">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left mb-6">
+        <div className="max-w-7xl mx-auto uc-footer-grid-audit gap-8 text-left mb-6">
           {/* Section 1: About UniConnect */}
           <div className="space-y-3">
             <h5 className="font-bold text-foreground text-sm uppercase tracking-wider">About UniConnect</h5>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { 
   Smile, 
   Heart, 
@@ -66,7 +67,7 @@ export default function About() {
         <h1 className="uc-section-heading mt-4 text-4xl md:text-6xl font-black text-foreground tracking-tight">
           Unifying Student Operations
         </h1>
-        <p className="uc-subheading max-w-lg mx-auto text-base text-muted-foreground">
+        <p className="uc-subheading uc-long-form-text-audit mx-auto text-base text-muted-foreground text-center">
           UniConnect was designed to solve the fragmentation of university life, replacing scattered sheets with a secure operating system.
         </p>
       </div>
@@ -104,10 +105,10 @@ export default function About() {
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
         <div className="space-y-6">
           <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-none">Why UniConnect Was Built</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-muted-foreground leading-relaxed uc-long-form-text-audit">
             University academics can be highly overwhelming. Students navigate separate portals for logging attendances, searching tutors, organizing meal plans, and requesting job postings.
           </p>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-muted-foreground leading-relaxed uc-long-form-text-audit">
             UniConnect integrates these operations under a single account. Protected by secure JWT keys, students log financial transactions, match with peer mentors, and check attendance curves on one responsive dashboard.
           </p>
           <div className="flex gap-4 select-none pt-2">

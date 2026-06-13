@@ -31,7 +31,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 
       {/* Modal core */}
       <div 
-        className={`relative w-full max-w-lg glass-panel max-h-[90vh] overflow-y-auto flex flex-col transition-all duration-300 transform ${animateIn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
+        className={`relative w-full max-w-lg glass-panel modal-core-container max-h-[90vh] overflow-y-auto flex flex-col transition-all duration-300 transform ${animateIn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
       >
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-border bg-card/95 backdrop-blur-md rounded-t-2xl">
@@ -47,7 +47,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         </div>
 
         {/* Body */}
-        <div className="p-6">
+        <div className="p-6 modal-body w-full flex-grow flex-1">
           {children}
         </div>
       </div>

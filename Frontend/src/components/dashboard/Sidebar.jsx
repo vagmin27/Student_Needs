@@ -72,6 +72,19 @@ const Sidebar = ({ className, role = "student" }) => {
         icon: MessageSquare,
       },
     ];
+  } else if (currentRole === "admin") {
+    links = [
+      {
+        name: "Dashboard",
+        href: "/student/dashboard",
+        icon: LayoutDashboard,
+      },
+      {
+        name: "Contact Messages",
+        href: "/admin/contact-messages",
+        icon: Inbox,
+      },
+    ];
   } else {
     // Default Student Links
     links = [
@@ -172,6 +185,8 @@ const Sidebar = ({ className, role = "student" }) => {
                 ? "/alumni/settings"
                 : currentRole === "tutor"
                 ? "/tutorials/tutor/settings"
+                : currentRole === "admin"
+                ? "/admin/settings"
                 : "/tutorials/profile/accountSettings"
             }
             className={cn(

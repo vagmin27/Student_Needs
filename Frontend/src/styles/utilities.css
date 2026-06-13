@@ -1,0 +1,82 @@
+/* ======================================================
+   DESIGN SYSTEM UTILITIES
+   ====================================================== */
+
+/* Typography Utilities */
+.font-content {
+  font-family: "Libre Baskerville", Georgia, Cambria, serif !important;
+}
+
+.font-ui {
+  font-family: "Inter", -apple-system, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Libre Baskerville", Georgia, serif;
+  color: var(--text-heading);
+  letter-spacing: -0.01em;
+}
+
+p, li, span, label, div, button, input, textarea, select {
+  font-family: "Inter", sans-serif;
+}
+
+/* Image Filters - Warmed archival look in dark mode, normal in light mode */
+img {
+  border-radius: var(--image-border-radius);
+  transition: filter var(--transition-normal) var(--ease-standard);
+}
+
+.dark img,
+.dark-theme img,
+[data-theme="dark"] img {
+  filter: var(--image-filter) !important;
+}
+
+/* Shimmer Skeleton Loaders */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--border-color) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite var(--ease-standard);
+  border-radius: var(--radius-sm);
+}
+
+/* Ambient Spotlights */
+.dashboard-background {
+  position: relative;
+}
+
+.dashboard-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 20% 10%,
+    rgba(140, 98, 57, 0.08),
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dashboard-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 80% 20%,
+    rgba(197, 160, 89, 0.04),
+    transparent 45%
+  );
+  pointer-events: none;
+  z-index: 0;
+}

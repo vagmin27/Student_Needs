@@ -4,6 +4,12 @@ import Charts from "../../components/Attendance/Charts";
 import {
   MdPeople, MdCheckCircle, MdCancel, MdCalendarToday, MdTrendingUp, MdBarChart,
 } from "react-icons/md";
+import {
+  PageLayout,
+  SectionContainer,
+  DashboardGrid,
+  PremiumCard
+} from "../../components/dashboard/shared/Primitives";
 
 function Dashboard() {
   const [students, setStudents] = useState([]);
@@ -117,108 +123,144 @@ function Dashboard() {
   const presentPct = totalToday > 0 ? ((presentStudents.length / totalToday) * 100).toFixed(0) : 0;
 
   return (
-    <div className="attendance-module">
+    <PageLayout className="attendance-module">
       <div className="page-header">
-        <h1>Teacher Dashboard</h1>
-        <p>Overview of attendance and student performance</p>
+        <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">Teacher Dashboard</h1>
+        <p className="text-sm text-muted-foreground mt-1">Overview of attendance and student performance</p>
       </div>
 
       {/* Stat Cards */}
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Total Students</div>
-            <div className="stat-value">{students.length}</div>
-            <div className="stat-sub">Registered in system</div>
-          </div>
-          <div className="stat-icon indigo"><MdPeople /></div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Present Today</div>
-            <div className="stat-value text-[var(--success)]">{presentStudents.length}</div>
-            <div className="stat-sub">{presentPct}% attendance rate</div>
-          </div>
-          <div className="stat-icon green"><MdCheckCircle /></div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Absent Today</div>
-            <div className="stat-value text-[var(--danger)]">{absentStudents.length}</div>
-            <div className="stat-sub">For selected date</div>
-          </div>
-          <div className="stat-icon red"><MdCancel /></div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-info">
-            <div className="stat-label">Latest Session</div>
-            <div className="stat-value text-base pt-1.5">
-              {latestSubject || "—"}
+      <SectionContainer>
+        <DashboardGrid cols={4}>
+          <PremiumCard hoverEffect={true}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Students</p>
+                <h3 className="text-3xl font-bold mt-2 text-foreground">{students.length}</h3>
+                <p className="text-xs text-muted-foreground mt-1">Registered in system</p>
+              </div>
+              <div className="p-3 bg-indigo-500/10 text-indigo-500 rounded-lg text-2xl">
+                <MdPeople />
+              </div>
             </div>
-            <div className="stat-sub">{latestDate || "No sessions yet"}</div>
-          </div>
-          <div className="stat-icon amber"><MdTrendingUp /></div>
-        </div>
-      </div>
+          </PremiumCard>
+
+          <PremiumCard hoverEffect={true}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Present Today</p>
+                <h3 className="text-3xl font-bold mt-2 text-[var(--success)]">{presentStudents.length}</h3>
+                <p className="text-xs text-muted-foreground mt-1">{presentPct}% attendance rate</p>
+              </div>
+              <div className="p-3 bg-[var(--success-bg)] text-[var(--success)] rounded-lg text-2xl">
+                <MdCheckCircle />
+              </div>
+            </div>
+          </PremiumCard>
+
+          <PremiumCard hoverEffect={true}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Absent Today</p>
+                <h3 className="text-3xl font-bold mt-2 text-[var(--danger)]">{absentStudents.length}</h3>
+                <p className="text-xs text-muted-foreground mt-1">For selected date</p>
+              </div>
+              <div className="p-3 bg-[var(--danger-bg)] text-[var(--danger)] rounded-lg text-2xl">
+                <MdCancel />
+              </div>
+            </div>
+          </PremiumCard>
+
+          <PremiumCard hoverEffect={true}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Latest Session</p>
+                <h3 className="text-lg font-bold mt-2 text-foreground truncate max-w-[150px]">
+                  {latestSubject || "—"}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">{latestDate || "No sessions yet"}</p>
+              </div>
+              <div className="p-3 bg-amber-500/10 text-amber-500 rounded-lg text-2xl">
+                <MdTrendingUp />
+              </div>
+            </div>
+          </PremiumCard>
+        </DashboardGrid>
+      </SectionContainer>
 
       {/* Date Filter */}
-      <div className="card">
-        <div className="card-title"><MdCalendarToday /> View Attendance By Date</div>
-        <input
-          type="date"
-          className="form-input max-w-[220px]"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
-      </div>
+      <SectionContainer>
+        <PremiumCard hoverEffect={false}>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+              <MdCalendarToday className="text-[var(--primary)]" /> View Attendance By Date
+            </h3>
+            <input
+              type="date"
+              className="form-input max-w-[220px]"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+            />
+          </div>
+        </PremiumCard>
+      </SectionContainer>
 
       {/* Present / Absent Lists */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-        <div className="card border-l-4 border-l-[var(--success)] mb-0">
-          <div className="card-title text-[var(--success)]">
-            <MdCheckCircle /> Present ({presentStudents.length})
-          </div>
-          {presentStudents.length > 0 ? (
-            presentStudents?.map((s, i) => (
-              <div key={i} className="py-1.5 border-b border-border text-sm text-muted-foreground">
-                {s}
-              </div>
-            ))
-          ) : (
-            <p className="text-muted-foreground text-sm">No records for this date</p>
-          )}
+      <SectionContainer>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
+          <PremiumCard hoverEffect={false} className="border-l-4 border-l-[var(--success)]">
+            <h3 className="text-base font-semibold text-[var(--success)] flex items-center gap-2 mb-4">
+              <MdCheckCircle /> Present ({presentStudents.length})
+            </h3>
+            <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+              {presentStudents.length > 0 ? (
+                presentStudents.map((s, i) => (
+                  <div key={i} className="py-2 border-b border-border/40 text-sm text-muted-foreground">
+                    {s}
+                  </div>
+                ))
+              ) : (
+                <p className="text-muted-foreground text-sm">No records for this date</p>
+              )}
+            </div>
+          </PremiumCard>
+
+          <PremiumCard hoverEffect={false} className="border-l-4 border-l-[var(--danger)]">
+            <h3 className="text-base font-semibold text-[var(--danger)] flex items-center gap-2 mb-4">
+              <MdCancel /> Absent ({absentStudents.length})
+            </h3>
+            <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+              {absentStudents.length > 0 ? (
+                absentStudents.map((s, i) => (
+                  <div key={i} className="py-2 border-b border-border/40 text-sm text-muted-foreground">
+                    {s}
+                  </div>
+                ))
+              ) : (
+                <p className="text-muted-foreground text-sm">No records for this date</p>
+              )}
+            </div>
+          </PremiumCard>
         </div>
-        <div className="card border-l-4 border-l-[var(--danger)] mb-0">
-          <div className="card-title text-[var(--danger)]">
-            <MdCancel /> Absent ({absentStudents.length})
-          </div>
-          {absentStudents.length > 0 ? (
-            absentStudents?.map((s, i) => (
-              <div key={i} className="py-1.5 border-b border-border text-sm text-muted-foreground">
-                {s}
-              </div>
-            ))
-          ) : (
-            <p className="text-muted-foreground text-sm">No records for this date</p>
-          )}
-        </div>
-      </div>
+      </SectionContainer>
 
       {/* Charts */}
-      {attendanceStats.length > 0 ? (
-        <div className="card">
-          <div className="card-title">Semester Analytics</div>
-          <Charts attendanceStats={attendanceStats} />
-        </div>
-      ) : (
-        <div className="card">
-          <div className="empty-state">
-            <MdBarChart className="w-12 h-12 block mx-auto mb-3 opacity-30" />
-            <p>No attendance data to display yet</p>
-          </div>
-        </div>
-      )}
-    </div>
+      <SectionContainer>
+        {attendanceStats.length > 0 ? (
+          <PremiumCard hoverEffect={false}>
+            <h3 className="text-base font-semibold text-foreground mb-4">Semester Analytics</h3>
+            <Charts attendanceStats={attendanceStats} />
+          </PremiumCard>
+        ) : (
+          <PremiumCard hoverEffect={false}>
+            <div className="py-12 text-center text-muted-foreground">
+              <MdBarChart className="w-12 h-12 block mx-auto mb-3 opacity-30" />
+              <p>No attendance data to display yet</p>
+            </div>
+          </PremiumCard>
+        )}
+      </SectionContainer>
+    </PageLayout>
   );
 }
 

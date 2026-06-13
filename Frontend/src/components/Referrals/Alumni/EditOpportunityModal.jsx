@@ -86,7 +86,7 @@ export function EditOpportunityModal({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="bg-card rounded-[var(--radius-sm)] px-6 py-4 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-xl border border-border/50"
+            className="bg-card rounded-[var(--radius-sm)] px-6 py-4 w-full max-w-lg modal-core-container max-h-[90vh] overflow-y-auto shadow-xl border border-border/50 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
@@ -96,7 +96,7 @@ export function EditOpportunityModal({
               </Button>
             </div>
 
-            <div className="space-y-4">
+            <form onSubmit={(e) => e.preventDefault()} className="modal-body flex flex-col gap-4 w-full flex-grow flex-1">
               {/* Job Title */}
               <div>
                 <Label htmlFor="edit-title">Job Title *</Label>
@@ -217,7 +217,7 @@ export function EditOpportunityModal({
                   )}
                 </Button>
               </div>
-            </div>
+            </form>
           </motion.div>
         </motion.div>
       )}

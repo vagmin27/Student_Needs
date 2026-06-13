@@ -60,7 +60,7 @@ export default function Home() {
           <h1 className="uc-hero-title text-5xl md:text-7xl font-extrabold tracking-tight leading-none">
             The Central OS for <span>Student</span> Success
           </h1>
-          <p className="uc-body-text max-w-lg leading-relaxed text-muted-foreground text-lg">
+          <p className="uc-body-text uc-hero-desc-audit leading-relaxed text-muted-foreground text-lg">
             UniConnect integrates everything you need to study better, manage your schedule, plan finances, and secure corporate job referrals in one unified platform.
           </p>
           <div className="uc-actions flex flex-wrap gap-4 select-none pt-2">

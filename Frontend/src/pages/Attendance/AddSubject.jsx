@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import API from "../../services/Attendance/api";
 import { MdLibraryAdd, MdCheckCircle } from "react-icons/md";
+import { PageLayout, SectionContainer, PremiumCard, PremiumButton } from "../../components/dashboard/shared/Primitives";
 
 function AddSubject() {
   const [formData, setFormData] = useState({
@@ -35,39 +36,51 @@ function AddSubject() {
   };
 
   return (
-    <div className="attendance-module">
+    <PageLayout className="attendance-module">
       <div className="page-header">
-        <h1>Add Subject</h1>
-        <p>Add a new subject to the system for attendance tracking</p>
+        <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">Add Subject</h1>
+        <p className="text-sm text-muted-foreground mt-1">Add a new subject to the system for attendance tracking</p>
       </div>
 
-      <div className="card max-w-[560px]">
-        <div className="card-title"><MdLibraryAdd /> Subject Details</div>
-        <form onSubmit={addSubject}>
-          <div className="form-group">
-            <label className="form-label">Subject Name *</label>
-            <input name="subjectName" className="form-input" placeholder="e.g. Data Structures" value={formData.subjectName} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Subject Code *</label>
-            <input name="subjectCode" className="form-input" placeholder="e.g. CS301" value={formData.subjectCode} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Department</label>
-            <input name="department" className="form-input" placeholder="e.g. Computer Science" value={formData.department} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Year</label>
-            <input name="year" className="form-input" placeholder="e.g. 2nd Year" value={formData.year} onChange={handleChange} />
-          </div>
-          <div className="flex justify-end mt-2">
-            <button type="submit" className="btn btn-primary min-w-[160px]" disabled={loading}>
-              {loading ? <><span className="spinner" /> Adding...</> : <><MdCheckCircle /> Add Subject</>}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <SectionContainer>
+        <div className="max-w-[560px]">
+          <PremiumCard hoverEffect={false}>
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2 mb-4">
+              <MdLibraryAdd className="text-[var(--primary)]" /> Subject Details
+            </h3>
+            <form onSubmit={addSubject} className="space-y-4">
+              <div className="form-group">
+                <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Subject Name *</label>
+                <input name="subjectName" className="form-input" placeholder="e.g. Data Structures" value={formData.subjectName} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Subject Code *</label>
+                <input name="subjectCode" className="form-input" placeholder="e.g. CS301" value={formData.subjectCode} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Department</label>
+                <input name="department" className="form-input" placeholder="e.g. Computer Science" value={formData.department} onChange={handleChange} />
+              </div>
+              <div className="form-group">
+                <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Year</label>
+                <input name="year" className="form-input" placeholder="e.g. 2nd Year" value={formData.year} onChange={handleChange} />
+              </div>
+              <div className="flex justify-end pt-4">
+                <PremiumButton
+                  type="submit"
+                  variant="primary"
+                  isLoading={loading}
+                  leftIcon={MdCheckCircle}
+                  className="min-w-[160px]"
+                >
+                  Add Subject
+                </PremiumButton>
+              </div>
+            </form>
+          </PremiumCard>
+        </div>
+      </SectionContainer>
+    </PageLayout>
   );
 }
 

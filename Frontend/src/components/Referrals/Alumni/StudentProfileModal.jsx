@@ -49,7 +49,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-card rounded-[var(--radius-lg)] shadow-2xl border border-border/50"
+          className="relative w-full max-w-3xl modal-core-container max-h-[90vh] overflow-y-auto bg-card rounded-[var(--radius-lg)] shadow-2xl border border-border/50"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button */}

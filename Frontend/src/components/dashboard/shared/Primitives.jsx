@@ -134,21 +134,24 @@ export const PremiumButton = React.forwardRef(({
   disabled,
   ...props
 }, ref) => {
-  const baseStyles = "inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-md)] text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] cursor-pointer shadow-sm";
+  const baseStyles = "btn font-ui focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] active:scale-[0.98]";
   
   const variants = {
-    default: "bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 border border-transparent shadow-[0_2px_8px_rgba(212,163,115,0.2)]",
-    secondary: "bg-[var(--bg-secondary)] text-foreground border border-border hover:bg-[var(--neutral-bg)] hover:text-foreground",
-    outline: "border border-[var(--primary)]/40 text-[var(--primary)] bg-transparent hover:bg-[var(--primary)]/10 hover:border-[var(--primary)]",
-    glass: "bg-white/5 backdrop-blur-md text-foreground border border-white/10 hover:bg-white/10 hover:border-[var(--primary)]/30",
-    ghost: "text-muted-foreground hover:bg-secondary hover:text-foreground shadow-none border-transparent",
-    destructive: "bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 shadow-none",
+    default: "btn-primary",
+    primary: "btn-primary",
+    secondary: "btn-secondary",
+    outline: "btn-outline",
+    ghost: "btn-ghost",
+    destructive: "btn-danger",
+    danger: "btn-danger",
+    success: "btn-success",
+    glass: "bg-white/5 backdrop-blur-md text-foreground border border-white/10 hover:bg-white/10",
   };
 
   const sizes = {
-    default: "h-10 px-4 py-2",
-    sm: "h-8.5 rounded-[var(--radius-sm)] px-3 text-xs",
-    lg: "h-12 rounded-[var(--radius-lg)] px-6 text-base",
+    default: "h-10 px-4",
+    sm: "h-8 px-3 text-xs rounded-[var(--radius-sm)]",
+    lg: "h-12 px-6 text-base rounded-[var(--radius-lg)]",
     icon: "h-10 w-10 p-0",
   };
 
@@ -277,7 +280,7 @@ export const EmptyState = React.memo(({
         {title}
       </h4>
       {description && (
-        <p className="text-sm text-muted-foreground description-text mb-6 max-w-xs leading-relaxed">
+        <p className="text-sm text-muted-foreground description-text mb-6 max-w-md leading-relaxed">
           {description}
         </p>
       )}
@@ -294,3 +297,57 @@ export const EmptyState = React.memo(({
   );
 });
 EmptyState.displayName = "EmptyState";
+
+// 8. PageLayout Component
+export const PageLayout = ({ children, className, ...props }) => {
+  return (
+    <div className={cn("w-full py-md px-md md:px-lg flex flex-col gap-lg max-w-[1600px] mx-auto", className)} {...props}>
+      {children}
+    </div>
+  );
+};
+
+// 9. ContentContainer Component
+export const ContentContainer = ({ children, className, ...props }) => {
+  return (
+    <div className={cn("w-full max-w-7xl mx-auto px-sm sm:px-md md:px-lg", className)} {...props}>
+      {children}
+    </div>
+  );
+};
+
+// 10. SectionContainer Component
+export const SectionContainer = ({ children, className, ...props }) => {
+  return (
+    <section className={cn("space-y-md md:space-y-lg py-sm md:py-md", className)} {...props}>
+      {children}
+    </section>
+  );
+};
+
+// 11. DashboardGrid Component
+export const DashboardGrid = ({ children, className, cols = 3, ...props }) => {
+  return (
+    <div 
+      className={cn(
+        "grid grid-cols-1 gap-md md:gap-lg",
+        cols === 2 && "md:grid-cols-2",
+        cols === 3 && "md:grid-cols-2 lg:grid-cols-3",
+        cols === 4 && "md:grid-cols-2 lg:grid-cols-4",
+        className
+      )} 
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+// 12. CardGrid Component
+export const CardGrid = ({ children, className, ...props }) => {
+  return (
+    <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-sm md:gap-md", className)} {...props}>
+      {children}
+    </div>
+  );
+};

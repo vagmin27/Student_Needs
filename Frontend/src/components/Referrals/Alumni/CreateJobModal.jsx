@@ -37,7 +37,7 @@ export function CreateJobModal({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="bg-card rounded-[var(--radius-sm)] px-6 py-4 w-full max-w-lg shadow-xl border border-border/50"
+            className="bg-card rounded-[var(--radius-sm)] px-6 py-4 w-full max-w-lg modal-core-container shadow-xl border border-border/50 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
@@ -47,7 +47,7 @@ export function CreateJobModal({
               </Button>
             </div>
 
-            <div className="space-y-4">
+            <form onSubmit={(e) => e.preventDefault()} className="modal-body flex flex-col gap-4 w-full flex-grow flex-1">
               <div>
                 <Label htmlFor="title">Job Title</Label>
                 <Input
@@ -155,7 +155,7 @@ export function CreateJobModal({
                   </>
                 )}
               </Button>
-            </div>
+            </form>
           </motion.div>
         </motion.div>
       )}
