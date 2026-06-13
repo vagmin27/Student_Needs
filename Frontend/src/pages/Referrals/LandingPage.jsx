@@ -15,7 +15,7 @@ const LandingPage = () => {
         {/* Tutorial Card */}
         <div className="bg-gray-900 border border-gray-700 rounded-[var(--radius-md)] p-6 hover:scale-105 transition cursor-pointer">
           <h2 className="text-xl font-semibold mb-2">Tutorial</h2>
-          <p className="text-gray-400">
+          <p className="text-muted-foreground">
             Learn how to use the platform (Coming Soon)
           </p>
         </div>
@@ -28,7 +28,7 @@ const LandingPage = () => {
           <h2 className="text-xl font-semibold mb-2 text-green-400">
             Referral
           </h2>
-          <p className="text-gray-400">
+          <p className="text-muted-foreground">
             Get verified referrals from alumni network
           </p>
         </div>
@@ -36,7 +36,7 @@ const LandingPage = () => {
         {/* Expense Tracker Card */}
         <div className="bg-gray-900 border border-gray-700 rounded-[var(--radius-md)] p-6 hover:scale-105 transition cursor-pointer">
           <h2 className="text-xl font-semibold mb-2">Expense Tracker</h2>
-          <p className="text-gray-400">
+          <p className="text-muted-foreground">
             Manage your finances (Coming Soon)
           </p>
         </div>

@@ -675,7 +675,7 @@ export default function ModuleDetail() {
       {/* ========================================================
           2. INTERACTIVE PREVIEW SANDBOX (THE CORE SANDBOX)
          ======================================================== */}
-      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-[var(--radius-xl)] p-8 text-center relative overflow-hidden shadow-sm">
+      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-[var(--radius-xl)] p-8 text-center relative overflow-hidden shadow-[var(--shadow-sm)]">
         <div className="max-w-2xl mx-auto text-center mb-8 space-y-2.5">
           <h2 className="text-2xl md:text-3xl font-black text-foreground tracking-tight">Interactive Sandbox Preview</h2>
           <p className="text-xs text-muted-foreground leading-relaxed">
@@ -725,7 +725,7 @@ export default function ModuleDetail() {
             ))}
           </div>
         </div>
-        <div className="p-8 bg-card border border-border/80 rounded-[var(--radius-lg)] text-left shadow-sm space-y-4 relative overflow-hidden">
+        <div className="p-8 bg-card border border-border/80 rounded-[var(--radius-lg)] text-left shadow-[var(--shadow-sm)] space-y-4 relative overflow-hidden">
           <h4 className="text-xs font-black uppercase tracking-wider text-primary">System Compliance Details</h4>
           <p className="text-[11.5px] text-muted-foreground leading-relaxed">
             Our modules adhere to college administrative verification rules. Direct logs connect student accounts with alumni verifiers and tutor records, locking updates against manual manipulation.
@@ -792,16 +792,16 @@ export default function ModuleDetail() {
           7. MODULE CTA BANNER
          ======================================================== */}
       <section className="mb-12">
-        <div className="p-10 md:p-14 bg-gradient-to-r from-primary via-indigo-600 to-indigo-900 rounded-[var(--radius-xl)] text-center relative overflow-hidden shadow-xl text-white">
+        <div className="p-10 md:p-14 bg-gradient-to-r from-primary via-indigo-600 to-indigo-900 rounded-[var(--radius-xl)] text-center relative overflow-hidden shadow-[var(--shadow-lg)] text-white">
           <div className="relative z-10 max-w-xl mx-auto space-y-6">
             <h3 className="text-xl md:text-3xl font-black tracking-tight">Ready to leverage this module?</h3>
-            <p className="text-slate-200 text-xs leading-relaxed max-w-md mx-auto">
+            <p className="text-muted-foreground text-xs leading-relaxed max-w-md mx-auto">
               Join thousands of university students managing academic tutoring, budgets, schedules, and internship placements.
             </p>
             <div className="flex justify-center gap-3">
               <Link 
                 to="/role-selection" 
-                className="px-6 py-2.5 bg-white text-primary rounded-[var(--radius-sm)] text-xs font-bold hover:bg-slate-100 transition-colors shadow-lg"
+                className="px-6 py-2.5 bg-white text-primary rounded-[var(--radius-sm)] text-xs font-bold hover:bg-slate-100 transition-colors shadow-[var(--shadow-lg)]"
               >
                 Log In to Workspace
               </Link>

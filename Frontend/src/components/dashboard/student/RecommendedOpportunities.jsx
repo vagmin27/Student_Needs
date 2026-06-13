@@ -59,7 +59,7 @@ export const RecommendedOpportunities = ({ refreshTrigger }) => {
   if (recommendations.length === 0) {
     return (
       <div className="text-center p-6 border border-dashed border-border rounded-[var(--radius-md)] bg-secondary/10">
-        <MdStar className="text-4xl text-slate-300 dark:text-slate-600 mx-auto mb-2" />
+        <MdStar className="text-4xl text-muted-foreground dark:text-slate-600 mx-auto mb-2" />
         <h3 className="text-sm font-semibold text-foreground">No recommendations yet</h3>
         <p className="text-xs text-muted-foreground mt-1 max-w-[250px] mx-auto">
           Update your profile skills and resume to help our AI find the perfect opportunities for you.

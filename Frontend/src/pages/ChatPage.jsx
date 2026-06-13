@@ -437,7 +437,7 @@ export default function ChatPage() {
 
       {/* Image Lightbox Preview Overlay */}
       {lightbox && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6">
+        <div className="fixed inset-0 bg-background/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6">
           <div className="absolute top-4 right-4 flex gap-3 text-white">
             <a
               href={lightbox.url}
@@ -460,7 +460,7 @@ export default function ChatPage() {
           <img
             src={lightbox.url}
             alt={lightbox.name}
-            className="max-w-full max-h-[85vh] object-contain rounded-[var(--radius-sm)] shadow-2xl border border-white/10"
+            className="max-w-full max-h-[85vh] object-contain rounded-[var(--radius-sm)] shadow-[var(--shadow-lg)] border border-white/10"
           />
           <p className="text-white/60 text-xs mt-3 select-none">{lightbox.name}</p>
         </div>

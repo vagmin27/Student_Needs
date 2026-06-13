@@ -497,7 +497,7 @@ const Home = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsAddExpenseOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-primary to-indigo-600 text-white flex items-center justify-center shadow-xl shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer"
+          className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-primary to-indigo-600 text-white flex items-center justify-center shadow-[var(--shadow-lg)] shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer"
           title="Quick Add Expense"
         >
           <MdAdd size={28} />

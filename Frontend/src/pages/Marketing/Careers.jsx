@@ -36,7 +36,7 @@ export default function Careers() {
       </section>
 
       {/* 🚀 FUTURE OPENINGS */}
-      <section className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm text-center">
+      <section className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] text-center">
         <h2 className="text-xl font-bold text-foreground mb-4">Future Openings & Opportunities</h2>
         <p className="text-xs text-muted-foreground max-w-md mx-auto mb-6 leading-relaxed">
           Although we do not have active openings today, we are always on the lookout for talented engineering interns, designers, and community leads.

@@ -388,7 +388,7 @@ export default function InterviewPage() {
           <div className="flex flex-col gap-2 w-full">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="font-semibold text-foreground dark:text-slate-100">
                 Application Submitted Successfully
               </span>
             </div>
@@ -397,7 +397,7 @@ export default function InterviewPage() {
                 toast.dismiss();
                 navigate(`/referrals/chat?chatId=${chatId}`);
               }}
-              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-[var(--radius-sm)] shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
+              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-[var(--radius-sm)] shadow-[var(--shadow-sm)] transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
             >
               Message Alumni
             </button>
@@ -478,7 +478,7 @@ export default function InterviewPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
         
         <div className="relative w-96 flex-shrink-0 space-y-4">
-          <div className="bg-card/50 backdrop-blur-sm rounded-[var(--radius-lg)] border border-border/50 shadow-xl p-6">
+          <div className="bg-card/50 backdrop-blur-sm rounded-[var(--radius-lg)] border border-border/50 shadow-[var(--shadow-lg)] p-6">
             <div className="flex items-start gap-3 mb-4">
               <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 flex items-center justify-center flex-shrink-0">
                 <Building2 className="w-5 h-5 text-primary" />
@@ -502,7 +502,7 @@ export default function InterviewPage() {
           {(profileScore !== null || interviewScore !== null) && (
             <div className="space-y-4">
               {profileScore !== null && (
-                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-[var(--radius-md)] p-4 shadow-lg">
+                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-[var(--radius-md)] p-4 shadow-[var(--shadow-lg)]">
                   <div className="flex items-center gap-3 mb-2">
                     <TrendingUp className="w-5 h-5 text-primary" />
                     <p className="text-sm font-medium text-muted-foreground">Profile Match</p>
@@ -513,7 +513,7 @@ export default function InterviewPage() {
               )}
               
               {interviewScore !== null && (
-                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-[var(--radius-md)] p-4 shadow-lg">
+                <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-[var(--radius-md)] p-4 shadow-[var(--shadow-lg)]">
                   <div className="flex items-center gap-3 mb-2">
                     <Award className="w-5 h-5 text-primary" />
                     <p className="text-sm font-medium text-muted-foreground">Interview Score</p>
@@ -548,7 +548,7 @@ export default function InterviewPage() {
                 <Sparkles className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 text-primary relative z-10 drop-shadow-2xl" />
               </div>
 
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-card/95 backdrop-blur-sm border border-border rounded-full shadow-lg">
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-card/95 backdrop-blur-sm border border-border rounded-full shadow-[var(--shadow-lg)]">
                 <p className="text-sm font-semibold text-foreground whitespace-nowrap">
                   {isAnalyzing ? (
                     <>Analyzing Profile...</>
@@ -572,7 +572,7 @@ export default function InterviewPage() {
                 onClick={analyzeProfile}
                 disabled={isAnalyzing}
                 size="lg"
-                className="rounded-full w-16 h-16 sm:w-20 sm:h-20 p-0 shadow-xl bg-primary hover:bg-primary/90"
+                className="rounded-full w-16 h-16 sm:w-20 sm:h-20 p-0 shadow-[var(--shadow-lg)] bg-primary hover:bg-primary/90"
               >
                 {isAnalyzing ? (
                   <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 animate-spin" />
@@ -586,7 +586,7 @@ export default function InterviewPage() {
                   <Button
                     onClick={startInterview}
                     size="lg"
-                    className="rounded-full w-16 h-16 sm:w-20 sm:h-20 p-0 shadow-xl bg-success hover:bg-success/90"
+                    className="rounded-full w-16 h-16 sm:w-20 sm:h-20 p-0 shadow-[var(--shadow-lg)] bg-success hover:bg-success/90"
                   >
                     <Phone className="w-8 h-8 sm:w-10 sm:h-10" />
                   </Button>
@@ -597,7 +597,7 @@ export default function InterviewPage() {
                     onClick={stopInterview}
                     size="lg"
                     variant="destructive"
-                    className="rounded-full w-16 h-16 sm:w-20 sm:h-20 p-0 shadow-xl animate-pulse"
+                    className="rounded-full w-16 h-16 sm:w-20 sm:h-20 p-0 shadow-[var(--shadow-lg)] animate-pulse"
                   >
                     <PhoneOff className="w-8 h-8 sm:w-10 sm:h-10" />
                   </Button>
@@ -611,7 +611,7 @@ export default function InterviewPage() {
               <Button
                 onClick={handleApplyAfterInterview}
                 size="lg"
-                className="px-8 py-6 text-lg shadow-xl"
+                className="px-8 py-6 text-lg shadow-[var(--shadow-lg)]"
               >
                 <CheckCircle2 className="w-6 h-6 mr-2" />
                 Apply for Referral
@@ -635,7 +635,7 @@ export default function InterviewPage() {
         </div>
 
         <div className="relative w-[28rem] flex-shrink-0">
-          <div className="bg-card/50 backdrop-blur-sm rounded-[var(--radius-lg)] border border-border/50 shadow-xl h-full flex flex-col">
+          <div className="bg-card/50 backdrop-blur-sm rounded-[var(--radius-lg)] border border-border/50 shadow-[var(--shadow-lg)] h-full flex flex-col">
             <div className="flex items-center justify-between p-4 border-b border-border/50">
               <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />

@@ -20,7 +20,7 @@ export const NetworkFallback = () => {
   if (!isOffline) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[9999] bg-red-900/90 text-white px-4 py-2 flex items-center justify-center gap-3 shadow-lg border-b border-red-500 backdrop-blur-md transition-all duration-300 transform translate-y-0">
+    <div className="fixed top-0 left-0 w-full z-[9999] bg-red-900/90 text-white px-4 py-2 flex items-center justify-center gap-3 shadow-[var(--shadow-lg)] border-b border-red-500 backdrop-blur-md transition-all duration-300 transform translate-y-0">
       <WifiOff className="w-5 h-5 animate-pulse" />
       <span className="font-semibold text-sm tracking-wide">
         System Offline: Connection to UniConnect servers lost. Attempting to reconnect...

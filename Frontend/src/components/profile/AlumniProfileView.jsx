@@ -355,7 +355,7 @@ export default function AlumniProfileView() {
       </div>
 
       {/* Live Completeness bar */}
-      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md">
+      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)]">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -392,7 +392,7 @@ export default function AlumniProfileView() {
         {/* Left column: Profile Photo & Social Links */}
         <div className="space-y-6 lg:col-span-1">
           <div className="glass-panel p-6 flex flex-col items-center text-center">
-            <div className="relative group w-32 h-32 rounded-[var(--radius-lg)] overflow-hidden border-4 border-background bg-muted flex items-center justify-center shrink-0 shadow-md">
+            <div className="relative group w-32 h-32 rounded-[var(--radius-lg)] overflow-hidden border-4 border-background bg-muted flex items-center justify-center shrink-0 shadow-[var(--shadow-md)]">
               {displayImageSrc ? (
                 <img
                   src={displayImageSrc}
@@ -405,7 +405,7 @@ export default function AlumniProfileView() {
                 </span>
               )}
               {isEditing && (
-                <label htmlFor="alumni-avatar-file" className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200">
+                <label htmlFor="alumni-avatar-file" className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200">
                   <Upload className="w-6 h-6 text-white mb-1" />
                   <span className="text-white text-xs font-semibold">Change Photo</span>
                   <input
@@ -439,7 +439,7 @@ export default function AlumniProfileView() {
           </div>
 
           {/* Social Links card */}
-          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md">
+          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)]">
             <CardHeader className="pb-3">
               <CardTitle className="text-base font-bold">Social Connections</CardTitle>
             </CardHeader>
@@ -524,7 +524,7 @@ export default function AlumniProfileView() {
 
         {/* Right column: Form Fields details */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md p-6 space-y-6">
+          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)] p-6 space-y-6">
             <h3 className="text-lg font-bold text-foreground border-b border-border/20 pb-2">Professional Details</h3>
 
             {!isEditing ? (

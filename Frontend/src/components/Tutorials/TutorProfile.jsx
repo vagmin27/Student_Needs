@@ -72,7 +72,7 @@ function TutorProfile({
       </div>
       <div className="imgRender">
         {displayPairs?.map((tutorData, idx) => (
-          <div className="card-group " key={idx}>
+          <div className="card-group" key={idx}>
             {tutorData?.map((tutorProfile) => {
               // ✅ NORMALIZE FIELDS
               const tutorName =

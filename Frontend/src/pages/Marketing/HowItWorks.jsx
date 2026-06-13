@@ -87,7 +87,7 @@ export default function HowItWorks() {
         </div>
 
         {/* Selected Step Description Details */}
-        <div className="md:col-span-7 p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm min-h-[180px] flex flex-col justify-between">
+        <div className="md:col-span-7 p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] min-h-[180px] flex flex-col justify-between">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeStep + journeyMode}

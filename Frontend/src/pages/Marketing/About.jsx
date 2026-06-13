@@ -137,7 +137,7 @@ export default function About() {
       </section>
 
       {/* 🚀 INTERACTIVE TECH STACK EXPLORER */}
-      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-[var(--radius-xl)] p-8 shadow-sm">
+      <section className="mb-20 bg-secondary/10 border border-border/60 rounded-[var(--radius-xl)] p-8 shadow-[var(--shadow-sm)]">
         <div className="text-center mb-8 max-w-lg mx-auto space-y-2">
           <h2 className="text-2xl md:text-3xl font-black text-foreground tracking-tight">Interactive Platform Stack</h2>
           <p className="text-xs text-muted-foreground">Click a layer to inspect how the technology powers our operations.</p>

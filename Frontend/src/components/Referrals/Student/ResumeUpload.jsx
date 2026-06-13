@@ -44,7 +44,7 @@ export function ResumeUpload({ student, formData, onSubmit, isUploading }) {
   };
 
   return (
-    <div className="bg-card rounded-[var(--radius-md)] p-6 border border-border/50 shadow-sm">
+    <div className="bg-card rounded-[var(--radius-md)] p-6 border border-border/50 shadow-[var(--shadow-sm)]">
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Resume Upload
       </h3>

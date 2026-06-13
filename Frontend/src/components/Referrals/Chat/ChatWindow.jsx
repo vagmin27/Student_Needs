@@ -336,7 +336,7 @@ export function ChatWindow({
               </button>
               
               {showEmojiPicker && (
-                <div className="absolute bottom-12 right-0 p-2 bg-card border border-border rounded-[var(--radius-sm)] shadow-lg flex gap-1.5 z-50">
+                <div className="absolute bottom-12 right-0 p-2 bg-card border border-border rounded-[var(--radius-sm)] shadow-[var(--shadow-lg)] flex gap-1.5 z-50">
                   {EMOJIS.map((emoji) => (
                     <button
                       key={emoji}

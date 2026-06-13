@@ -41,7 +41,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/60 backdrop-blur-sm"
         onClick={onClose}
       >
         <motion.div
@@ -49,7 +49,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-3xl modal-core-container max-h-[90vh] overflow-y-auto bg-card rounded-[var(--radius-lg)] shadow-2xl border border-border/50"
+          className="relative w-full max-w-3xl modal-core-container max-h-[90vh] overflow-y-auto bg-card rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] border border-border/50"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button */}
@@ -136,7 +136,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-500/10 text-gray-400 text-sm hover:bg-gray-500/20 transition-colors"
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-500/10 text-muted-foreground text-sm hover:bg-gray-500/20 transition-colors"
                       >
                         <Code className="w-4 h-4" />
                         GitHub

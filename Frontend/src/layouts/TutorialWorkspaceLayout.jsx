@@ -13,7 +13,7 @@ const WorkspaceContent = () => {
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 md:hidden backdrop-blur-sm transition-opacity duration-300"
+          className="fixed inset-0 z-40 bg-background/50 md:hidden backdrop-blur-sm transition-opacity duration-300"
           onClick={closeMobileMenu}
         />
       )}

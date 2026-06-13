@@ -158,7 +158,7 @@ export const ChatWindow = ({
           {/* Back button on mobile */}
           <button
             onClick={onBack}
-            className="p-2 hover:bg-slate-850 rounded-[var(--radius-md)] text-slate-400 hover:text-foreground md:hidden shrink-0 transition-colors cursor-pointer"
+            className="p-2 hover:bg-slate-850 rounded-[var(--radius-md)] text-muted-foreground hover:text-foreground md:hidden shrink-0 transition-colors cursor-pointer"
             title="Back to conversations"
           >
             <ArrowLeft className="w-4.5 h-4.5" />
@@ -197,7 +197,7 @@ export const ChatWindow = ({
           <button
             onClick={() => handleStartCall("audio")}
             disabled={chat.isBlocked || isCallLoading}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-[var(--radius-md)] text-xs font-medium text-slate-300 hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-[var(--radius-md)] text-xs font-medium text-muted-foreground hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
             title="Audio call tutor"
           >
             {isCallLoading && incomingCallData?.type === "audio" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Phone className="w-3.5 h-3.5" />}
@@ -206,7 +206,7 @@ export const ChatWindow = ({
           <button
             onClick={() => handleStartCall("video")}
             disabled={chat.isBlocked || isCallLoading}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-[var(--radius-md)] text-xs font-medium text-slate-300 hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-[var(--radius-md)] text-xs font-medium text-muted-foreground hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
             title="Video consult tutor"
           >
             {isCallLoading && incomingCallData?.type === "video" ? <Loader2 className="w-4 h-4 animate-spin" /> : <Video className="w-4 h-4" />}
@@ -215,7 +215,7 @@ export const ChatWindow = ({
           <button
             onClick={handleAskAi}
             disabled={chat.isBlocked}
-            className="flex items-center gap-1.5 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-[var(--radius-md)] text-xs font-medium transition-all duration-200 cursor-pointer disabled:opacity-40 border border-primary/20 shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-[var(--radius-md)] text-xs font-medium transition-all duration-200 cursor-pointer disabled:opacity-40 border border-primary/20 shadow-[var(--shadow-sm)]"
             title="Concept check with AI Tutor"
           >
             <Bot className="w-4 h-4" />
@@ -225,14 +225,14 @@ export const ChatWindow = ({
           <div className="relative">
             <button
               onClick={() => setHeaderMenuOpen(!headerMenuOpen)}
-              className="p-2.5 hover:bg-slate-850 rounded-[var(--radius-md)] text-slate-400 hover:text-foreground transition-all duration-200 cursor-pointer"
+              className="p-2.5 hover:bg-slate-850 rounded-[var(--radius-md)] text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer"
               title="More options"
             >
               <MoreHorizontal className="w-4 h-4" />
             </button>
 
             {headerMenuOpen && (
-              <div className="absolute right-0 top-12 bg-slate-950 border border-slate-800 rounded-[var(--radius-md)] shadow-xl z-50 py-1.5 min-w-[150px] animate-in fade-in zoom-in-95 duration-100">
+              <div className="absolute right-0 top-12 bg-slate-950 border border-slate-800 rounded-[var(--radius-md)] shadow-[var(--shadow-lg)] z-50 py-1.5 min-w-[150px] animate-in fade-in zoom-in-95 duration-100">
                 <button
                   onClick={() => {
                     onToggleBlock(chat._id, !chat.isBlocked);
@@ -292,7 +292,7 @@ export const ChatWindow = ({
                 href={chat.booking.meetingLink}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full md:w-auto justify-center px-4 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-[var(--radius-sm)] text-sm font-medium transition-colors flex items-center gap-1.5 shadow-lg shadow-primary/20"
+                className="w-full md:w-auto justify-center px-4 py-1.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-[var(--radius-sm)] text-sm font-medium transition-colors flex items-center gap-1.5 shadow-[var(--shadow-lg)] shadow-primary/20"
               >
                 🚀 Join Class
               </a>

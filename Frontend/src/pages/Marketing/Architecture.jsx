@@ -17,7 +17,7 @@ export default function Architecture() {
       </div>
 
       {/* 🚀 VISUAL DIAGRAM FLOWCHART */}
-      <section className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm mb-16 text-center">
+      <section className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] mb-16 text-center">
         <h2 className="text-base font-bold text-foreground mb-8">System Data Flow</h2>
         
         <div className="flex flex-col md:flex-row items-center justify-around gap-6 max-w-2xl mx-auto">

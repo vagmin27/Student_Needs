@@ -12,7 +12,7 @@ import { TUTORIAL_PATHS } from "@/utils/tutorialRoutes";
 import { useTutorialDashboard } from "@/hooks/useTutorialDashboard";
 
 const MetricCard = ({ title, value, icon: Icon, colorClass }) => (
-  <Card className="hover:border-primary/50 transition-colors bg-card shadow-sm h-full">
+  <Card className="hover:border-primary/50 transition-colors bg-card shadow-[var(--shadow-sm)] h-full">
     <CardContent className="p-6 flex flex-col justify-between h-full">
       <div className="flex items-start justify-between mb-4">
         <p className="text-sm font-medium text-muted-foreground">{title}</p>

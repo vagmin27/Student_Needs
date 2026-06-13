@@ -34,7 +34,7 @@ const TutorialSidebar = () => {
     >
       {/* Brand / Logo */}
       <div className={cn("flex items-center gap-3 mb-8 px-2 shrink-0", isCollapsed ? "justify-center" : "")}>
-        <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-primary text-primary-foreground flex items-center justify-center shrink-0 shadow-sm">
+        <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-primary text-primary-foreground flex items-center justify-center shrink-0 shadow-[var(--shadow-sm)]">
           <GraduationCap className="w-5 h-5" />
         </div>
         {!isCollapsed && (
@@ -65,7 +65,7 @@ const TutorialSidebar = () => {
             <item.icon className="w-5 h-5 shrink-0" />
             {!isCollapsed && <span className="whitespace-nowrap">{item.label}</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 {item.label}
               </div>
             )}
@@ -91,7 +91,7 @@ const TutorialSidebar = () => {
             <ArrowLeft className="w-5 h-5 shrink-0" />
             {!isCollapsed && <span className="whitespace-nowrap">Back to Dashboard</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Back to Dashboard
               </div>
             )}
@@ -115,7 +115,7 @@ const TutorialSidebar = () => {
             <LogOut className="w-5 h-5 shrink-0 text-destructive" />
             {!isCollapsed && <span className="whitespace-nowrap font-medium text-destructive">Logout</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Logout
               </div>
             )}
@@ -143,7 +143,7 @@ const TutorialSidebar = () => {
           </svg>
           {!isCollapsed && <span className="sidebar-label">Collapse</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Expand
             </div>
           )}

@@ -42,7 +42,7 @@ const TutorialTopbar = () => {
             <p className="text-sm font-medium leading-none">{user?.name || "Student"}</p>
             <p className="text-xs text-muted-foreground mt-1">Profile & Settings</p>
           </div>
-          <div className="w-9 h-9 rounded-[var(--radius-md)] bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shadow-sm border border-primary/20">
+          <div className="w-9 h-9 rounded-[var(--radius-md)] bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shadow-[var(--shadow-sm)] border border-primary/20">
             {(user?.name || "S")[0].toUpperCase()}
           </div>
         </div>

@@ -272,7 +272,7 @@ export const EmptyState = React.memo(({
       className
     )}>
       {Icon && (
-        <div className="w-16 h-16 rounded-[var(--radius-lg)] bg-[var(--primary)]/[0.03] border border-[var(--primary)]/10 flex items-center justify-center mb-5 text-muted-foreground group-hover:text-[var(--primary)] group-hover:scale-105 transition-all duration-300 shadow-sm">
+        <div className="w-16 h-16 rounded-[var(--radius-lg)] bg-[var(--primary)]/[0.03] border border-[var(--primary)]/10 flex items-center justify-center mb-5 text-muted-foreground group-hover:text-[var(--primary)] group-hover:scale-105 transition-all duration-300 shadow-[var(--shadow-sm)]">
           <Icon className="w-7 h-7 text-muted-foreground group-hover:text-[var(--primary)] transition-colors duration-300" />
         </div>
       )}

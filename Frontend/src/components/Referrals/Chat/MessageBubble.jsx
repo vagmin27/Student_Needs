@@ -77,7 +77,7 @@ export function MessageBubble({
             <a 
               href={downloadUrl} 
               download={name}
-              className="p-1.5 bg-black/60 rounded-full text-white hover:bg-black/80 transition-colors"
+              className="p-1.5 bg-background/60 rounded-full text-white hover:bg-black/80 transition-colors"
               title="Download image"
             >
               <Download className="w-3.5 h-3.5" />

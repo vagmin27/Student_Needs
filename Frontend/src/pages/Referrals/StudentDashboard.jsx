@@ -292,7 +292,7 @@ export function StudentDashboard() {
           <div className="flex flex-col gap-2 w-full">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="font-semibold text-foreground dark:text-slate-100">
                 Application Submitted Successfully
               </span>
             </div>
@@ -301,7 +301,7 @@ export function StudentDashboard() {
                 toast.dismiss();
                 navigate(`/referrals/chat?chatId=${chatId}`);
               }}
-              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-[var(--radius-sm)] shadow-sm transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
+              className="mt-1 px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-[var(--radius-sm)] shadow-[var(--shadow-sm)] transition-all text-center flex items-center justify-center gap-1.5 w-full sm:w-auto self-start font-medium"
             >
               Message Alumni
             </button>

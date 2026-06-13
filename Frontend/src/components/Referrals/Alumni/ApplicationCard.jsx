@@ -68,7 +68,7 @@ export function ApplicationCard({
   };
 
   return (
-    <div className="bg-card/40 backdrop-blur-md rounded-[var(--radius-lg)] p-6 border border-border shadow-lg hover:border-primary/30 transition-all duration-300">
+    <div className="bg-card/40 backdrop-blur-md rounded-[var(--radius-lg)] p-6 border border-border shadow-[var(--shadow-lg)] hover:border-primary/30 transition-all duration-300">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start gap-4">
           {/* Profile Image */}
@@ -184,7 +184,7 @@ export function ApplicationCard({
           <Button
             size="sm"
             onClick={handleApprove}
-            className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-medium shadow-md shadow-emerald-950/20"
+            className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-medium shadow-[var(--shadow-md)] shadow-emerald-950/20"
           >
             <Check className="w-4 h-4 mr-1.5" />
             Approve

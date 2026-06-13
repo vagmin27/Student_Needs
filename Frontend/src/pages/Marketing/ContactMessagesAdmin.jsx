@@ -113,7 +113,7 @@ export default function ContactMessagesAdmin() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 select-none">
         {/* Search bar */}
         <div className="relative">
-          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
+          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground pointer-events-none">
             <Search className="w-4 h-4" />
           </span>
           <input
@@ -156,7 +156,7 @@ export default function ContactMessagesAdmin() {
                   <span className="text-[10px] text-muted-foreground">&lt;{msg.email}&gt;</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[9px] text-slate-500 flex items-center gap-1">
+                  <span className="text-[9px] text-muted-foreground flex items-center gap-1">
                     <Calendar className="w-3 h-3" /> {new Date(msg.createdAt).toLocaleDateString()}
                   </span>
                   <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded ${msg.isRead ? "bg-slate-800 text-slate-400" : "bg-primary/20 text-primary border border-primary/25 animate-pulse"}`}>
