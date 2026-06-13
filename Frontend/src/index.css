@@ -14,6 +14,95 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
 
+:root {
+  --bg-main-page: #ffffff;
+  --bg-surface-1: #f8fafc; /* elevated dropdowns, popovers, modals */
+  --bg-surface-2: #f0f4f9; /* sidebar, cards, panels */
+  --bg-surface-3: #e9eef6; /* hovers, active element bg */
+
+  --text-primary: #1f1f1f;
+  --text-secondary: #474747;
+
+  --nav-accent: #1a73e8;
+
+  --border-subtle: #dde3ea;
+
+  --focus-ring: rgba(26, 115, 232, 0.25);
+  --active-bg: rgba(26, 115, 232, 0.12);
+
+  --theme-transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    fill 0.3s ease,
+    stroke 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --bg-main-page: #131314;
+  --bg-surface-1: #1b1c1d;
+  --bg-surface-2: #1e1f20;
+  --bg-surface-3: #282a2c;
+
+  --text-primary: #e3e3e3;
+  --text-secondary: #c4c7c5;
+
+  --nav-accent: #7fc0ff;
+
+  --border-subtle: #444746;
+
+  --focus-ring: rgba(127, 192, 255, 0.35);
+  --active-bg: rgba(127, 192, 255, 0.15);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background-color: var(--bg-main-page);
+  color: var(--text-primary);
+  transition: var(--theme-transition);
+}
+
+/* --- Accessibility Focus Rules --- */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: 2px;
+}
+
+/* --- Reduced Motion Support --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* --- Scrollbar Theming --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nav-accent);
+}
+
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

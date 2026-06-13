@@ -131,7 +131,7 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     padding: "15px 40px",
-    background: "#8fa79a",
+    background: "var(--bg-surface-2)",
     color: "var(--text-white)",
   },
 
@@ -193,7 +193,7 @@ const styles = {
   submit: {
     marginTop: "15px",
     padding: "12px",
-    background: "#ff7a2f",
+    background: "var(--nav-accent)",
     border: "none",
     color: "var(--text-white)",
     fontWeight: "bold",
@@ -202,7 +202,7 @@ const styles = {
   },
 
   link: {
-    color: "#ff7a2f",
+    color: "var(--nav-accent)",
     cursor: "pointer",
     fontWeight: "bold",
   },
