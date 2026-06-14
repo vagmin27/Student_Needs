@@ -21,6 +21,13 @@
   overflow: hidden;
 }
 
+[data-theme="dark"] .premium-card,
+[data-theme="dark"] .glass-card,
+[data-theme="dark"] .premium-dashboard-card {
+  background: var(--card-bg);
+}
+
+
 .premium-card:hover,
 .glass-card:hover,
 .premium-dashboard-card:hover {
@@ -93,7 +100,7 @@
 .btn-danger {
   background-color: var(--danger-bg);
   color: var(--danger);
-  border-color: rgba(155, 34, 38, 0.2);
+  border-color: var(--danger);
 }
 .btn-danger:hover {
   background-color: var(--danger);
@@ -104,7 +111,7 @@
 .btn-success {
   background-color: var(--success-bg);
   color: var(--success);
-  border-color: rgba(44, 110, 73, 0.2);
+  border-color: var(--success);
 }
 .btn-success:hover {
   background-color: var(--success);
@@ -247,22 +254,22 @@ tbody tr:hover {
 .badge-success {
   background-color: var(--success-bg);
   color: var(--success);
-  border-color: rgba(44, 110, 73, 0.2);
+  border-color: var(--success);
 }
 .badge-warning {
   background-color: var(--warning-bg);
   color: var(--warning);
-  border-color: rgba(166, 124, 0, 0.2);
+  border-color: var(--warning);
 }
 .badge-danger {
   background-color: var(--danger-bg);
   color: var(--danger);
-  border-color: rgba(155, 34, 38, 0.2);
+  border-color: var(--danger);
 }
 .badge-info {
   background-color: var(--info-bg);
   color: var(--info);
-  border-color: rgba(140, 98, 57, 0.2);
+  border-color: var(--info);
 }
 .badge-neutral {
   background-color: var(--neutral-bg);
@@ -275,12 +282,12 @@ tbody tr:hover {
 .dialog-overlay {
   backdrop-filter: var(--glass-blur) !important;
   -webkit-backdrop-filter: var(--glass-blur) !important;
-  background-color: rgba(15, 26, 36, 0.5) !important;
+  background-color: var(--glass-bg) !important;
 }
 
 .light-theme .modal-backdrop,
 .light-theme .dialog-overlay {
-  background-color: rgba(26, 37, 48, 0.25) !important;
+  background-color: var(--glass-bg) !important;
 }
 
 /* ======================================================

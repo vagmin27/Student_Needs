@@ -867,11 +867,12 @@ function App() {
             toastOptions={{
               duration: 3500,
               style: {
-                background: "#1e293b",
-                color: "#f1f5f9",
-                border: "1px solid #334155",
+                background: "var(--bg-nav-container)",
+                color: "var(--text-primary)",
+                border: "1px solid var(--border-subtle)",
                 fontFamily: "Inter, sans-serif",
                 fontSize: "14px",
+                transition: "var(--theme-transition)",
               },
             }}
           />

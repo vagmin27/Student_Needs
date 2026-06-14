@@ -141,9 +141,9 @@ const styles = {
 
   navBtn: {
     padding: "8px 16px",
-    border: "1px solid var(--text-white)",
+    border: "1px solid var(--border-subtle)",
     background: "transparent",
-    color: "var(--text-white)",
+    color: "var(--text-primary)",
     cursor: "pointer",
     borderRadius: "4px",
   },
@@ -195,7 +195,7 @@ const styles = {
     padding: "12px",
     background: "var(--nav-accent)",
     border: "none",
-    color: "var(--text-white)",
+    color: "var(--text-button)",
     fontWeight: "bold",
     borderRadius: "6px",
     cursor: "pointer",

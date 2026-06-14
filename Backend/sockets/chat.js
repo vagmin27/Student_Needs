@@ -1,5 +1,4 @@
-// Map to track online users and their active connection counts
-export const onlineUsers = new Map();
+// Removed local onlineUsers map, presence is handled by Backend/sockets/index.js
 
 export const registerChatHandlers = (io, socket) => {
   const userId = socket.user.id || socket.user._id;
@@ -7,25 +6,6 @@ export const registerChatHandlers = (io, socket) => {
 
   const stringUserId = userId.toString();
 
-  // Handle Online Presence
-  const currentConnections = onlineUsers.get(stringUserId) || 0;
-  onlineUsers.set(stringUserId, currentConnections + 1);
-
-  if (currentConnections === 0) {
-    // Broadcast that this user came online
-    io.emit("user_status", {
-      userId: stringUserId,
-      status: "online",
-      lastSeen: new Date()
-    });
-  }
-
-  // Socket can request to get online list on connection
-  socket.on("get_online_users", (callback) => {
-    if (typeof callback === "function") {
-      callback(Array.from(onlineUsers.keys()));
-    }
-  });
 
   // Handle Typing indicator
   socket.on("typing", async (data) => {
@@ -91,19 +71,4 @@ export const registerChatHandlers = (io, socket) => {
     }
   });
 
-  // Handle Disconnect (clean up presence)
-  socket.on("disconnect", () => {
-    const activeConns = onlineUsers.get(stringUserId) || 0;
-    if (activeConns <= 1) {
-      onlineUsers.delete(stringUserId);
-      // Broadcast that this user went offline
-      io.emit("user_status", {
-        userId: stringUserId,
-        status: "offline",
-        lastSeen: new Date()
-      });
-    } else {
-      onlineUsers.set(stringUserId, activeConns - 1);
-    }
-  });
 };

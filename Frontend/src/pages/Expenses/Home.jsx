@@ -215,7 +215,7 @@ const Home = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
             <span className="text-brand-primary font-mont">Expense</span> Dashboard
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
@@ -316,11 +316,11 @@ const Home = () => {
           {/* Charts Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {isLoading ? (
-              <div className="glass-card flex flex-col h-[320px]">
+              <div className="glass-card flex flex-col h-[320px] gap-4">
                 <Skeleton type="chart" />
               </div>
             ) : userexp.length === 0 ? (
-              <div className="glass-card flex flex-col h-[320px] justify-center items-center">
+              <div className="glass-card flex flex-col h-[320px] justify-center items-center gap-4">
                 <EmptyState title="No Trend Data" message="Add transactions to view monthly progress." />
               </div>
             ) : (
@@ -328,11 +328,11 @@ const Home = () => {
             )}
 
             {isLoading ? (
-              <div className="glass-card flex flex-col h-[320px]">
+              <div className="glass-card flex flex-col h-[320px] gap-4">
                 <Skeleton type="chart" />
               </div>
             ) : userexp.length === 0 ? (
-              <div className="glass-card flex flex-col h-[320px] justify-center items-center">
+              <div className="glass-card flex flex-col h-[320px] justify-center items-center gap-4">
                 <EmptyState title="No Breakdown Found" />
               </div>
             ) : (
@@ -539,7 +539,7 @@ const Home = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">Category</label>
               <select
@@ -652,7 +652,7 @@ const Home = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">Priority Level</label>
               <select
@@ -751,7 +751,7 @@ const Home = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-muted-foreground">Priority Level</label>
                 <select

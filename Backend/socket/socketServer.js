@@ -5,34 +5,21 @@ import Tutor from "../models/Tutorials/Tutor.js";
 import User from "../models/Tutorials/user.js";
 
 // Global online users map: Map<userId, socketId>
-export const onlineTutorUsers = new Map();
+// Removed onlineTutorUsers, handled globally in Backend/sockets/index.js
 
 export const registerTutorChatHandlers = (io, socket) => {
   const userId = socket.user?.id;
   if (!userId) return;
 
   const stringUserId = userId.toString();
-  
-  // Track online presence
-  onlineTutorUsers.set(stringUserId, socket.id);
-  
-  // Broadcast user is online
-  io.emit("userOnline", { userId: stringUserId });
-  console.log(`🔌 User Online: ${stringUserId} (Socket: ${socket.id})`);
 
-  // Provide initial list of online users on request
-  socket.on("get_online_users", (callback) => {
-    if (typeof callback === "function") {
-      callback(Array.from(onlineTutorUsers.keys()));
-    }
-  });
 
   // 1. Join Conversation Room
   socket.on("joinConversation", (data) => {
     const { conversationId } = data || {};
     if (conversationId) {
       socket.join(conversationId);
-      console.log(`🗣️ Socket ${socket.id} joined conversation: ${conversationId}`);
+      console.log(`[JOIN CONVERSATION] timestamp=${new Date().toISOString()} socketId=${socket.id} userId=${stringUserId} conversationId=${conversationId}`);
     }
   });
 
@@ -172,9 +159,8 @@ export const registerTutorChatHandlers = (io, socket) => {
   // 6. Future-ready WebRTC Video Call Signaling Hooks
   socket.on("callUser", (data) => {
     const { userToCall, signalData, from, name } = data || {};
-    const recipientSocket = onlineTutorUsers.get(userToCall?.toString());
-    if (recipientSocket) {
-      io.to(recipientSocket).emit("callUser", {
+    if (userToCall) {
+      io.to(`user:${userToCall.toString()}`).emit("callUser", {
         signal: signalData,
         from,
         name,
@@ -184,17 +170,15 @@ export const registerTutorChatHandlers = (io, socket) => {
 
   socket.on("answerCall", (data) => {
     const { to, signal } = data || {};
-    const recipientSocket = onlineTutorUsers.get(to?.toString());
-    if (recipientSocket) {
-      io.to(recipientSocket).emit("callAccepted", signal);
+    if (to) {
+      io.to(`user:${to.toString()}`).emit("callAccepted", signal);
     }
   });
 
   socket.on("endCall", (data) => {
     const { to } = data || {};
-    const recipientSocket = onlineTutorUsers.get(to?.toString());
-    if (recipientSocket) {
-      io.to(recipientSocket).emit("callEnded");
+    if (to) {
+      io.to(`user:${to.toString()}`).emit("callEnded");
     }
   });
 
@@ -210,10 +194,7 @@ export const registerTutorChatHandlers = (io, socket) => {
 
   // Disconnect handler
   socket.on("disconnect", async () => {
-    onlineTutorUsers.delete(stringUserId);
-    io.emit("userOffline", { userId: stringUserId, lastSeen: new Date() });
-    console.log(`🔌 User Offline: ${stringUserId}`);
-
+    // Presence is handled by Backend/sockets/index.js
     // Update database last seen timestamp
     try {
       await Tutor.findByIdAndUpdate(stringUserId, { lastSeen: new Date() });

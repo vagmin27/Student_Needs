@@ -119,7 +119,7 @@ const Sidebar = ({ className, role = "student" }) => {
   return (
     <div
       className={cn(
-        "flex flex-col h-full bg-card overflow-y-auto overflow-x-hidden select-none sidebar-transition",
+        "flex flex-col h-full bg-card overflow-y-auto overflow-x-hidden select-none sidebar-transition gemini-sidebar",
         isCollapsed ? "px-2 py-6" : "p-4",
         className
       )}

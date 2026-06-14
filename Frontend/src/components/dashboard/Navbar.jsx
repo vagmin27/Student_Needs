@@ -39,7 +39,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
       STUDENT_MODULE_PATHS.some((p) => location.pathname.startsWith(p)));
 
   const handleHamburgerClick = () => {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1024) {
       toggleMobileMenu();
     } else {
       toggleSidebar();
@@ -47,7 +47,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
   };
 
   return (
-    <header className="h-16 border-b border-border/40 bg-background/70 backdrop-blur-[20px] sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 transition-all duration-300">
+    <header className="h-16 border-b border-border/40 bg-background/70 backdrop-blur-[20px] sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 transition-all duration-300 gemini-navbar">
       <div className="flex items-center gap-3 min-w-0">
         <button
           onClick={handleHamburgerClick}

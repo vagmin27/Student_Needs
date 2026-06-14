@@ -484,6 +484,7 @@ const UnifiedDashboard = () => {
               size="sm"
               onClick={() => navigate("/expenses-tracker")}
               rightIcon={ArrowRight}
+              className="dark:text-[var(--nav-accent)] dark:border-[var(--nav-accent)] dark:hover:bg-[var(--nav-accent)] dark:hover:text-[var(--text-button)]"
             >
               Expense Tracker
             </PremiumButton>
@@ -547,7 +548,7 @@ const UnifiedDashboard = () => {
               }
             >
               {upcomingClasses.length === 0 ? (
-                <div className="flex flex-col items-center justify-center text-center p-6 min-h-[290px] w-full max-w-[420px] mx-auto select-none">
+                <div className="flex flex-col items-center justify-center text-center p-6 min-h-[290px] w-full max-w-[420px] mx-auto select-none gap-4">
                   {/* Icon */}
                   <div className="w-14 h-14 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5 shrink-0 border border-[var(--primary)]/20 shadow-[var(--shadow-sm)]">
                     <Clock className="w-6 h-6" />
@@ -829,7 +830,7 @@ const UnifiedDashboard = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground">Category</label>
               <select

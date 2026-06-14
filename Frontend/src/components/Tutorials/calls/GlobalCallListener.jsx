@@ -16,6 +16,7 @@ export const GlobalCallListener = () => {
 
     const handleIncomingCall = (data) => {
       console.log("[CALL RECEIVED] frontend");
+      console.log("[RECEIVER GOT CALL]");
       if (!callState) {
         setIncomingCallData(data);
         setCallState("incoming");
@@ -23,6 +24,7 @@ export const GlobalCallListener = () => {
     };
     
     const handleCallAccepted = () => {
+      console.log("[CALL ACCEPTED]");
       setCallState("active");
     };
 

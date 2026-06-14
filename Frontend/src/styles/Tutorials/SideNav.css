@@ -66,6 +66,20 @@
   font-weight: 600;
 }
 
+[data-theme="dark"] .sidenav__list-item a:hover {
+  color: var(--nav-accent) !important;
+}
+
+[data-theme="dark"] .sidenav__list-item a:focus,
+[data-theme="dark"] .sidenav__list-item a.active {
+  color: var(--nav-accent) !important;
+  box-shadow: inset 3px 0 0 0 var(--nav-accent) !important;
+}
+
+[data-theme="dark"] .sideNavIcon {
+  color: var(--nav-accent) !important;
+}
+
 /* REMOVE OLD BEHAVIOR */
 .sidenav__list-item:hover {
   width: auto; /* ❌ remove expanding bug */

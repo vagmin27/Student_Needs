@@ -115,7 +115,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--border-subtle);
   border-radius: 10px;
 }
 
@@ -175,7 +175,7 @@ img {
 ====================================================== */
 
 .read-the-docs {
-  color: #888;
+  color: var(--text-secondary);
 }
 
 /* ======================================================
@@ -260,7 +260,7 @@ img {
 
 .uc-primary-button {
   background: var(--primary);
-  color: #ffffff !important;
+  color: var(--bg-nav-container) !important;
 }
 
 .uc-primary-button:hover {
@@ -1026,7 +1026,7 @@ img {
   width: 22px;
   height: 22px;
   background: var(--primary);
-  color: #ffffff;
+  color: var(--bg-nav-container);
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -1213,7 +1213,7 @@ img {
 
 .eco-node.career {
   background: var(--primary);
-  color: #ffffff !important;
+  color: var(--bg-nav-container) !important;
   border-color: var(--primary);
 }
 
@@ -1262,7 +1262,7 @@ img {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  color: #ffffff !important;
+  color: var(--bg-nav-container) !important;
   font-size: 11px;
   font-weight: 800;
   display: grid;
@@ -1403,7 +1403,7 @@ img {
 .light-theme .browser-content,
 .light-theme .tablet-content,
 .light-theme .mobile-content {
-  background: #ffffff !important;
+  background: var(--bg-nav-container) !important;
   color: #0f172a !important;
 }
 
@@ -1425,9 +1425,9 @@ img {
   color: #0f172a !important;
 }
 
-.light-theme .browser-content .text-white,
-.light-theme .tablet-content .text-white,
-.light-theme .mobile-content .text-white {
+.light-theme .browser-content .text-\[var\(--text-primary\)\],
+.light-theme .tablet-content .text-\[var\(--text-primary\)\],
+.light-theme .mobile-content .text-\[var\(--text-primary\)\] {
   color: #0f172a !important;
 }
 
@@ -1802,7 +1802,7 @@ body,
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent-purple) 100%);
-  color: #ffffff !important;
+  color: var(--bg-nav-container) !important;
   border-radius: var(--radius-sm);
   font-weight: 600;
   padding: 0 24px;

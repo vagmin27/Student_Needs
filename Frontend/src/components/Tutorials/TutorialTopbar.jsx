@@ -13,7 +13,7 @@ const TutorialTopbar = () => {
   return (
     <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-4 sticky top-0 z-30">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={toggleMobileMenu} className="md:hidden">
+        <Button variant="ghost" size="icon" onClick={toggleMobileMenu} className="lg:hidden">
           <Menu className="w-5 h-5" />
         </Button>
         <h1 className="text-xl font-serif font-bold tracking-tight hidden sm:block">Tutorials</h1>

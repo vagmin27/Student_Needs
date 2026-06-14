@@ -43,7 +43,7 @@ function Navbar() {
       : "navAll";
 
   return (
-    <nav id="mainNavbar" className={navClass}>
+    <nav id="mainNavbar" className={`${navClass} gemini-navbar`}>
       <div className="navContainer">
 
         {/* LOGO */}

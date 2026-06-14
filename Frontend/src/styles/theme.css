@@ -2,6 +2,31 @@
    GLOBAL THEME TOKENS — Student Needs Platform
    ====================================================== */
 
+:root {
+  --bg-main-page: #f4f1fb;        /* soft lavender canvas, was #ffffff/#f0f4f9 */
+  --bg-nav-container: #ffffff;     /* white cards/sidebar, was #f0f4f9 */
+  --bg-nav-hover: #ece6fb;          /* light purple hover, was #e1e6eb */
+  --text-primary: #1f1f1f;          /* unchanged */
+  --text-secondary: #6b6b6b;        /* unchanged-ish */
+  --nav-accent: #6c4cf1;            /* purple accent, was #1a73e8 */
+  --border-subtle: #e4def9;         /* lavender-tinted border, was #dde3ea */
+  --theme-transition:
+    background-color .3s ease,
+    color .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+[data-theme="dark"] {
+  --bg-main-page: #131314;
+  --bg-nav-container: #1e1f20;
+  --bg-nav-hover: #282a2c;
+  --text-primary: #e3e3e3;
+  --text-secondary: #c4c7c5;
+  --nav-accent: #7fc0ff;
+  --border-subtle: #444746;
+}
+
 :root,
 .light-theme {
   /* Primary Accent: Google Blue */

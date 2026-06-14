@@ -13,6 +13,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
+import { useTheme } from "../../context/ThemeContext";
 
 const COLORS = ["#6366f1", "#22c55e", "#ef4444", "#f59e0b", "#38bdf8", "#a855f7"];
 
@@ -32,6 +33,11 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectId = "" }) {
+  const { isDark } = useTheme();
+  const currentColors = isDark
+    ? COLORS
+    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
+
   const barData = bySubject.map((s) => ({
     subject: s.subjectName || s.subject,
     percentage: s.percentage ?? 0,
@@ -66,7 +72,7 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
                   <XAxis dataKey="subject" tick={{ fontSize: 11 }} />
                   <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="percentage" name="Attendance %" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#6c4cf1"} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -87,7 +93,7 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
                       label={({ subject, percentage }) => `${subject} ${percentage}%`}
                     >
                       {pieData.map((_, i) => (
-                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                        <Cell key={i} fill={currentColors[i % currentColors.length]} />
                       ))}
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />

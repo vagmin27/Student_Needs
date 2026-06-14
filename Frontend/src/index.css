@@ -5,6 +5,7 @@
 @import "tailwindcss";
 @import "./styles/variables.css";
 @import "./styles/theme.css";
+@import "./styles/ui-tokens.css";
 @import "./styles/layout.css";
 @import "./styles/components.css";
 @import "./styles/utilities.css";
@@ -149,12 +150,21 @@ a:focus-visible {
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-[var(--border-subtle)];
     box-sizing: border-box;
   }
 
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background: var(--bg-main-page);
+    color: var(--text-primary);
+    transition: var(--theme-transition);
+  }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply font-sans antialiased;
     font-feature-settings: "cv11", "ss01", "ss03";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -165,7 +175,7 @@ a:focus-visible {
     color: var(--text-heading);
   }
 
-  p, li, span, div {
+  p, li {
     color: var(--text-paragraph);
   }
 
@@ -351,6 +361,56 @@ html.lenis body {
   overflow: hidden;
 }
 
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
+  /* ======================================================
+     GEMINI THEME UTILITIES
+     ====================================================== */
+  .gemini-sidebar {
+    background: var(--bg-nav-container) !important;
+    border-color: var(--border-subtle) !important;
+    border-right-width: 1px;
+    color: var(--text-primary) !important;
+    transition: var(--theme-transition);
+  }
+
+  .gemini-navbar {
+    background: var(--bg-nav-container) !important;
+    border-color: var(--border-subtle) !important;
+    border-bottom-width: 1px;
+    color: var(--text-primary) !important;
+    transition: var(--theme-transition);
+  }
+
+  .gemini-card {
+    background: var(--bg-nav-container) !important;
+    border: 1px solid var(--border-subtle) !important;
+    transition: var(--theme-transition);
+  }
+
+  .sidebar-link-btn {
+    color: var(--text-secondary) !important;
+    transition: var(--theme-transition);
+  }
+
+  .sidebar-link-btn:hover {
+    background: var(--bg-nav-hover) !important;
+  }
+
+
+  .sidebar-link-btn:hover {
+    background: var(--bg-nav-hover) !important;
+  }
+
+  .sidebar-link-btn.active-link,
+  .active-link {
+    color: var(--nav-accent) !important;
+  }
+
+  [data-theme="dark"] .sidebar-link-btn.active-link,
+  [data-theme="dark"] .active-link {
+    background: rgba(127, 192, 255, 0.15) !important;
+  }
+

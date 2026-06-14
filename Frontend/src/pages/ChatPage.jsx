@@ -410,6 +410,8 @@ export default function ChatPage() {
       >
         <ChatWindow
           chat={activeChat}
+          socket={socket}
+          waitForSocket={waitForSocket}
           messages={messages}
           loadingMessages={loadingMessages}
           onSendMessage={handleSendMessage}

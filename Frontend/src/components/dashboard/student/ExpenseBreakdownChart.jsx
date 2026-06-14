@@ -3,6 +3,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recha
 import { ChartContainer } from "../shared/ChartContainer";
 import { EmptyState } from "../shared/EmptyState";
 import { Wallet } from "lucide-react";
+import { useTheme } from "../../../context/ThemeContext";
 
 const COLORS = [
   '#D4A373', // Primary Gold
@@ -13,6 +14,12 @@ const COLORS = [
 ];
 
 export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
+  const { isDark } = useTheme();
+  const colors = useMemo(() => isDark 
+    ? COLORS
+    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"]
+  , [isDark]);
+
   const chartData = useMemo(() => data?.filter(d => d.amount > 0), [data]);
 
   if (!chartData || chartData.length === 0) {
@@ -40,7 +47,7 @@ export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
           animationDuration={700}
         >
           {chartData?.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>
         <Tooltip 

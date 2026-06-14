@@ -1316,7 +1316,7 @@ function RoleAuthShell({
                     <div className="flex justify-end mt-1">
                       <Link
                         to={`/forgot-password?role=${role}`}
-                        className="text-xs text-[var(--primary)] hover:text-indigo-300 font-semibold transition-colors"
+                        className="text-xs text-[var(--primary)] hover:text-[var(--nav-accent)] font-semibold transition-colors"
                       >
                         Forgot Password?
                       </Link>
@@ -1333,7 +1333,7 @@ function RoleAuthShell({
               <label className="flex items-center gap-2 mt-2 mb-4 text-sm text-muted-foreground cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-indigo-950/60 bg-indigo-950/20 text-[var(--primary)] focus:ring-[var(--primary)]/20/50 cursor-pointer"
+                  className="w-4 h-4 rounded border-[var(--border-subtle)] bg-[var(--bg-nav-container)] text-[var(--primary)] focus:ring-[var(--primary)]/20 cursor-pointer"
                 />
                 <span>Remember me</span>
               </label>

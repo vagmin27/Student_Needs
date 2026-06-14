@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import {
@@ -13,8 +12,8 @@ import {
   MdMenu,
   MdClose,
 } from "react-icons/md";
-import { FiUser } from "react-icons/fi";
 import toast from "react-hot-toast";
+import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext";
 
 const teacherNav = [
   { label: "Dashboard",      to: "/attendance/dashboard",      icon: <MdDashboard /> },
@@ -29,10 +28,10 @@ const studentNav = [
   { label: "My Dashboard",   to: "/student/dashboard", icon: <MdDashboard /> },
 ];
 
-const DashboardLayout = ({ children, pageTitle }) => {
+const DashboardLayoutContent = ({ children, pageTitle }) => {
   const { user, logout, isTeacher } = useAuth();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { isCollapsed, isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useSidebar();
 
   const navItems = isTeacher ? teacherNav : studentNav;
 
@@ -49,19 +48,19 @@ const DashboardLayout = ({ children, pageTitle }) => {
   return (
     <div className="layout">
       {/* Overlay for mobile */}
-      {sidebarOpen && (
+      {isMobileMenuOpen && (
         <div
-          onClick={() => setSidebarOpen(false)}
+          onClick={closeMobileMenu}
           style={{
-            position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)",
-            zIndex: 99, display: "none",
+            position: "fixed", inset: 0, background: "var(--glass-bg)",
+            zIndex: 99,
           }}
           className="sidebar-overlay"
         />
       )}
 
       {/* SIDEBAR */}
-      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+      <aside className={`sidebar ${isMobileMenuOpen ? "open" : ""} ${isCollapsed ? "collapsed" : ""}`}>
         <div className="sidebar-header">
           <div className="sidebar-brand">
             <div className="sidebar-brand-icon">
@@ -83,7 +82,7 @@ const DashboardLayout = ({ children, pageTitle }) => {
               key={item.to}
               to={item.to}
               className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-              onClick={() => setSidebarOpen(false)}
+              onClick={closeMobileMenu}
             >
               {item.icon}
               {item.label}
@@ -109,8 +108,8 @@ const DashboardLayout = ({ children, pageTitle }) => {
       <div className="main-content">
         <header className="topbar">
           <div className="topbar-left">
-            <button className="hamburger" onClick={() => setSidebarOpen(!sidebarOpen)}>
-              {sidebarOpen ? <MdClose /> : <MdMenu />}
+            <button className="hamburger" onClick={toggleMobileMenu}>
+              {isMobileMenuOpen ? <MdClose /> : <MdMenu />}
             </button>
             <span className="topbar-title">{pageTitle || "Dashboard"}</span>
           </div>
@@ -125,6 +124,16 @@ const DashboardLayout = ({ children, pageTitle }) => {
         <main className="page-content">{children}</main>
       </div>
     </div>
+  );
+};
+
+const DashboardLayout = ({ children, pageTitle }) => {
+  return (
+    <SidebarProvider>
+      <DashboardLayoutContent pageTitle={pageTitle}>
+        {children}
+      </DashboardLayoutContent>
+    </SidebarProvider>
   );
 };
 

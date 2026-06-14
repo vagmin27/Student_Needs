@@ -351,7 +351,7 @@ export function StudentDashboard() {
       {/* Header */}
       {!isReferralRoute && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-          <div className="flex flex-col items-start justify-center">
+          <div className="flex flex-col items-start justify-center gap-4">
             <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">
               Student Referral Dashboard
             </h1>

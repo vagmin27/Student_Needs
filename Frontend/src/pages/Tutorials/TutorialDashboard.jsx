@@ -60,7 +60,7 @@ const LoadingSkeleton = () => (
 );
 
 const EmptyExperience = () => (
-  <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
+  <div className="flex flex-col items-center justify-center py-20 px-4 text-center gap-4">
     <div className="w-24 h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
       <GraduationCap className="w-12 h-12" />
     </div>

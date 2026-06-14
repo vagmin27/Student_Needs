@@ -85,7 +85,7 @@ const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-              />
+              className="rounded-[var(--input-radius)]" />
             </label>
             {errors.name && <p className="text-xs text-destructive mt-1">{errors.name}</p>}
 
@@ -98,7 +98,7 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-              />
+              className="rounded-[var(--input-radius)]" />
             </label>
             {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
 
@@ -125,10 +125,10 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="pr-10"
+                  className="pr-10 rounded-[var(--input-radius)]"
                 />
                 <span 
-                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-muted-foreground" 
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--text-secondary)]" 
                   onClick={() => setShowPass(!showPass)}
                 >
                   {showPass ? <FiEyeOff /> : <FiEye />}
@@ -147,10 +147,10 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="pr-10"
+                  className="pr-10 rounded-[var(--input-radius)]"
                 />
                 <span 
-                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-muted-foreground" 
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--text-secondary)]" 
                   onClick={() => setShowConfirm(!showConfirm)}
                 >
                   {showConfirm ? <FiEyeOff /> : <FiEye />}
@@ -159,7 +159,7 @@ const Register = () => {
             </label>
             {errors.confirmPassword && <p className="text-xs text-destructive mt-1">{errors.confirmPassword}</p>}
 
-            <button type="submit" className="uc-login-submit mt-1" disabled={loading}>
+            <button type="submit" className="uc-login-submit mt-1 rounded-[var(--button-radius)] transition-all hover:translate-y-[-2px] gap-6" disabled={loading}>
               {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>

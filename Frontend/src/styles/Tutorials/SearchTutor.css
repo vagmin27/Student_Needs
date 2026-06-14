@@ -38,7 +38,7 @@
 
 /* INPUT FOCUS */
 .searchTerm:focus {
-  background: var(--bg-hover, #f9fafb);
+  background: var(--bg-nav-hover);
 }
 
 /* BUTTON */

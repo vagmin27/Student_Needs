@@ -70,16 +70,26 @@ export const ChatWindow = ({
       toast.error(data.message || "User unavailable. Try later.");
     };
 
+    const handleCancelDuplicate = (data) => {
+      if (callState === "incoming") {
+        setIsCallLoading(false);
+        setCallState(null);
+        setIncomingCallData(null);
+      }
+    };
+
     socket.on("call:accepted", handleCallAccepted);
     socket.on("call:declined", handleCallDeclined);
     socket.on("call:error", handleCallError);
     socket.on("call:user_offline", handleUserOffline);
+    socket.on("call:cancel_duplicate", handleCancelDuplicate);
 
     return () => {
       socket.off("call:accepted", handleCallAccepted);
       socket.off("call:declined", handleCallDeclined);
       socket.off("call:error", handleCallError);
       socket.off("call:user_offline", handleUserOffline);
+      socket.off("call:cancel_duplicate", handleCancelDuplicate);
     };
   }, [socket, callState]);
 
@@ -118,6 +128,14 @@ export const ChatWindow = ({
     };
   }, [hasMore, onLoadMore, loadingMessages]);
 
+  const isOnline = chat ? onlineUsersList.has(chat.partner?._id?.toString()) : false;
+  // Adding log for testing
+  useEffect(() => {
+    if (chat?.partner?._id) {
+      console.log(`[ONLINE USERS RECEIVED] timestamp=${new Date().toISOString()} isOnline=${isOnline} partnerId=${chat.partner._id}`);
+    }
+  }, [isOnline, chat?.partner?._id]);
+
   if (!chat) {
     return (
       <div className="flex-1 h-full flex flex-col items-center justify-center text-center p-6 bg-card/40 select-none">
@@ -132,16 +150,41 @@ export const ChatWindow = ({
     );
   }
 
-  const isOnline = onlineUsersList.has(chat.partner?._id?.toString());
-
-  const handleStartCall = (type) => {
+  const handleStartCall = async (type) => {
+    if (isCallLoading || callState) {
+      console.log("[START CALL CLICKED] Blocked - call already in progress or loading");
+      return;
+    }
+    console.log(`[START CALL CLICKED] timestamp=${new Date().toISOString()} type=${type} conversationId=${chat?._id}`);
     if (!socket || !chat?.partner?._id) return;
     setIsCallLoading(true);
+
+    // Wait for socket to be ready
+    if (socket.waitForSocket) {
+      const isReady = await socket.waitForSocket();
+      if (!isReady) {
+        setIsCallLoading(false);
+        toast.error("Failed to connect to server");
+        return;
+      }
+    }
+
+    // Join conversation explicitly
+    socket.emit("joinConversation", { conversationId: chat._id });
+
+    console.log("[CALL DEBUG]", {
+      socketExists: !!socket,
+      socketConnected: socket?.connected,
+      waitForSocketExists: !!socket.waitForSocket
+    });
+
     setIncomingCallData({ type }); // store our own intent
     socket.emit("call:start", {
       conversationId: chat._id,
       receiverId: chat.partner._id,
       type
+    }, () => {
+      console.log("[CALL ACK RECEIVED]");
     });
     setCallState("calling");
   };

@@ -55,7 +55,7 @@ function ReviewModal({ handleModal, currTutor }) {
         height: "100vh",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "rgba(0,0,0,0.5)",
+        backgroundColor: "var(--glass-bg)",
       }}
     >
       <div className="modalContainerReview">

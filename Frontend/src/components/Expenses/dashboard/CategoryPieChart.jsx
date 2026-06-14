@@ -1,20 +1,24 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { sortCategoryWise } from '../../../utils/Expenses/seperator';
+import { useTheme } from '../../../context/ThemeContext';
 
 export function CategoryPieChart({ exdata }) {
+  const { isDark } = useTheme();
   const categories = ['Grocery', 'Vehicle', 'Shopping', 'Travel', 'Food', 'Fun', 'Other'];
   const totalexp = sortCategoryWise(exdata, categories);
 
-  const COLORS = [
-    'rgba(251, 146, 60, 0.8)',  // Orange
-    'rgba(96, 165, 250, 0.8)',  // Blue
-    'rgba(192, 132, 252, 0.8)', // Purple
-    'rgba(129, 140, 248, 0.8)', // Indigo
-    'rgba(251, 113, 133, 0.8)', // Rose
-    'rgba(52, 211, 153, 0.8)',  // Emerald
-    'rgba(148, 163, 184, 0.8)', // Slate
-  ];
+  const COLORS = isDark
+    ? [
+        'rgba(251, 146, 60, 0.8)',  // Orange
+        'rgba(96, 165, 250, 0.8)',  // Blue
+        'rgba(192, 132, 252, 0.8)', // Purple
+        'rgba(129, 140, 248, 0.8)', // Indigo
+        'rgba(251, 113, 133, 0.8)', // Rose
+        'rgba(52, 211, 153, 0.8)',  // Emerald
+        'rgba(148, 163, 184, 0.8)', // Slate
+      ]
+    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
 
   const chartData = categories?.map((cat, index) => ({
     name: cat,

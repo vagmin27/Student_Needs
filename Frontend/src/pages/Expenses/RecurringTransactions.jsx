@@ -204,7 +204,7 @@ const RecurringTransactions = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
             <span className="text-brand-primary">Automated</span> Payments
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
@@ -413,7 +413,7 @@ const RecurringTransactions = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-muted-foreground">
                 Amount (₹)
@@ -458,7 +458,7 @@ const RecurringTransactions = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 z-50 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 z-50 relative">
             <div className="space-y-2">
               <label className="text-sm font-medium text-muted-foreground">
                 Next Execution

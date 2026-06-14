@@ -23,7 +23,7 @@ const WorkspaceContent = () => {
         className={`fixed inset-y-0 left-0 z-50 bg-card border-r border-border sidebar-transition flex flex-col ${
           isMobileMenuOpen
             ? "translate-x-0 sidebar-expanded"
-            : "-translate-x-full md:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
+            : "-translate-x-full lg:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
         }`}
       >
         <TutorialSidebar />

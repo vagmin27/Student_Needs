@@ -55,9 +55,13 @@ export const VideoCallModal = ({
   // Sync internal machine with parent prop safely
   useEffect(() => {
     if (callState === "incoming" && (internalCallState === "idle" || internalCallState === "ended")) {
+      console.log("[MODAL OPENED]");
+      console.log(`[CALL MODAL OPEN] timestamp=${new Date().toISOString()} type=incoming conversationId=${conversationId}`);
       setInternalCallState("incoming");
       cleanupInProgress.current = false; // Reset cleanup lock
     } else if (callState === "calling" && (internalCallState === "idle" || internalCallState === "ended")) {
+      console.log("[MODAL OPENED]");
+      console.log(`[CALL MODAL OPEN] timestamp=${new Date().toISOString()} type=outgoing conversationId=${conversationId}`);
       setInternalCallState("connecting");
       cleanupInProgress.current = false; // Reset cleanup lock
       if (!callInitialized.current) {
@@ -284,6 +288,15 @@ export const VideoCallModal = ({
     try {
       const type = incomingCallData?.type || "video";
       console.log(`[CALL] Getting user media for type: ${type}`);
+      
+      console.log("[MEDIA CHECK]", {
+        protocol: window.location.protocol,
+        hostname: window.location.hostname,
+        secureContext: window.isSecureContext,
+        mediaDevices: !!navigator.mediaDevices,
+        getUserMedia: !!navigator.mediaDevices?.getUserMedia
+      });
+
       const stream = await navigator.mediaDevices.getUserMedia({
         video: type === "video",
         audio: true,
@@ -291,6 +304,7 @@ export const VideoCallModal = ({
       streamRef.current = stream;
       setLocalStream(stream);
       setIsVideoMuted(type !== "video");
+      console.log(`[LOCAL STREAM READY] timestamp=${new Date().toISOString()} hasVideo=${type === "video"} conversationId=${conversationId}`);
       return stream;
     } catch (error) {
       console.error("[ERROR] Media devices access denied:", error);
@@ -326,6 +340,7 @@ export const VideoCallModal = ({
     };
 
     peerConnectionRef.current.ontrack = (event) => {
+      console.log(`[REMOTE STREAM RECEIVED] timestamp=${new Date().toISOString()} conversationId=${conversationId}`);
       console.log("[PEER] Received remote track");
       setRemoteStream(event.streams[0]);
     };
@@ -425,7 +440,10 @@ export const VideoCallModal = ({
     setInternalCallState("accepting");
     if (onAccept) onAccept(); // Tell parent to hide incoming UI and set callState to active
     
-    socket.emit("call:accepted", { conversationId });
+    socket.emit("call:accepted", { 
+      conversationId,
+      callSessionId: incomingCallData?.callSessionId
+    });
     
     // Proactively initialize call constraints so peer exists before offer arrives
     if (!callInitialized.current) {
