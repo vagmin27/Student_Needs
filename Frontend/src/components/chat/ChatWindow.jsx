@@ -128,6 +128,14 @@ export const ChatWindow = ({
     };
   }, [hasMore, onLoadMore, loadingMessages]);
 
+  const isOnline = chat ? onlineUsersList.has(chat.partner?._id?.toString()) : false;
+  // Adding log for testing
+  useEffect(() => {
+    if (chat?.partner?._id) {
+      console.log(`[ONLINE USERS RECEIVED] timestamp=${new Date().toISOString()} isOnline=${isOnline} partnerId=${chat.partner._id}`);
+    }
+  }, [isOnline, chat?.partner?._id]);
+
   if (!chat) {
     return (
       <div className="flex-1 h-full flex flex-col items-center justify-center text-center p-6 bg-card/40 select-none">
@@ -141,14 +149,6 @@ export const ChatWindow = ({
       </div>
     );
   }
-
-  const isOnline = onlineUsersList.has(chat.partner?._id?.toString());
-  // Adding log for testing
-  useEffect(() => {
-    if (chat?.partner?._id) {
-      console.log(`[ONLINE USERS RECEIVED] timestamp=${new Date().toISOString()} isOnline=${isOnline} partnerId=${chat.partner._id}`);
-    }
-  }, [isOnline, chat?.partner?._id]);
 
   const handleStartCall = async (type) => {
     console.log(`[START CALL CLICKED] timestamp=${new Date().toISOString()} type=${type} conversationId=${chat?._id}`);
