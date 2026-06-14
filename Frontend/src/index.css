@@ -14,6 +14,37 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
 
+:root {
+  --bg-main-page: #ffffff;
+  --bg-nav-container: #f0f4f9;
+  --bg-nav-hover: #e1e6eb;
+
+  --text-primary: #1f1f1f;
+  --text-secondary: #474747;
+
+  --nav-accent: #1a73e8;
+
+  --border-subtle: #dde3ea;
+
+  --theme-transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --bg-main-page: #131314;
+  --bg-nav-container: #1e1f20;
+  --bg-nav-hover: #282a2c;
+
+  --text-primary: #e3e3e3;
+  --text-secondary: #c4c7c5;
+
+  --nav-accent: #7fc0ff;
+
+  --border-subtle: #444746;
+}
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -64,8 +95,17 @@
     box-sizing: border-box;
   }
 
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background-color: var(--bg-main-page);
+    color: var(--text-primary);
+    transition: var(--theme-transition);
+  }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply font-sans antialiased;
     font-feature-settings: "cv11", "ss01", "ss03";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -262,6 +302,46 @@ html.lenis body {
   overflow: hidden;
 }
 
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
+  /* ======================================================
+     GEMINI THEME UTILITIES
+     ====================================================== */
+  .gemini-sidebar {
+    background: var(--bg-nav-container) !important;
+    border-color: var(--border-subtle) !important;
+    border-right-width: 1px;
+    color: var(--text-primary) !important;
+  }
+
+  .gemini-navbar {
+    background: var(--bg-nav-container) !important;
+    border-color: var(--border-subtle) !important;
+    border-bottom-width: 1px;
+  }
+
+  .gemini-card {
+    background: var(--bg-nav-container) !important;
+    border: 1px solid var(--border-subtle) !important;
+  }
+
+  .sidebar-link-btn {
+    color: var(--text-secondary) !important;
+  }
+
+  .sidebar-link-btn:hover {
+    background: var(--bg-nav-hover) !important;
+  }
+
+  .sidebar-link-btn.active-link,
+  .active-link {
+    color: var(--nav-accent) !important;
+  }
+
+  [data-theme="dark"] .sidebar-link-btn.active-link,
+  [data-theme="dark"] .active-link {
+    background: rgba(127, 192, 255, 0.15) !important;
+  }
+

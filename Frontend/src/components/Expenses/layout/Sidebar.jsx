@@ -32,7 +32,7 @@ const Sidebar = () => {
 
   return (
     <div className={cn(
-      "flex flex-col h-full bg-card sidebar-transition select-none",
+      "flex flex-col h-full bg-card sidebar-transition select-none gemini-sidebar",
       isCollapsed ? "px-2 py-6" : ""
     )}>
       {/* Branding */}

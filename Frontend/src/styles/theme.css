@@ -20,22 +20,22 @@
   --neutral: #5C6773;
   --neutral-bg: rgba(92, 103, 115, 0.08);
 
-  /* Surface System (Warm Ivory) */
-  --background: #FDFBF7;
-  --bg-primary: #FDFBF7;
-  --bg-secondary: #F5F1E6;
-  --card-bg: #FDFBF7;
-  --sidebar-bg: #F5F1E6;
-  --navbar-bg: #FDFBF7;
+  /* Surface System (Gemini Light) */
+  --background: var(--bg-main-page);
+  --bg-primary: var(--bg-main-page);
+  --bg-secondary: var(--bg-nav-container);
+  --card-bg: var(--bg-nav-container);
+  --sidebar-bg: var(--bg-nav-container);
+  --navbar-bg: var(--bg-nav-container);
 
   /* Text System */
-  --text-primary: #1A2530;
-  --text-secondary: #4A5868;
+  --text-primary: var(--text-primary);
+  --text-secondary: var(--text-secondary);
 
-  /* Borders: Soft neutral tone */
-  --border-color: rgba(140, 98, 57, 0.18);
-  --border: rgba(140, 98, 57, 0.18);
-  --input: rgba(140, 98, 57, 0.18);
+  /* Borders: Subtle */
+  --border-color: var(--border-subtle);
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
 
   /* Shadows (Three-tier elevation/shadow system - Light Mode) */
   --elevation-1: 0 1px 3px rgba(26, 37, 48, 0.05);
@@ -93,22 +93,22 @@
   --neutral: #8390A1;
   --neutral-bg: rgba(131, 144, 161, 0.12);
 
-  /* Surface System (Deep Navy & Deep slate surface) */
-  --background: #0F1A24;
-  --bg-primary: #0F1A24;
-  --bg-secondary: #162431;
-  --card-bg: #162431;
-  --sidebar-bg: #162431;
-  --navbar-bg: #0F1A24;
+  /* Surface System (Gemini Dark) */
+  --background: var(--bg-main-page);
+  --bg-primary: var(--bg-main-page);
+  --bg-secondary: var(--bg-nav-container);
+  --card-bg: var(--bg-nav-container);
+  --sidebar-bg: var(--bg-nav-container);
+  --navbar-bg: var(--bg-nav-container);
 
   /* Text System */
-  --text-primary: #EAE5DA;
-  --text-secondary: #B1B8C0;
+  --text-primary: var(--text-primary);
+  --text-secondary: var(--text-secondary);
 
-  /* Borders: Subtle transparent light borders */
-  --border-color: rgba(234, 229, 218, 0.22);
-  --border: rgba(234, 229, 218, 0.22);
-  --input: rgba(234, 229, 218, 0.22);
+  /* Borders: Subtle */
+  --border-color: var(--border-subtle);
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
 
   /* Shadows (Three-tier elevation/shadow system - Dark Mode) */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3);

@@ -30,7 +30,7 @@ const TopNavbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-30 flex items-center justify-between h-20 px-4 md:px-8 bg-[var(--navbar-bg)] backdrop-blur-md border-b border-border">
+    <div className="sticky top-0 z-30 flex items-center justify-between h-20 px-4 md:px-8 bg-[var(--navbar-bg)] backdrop-blur-md border-b border-border gemini-navbar">
       <LoadingBar color='var(--primary)' ref={ref} height={3} />
       
       <div className="flex items-center gap-4 min-w-0">
