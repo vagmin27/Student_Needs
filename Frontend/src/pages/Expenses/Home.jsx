@@ -316,11 +316,11 @@ const Home = () => {
           {/* Charts Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {isLoading ? (
-              <div className="glass-card flex flex-col h-[320px]">
+              <div className="glass-card flex flex-col h-[320px] gap-4">
                 <Skeleton type="chart" />
               </div>
             ) : userexp.length === 0 ? (
-              <div className="glass-card flex flex-col h-[320px] justify-center items-center">
+              <div className="glass-card flex flex-col h-[320px] justify-center items-center gap-4">
                 <EmptyState title="No Trend Data" message="Add transactions to view monthly progress." />
               </div>
             ) : (
@@ -328,11 +328,11 @@ const Home = () => {
             )}
 
             {isLoading ? (
-              <div className="glass-card flex flex-col h-[320px]">
+              <div className="glass-card flex flex-col h-[320px] gap-4">
                 <Skeleton type="chart" />
               </div>
             ) : userexp.length === 0 ? (
-              <div className="glass-card flex flex-col h-[320px] justify-center items-center">
+              <div className="glass-card flex flex-col h-[320px] justify-center items-center gap-4">
                 <EmptyState title="No Breakdown Found" />
               </div>
             ) : (

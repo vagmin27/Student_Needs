@@ -29,7 +29,7 @@ export const PremiumCard = React.forwardRef(({
         }
       }}
       className={cn(
-        "premium-dashboard-card flex flex-col h-full relative overflow-hidden",
+        "premium-dashboard-card rounded-lg flex flex-col h-full relative overflow-hidden",
         hoverEffect && "cursor-pointer",
         gradient && "bg-gradient-to-b from-[var(--card-bg)] to-[var(--bg-secondary)]",
         className
@@ -77,7 +77,7 @@ export const GlassPanel = React.forwardRef(({
     <div
       ref={ref}
       className={cn(
-        "glass-panel relative overflow-hidden",
+        "glass-panel rounded-lg relative overflow-hidden",
         hoverEffect && "hover:translate-y-[-4px] hover:scale-[1.01] hover:border-[var(--primary)] hover:shadow-[var(--elevation-3)]",
         className
       )}

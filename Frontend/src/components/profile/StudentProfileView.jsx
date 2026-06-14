@@ -604,7 +604,7 @@ export default function StudentProfileView() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column: Profile Pic & Info details */}
         <div className="space-y-6 lg:col-span-1">
-          <div className="glass-panel p-6 flex flex-col items-center text-center">
+          <div className="glass-panel p-6 flex flex-col items-center text-center gap-4">
             <div className="relative group w-32 h-32 rounded-[var(--radius-lg)] overflow-hidden border-4 border-background bg-muted flex items-center justify-center shrink-0 shadow-md">
               {displayImageSrc ? (
                 <img
@@ -618,7 +618,7 @@ export default function StudentProfileView() {
                 </span>
               )}
               {isEditing && (
-                <label htmlFor="student-avatar-file" className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200">
+                <label htmlFor="student-avatar-file" className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200 gap-4">
                   <Upload className="w-6 h-6 text-white mb-1" />
                   <span className="text-white text-xs font-semibold">Change Photo</span>
                   <input

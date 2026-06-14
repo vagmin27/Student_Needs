@@ -13,7 +13,7 @@ import { useTutorialDashboard } from "@/hooks/useTutorialDashboard";
 
 const MetricCard = ({ title, value, icon: Icon, colorClass }) => (
   <Card className="hover:border-primary/50 transition-colors bg-card shadow-sm h-full">
-    <CardContent className="p-6 flex flex-col justify-between h-full">
+    <CardContent className="p-6 flex flex-col justify-between h-full gap-4">
       <div className="flex items-start justify-between mb-4">
         <p className="text-sm font-medium text-muted-foreground">{title}</p>
         <div className={`p-2 rounded-[var(--radius-sm)] bg-opacity-10 ${colorClass} bg-current`}>
@@ -60,7 +60,7 @@ const LoadingSkeleton = () => (
 );
 
 const EmptyExperience = () => (
-  <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
+  <div className="flex flex-col items-center justify-center py-20 px-4 text-center gap-4">
     <div className="w-24 h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
       <GraduationCap className="w-12 h-12" />
     </div>

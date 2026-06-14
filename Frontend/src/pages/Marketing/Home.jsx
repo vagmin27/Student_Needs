@@ -45,7 +45,7 @@ export default function Home() {
   const referralsCount = useCountUp(1000, statsActive);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center gap-4">
       {/* 🚀 HERO SECTION */}
       <section className="uc-modern-section uc-modern-container grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
         <motion.div 
@@ -245,7 +245,7 @@ export default function Home() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0 }
               }}
-              className="glass-card-modern p-8 text-left flex flex-col justify-between"
+              className="glass-card-modern p-8 text-left flex flex-col justify-between gap-4"
             >
               <div>
                 <div className="w-12 h-12 rounded-[var(--radius-md)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-6 shadow-sm"><BookOpen className="w-6 h-6" /></div>
@@ -260,7 +260,7 @@ export default function Home() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0 }
               }}
-              className="glass-card-modern p-8 text-left flex flex-col justify-between"
+              className="glass-card-modern p-8 text-left flex flex-col justify-between gap-4"
             >
               <div>
                 <div className="w-12 h-12 rounded-[var(--radius-md)] bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-6 shadow-sm"><Briefcase className="w-6 h-6" /></div>
@@ -275,7 +275,7 @@ export default function Home() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0 }
               }}
-              className="glass-card-modern p-8 text-left flex flex-col justify-between"
+              className="glass-card-modern p-8 text-left flex flex-col justify-between gap-4"
             >
               <div>
                 <div className="w-12 h-12 rounded-[var(--radius-md)] bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6 shadow-sm"><ClipboardList className="w-6 h-6" /></div>

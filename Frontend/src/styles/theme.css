@@ -2,8 +2,33 @@
    GLOBAL THEME TOKENS — Student Needs Platform
    ====================================================== */
 
+:root {
+  --bg-main-page: var(--bg-nav-container);
+  --bg-nav-container: #f0f4f9;
+  --bg-nav-hover: #e1e6eb;
+  --text-primary: #1f1f1f;
+  --text-secondary: #474747;
+  --nav-accent: #1a73e8;
+  --border-subtle: #dde3ea;
+  --theme-transition:
+    background-color .3s ease,
+    color .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+[data-theme="dark"] {
+  --bg-main-page: #131314;
+  --bg-nav-container: #1e1f20;
+  --bg-nav-hover: #282a2c;
+  --text-primary: #e3e3e3;
+  --text-secondary: #c4c7c5;
+  --nav-accent: #7fc0ff;
+  --border-subtle: #444746;
+}
+
 :root,
-.light-theme {
+[data-theme="light"] {
   /* Primary Accent: Muted Bronze */
   --primary: #8C6239;
   --primary-hover: #734e2c;
@@ -28,10 +53,6 @@
   --sidebar-bg: var(--bg-nav-container);
   --navbar-bg: var(--bg-nav-container);
 
-  /* Text System */
-  --text-primary: var(--text-primary);
-  --text-secondary: var(--text-secondary);
-
   /* Borders: Subtle */
   --border-color: var(--border-subtle);
   --border: var(--border-subtle);
@@ -48,16 +69,16 @@
   --shadow-xl: var(--elevation-3);
 
   /* Centralized Typography Variables */
-  --text-heading: #1A2530;
-  --text-paragraph: #1A2530;
-  --text-label: #1A2530;
+  --text-heading: var(--text-primary);
+  --text-paragraph: var(--text-primary);
+  --text-label: var(--text-primary);
   --text-table: #1A2530;
   --text-input: #1A2530;
   --text-button: #FDFBF7;
-  --text-navbar: #1A2530;
-  --text-sidebar: #1A2530;
+  --text-navbar: var(--text-primary);
+  --text-sidebar: var(--text-primary);
   --text-placeholder: #7C8B9C;
-  --text-white: #ffffff;
+  --text-white: var(--bg-nav-container);
   --text-black: #1A2530;
 
   /* Glassmorphism system variables for light mode */
@@ -75,8 +96,7 @@
   --sidebar-link-color: #4A5868;
 }
 
-.dark,
-.dark-theme {
+[data-theme="dark"] {
   /* Primary Accent: Soft Gold */
   --primary: #C5A059;
   --primary-hover: #D8B774;
@@ -101,10 +121,6 @@
   --sidebar-bg: var(--bg-nav-container);
   --navbar-bg: var(--bg-nav-container);
 
-  /* Text System */
-  --text-primary: var(--text-primary);
-  --text-secondary: var(--text-secondary);
-
   /* Borders: Subtle */
   --border-color: var(--border-subtle);
   --border: var(--border-subtle);
@@ -121,14 +137,14 @@
   --shadow-xl: var(--elevation-3);
 
   /* Centralized Typography Variables */
-  --text-heading: #EAE5DA;
-  --text-paragraph: #EAE5DA;
-  --text-label: #EAE5DA;
+  --text-heading: var(--text-primary);
+  --text-paragraph: var(--text-primary);
+  --text-label: var(--text-primary);
   --text-table: #EAE5DA;
   --text-input: #EAE5DA;
   --text-button: #0F1A24;
-  --text-navbar: #EAE5DA;
-  --text-sidebar: #EAE5DA;
+  --text-navbar: var(--text-primary);
+  --text-sidebar: var(--text-primary);
   --text-placeholder: #626F7D;
   --text-white: #EAE5DA;
   --text-black: #0F1A24;
@@ -150,24 +166,12 @@
 
 /* Theme transition adjustments */
 html {
-  transition: background-color var(--transition-normal) var(--ease-standard),
-              color var(--transition-normal) var(--ease-standard);
-  background-color: var(--bg-primary);
+  transition: var(--theme-transition);
+  background-color: var(--bg-main-page);
   color: var(--text-primary);
 }
 
 body {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Ensure clean themes apply to specific wrapper nodes */
-.light-theme, .light {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme, .dark {
-  background-color: var(--bg-primary) !important;
+  background-color: var(--bg-main-page) !important;
   color: var(--text-primary) !important;
 }

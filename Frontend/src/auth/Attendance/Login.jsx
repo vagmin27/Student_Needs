@@ -49,7 +49,7 @@ const Login = () => {
 
   return (
     <div className="uc-login-page">
-      <div className="uc-login-card">
+      <div className="uc-login-card bg-[var(--bg-nav-container)] rounded-[var(--card-radius)] p-[16px] gap-[var(--card-gap)] border border-[var(--border-subtle)]">
         <Link to="/role-selection" className="uc-back-link">
           <span>{"<- "}</span>
           Back to role selection
@@ -72,7 +72,7 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-              />
+              className="rounded-[var(--input-radius)]" />
             </label>
             {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
 
@@ -86,11 +86,11 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="pr-10"
+                  className="pr-10 rounded-[var(--input-radius)]"
                 />
                 <span 
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-muted-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--text-secondary)]"
                 >
                   {showPass ? <FiEyeOff /> : <FiEye />}
                 </span>
@@ -100,7 +100,7 @@ const Login = () => {
 
             <button
               type="submit"
-              className="uc-login-submit mt-2"
+              className="uc-login-submit mt-2 rounded-[var(--button-radius)] transition-all hover:translate-y-[-2px]"
               disabled={loading}
             >
               {loading ? "Signing in..." : "Sign In"}
