@@ -168,11 +168,19 @@ export const ChatWindow = ({
     // Join conversation explicitly
     socket.emit("joinConversation", { conversationId: chat._id });
 
+    console.log("[CALL DEBUG]", {
+      socketExists: !!socket,
+      socketConnected: socket?.connected,
+      waitForSocketExists: !!socket.waitForSocket
+    });
+
     setIncomingCallData({ type }); // store our own intent
     socket.emit("call:start", {
       conversationId: chat._id,
       receiverId: chat.partner._id,
       type
+    }, () => {
+      console.log("[CALL ACK RECEIVED]");
     });
     setCallState("calling");
   };

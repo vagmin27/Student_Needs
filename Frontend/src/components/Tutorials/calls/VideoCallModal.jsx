@@ -286,6 +286,15 @@ export const VideoCallModal = ({
     try {
       const type = incomingCallData?.type || "video";
       console.log(`[CALL] Getting user media for type: ${type}`);
+      
+      console.log("[MEDIA CHECK]", {
+        protocol: window.location.protocol,
+        hostname: window.location.hostname,
+        secureContext: window.isSecureContext,
+        mediaDevices: !!navigator.mediaDevices,
+        getUserMedia: !!navigator.mediaDevices?.getUserMedia
+      });
+
       const stream = await navigator.mediaDevices.getUserMedia({
         video: type === "video",
         audio: true,

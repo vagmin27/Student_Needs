@@ -8,7 +8,9 @@ export const registerTutorCallHandlers = (io, socket) => {
   const userId = socket.user?.id || socket.user?._id;
 
   // Initialize a call
-  socket.on("call:start", async ({ conversationId, receiverId, type = "video" }) => {
+  socket.on("call:start", async ({ conversationId, receiverId, type = "video" }, callback) => {
+    console.log("[SERVER RECEIVED CALL START]");
+    if (typeof callback === "function") callback();
     try {
       if (!userId || !receiverId || !conversationId) return;
       if (userId === receiverId) {
@@ -63,6 +65,7 @@ export const registerTutorCallHandlers = (io, socket) => {
       const receiverIsOnline = onlineUsers.has(receiverId.toString()) && onlineUsers.get(receiverId.toString()).size > 0;
       if (receiverIsOnline) {
         console.log(`[CALL INCOMING] timestamp=${new Date().toISOString()} userId=${receiverId} conversationId=${conversationId} callSessionId=${callSessionId}`);
+        console.log("[EMIT CALL INCOMING]", receiverId.toString());
         // Emit incoming call to receiver's user room
         io.to(`user:${receiverId.toString()}`).emit("call:incoming", {
           conversationId,
