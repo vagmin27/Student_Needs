@@ -61,7 +61,7 @@ function TutorAcceptPage() {
           bookings?.map((b) => (
             <div
               key={b._id}
-              className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-sm space-y-2"
+              className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-[var(--shadow-sm)] space-y-2"
             >
               <p><strong>📖 Subject:</strong> {b.subject}</p>
               <p><strong>📅 Date:</strong> {b.date}</p>

@@ -46,7 +46,7 @@ export function ReferralsList({ jobs, student, isApplying, onApply }) {
         return (
           <div
             key={job.id}
-            className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 shadow-sm hover:shadow-md transition-shadow flex flex-col mt-4"
+            className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 shadow-[var(--shadow-sm)] hover:shadow-md transition-shadow flex flex-col mt-4"
           >
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">

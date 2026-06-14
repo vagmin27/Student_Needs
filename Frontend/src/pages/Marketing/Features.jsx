@@ -20,7 +20,7 @@ function LaptopFrame({ children }) {
   return (
     <div className="mockup-wrapper w-full max-w-xl mx-auto relative group">
       <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-indigo-500/20 to-cyan-500/20 rounded-[var(--radius-lg)] blur-xl opacity-75 group-hover:opacity-100 transition duration-1000" />
-      <div className="laptop-mockup relative border border-border/80 rounded-[var(--radius-md)] bg-card shadow-2xl overflow-hidden">
+      <div className="laptop-mockup relative border border-border/80 rounded-[var(--radius-md)] bg-card shadow-[var(--shadow-lg)] overflow-hidden">
         <div className="bg-muted/60 px-4 py-2 border-b border-border/60 flex items-center gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-rose-500/70" />
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/70" />
@@ -30,7 +30,7 @@ function LaptopFrame({ children }) {
           {children}
         </div>
       </div>
-      <div className="h-2 w-[85%] mx-auto bg-muted rounded-b-xl border-t border-border/40 shadow-md" />
+      <div className="h-2 w-[85%] mx-auto bg-muted rounded-b-xl border-t border-border/40 shadow-[var(--shadow-md)]" />
     </div>
   );
 }
@@ -39,7 +39,7 @@ function TabletFrame({ children }) {
   return (
     <div className="mockup-wrapper w-full max-w-lg mx-auto relative group">
       <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 rounded-[var(--radius-lg)] blur-xl opacity-70 group-hover:opacity-100 transition duration-1000" />
-      <div className="tablet-mockup relative border border-border/80 rounded-[var(--radius-lg)] bg-card shadow-2xl overflow-hidden">
+      <div className="tablet-mockup relative border border-border/80 rounded-[var(--radius-lg)] bg-card shadow-[var(--shadow-lg)] overflow-hidden">
         <div className="bg-muted/40 px-4 py-2 border-b border-border/40 flex items-center justify-between">
           <div className="flex gap-1">
             <span className="w-2 h-2 rounded-full bg-slate-500/50" />
@@ -59,7 +59,7 @@ function MobileFrame({ children }) {
   return (
     <div className="mockup-wrapper w-full max-w-[290px] mx-auto relative group">
       <div className="absolute -inset-2 bg-gradient-to-r from-rose-500/20 to-amber-500/20 rounded-[var(--radius-lg)] blur-xl opacity-75 group-hover:opacity-100 transition duration-1000" />
-      <div className="mobile-mockup relative border-4 border-slate-800 rounded-[32px] bg-card shadow-2xl overflow-hidden min-h-[440px]">
+      <div className="mobile-mockup relative border-4 border-slate-800 rounded-[32px] bg-card shadow-[var(--shadow-lg)] overflow-hidden min-h-[440px]">
         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4 bg-slate-800 rounded-full z-10 flex items-center justify-center">
           <span className="w-2 h-2 rounded-full bg-slate-900" />
         </div>
@@ -82,7 +82,7 @@ const TutorialsPreview = () => (
         { name: "Dr. Marcus Aurelius", sub: "CS-301 Data Algorithms", rating: "5.0 ★", price: "$25/hr" },
         { name: "Sarah Chen", sub: "React & Frontend Architecture", rating: "4.9 ★", price: "$30/hr" }
       ].map((tutor, i) => (
-        <div key={i} className="p-2.5 bg-card/65 border border-border rounded-[var(--radius-sm)] flex items-center justify-between shadow-sm">
+        <div key={i} className="p-2.5 bg-card/65 border border-border rounded-[var(--radius-sm)] flex items-center justify-between shadow-[var(--shadow-sm)]">
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-[8px]">{tutor.name[4]}</span>
             <div className="text-left">
@@ -115,13 +115,13 @@ const ReferralsPreview = () => (
         { company: "Stripe", title: "Software Engineer Intern", status: "Referral Approved", date: "Just now" },
         { company: "Google", title: "Associate Product PM", status: "Submitted to Portal", date: "3d ago" }
       ].map((job, i) => (
-        <div key={i} className="p-3 bg-card border border-border rounded-[var(--radius-md)] shadow-sm space-y-2">
+        <div key={i} className="p-3 bg-card border border-border rounded-[var(--radius-md)] shadow-[var(--shadow-sm)] space-y-2">
           <div className="flex justify-between items-start">
             <div>
               <div className="font-bold text-[10px] text-foreground">{job.company}</div>
               <div className="text-[8.5px] text-muted-foreground">{job.title}</div>
             </div>
-            <span className="text-[7.5px] text-slate-500">{job.date}</span>
+            <span className="text-[7.5px] text-muted-foreground">{job.date}</span>
           </div>
           <div className="flex justify-between items-center pt-2 border-t border-border/40">
             <span className="text-[8px] text-cyan-400 font-bold">{job.status}</span>
@@ -174,7 +174,7 @@ const AttendancePreview = () => (
         { course: "CS 301 (Algorithms)", attended: "19/20", rate: "95.0%", status: "Good", color: "text-emerald-500" },
         { course: "MATH 310 (Probability)", attended: "14/18", rate: "77.7%", status: "Warning", color: "text-amber-500" }
       ].map((c, i) => (
-        <div key={i} className="p-2.5 bg-card/60 border border-border rounded-[var(--radius-sm)] flex items-center justify-between shadow-sm">
+        <div key={i} className="p-2.5 bg-card/60 border border-border rounded-[var(--radius-sm)] flex items-center justify-between shadow-[var(--shadow-sm)]">
           <div>
             <div className="font-bold text-[9px] text-foreground">{c.course}</div>
             <div className="text-[8px] text-muted-foreground">Attended: {c.attended} lectures</div>
@@ -200,12 +200,12 @@ const AlumniPreview = () => (
         { name: "Marcus Aurelius", role: "Staff Eng @ Linear", batch: "'18" },
         { name: "Diana Prince", role: "Product Manager @ Stripe", batch: "'20" }
       ].map((alumnus, i) => (
-        <div key={i} className="p-2 bg-card border border-border rounded-[var(--radius-sm)] shadow-sm space-y-1">
+        <div key={i} className="p-2 bg-card border border-border rounded-[var(--radius-sm)] shadow-[var(--shadow-sm)] space-y-1">
           <span className="w-5 h-5 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-[8px]">{alumnus.name[0]}</span>
           <div>
             <div className="font-bold text-[8.5px] text-foreground truncate">{alumnus.name}</div>
             <div className="text-[7.5px] text-muted-foreground truncate">{alumnus.role}</div>
-            <div className="text-[6.5px] text-slate-400">Class of {alumnus.batch}</div>
+            <div className="text-[6.5px] text-muted-foreground">Class of {alumnus.batch}</div>
           </div>
         </div>
       ))}
@@ -274,7 +274,7 @@ export default function Features() {
            ======================================================== */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
           <div className="space-y-6">
-            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-[var(--primary)] bg-[var(--primary)]/10 border border-[var(--primary)]/30/20">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-[var(--shadow-sm)] text-[var(--primary)] bg-[var(--primary)]/10 border border-[var(--primary)]/30/20">
               <BookOpen className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Academic Match & Tutorials</h2>
@@ -322,7 +322,7 @@ export default function Features() {
             </MobileFrame>
           </div>
           <div className="space-y-6 lg:pl-6">
-            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-cyan-400 bg-cyan-400/10 border border-cyan-400/20">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-[var(--shadow-sm)] text-cyan-400 bg-cyan-400/10 border border-cyan-400/20">
               <Briefcase className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Alumni Referral Network</h2>
@@ -360,7 +360,7 @@ export default function Features() {
            ======================================================== */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
           <div className="space-y-6">
-            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-emerald-500 bg-emerald-500/10 border border-emerald-500/20">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-[var(--shadow-sm)] text-emerald-500 bg-emerald-500/10 border border-emerald-500/20">
               <ClipboardList className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Class Attendance Tracker</h2>
@@ -405,7 +405,7 @@ export default function Features() {
            ======================================================== */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
           <div className="space-y-6">
-            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-rose-500 bg-rose-500/10 border border-rose-500/20">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-[var(--shadow-sm)] text-rose-500 bg-rose-500/10 border border-rose-500/20">
               <ReceiptText className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Smart Expenses & Budgeting</h2>
@@ -446,7 +446,7 @@ export default function Features() {
            ======================================================== */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start w-full">
           <div className="space-y-6 text-left lg:sticky lg:top-24">
-            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-amber-500 bg-amber-500/10 border border-amber-500/20">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-[var(--shadow-sm)] text-amber-500 bg-amber-500/10 border border-amber-500/20">
               <Users className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Alumni Network Mentorship</h2>
@@ -516,7 +516,7 @@ export default function Features() {
             </LaptopFrame>
           </div>
           <div className="space-y-6 lg:pl-6">
-            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-sm text-[var(--primary)] bg-[var(--primary)]/10 border border-[var(--primary)]/30/20">
+            <div className="w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center shadow-[var(--shadow-sm)] text-[var(--primary)] bg-[var(--primary)]/10 border border-[var(--primary)]/30/20">
               <LayoutDashboard className="w-6 h-6" />
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Central Student Dashboard</h2>

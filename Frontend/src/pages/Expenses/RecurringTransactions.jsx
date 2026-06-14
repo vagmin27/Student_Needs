@@ -213,7 +213,7 @@ const RecurringTransactions = () => {
         </div>
         <button
           onClick={() => openForm()}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-[var(--shadow-lg)] shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
         >
           <AiOutlinePlus size={20} /> New Rule
         </button>
@@ -513,7 +513,7 @@ const RecurringTransactions = () => {
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
+              className="px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-[var(--shadow-lg)] shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
             >
               Save Rule
             </button>

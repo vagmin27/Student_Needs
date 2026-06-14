@@ -96,7 +96,7 @@ export function OpportunitiesList({
         return (
           <div
             key={opportunity._id}
-            className="bg-card rounded-[var(--radius-lg)] p-6 border border-border shadow-sm hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
+            className="bg-card rounded-[var(--radius-lg)] p-6 border border-border shadow-[var(--shadow-sm)] hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
           >
             <div className="flex-1">
               {/* Header with Referral Count */}

@@ -78,7 +78,7 @@ const TopNavbar = () => {
             <Link to="/student/settings?tab=expenses" className="text-xs text-brand-primary hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
           </div>
           
-          <Link to="/student/settings?tab=expenses" className="w-10 h-10 rounded-[var(--radius-md)] bg-gradient-to-tr from-brand-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-primary/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
+          <Link to="/student/settings?tab=expenses" className="w-10 h-10 rounded-[var(--radius-md)] bg-gradient-to-tr from-brand-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-[var(--shadow-lg)] shadow-brand-primary/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
             {(user?.username?.charAt(0) || user?.name?.charAt(0) || user?.fullName?.charAt(0) || 'U').toUpperCase()}
           </Link>
 

@@ -14,7 +14,7 @@ export const CallControls = ({
   callType,
 }) => {
   return (
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-slate-900/90 backdrop-blur-md px-6 py-3 rounded-[var(--radius-lg)] border border-slate-700/50 shadow-2xl z-50">
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-slate-900/90 backdrop-blur-md px-6 py-3 rounded-[var(--radius-lg)] border border-slate-700/50 shadow-[var(--shadow-lg)] z-50">
       <button
         onClick={onToggleAudio}
         className={`p-3 rounded-[var(--radius-md)] transition-all ${
@@ -50,7 +50,7 @@ export const CallControls = ({
       {callType === "video" && (
         <button
           onClick={onToggleFullscreen}
-          className="p-3 rounded-[var(--radius-md)] bg-slate-800 text-slate-200 hover:bg-slate-700 transition-all hidden md:block"
+          className="p-3 rounded-[var(--radius-md)] bg-slate-800 text-muted-foreground hover:bg-slate-700 transition-all hidden md:block"
           title="Toggle Fullscreen"
         >
           {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
@@ -61,7 +61,7 @@ export const CallControls = ({
 
       <button
         onClick={onLeaveCall}
-        className="p-3 rounded-[var(--radius-md)] bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-600/20 transition-all"
+        className="p-3 rounded-[var(--radius-md)] bg-red-600 text-white hover:bg-red-700 shadow-[var(--shadow-lg)] shadow-red-600/20 transition-all"
         title="Leave Call"
       >
         <PhoneOff className="w-5 h-5" />

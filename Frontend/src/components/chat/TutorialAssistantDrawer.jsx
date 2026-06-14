@@ -15,7 +15,7 @@ export const TutorialAssistantDrawer = ({ isOpen, onClose, chatContext }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute top-0 right-0 h-full w-80 bg-card border-l border-border shadow-2xl z-40 flex flex-col animate-in slide-in-from-right duration-200">
+    <div className="absolute top-0 right-0 h-full w-80 bg-card border-l border-border shadow-[var(--shadow-lg)] z-40 flex flex-col animate-in slide-in-from-right duration-200">
       <div className="p-4 border-b border-border flex items-center justify-between shrink-0 bg-card/50 backdrop-blur-md">
         <div className="flex items-center gap-2 text-primary font-semibold">
           <Sparkles className="w-5 h-5" />

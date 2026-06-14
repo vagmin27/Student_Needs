@@ -79,9 +79,9 @@ export const MessageBubble = ({
     if (normalizedMessage.seen) {
       return <CheckCheck className="w-3.5 h-3.5 text-cyan-400" title="Seen" />;
     } else if (normalizedMessage.delivered) {
-      return <CheckCheck className="w-3.5 h-3.5 text-slate-400" title="Delivered" />;
+      return <CheckCheck className="w-3.5 h-3.5 text-muted-foreground" title="Delivered" />;
     } else {
-      return <Check className="w-3.5 h-3.5 text-slate-400" title="Sent" />;
+      return <Check className="w-3.5 h-3.5 text-muted-foreground" title="Sent" />;
     }
   };
 
@@ -102,14 +102,14 @@ export const MessageBubble = ({
             <div className="opacity-0 group-hover:opacity-100 flex gap-1.5 mr-2 transition-opacity duration-200">
               <button
                 onClick={() => setIsEditing(true)}
-                className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-[var(--radius-sm)] border border-slate-700 transition-colors"
+                className="p-1.5 bg-slate-800 hover:bg-slate-700 text-muted-foreground hover:text-white rounded-[var(--radius-sm)] border border-slate-700 transition-colors"
                 title="Edit message"
               >
                 <Edit2 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onDeleteMessage(normalizedMessage._id)}
-                className="p-1.5 bg-slate-800 hover:bg-red-950/80 text-slate-300 hover:text-red-400 rounded-[var(--radius-sm)] border border-slate-700 hover:border-red-900 transition-colors"
+                className="p-1.5 bg-slate-800 hover:bg-red-950/80 text-muted-foreground hover:text-red-400 rounded-[var(--radius-sm)] border border-slate-700 hover:border-red-900 transition-colors"
                 title="Delete message"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -145,7 +145,7 @@ export const MessageBubble = ({
                 <div className="flex justify-end gap-1.5">
                   <button
                     onClick={handleCancelEdit}
-                    className="flex items-center gap-1 text-xs px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-[var(--radius-sm)] transition-colors"
+                    className="flex items-center gap-1 text-xs px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-muted-foreground rounded-[var(--radius-sm)] transition-colors"
                   >
                     <X className="w-3.5 h-3.5" /> Cancel
                   </button>
@@ -188,7 +188,7 @@ export const MessageBubble = ({
                               className="max-h-[180px] w-full object-cover transition-transform duration-300 group-hover/att:scale-105"
                             />
                             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/att:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                              <span className="text-white text-xs font-medium bg-black/60 px-2.5 py-1 rounded-full">Preview</span>
+                              <span className="text-white text-xs font-medium bg-background/60 px-2.5 py-1 rounded-full">Preview</span>
                             </div>
                           </div>
                         ) : (

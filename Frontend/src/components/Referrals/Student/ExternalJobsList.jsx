@@ -78,7 +78,7 @@ export function ExternalJobsList({ jobs = [], loading }) {
         return (
           <div
             key={job.slug}
-            className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
+            className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 shadow-[var(--shadow-sm)] hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
           >
             <div className="flex-1">
               {/* Job Title */}

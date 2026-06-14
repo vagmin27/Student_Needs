@@ -502,13 +502,13 @@ export const VideoCallModal = ({
   // Render Incoming Call Popup
   if (internalCallState === "incoming") {
     return createPortal(
-      <div className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center">
-        <div className="bg-slate-900 border border-slate-700 p-6 rounded-[var(--radius-lg)] shadow-2xl max-w-sm w-full text-center animate-in zoom-in-95 duration-200">
+      <div className="fixed inset-0 z-[9999] bg-background/60 backdrop-blur-sm flex items-center justify-center">
+        <div className="bg-slate-900 border border-slate-700 p-6 rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] max-w-sm w-full text-center animate-in zoom-in-95 duration-200">
           <div className="w-20 h-20 bg-slate-800 rounded-full mx-auto flex items-center justify-center mb-4 text-2xl font-bold text-primary animate-pulse">
             {incomingCallData?.callerInfo?.name?.[0] || "U"}
           </div>
           <h2 className="text-xl font-bold text-white mb-2">Incoming {incomingCallData?.type || "Video"} Call</h2>
-          <p className="text-slate-400 mb-8">{incomingCallData?.callerInfo?.name || "Someone"} is calling you...</p>
+          <p className="text-muted-foreground mb-8">{incomingCallData?.callerInfo?.name || "Someone"} is calling you...</p>
           
           <div className="flex items-center justify-center gap-4">
             <button
@@ -534,7 +534,7 @@ export const VideoCallModal = ({
   // Render Active Call (connecting, connected, accepting)
   return createPortal(
     <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center ${isFullscreen ? "p-0" : "p-4 md:p-8"}`}>
-      <div className={`relative w-full h-full max-w-6xl mx-auto rounded-[var(--radius-xl)] overflow-hidden bg-slate-950 shadow-2xl border border-slate-800 flex items-center justify-center`}>
+      <div className={`relative w-full h-full max-w-6xl mx-auto rounded-[var(--radius-xl)] overflow-hidden bg-slate-950 shadow-[var(--shadow-lg)] border border-slate-800 flex items-center justify-center`}>
         
         {/* Remote Video (Main) */}
         {remoteStream ? (
@@ -545,7 +545,7 @@ export const VideoCallModal = ({
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="flex flex-col items-center text-slate-500">
+          <div className="flex flex-col items-center text-muted-foreground">
             <div className="w-24 h-24 rounded-full bg-slate-900 flex items-center justify-center mb-4 animate-pulse">
               <span className="text-3xl text-slate-700">👤</span>
             </div>
@@ -558,9 +558,9 @@ export const VideoCallModal = ({
         )}
 
         {/* Local Video (PIP) */}
-        <div className={`absolute top-6 right-6 w-32 md:w-48 aspect-[3/4] md:aspect-video bg-slate-900 rounded-[var(--radius-lg)] overflow-hidden border-2 border-slate-700/50 shadow-xl transition-all z-10 ${isVideoMuted ? "flex items-center justify-center" : ""}`}>
+        <div className={`absolute top-6 right-6 w-32 md:w-48 aspect-[3/4] md:aspect-video bg-slate-900 rounded-[var(--radius-lg)] overflow-hidden border-2 border-slate-700/50 shadow-[var(--shadow-lg)] transition-all z-10 ${isVideoMuted ? "flex items-center justify-center" : ""}`}>
           {isVideoMuted ? (
-            <span className="text-slate-500 text-sm">Camera Off</span>
+            <span className="text-muted-foreground text-sm">Camera Off</span>
           ) : (
             <video
               ref={localVideoRef}

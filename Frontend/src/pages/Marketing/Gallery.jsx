@@ -9,7 +9,7 @@ const screenshotsData = [
     category: "dashboard",
     desc: "Overview of student progress logs, pending tutorials chat counters, and threshold warnings.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
         <div className="flex justify-between border-b border-border/10 pb-1.5 mb-3">
           <strong>👨‍🎓 Student Dashboard</strong>
           <span className="text-[8px] bg-primary/20 text-primary px-1.5 rounded">Anaya Sharma</span>
@@ -21,7 +21,7 @@ const screenshotsData = [
         </div>
         <div className="p-2 bg-slate-950 rounded text-[8px] border-l-2 border-l-primary">
           <strong>🔔 Notifications</strong>
-          <p className="text-slate-400 mt-0.5">New tutor message from Dr. Rajesh Kumar (Math)</p>
+          <p className="text-muted-foreground mt-0.5">New tutor message from Dr. Rajesh Kumar (Math)</p>
         </div>
       </div>
     )
@@ -32,23 +32,23 @@ const screenshotsData = [
     category: "tutorials",
     desc: "List of certified on-demand campus tutors grouped by academic subjects.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
         <div className="flex justify-between border-b border-border/10 pb-1.5 mb-2">
           <strong>📚 Search Tutors</strong>
-          <span className="text-[7px] text-slate-500">24 active tutors</span>
+          <span className="text-[7px] text-muted-foreground">24 active tutors</span>
         </div>
         <div className="space-y-2">
           <div className="p-2 bg-slate-800 rounded flex justify-between items-center">
             <div>
               <strong>Dr. Rajesh Kumar</strong>
-              <span className="block text-[7px] text-slate-400">Data Structures • Rating: 4.9 (42 reviews)</span>
+              <span className="block text-[7px] text-muted-foreground">Data Structures • Rating: 4.9 (42 reviews)</span>
             </div>
             <span className="bg-primary text-white px-2 py-0.5 rounded text-[8px]">Message</span>
           </div>
           <div className="p-2 bg-slate-800 rounded flex justify-between items-center">
             <div>
               <strong>Prof. Priya Nair</strong>
-              <span className="block text-[7px] text-slate-400">Database Management • Rating: 4.8 (30 reviews)</span>
+              <span className="block text-[7px] text-muted-foreground">Database Management • Rating: 4.8 (30 reviews)</span>
             </div>
             <span className="bg-primary text-white px-2 py-0.5 rounded text-[8px]">Message</span>
           </div>
@@ -62,7 +62,7 @@ const screenshotsData = [
     category: "chat",
     desc: "Real-time communication panel linking students and tutors with typing status.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
         <div className="border-b border-border/10 pb-1.5 mb-3 flex justify-between">
           <strong>💬 Dr. Rajesh Kumar</strong>
           <span className="text-[7px] text-emerald-400">typing...</span>
@@ -72,7 +72,7 @@ const screenshotsData = [
           <div className="p-1.5 bg-[var(--primary)] text-white rounded w-4/5 ml-auto text-right">Yes, I checked them. Let's schedule tomorrow.</div>
         </div>
         <div className="p-1 bg-slate-950 rounded flex justify-between">
-          <span className="text-slate-500">Type message...</span>
+          <span className="text-muted-foreground">Type message...</span>
           <span className="bg-primary text-white px-2 py-0.5 rounded text-[7px]">SEND</span>
         </div>
       </div>
@@ -84,7 +84,7 @@ const screenshotsData = [
     category: "attendance",
     desc: "Progress checklist tracking college thresholds and monthly logs.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
         <strong className="block mb-2">📊 Attendance tracking</strong>
         <div className="space-y-1.5">
           <div className="p-1.5 bg-slate-800 rounded flex justify-between border-l-2 border-l-emerald-500">
@@ -103,7 +103,7 @@ const screenshotsData = [
     category: "expenses",
     desc: "Student personal budgeting sheet detailing transaction categories and limits.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
         <strong className="block border-b border-border/10 pb-1 mb-2">💰 Spend Tracker</strong>
         <div className="space-y-1">
           <div className="flex justify-between py-1 border-b border-border/5"><span>Dinner at Cafeteria</span><span className="text-rose-400">-$12.40</span></div>
@@ -118,11 +118,11 @@ const screenshotsData = [
     category: "referrals",
     desc: "Direct alumni-posted corporate opportunities board.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-slate-300">
+      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
         <strong className="block mb-2">💼 Careers verifier listings</strong>
         <div className="p-2 bg-slate-800 rounded border border-border/5">
           <div className="flex justify-between"><span className="text-white font-semibold">Software Intern</span><span className="bg-cyan-500/20 text-cyan-400 px-1 rounded">Google</span></div>
-          <p className="text-[7px] text-slate-400 mt-1">Endorsement from alumnus Priya Verma (Class of 2023)</p>
+          <p className="text-[7px] text-muted-foreground mt-1">Endorsement from alumnus Priya Verma (Class of 2023)</p>
         </div>
       </div>
     )
@@ -192,7 +192,7 @@ export default function Gallery() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-background/90 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
           >
-            <div className="relative w-full max-w-lg bg-card p-6 border border-border rounded-[var(--radius-lg)] shadow-xl text-left">
+            <div className="relative w-full max-w-lg bg-card p-6 border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] text-left">
               <button
                 onClick={() => setLightboxIndex(null)}
                 className="absolute top-4 right-4 text-muted-foreground hover:text-primary cursor-pointer focus:outline-none"

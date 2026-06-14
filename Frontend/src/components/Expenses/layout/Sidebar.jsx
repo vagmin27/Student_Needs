@@ -66,7 +66,7 @@ const Sidebar = () => {
           </div>
           {!isCollapsed && <span>Back to Dashboard</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Back to Dashboard
             </div>
           )}
@@ -93,7 +93,7 @@ const Sidebar = () => {
             </div>
             {!isCollapsed && <span>{item.name}</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 {item.name}
               </div>
             )}
@@ -155,7 +155,7 @@ const Sidebar = () => {
           </svg>
           {!isCollapsed && <span className="sidebar-label">Collapse</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Expand
             </div>
           )}

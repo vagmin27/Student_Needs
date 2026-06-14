@@ -346,7 +346,7 @@ function AccountSetting({ mode }) {
         <div className={mode === "expenses-only" ? "w-full" : "flex-1 w-full min-w-0"}>
           {/* Tab 1: Profile */}
           {activeTab === "profile" && (
-            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
               {role === "student" && <StudentProfileView />}
               {(role === "tutor" || role === "teacher") && <TutorProfileView />}
               {role === "alumni" && <AlumniProfileView />}
@@ -356,7 +356,7 @@ function AccountSetting({ mode }) {
           {/* Tab 2: Account */}
           {activeTab === "account" && (
             <div className="space-y-6">
-              <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+              <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
                 <ThemePreference
                   variant="inline"
                   title="Theme Preference"
@@ -364,7 +364,7 @@ function AccountSetting({ mode }) {
                 />
               </div>
 
-              <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm space-y-4">
+              <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] space-y-4">
                 <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
                   <ShieldCheck className="text-primary w-5 h-5" /> Privacy Preferences
                 </h3>
@@ -387,7 +387,7 @@ function AccountSetting({ mode }) {
 
           {/* Tab 3: Notifications */}
           {activeTab === "notifications" && (
-            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm space-y-6">
+            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] space-y-6">
               <div>
                 <h3 className="text-lg font-bold text-foreground">General Platform Alerts</h3>
                 <p className="text-muted-foreground text-xs mt-1">Select channel notification defaults.</p>
@@ -720,7 +720,7 @@ function AccountSetting({ mode }) {
                     <button
                       type="submit"
                       disabled={savingSettings}
-                      className="px-8 py-3 rounded-[var(--radius-md)] bg-primary text-primary-foreground hover:bg-primary-hover font-bold shadow-sm transition-all cursor-pointer flex items-center justify-center min-w-[150px]"
+                      className="px-8 py-3 rounded-[var(--radius-md)] bg-primary text-primary-foreground hover:bg-primary-hover font-bold shadow-[var(--shadow-sm)] transition-all cursor-pointer flex items-center justify-center min-w-[150px]"
                     >
                       {savingSettings ? (
                         <>

@@ -19,7 +19,7 @@ const TutorialStudentLayoutContent = () => {
       )}
 
       {/* Mobile Header / Trigger */}
-      <div className="lg:hidden flex items-center justify-between bg-card p-4 rounded-[var(--radius-sm)] border shadow-sm">
+      <div className="md:hidden flex items-center justify-between bg-card p-4 rounded-[var(--radius-sm)] border shadow-[var(--shadow-sm)]">
         <span className="font-semibold text-lg">Tutorials Menu</span>
         <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
           <Menu className="w-6 h-6" />
@@ -38,7 +38,7 @@ const TutorialStudentLayoutContent = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 bg-card rounded-[var(--radius-sm)] border shadow-sm p-4 md:p-6 overflow-x-hidden min-h-[50vh]">
+      <div className="flex-1 bg-card rounded-[var(--radius-sm)] border shadow-[var(--shadow-sm)] p-4 md:p-6 overflow-x-hidden min-h-[50vh]">
         <Outlet />
       </div>
     </div>

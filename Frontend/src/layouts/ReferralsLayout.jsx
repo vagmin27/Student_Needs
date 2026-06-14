@@ -25,7 +25,7 @@ const ReferralsLayoutContent = () => {
       {/* Mobile Sidebar overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
+          className="fixed inset-0 bg-background/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
           onClick={closeMobileMenu}
         />
       )}

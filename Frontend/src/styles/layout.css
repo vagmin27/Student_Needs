@@ -137,3 +137,162 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+/* ======================================================
+   GEMINI LAYOUT & COMPONENT OVERRIDES
+   ====================================================== */
+
+/* Sidebars */
+.sidebar-transition,
+.uc-sidebar,
+aside,
+.sidebar-container,
+.expenses-layout aside,
+.tutorial-sidebar {
+  background: var(--bg-surface-2);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+/* Navbars & Headers */
+header,
+.uc-topbar,
+.uc-dashboard-header,
+.navbar-container,
+nav[id="mainNavbar"] {
+  background: var(--bg-surface-2);
+  border-color: var(--border-subtle);
+}
+
+/* Cards & Elevated Containers */
+.card,
+.dashboard-card,
+.stats-card,
+.widget-card,
+.premium-card,
+.glass-card,
+.content-card,
+.premium-dashboard-card,
+.uc-panel,
+.uc-quick-actions,
+.uc-module-card,
+.uc-role-card,
+.uc-stat-card,
+.stat-card,
+.metric-card,
+.summary-card,
+.uc-login-panel,
+.hero-card,
+.highlight-card,
+.feature-card {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-1);
+}
+
+/* Modals & Dialogs Backdrop */
+.modal-backdrop,
+.dialog-overlay {
+  background: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+/* Modal Core Content Container */
+.modal-core-container,
+div[role="dialog"] {
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-3);
+}
+
+/* Dropdown & Popover Menus */
+.dropdown-menu,
+.profile-menu,
+.notification-menu,
+.popover,
+.menu-panel,
+.settings-menu {
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-2);
+}
+
+/* Links & Sidebar Navigation Items */
+.sidebar-link-btn,
+.uc-sidebar nav a,
+.uc-navlinks a,
+.expenses-layout nav a,
+.tutorial-sidebar nav a {
+  color: var(--text-secondary);
+  transition: var(--theme-transition);
+}
+
+.sidebar-link-btn:hover,
+.uc-sidebar nav a:hover,
+.uc-navlinks a:hover,
+.expenses-layout nav a:hover,
+.tutorial-sidebar nav a:hover {
+  background: var(--bg-surface-3);
+}
+
+.sidebar-link-btn.active-link,
+.sidebar-link-btn.active,
+.uc-sidebar nav a.active,
+.uc-navlinks a.active,
+.expenses-layout nav a.active,
+.tutorial-sidebar nav a.active {
+  color: var(--nav-accent);
+  background: var(--bg-surface-3);
+}
+
+/* Dark mode active background: var(--active-bg) */
+[data-theme="dark"] .sidebar-link-btn.active-link,
+[data-theme="dark"] .sidebar-link-btn.active,
+[data-theme="dark"] .uc-sidebar nav a.active,
+[data-theme="dark"] .expenses-layout nav a.active,
+[data-theme="dark"] .tutorial-sidebar nav a.active {
+  background: var(--active-bg);
+}
+
+/* Form inputs & controls */
+input,
+textarea,
+select {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--nav-accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Action buttons styling */
+.btn-primary,
+.uc-primary-button {
+  background: var(--nav-accent);
+  color: #ffffff;
+}
+
+.btn-secondary,
+.uc-secondary-button {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover,
+.uc-secondary-button:hover {
+  background: var(--bg-surface-3);
+}

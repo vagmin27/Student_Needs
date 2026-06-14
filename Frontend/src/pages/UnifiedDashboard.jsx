@@ -492,19 +492,19 @@ const UnifiedDashboard = () => {
         />
         
         <DashboardGrid cols={5} className="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-sm gap-4">
+          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Monthly Budget</span>
             <span className="block text-xl font-bold text-foreground mt-1">
               <AnimatedCounter value={expenseSummary?.monthlyBudget || 0} prefix={currencySymbol} />
             </span>
           </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-sm gap-4">
+          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Spent</span>
             <span className="block text-xl font-bold text-red-500 mt-1">
               <AnimatedCounter value={expenseSummary?.totalSpent || 0} prefix={currencySymbol} />
             </span>
           </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-sm gap-4">
+          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Remaining</span>
             <span className={`block text-xl font-bold mt-1 ${
               (expenseSummary?.remainingBudget || 0) < 0 ? "text-red-500" : "text-emerald-500"
@@ -512,13 +512,13 @@ const UnifiedDashboard = () => {
               <AnimatedCounter value={expenseSummary?.remainingBudget || 0} prefix={currencySymbol} />
             </span>
           </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-sm gap-4">
+          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Upcoming Bills</span>
             <span className="block text-xl font-bold text-[var(--primary)] mt-1">
               <AnimatedCounter value={expenseSummary?.upcomingCount || 0} />
             </span>
           </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-sm col-span-2 sm:col-span-1 gap-4">
+          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)] col-span-2 sm:col-span-1">
             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Overdue Bills</span>
             <span className={`block text-xl font-bold mt-1 ${
               (expenseSummary?.overdueCount || 0) > 0 ? "text-red-500 animate-pulse font-extrabold" : "text-muted-foreground/60"
@@ -550,7 +550,7 @@ const UnifiedDashboard = () => {
               {upcomingClasses.length === 0 ? (
                 <div className="flex flex-col items-center justify-center text-center p-6 min-h-[290px] w-full max-w-[420px] mx-auto select-none gap-4">
                   {/* Icon */}
-                  <div className="w-14 h-14 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5 shrink-0 border border-[var(--primary)]/20 shadow-sm">
+                  <div className="w-14 h-14 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5 shrink-0 border border-[var(--primary)]/20 shadow-[var(--shadow-sm)]">
                     <Clock className="w-6 h-6" />
                   </div>
                   {/* Heading */}

@@ -362,7 +362,7 @@ export default function TutorProfileView() {
       </div>
 
       {/* Live Completeness bar */}
-      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md p-4 mb-6">
+      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)] p-4 mb-6">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2.5">
             <TrendingUp className="w-5 h-5 text-primary" />

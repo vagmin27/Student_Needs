@@ -28,10 +28,10 @@
 }
 
 :root,
-[data-theme="light"] {
-  /* Primary Accent: Purple */
-  --primary: #6c4cf1;
-  --primary-hover: #5a3ddb;
+.light-theme {
+  /* Primary Accent: Google Blue */
+  --primary: var(--nav-accent);
+  --primary-hover: var(--nav-accent);
   
   /* Semantic Status Colors (Light Theme) */
   --success: #2C6E49;
@@ -40,28 +40,32 @@
   --warning-bg: rgba(166, 124, 0, 0.08);
   --danger: #9B2226;
   --danger-bg: rgba(155, 34, 38, 0.08);
-  --info: #6c4cf1;
-  --info-bg: rgba(108, 76, 241, 0.08);
+  --info: var(--nav-accent);
+  --info-bg: rgba(26, 115, 232, 0.08);
   --neutral: #5C6773;
   --neutral-bg: rgba(92, 103, 115, 0.08);
 
   /* Surface System (Gemini Light) */
   --background: var(--bg-main-page);
   --bg-primary: var(--bg-main-page);
-  --bg-secondary: var(--bg-nav-container);
-  --card-bg: var(--bg-nav-container);
-  --sidebar-bg: var(--bg-nav-container);
-  --navbar-bg: var(--bg-nav-container);
+  --bg-secondary: var(--bg-surface-2);
+  --card-bg: var(--bg-surface-2);
+  --sidebar-bg: var(--bg-surface-2);
+  --navbar-bg: var(--bg-main-page);
 
-  /* Borders: Subtle */
+  /* Text System */
+  --text-primary: var(--text-primary);
+  --text-secondary: var(--text-secondary);
+
+  /* Borders: Soft neutral tone */
   --border-color: var(--border-subtle);
   --border: var(--border-subtle);
   --input: var(--border-subtle);
 
   /* Shadows (Three-tier elevation/shadow system - Light Mode) */
-  --elevation-1: 0 1px 3px rgba(26, 37, 48, 0.05);
-  --elevation-2: 0 8px 24px rgba(108, 76, 241, 0.06);
-  --elevation-3: 0 20px 40px rgba(26, 37, 48, 0.08);
+  --elevation-1: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --elevation-2: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --elevation-3: 0 20px 40px rgba(15, 23, 42, 0.12);
   
   --shadow-sm: var(--elevation-1);
   --shadow-md: var(--elevation-2);
@@ -72,35 +76,35 @@
   --text-heading: var(--text-primary);
   --text-paragraph: var(--text-primary);
   --text-label: var(--text-primary);
-  --text-table: #1A2530;
-  --text-input: #1A2530;
-  --text-button: #FDFBF7;
+  --text-table: var(--text-primary);
+  --text-input: var(--text-primary);
+  --text-button: #ffffff;
   --text-navbar: var(--text-primary);
   --text-sidebar: var(--text-primary);
-  --text-placeholder: #7C8B9C;
-  --text-white: var(--bg-nav-container);
-  --text-black: #1A2530;
+  --text-placeholder: var(--text-secondary);
+  --text-white: #ffffff;
+  --text-black: #1f1f1f;
 
   /* Glassmorphism system variables for light mode */
   --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-blur: blur(24px);
-  --glass-border: rgba(108, 76, 241, 0.22);
-  --glass-shadow: 0 8px 32px rgba(108, 76, 241, 0.04);
-  --card-border-gradient: linear-gradient(135deg, rgba(108, 76, 241, 0.2), transparent, rgba(108, 76, 241, 0.05));
+  --glass-border: var(--border-subtle);
+  --glass-shadow: 0 8px 32px rgba(15, 23, 42, 0.04);
+  --card-border-gradient: linear-gradient(135deg, var(--border-subtle), transparent, var(--border-subtle));
 
   /* Image controls */
   --image-filter: none;
   --image-border-radius: var(--radius-md);
 
   /* Sidebar configuration mapping */
-  --sidebar-link-color: #4A5868;
-
+  --sidebar-link-color: var(--text-secondary);
 }
 
-[data-theme="dark"] {
-  /* Primary Accent: Purple (brand-consistent with light mode) */
-  --primary: #9b7cf6;
-  --primary-hover: #b39bf9;
+.dark,
+.dark-theme {
+  /* Primary Accent: Neon Blue */
+  --primary: var(--nav-accent);
+  --primary-hover: var(--nav-accent);
   
   /* Semantic Status Colors (Dark Theme) */
   --success: #469A6C;
@@ -109,20 +113,24 @@
   --warning-bg: rgba(235, 177, 52, 0.12);
   --danger: #E2585B;
   --danger-bg: rgba(226, 88, 91, 0.12);
-  --info: #9b7cf6;
-  --info-bg: rgba(155, 124, 246, 0.12);
+  --info: var(--nav-accent);
+  --info-bg: rgba(127, 192, 255, 0.12);
   --neutral: #8390A1;
   --neutral-bg: rgba(131, 144, 161, 0.12);
 
   /* Surface System (Gemini Dark) */
   --background: var(--bg-main-page);
   --bg-primary: var(--bg-main-page);
-  --bg-secondary: var(--bg-nav-container);
-  --card-bg: var(--bg-nav-container);
-  --sidebar-bg: var(--bg-nav-container);
-  --navbar-bg: var(--bg-nav-container);
+  --bg-secondary: var(--bg-surface-2);
+  --card-bg: var(--bg-surface-2);
+  --sidebar-bg: var(--bg-surface-2);
+  --navbar-bg: var(--bg-main-page);
 
-  /* Borders: Subtle */
+  /* Text System */
+  --text-primary: var(--text-primary);
+  --text-secondary: var(--text-secondary);
+
+  /* Borders: Subtle transparent light borders */
   --border-color: var(--border-subtle);
   --border: var(--border-subtle);
   --input: var(--border-subtle);
@@ -130,7 +138,7 @@
   /* Shadows (Three-tier elevation/shadow system - Dark Mode) */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3);
   --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --elevation-3: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(155, 124, 246, 0.1);
+  --elevation-3: 0 20px 40px rgba(0, 0, 0, 0.5);
   
   --shadow-sm: var(--elevation-1);
   --shadow-md: var(--elevation-2);
@@ -141,39 +149,28 @@
   --text-heading: var(--text-primary);
   --text-paragraph: var(--text-primary);
   --text-label: var(--text-primary);
-  --text-table: #EAE5DA;
-  --text-input: #EAE5DA;
-  --text-button: #0F1A24;
+  --text-table: var(--text-primary);
+  --text-input: var(--text-primary);
+  --text-button: var(--bg-main-page);
   --text-navbar: var(--text-primary);
   --text-sidebar: var(--text-primary);
-  --text-placeholder: #626F7D;
-  --text-white: #EAE5DA;
-  --text-black: #0F1A24;
+  --text-placeholder: var(--text-secondary);
+  --text-white: var(--text-primary);
+  --text-black: var(--bg-main-page);
 
   /* Glassmorphism system variables for dark mode */
-  --glass-bg: rgba(22, 36, 49, 0.7);
+  --glass-bg: rgba(30, 31, 32, 0.7);
   --glass-blur: blur(24px);
-  --glass-border: rgba(234, 229, 218, 0.25);
+  --glass-border: var(--border-subtle);
   --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-  --card-border-gradient: linear-gradient(135deg, rgba(234, 229, 218, 0.2), transparent, rgba(234, 229, 218, 0.05));
+  --card-border-gradient: linear-gradient(135deg, var(--border-subtle), transparent, var(--border-subtle));
 
   /* Dark mode archival image adjustments */
   --image-filter: brightness(0.85) sepia(0.15) contrast(0.95);
   --image-border-radius: var(--radius-md);
 
   /* Sidebar configuration mapping */
-  --sidebar-link-color: #B1B8C0;
-
-  /* Shadcn UI Dark Mode Overrides (Defaults used for light mode) */
-  --foreground: #e3e3e3;
-  --muted-foreground: #c4c7c5;
-  --card: #1e1f20;
-  --card-foreground: #e3e3e3;
-  --popover: #1e1f20;
-  --popover-foreground: #e3e3e3;
-  --secondary: #282a2c;
-  --secondary-foreground: #e3e3e3;
-  --muted: #282a2c;
+  --sidebar-link-color: var(--text-secondary);
 }
 
 /* Theme transition adjustments */
@@ -184,6 +181,17 @@ html {
 }
 
 body {
+  background-color: var(--bg-main-page) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Ensure clean themes apply to specific wrapper nodes */
+.light-theme, .light {
+  background-color: var(--bg-main-page) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark-theme, .dark {
   background-color: var(--bg-main-page) !important;
   color: var(--text-primary) !important;
 }

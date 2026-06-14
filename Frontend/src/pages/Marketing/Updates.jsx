@@ -57,7 +57,7 @@ export default function Updates() {
         {versionsData.map((ver, idx) => (
           <div key={ver.version} className="timeline-item relative">
             {/* Version Badge timeline badge */}
-            <div className={`absolute -left-[54px] top-0 w-[42px] h-[22px] rounded-full border-2 border-card text-[9px] font-black text-white flex items-center justify-center ${ver.color} shadow-sm select-none`}>
+            <div className={`absolute -left-[54px] top-0 w-[42px] h-[22px] rounded-full border-2 border-card text-[9px] font-black text-white flex items-center justify-center ${ver.color} shadow-[var(--shadow-sm)] select-none`}>
               {ver.version}
             </div>
 

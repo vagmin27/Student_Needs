@@ -48,7 +48,7 @@ export function OpportunityDetailModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="absolute inset-0 bg-background/50 backdrop-blur-sm"
           onClick={onClose}
         />
         
@@ -57,7 +57,7 @@ export function OpportunityDetailModal({
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative bg-card border border-border rounded-[var(--radius-md)] w-full max-w-2xl modal-core-container max-h-[90vh] overflow-y-auto shadow-xl flex flex-col"
+          className="relative bg-card border border-border rounded-[var(--radius-md)] w-full max-w-2xl modal-core-container max-h-[90vh] overflow-y-auto shadow-[var(--shadow-lg)] flex flex-col"
         >
           {/* Header */}
           <div className="sticky top-0 bg-card border-b border-border p-6 flex items-start justify-between z-10">

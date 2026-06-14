@@ -121,7 +121,7 @@ export function QRScanner({ isOpen, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/60 backdrop-blur-sm z-50"
           />
 
           {/* Modal Container */}
@@ -130,7 +130,7 @@ export function QRScanner({ isOpen, onClose }) {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-card border border-border rounded-[var(--radius-lg)] shadow-2xl max-w-md w-full overflow-hidden max-h-[90vh] overflow-y-auto"
+              className="bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] max-w-md w-full overflow-hidden max-h-[90vh] overflow-y-auto"
             >
               {/* Animated Header */}
               <div className="relative bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 p-6 border-b border-border">

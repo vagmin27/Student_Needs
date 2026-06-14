@@ -20,13 +20,17 @@ export const ThemeToggle = ({ className }) => {
       <div
         className={cn(
           "absolute left-1 top-1 bottom-1 w-10 rounded-full bg-white dark:bg-[var(--nav-accent)] shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-white/10 dark:border-[var(--nav-accent)]/30 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] flex items-center justify-center pointer-events-none",
-          theme === "light" ? "translate-x-0" : theme === "system" ? "translate-x-[44px]" : "translate-x-[88px]"
+          theme === "light"
+            ? "translate-x-0"
+            : theme === "system"
+            ? "translate-x-[44px]"
+            : "translate-x-[88px]"
         )}
       >
         <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]/40 dark:bg-white" />
       </div>
 
-      {/* Sun Segment (Light) */}
+      {/* Light */}
       <button
         type="button"
         onClick={(e) => {
@@ -38,10 +42,17 @@ export const ThemeToggle = ({ className }) => {
         aria-checked={theme === "light"}
         title="Light Mode"
       >
-        <Sun className={cn("w-4.5 h-4.5 transition-all duration-300", theme === "light" ? "text-amber-500 scale-110 opacity-100" : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80")} />
+        <Sun
+          className={cn(
+            "w-4.5 h-4.5 transition-all duration-300",
+            theme === "light"
+              ? "text-amber-500 scale-110 opacity-100"
+              : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80"
+          )}
+        />
       </button>
 
-      {/* Laptop Segment (System) */}
+      {/* System */}
       <button
         type="button"
         onClick={(e) => {
@@ -53,10 +64,17 @@ export const ThemeToggle = ({ className }) => {
         aria-checked={theme === "system"}
         title="System Preference"
       >
-        <Laptop className={cn("w-4.5 h-4.5 transition-all duration-300", theme === "system" ? "text-[var(--primary)] dark:text-[var(--nav-accent)] scale-110 opacity-100" : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80")} />
+        <Laptop
+          className={cn(
+            "w-4.5 h-4.5 transition-all duration-300",
+            theme === "system"
+              ? "text-[var(--primary)] dark:text-[var(--nav-accent)] scale-110 opacity-100"
+              : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80"
+          )}
+        />
       </button>
 
-      {/* Moon Segment (Dark) */}
+      {/* Dark */}
       <button
         type="button"
         onClick={(e) => {
@@ -68,7 +86,14 @@ export const ThemeToggle = ({ className }) => {
         aria-checked={theme === "dark"}
         title="Dark Mode"
       >
-        <Moon className={cn("w-4.5 h-4.5 transition-all duration-300", theme === "dark" ? "text-[var(--primary)] dark:text-[var(--nav-accent)] scale-110 opacity-100" : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80")} />
+        <Moon
+          className={cn(
+            "w-4.5 h-4.5 transition-all duration-300",
+            theme === "dark"
+              ? "text-[var(--primary)] dark:text-[var(--nav-accent)] scale-110 opacity-100"
+              : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80"
+          )}
+        />
       </button>
     </div>
   );

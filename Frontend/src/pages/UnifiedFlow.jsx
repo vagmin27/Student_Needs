@@ -730,7 +730,7 @@ export function UnifiedLanding() {
           {/* Laptop Mockup */}
           {activePreviewTab === "laptop" && (
             <div className="laptop-mockup w-full">
-              <div className="laptop-screen bg-slate-900 border-4 border-slate-700 rounded-t-xl overflow-hidden shadow-2xl relative">
+              <div className="laptop-screen bg-slate-900 border-4 border-slate-700 rounded-t-xl overflow-hidden shadow-[var(--shadow-lg)] relative">
                 {/* Simulated browser navbar */}
                 <div className="browser-header bg-slate-800/80 px-4 py-2 flex items-center gap-2 border-b border-border/20">
                   <div className="flex gap-1.5">
@@ -738,36 +738,36 @@ export function UnifiedLanding() {
                     <span className="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
                     <span className="w-2.5 h-2.5 rounded-full bg-green-500"></span>
                   </div>
-                  <div className="flex-1 max-w-xs mx-auto bg-slate-950/60 text-[10px] text-slate-400 py-0.5 rounded px-3 truncate text-center select-none">
+                  <div className="flex-1 max-w-xs mx-auto bg-slate-950/60 text-[10px] text-muted-foreground py-0.5 rounded px-3 truncate text-center select-none">
                     uniconnect.com/student/dashboard
                   </div>
                 </div>
                 
                 {/* Simulated Student Dashboard Content */}
-                <div className="browser-content p-4 text-left text-xs text-slate-300 min-h-[300px]">
+                <div className="browser-content p-4 text-left text-xs text-muted-foreground min-h-[300px]">
                   <div className="flex justify-between items-center mb-4 border-b border-border/10 pb-2">
                     <div>
                       <h4 className="font-bold text-white text-sm">👨‍🎓 Student Dashboard</h4>
-                      <p className="text-[10px] text-slate-400">Welcome back, Anaya Sharma</p>
+                      <p className="text-[10px] text-muted-foreground">Welcome back, Anaya Sharma</p>
                     </div>
                     <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded font-semibold border border-primary/25">IT Branch</span>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-3">
                     <div className="p-3 bg-slate-800/60 rounded-[var(--radius-sm)] border border-border/10">
-                      <span className="text-[10px] text-slate-400">Class Attendance</span>
+                      <span className="text-[10px] text-muted-foreground">Class Attendance</span>
                       <strong className="block text-sm text-emerald-400 mt-1">84.5%</strong>
-                      <span className="text-[8px] text-slate-500">Above criteria target (75%)</span>
+                      <span className="text-[8px] text-muted-foreground">Above criteria target (75%)</span>
                     </div>
                     <div className="p-3 bg-slate-800/60 rounded-[var(--radius-sm)] border border-border/10">
-                      <span className="text-[10px] text-slate-400">Active Bookings</span>
+                      <span className="text-[10px] text-muted-foreground">Active Bookings</span>
                       <strong className="block text-sm text-[var(--primary)] mt-1">3 Upcoming</strong>
-                      <span className="text-[8px] text-slate-500">Next class tomorrow at 3 PM</span>
+                      <span className="text-[8px] text-muted-foreground">Next class tomorrow at 3 PM</span>
                     </div>
                     <div className="p-3 bg-slate-800/60 rounded-[var(--radius-sm)] border border-border/10">
-                      <span className="text-[10px] text-slate-400">Remaining Budget</span>
+                      <span className="text-[10px] text-muted-foreground">Remaining Budget</span>
                       <strong className="block text-sm text-rose-400 mt-1">$245.50</strong>
-                      <span className="text-[8px] text-slate-500">Goal alert: 82% spent</span>
+                      <span className="text-[8px] text-muted-foreground">Goal alert: 82% spent</span>
                     </div>
                   </div>
                   
@@ -776,35 +776,35 @@ export function UnifiedLanding() {
                     <div className="space-y-1.5">
                       <div className="p-1.5 bg-slate-900/60 rounded text-[9px] flex justify-between border-l-2 border-l-indigo-500">
                         <span>New tutor message from Rohan Mehta (Math)</span>
-                        <span className="text-slate-500">2 mins ago</span>
+                        <span className="text-muted-foreground">2 mins ago</span>
                       </div>
                       <div className="p-1.5 bg-slate-900/60 rounded text-[9px] flex justify-between border-l-2 border-l-cyan-400">
                         <span>Internship Referral Active: Software Intern at Stripe</span>
-                        <span className="text-slate-500">1 hour ago</span>
+                        <span className="text-muted-foreground">1 hour ago</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               {/* Keyboard/Stand part of laptop */}
-              <div className="laptop-base bg-slate-700 h-3 w-[105%] -ml-[2.5%] rounded-b-xl border-t border-slate-600 shadow-xl"></div>
+              <div className="laptop-base bg-slate-700 h-3 w-[105%] -ml-[2.5%] rounded-b-xl border-t border-slate-600 shadow-[var(--shadow-lg)]"></div>
             </div>
           )}
 
           {/* Tablet Mockup */}
           {activePreviewTab === "tablet" && (
-            <div className="tablet-mockup w-[80%] max-w-lg bg-slate-900 border-[8px] border-slate-700 rounded-[var(--radius-xl)] overflow-hidden shadow-2xl relative">
+            <div className="tablet-mockup w-[80%] max-w-lg bg-slate-900 border-[8px] border-slate-700 rounded-[var(--radius-xl)] overflow-hidden shadow-[var(--shadow-lg)] relative">
               {/* Speaker & camera dots */}
               <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-slate-800 rounded-full"></div>
               
               {/* Browser Header */}
               <div className="browser-header bg-slate-800/80 px-4 py-2 flex justify-between items-center border-b border-border/20 pt-4">
-                <span className="text-[8px] text-slate-500">uniconnect.com/tutorials/chat</span>
+                <span className="text-[8px] text-muted-foreground">uniconnect.com/tutorials/chat</span>
                 <div className="w-1.5 h-1.5 rounded-full bg-slate-600"></div>
               </div>
 
               {/* Tablet Content */}
-              <div className="tablet-content p-4 text-left text-xs text-slate-300 min-h-[300px]">
+              <div className="tablet-content p-4 text-left text-xs text-muted-foreground min-h-[300px]">
                 <h4 className="font-bold text-white text-sm mb-3">📚 Tutorials & Class Chat</h4>
                 
                 <div className="grid grid-cols-5 gap-3">
@@ -816,7 +816,7 @@ export function UnifiedLanding() {
                     </div>
                     <div className="p-1.5 bg-slate-800/40 rounded text-[10px]">
                       Prof. Priya Nair
-                      <span className="block text-[7px] text-slate-500">Seen yesterday</span>
+                      <span className="block text-[7px] text-muted-foreground">Seen yesterday</span>
                     </div>
                   </div>
 
@@ -831,7 +831,7 @@ export function UnifiedLanding() {
                       </div>
                     </div>
                     <div className="mt-2 p-1 bg-slate-900 border border-border/20 rounded flex items-center justify-between">
-                      <span className="text-[8px] text-slate-500">Type a message...</span>
+                      <span className="text-[8px] text-muted-foreground">Type a message...</span>
                       <span className="text-[8px] text-white bg-primary px-1.5 py-0.5 rounded">SEND</span>
                     </div>
                   </div>
@@ -849,14 +849,14 @@ export function UnifiedLanding() {
 
           {/* Mobile Mockup */}
           {activePreviewTab === "mobile" && (
-            <div className="mobile-mockup w-[55%] max-w-sm bg-slate-900 border-[10px] border-slate-700 rounded-[36px] overflow-hidden shadow-2xl relative">
+            <div className="mobile-mockup w-[55%] max-w-sm bg-slate-900 border-[10px] border-slate-700 rounded-[36px] overflow-hidden shadow-[var(--shadow-lg)] relative">
               {/* Speaker notch */}
               <div className="absolute top-2 left-1/2 -translate-x-1/2 w-14 h-4 bg-slate-700 rounded-full z-10 flex items-center justify-center">
                 <span className="w-6 h-0.5 bg-slate-600 rounded-full"></span>
               </div>
 
               {/* Content */}
-              <div className="mobile-content p-4 text-left text-xs text-slate-300 min-h-[300px] pt-8">
+              <div className="mobile-content p-4 text-left text-xs text-muted-foreground min-h-[300px] pt-8">
                 {/* Header */}
                 <div className="flex justify-between items-center border-b border-border/15 pb-2 mb-3">
                   <strong className="text-white text-xs">💼 Career Referrals</strong>
@@ -870,14 +870,14 @@ export function UnifiedLanding() {
                       <strong className="text-[10px] text-white">Software Intern</strong>
                       <span className="text-[7px] bg-cyan-500/20 text-cyan-400 px-1 rounded border border-cyan-400/25">Google</span>
                     </div>
-                    <p className="text-[8px] text-slate-400 mt-1">Verified alumni referral available from Siddharth Sen.</p>
+                    <p className="text-[8px] text-muted-foreground mt-1">Verified alumni referral available from Siddharth Sen.</p>
                   </div>
                   <div className="p-2 bg-slate-800/80 rounded border border-border/10">
                     <div className="flex justify-between items-start">
                       <strong className="text-[10px] text-white">UI/UX Associate</strong>
                       <span className="text-[7px] bg-[var(--primary)]/20 text-[var(--primary)] px-1 rounded border border-[var(--primary)]/30/25">Stripe</span>
                     </div>
-                    <p className="text-[8px] text-slate-400 mt-1">Verified alumni referral available from Rahul K.</p>
+                    <p className="text-[8px] text-muted-foreground mt-1">Verified alumni referral available from Rahul K.</p>
                   </div>
                 </div>
 
@@ -1023,37 +1023,37 @@ export function UnifiedLanding() {
 
           {/* Stats grid triggered by viewport count-up hook */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-[var(--shadow-sm)]">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-primary">
                 {studentsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Students Supported</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-[var(--shadow-sm)]">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-[var(--primary)]">
                 {tutorsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Vetted Tutors</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm col-span-2">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-[var(--shadow-sm)] col-span-2">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-emerald-400">
                 {sessionsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Tutorial Sessions Booked</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-[var(--shadow-sm)]">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-cyan-400">
                 {referralsCount.toLocaleString()}+
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">Referrals Shared</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-[var(--shadow-sm)]">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-[var(--primary)]">
                 {satisfactionCount}%
               </strong>
               <span className="text-xs text-muted-foreground font-semibold mt-1 block">User Satisfaction</span>
             </div>
-            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-sm col-span-2">
+            <div className="p-5 bg-card border border-border rounded-[var(--radius-md)] text-center shadow-[var(--shadow-sm)] col-span-2">
               <strong className="block text-2xl sm:text-3xl font-extrabold text-amber-500">
                 {mentorsCount}+
               </strong>
@@ -1306,7 +1306,7 @@ function RoleAuthShell({
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] focus:outline-none text-xs font-semibold select-none cursor-pointer"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-slate-200 focus:outline-none text-xs font-semibold select-none cursor-pointer"
                       >
                         {showPassword ? "HIDE" : "SHOW"}
                       </button>
@@ -1330,7 +1330,7 @@ function RoleAuthShell({
             </div>
 
             {mode === "login" && (
-              <label className="flex items-center gap-2 mt-2 mb-4 text-sm text-[var(--text-secondary)] cursor-pointer select-none">
+              <label className="flex items-center gap-2 mt-2 mb-4 text-sm text-muted-foreground cursor-pointer select-none">
                 <input
                   type="checkbox"
                   className="w-4 h-4 rounded border-[var(--border-subtle)] bg-[var(--bg-nav-container)] text-[var(--primary)] focus:ring-[var(--primary)]/20 cursor-pointer"
@@ -1348,15 +1348,15 @@ function RoleAuthShell({
           {(role === "student" || role === "alumni") && (
             <>
               <div className="uc-social-separator my-5 flex items-center justify-center gap-3 w-full">
-                <span className="h-[1px] bg-[var(--border-subtle)] flex-grow"></span>
-                <span className="text-xs text-[var(--text-secondary)] font-medium uppercase tracking-wider">or continue with</span>
-                <span className="h-[1px] bg-[var(--border-subtle)] flex-grow"></span>
+                <span className="h-[1px] bg-slate-800 flex-grow"></span>
+                <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">or continue with</span>
+                <span className="h-[1px] bg-slate-800 flex-grow"></span>
               </div>
               <div className="uc-social-buttons flex gap-3 w-full">
                 <button
                   type="button"
                   onClick={() => window.location.href = `http://localhost:8000/api/v1/student/auth/google?role=${role}`}
-                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-nav-container)] text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-nav-hover)] hover:text-[var(--text-primary)] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-muted-foreground hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -1369,7 +1369,7 @@ function RoleAuthShell({
                 <button
                   type="button"
                   onClick={() => window.location.href = `http://localhost:8000/api/v1/student/auth/github?role=${role}`}
-                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-nav-container)] text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-nav-hover)] hover:text-[var(--text-primary)] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-muted-foreground hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z" />

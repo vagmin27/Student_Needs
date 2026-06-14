@@ -10,8 +10,8 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div style={{
-        background: "#1e293b", border: "1px solid #334155",
-        borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "#f1f5f9",
+        background: "var(--bg-surface-1)", border: "1px solid var(--border-subtle)",
+        borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "var(--text-primary)",
       }}>
         <p style={{ fontWeight: 600, marginBottom: 4 }}>{label}</p>
         {payload?.map((p, i) => (
@@ -41,9 +41,9 @@ function Charts({ attendanceStats }) {
         <div style={{ height: 260 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={attendanceStats} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "#94a3b8" }} />
-              <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} domain={[0, 100]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
+              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
+              <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} domain={[0, 100]} />
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#6c4cf1"} radius={[4, 4, 0, 0]} />
             </BarChart>
@@ -59,9 +59,9 @@ function Charts({ attendanceStats }) {
         <div style={{ height: 260 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={attendanceStats} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "#94a3b8" }} />
-              <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
+              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
+              <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="presentDays" name="Present Days" fill="#22c55e" radius={[4, 4, 0, 0]} />
             </BarChart>
@@ -85,7 +85,7 @@ function Charts({ attendanceStats }) {
                 innerRadius={50}
                 paddingAngle={3}
                 label={({ subject, percentage }) => `${subject} ${percentage}%`}
-                labelLine={{ stroke: "#475569" }}
+                labelLine={{ stroke: "var(--text-secondary)" }}
               >
                 {attendanceStats?.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={currentColors[index % currentColors.length]} />
@@ -93,7 +93,7 @@ function Charts({ attendanceStats }) {
               </Pie>
               <Tooltip content={<CustomTooltip />} />
               <Legend
-                wrapperStyle={{ fontSize: 12, color: "#94a3b8" }}
+                wrapperStyle={{ fontSize: 12, color: "var(--text-secondary)" }}
               />
             </PieChart>
           </ResponsiveContainer>

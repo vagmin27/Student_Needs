@@ -198,7 +198,7 @@ export default function MarketingLayout() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 bottom-0 w-[280px] bg-background border-l border-border z-50 p-6 flex flex-col justify-between md:hidden shadow-2xl"
+              className="fixed right-0 top-0 bottom-0 w-[280px] bg-background border-l border-border z-50 p-6 flex flex-col justify-between md:hidden shadow-[var(--shadow-lg)]"
             >
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-border/50 pb-4">
@@ -254,7 +254,7 @@ export default function MarketingLayout() {
                 </div>
                 <Link 
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center block py-2.5 bg-primary text-white rounded-[var(--radius-sm)] text-sm font-semibold hover:bg-primary-hover transition-colors shadow-md" 
+                  className="w-full text-center block py-2.5 bg-primary text-white rounded-[var(--radius-sm)] text-sm font-semibold hover:bg-primary-hover transition-colors shadow-[var(--shadow-md)]" 
                   to="/role-selection"
                 >
                   Get Started
@@ -446,13 +446,13 @@ export default function MarketingLayout() {
       <div className="sticky-cta-bar select-none">
         <div className="flex items-center gap-3">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs text-slate-300 font-medium">UniConnect Operating System - Start boosting academic performance today.</span>
+          <span className="text-xs text-muted-foreground font-medium">UniConnect Operating System - Start boosting academic performance today.</span>
         </div>
         <div className="flex items-center gap-4">
           <Link to="/features" className="px-4 py-1.5 bg-secondary hover:bg-secondary/80 border border-border text-foreground rounded text-xs font-bold transition-all hover:border-primary">
             Explore Features
           </Link>
-          <Link to="/role-selection" className="px-4.5 py-1.5 bg-primary text-white rounded text-xs font-black hover:bg-primary-hover transition-colors shadow-md flex items-center gap-1.5">
+          <Link to="/role-selection" className="px-4.5 py-1.5 bg-primary text-white rounded text-xs font-black hover:bg-primary-hover transition-colors shadow-[var(--shadow-md)] flex items-center gap-1.5">
             Join UniConnect <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

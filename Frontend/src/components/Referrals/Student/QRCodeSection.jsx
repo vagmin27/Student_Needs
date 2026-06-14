@@ -65,7 +65,7 @@ export function QRCodeSection({ student, address }) {
 
   return (
     <div className="max-w-md mx-auto">
-      <div className="bg-card rounded-[var(--radius-md)] p-6 border border-border/50 shadow-sm">
+      <div className="bg-card rounded-[var(--radius-md)] p-6 border border-border/50 shadow-[var(--shadow-sm)]">
         <h3 className="text-lg font-semibold text-foreground mb-4 text-center">
           Your Student QR Code
         </h3>
@@ -78,7 +78,7 @@ export function QRCodeSection({ student, address }) {
         {qrCodeData ? (
           <div className="space-y-4 mb-2">
             <div className="flex justify-center">
-              <div className="p-4 bg-white rounded-[var(--radius-md)] shadow-sm border">
+              <div className="p-4 bg-white rounded-[var(--radius-md)] shadow-[var(--shadow-sm)] border">
                 <img 
                   src={qrCodeData.qrCodeUrl} 
                   alt="Student QR Code" 

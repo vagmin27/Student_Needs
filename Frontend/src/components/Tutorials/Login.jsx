@@ -131,8 +131,8 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     padding: "15px 40px",
-    background: "var(--bg-nav-container)",
-    color: "var(--text-primary)",
+    background: "var(--bg-surface-2)",
+    color: "var(--text-white)",
   },
 
   logo: {

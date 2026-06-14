@@ -60,7 +60,7 @@ export default function SocialSuccess() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground">
-      <div className="p-8 max-w-md w-full bg-card border border-border rounded-xl flex flex-col items-center gap-6 shadow-md text-center">
+      <div className="p-8 max-w-md w-full bg-card border border-border rounded-xl flex flex-col items-center gap-6 shadow-[var(--shadow-md)] text-center">
         <Loader2 className="w-12 h-12 text-primary animate-spin" />
         <div>
           <h2 className="text-xl font-bold tracking-tight mb-2">Completing Login</h2>

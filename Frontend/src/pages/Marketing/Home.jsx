@@ -64,7 +64,7 @@ export default function Home() {
             UniConnect integrates everything you need to study better, manage your schedule, plan finances, and secure corporate job referrals in one unified platform.
           </p>
           <div className="uc-actions flex flex-wrap gap-4 select-none pt-2">
-            <Link className="uc-btn-primary px-8 py-4 text-white rounded-[var(--radius-sm)] text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-primary/20" to="/role-selection">
+            <Link className="uc-btn-primary px-8 py-4 text-white rounded-[var(--radius-sm)] text-sm font-bold flex items-center gap-1.5 shadow-[var(--shadow-lg)] shadow-primary/20" to="/role-selection">
               Get Started Now <ArrowRight className="w-4 h-4" />
             </Link>
             <Link className="uc-btn-secondary px-8 py-4 rounded-[var(--radius-sm)] text-sm font-bold transition-all" to="/features">
@@ -82,7 +82,7 @@ export default function Home() {
           aria-hidden="true"
         >
           {/* Central Live Environment Container */}
-          <div className="w-full max-w-[500px] bg-card/60 border border-border/80 rounded-[var(--radius-lg)] p-5 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-md">
+          <div className="w-full max-w-[500px] bg-card/60 border border-border/80 rounded-[var(--radius-lg)] p-5 shadow-[var(--shadow-lg)] space-y-4 relative overflow-hidden backdrop-blur-md">
             
             {/* Window bar */}
             <div className="flex items-center justify-between border-b border-border/60 pb-3 mb-1.5">
@@ -248,7 +248,7 @@ export default function Home() {
               className="glass-card-modern p-8 text-left flex flex-col justify-between gap-4"
             >
               <div>
-                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-6 shadow-sm"><BookOpen className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-6 shadow-[var(--shadow-sm)]"><BookOpen className="w-6 h-6" /></div>
                 <h3 className="text-xl font-bold text-foreground mb-3">Tutorials</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">Connect with vetted student tutors and request bookings instantly.</p>
               </div>
@@ -263,7 +263,7 @@ export default function Home() {
               className="glass-card-modern p-8 text-left flex flex-col justify-between gap-4"
             >
               <div>
-                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-6 shadow-sm"><Briefcase className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-6 shadow-[var(--shadow-sm)]"><Briefcase className="w-6 h-6" /></div>
                 <h3 className="text-xl font-bold text-foreground mb-3">Referrals & Internships</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">Accelerate your career search with job boards powered by verified alumni.</p>
               </div>
@@ -278,7 +278,7 @@ export default function Home() {
               className="glass-card-modern p-8 text-left flex flex-col justify-between gap-4"
             >
               <div>
-                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6 shadow-sm"><ClipboardList className="w-6 h-6" /></div>
+                <div className="w-12 h-12 rounded-[var(--radius-md)] bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6 shadow-[var(--shadow-sm)]"><ClipboardList className="w-6 h-6" /></div>
                 <h3 className="text-xl font-bold text-foreground mb-3">Attendance Management</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">Monitor your attendance limits and sync class lists automatically.</p>
               </div>
@@ -291,19 +291,19 @@ export default function Home() {
       {/* 🚀 STATISTICS PREVIEW */}
       <section ref={statsRef} className="w-full py-24 px-6 max-w-5xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
             <strong className="block text-4xl font-extrabold text-primary">{studentsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Active Students</span>
           </div>
-          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
             <strong className="block text-4xl font-extrabold text-[var(--primary)]">{tutorsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Certified Tutors</span>
           </div>
-          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
             <strong className="block text-4xl font-extrabold text-emerald-500">{sessionsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Sessions Completed</span>
           </div>
-          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+          <div className="p-8 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
             <strong className="block text-4xl font-extrabold text-cyan-400">{referralsCount.toLocaleString()}+</strong>
             <span className="text-xs text-muted-foreground mt-2 block font-semibold uppercase tracking-wider">Job Referrals</span>
           </div>
@@ -312,7 +312,7 @@ export default function Home() {
 
       {/* 🚀 CTA SECTION */}
       <section className="w-full px-6 py-20 max-w-6xl mx-auto mb-16">
-        <div className="premium-cta-banner p-12 sm:p-20 text-center rounded-[var(--radius-xl)] relative overflow-hidden shadow-2xl">
+        <div className="premium-cta-banner p-12 sm:p-20 text-center rounded-[var(--radius-xl)] relative overflow-hidden shadow-[var(--shadow-lg)]">
           {/* Animated Blobs */}
           <div className="cta-blobs-container">
             <div className="cta-blob cta-blob-1"></div>
@@ -322,7 +322,7 @@ export default function Home() {
           
           <div className="relative z-10 max-w-2xl mx-auto">
             <h2 className="uc-section-heading text-white mb-6">Ready to Transform Your Student Journey?</h2>
-            <p className="text-slate-300 text-base mb-10 leading-relaxed max-w-lg mx-auto">
+            <p className="text-muted-foreground text-base mb-10 leading-relaxed max-w-lg mx-auto">
               Join thousands of university students matching with verified tutors, tracking schedules, budgeting, and securing corporate job referrals.
             </p>
             <div className="flex justify-center gap-4 select-none">

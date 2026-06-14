@@ -164,7 +164,7 @@ const Sidebar = ({ className, role = "student" }) => {
               
               {/* Premium CSS Tooltip */}
               {isCollapsed && (
-                <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+                <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                   {link.name}
                 </div>
               )}
@@ -199,7 +199,7 @@ const Sidebar = ({ className, role = "student" }) => {
             <Settings className="w-5 h-5 shrink-0" />
             {!isCollapsed && <span>Settings</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Settings
               </div>
             )}
@@ -217,7 +217,7 @@ const Sidebar = ({ className, role = "student" }) => {
             <LogOut className="w-5 h-5 shrink-0 text-destructive" />
             {!isCollapsed && <span className="font-medium text-destructive">Log out</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Log out
               </div>
             )}
@@ -274,7 +274,7 @@ const Sidebar = ({ className, role = "student" }) => {
           />
           {!isCollapsed && <span className="sidebar-label">Collapse</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Expand
             </div>
           )}

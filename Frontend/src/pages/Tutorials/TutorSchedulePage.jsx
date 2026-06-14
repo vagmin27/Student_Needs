@@ -57,7 +57,7 @@ function TutorSchedulePage() {
           <p>No schedule found ❌</p>
         ) : (
           schedule?.map((item, index) => (
-            <div key={item._id || index} className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-sm space-y-3">
+            <div key={item._id || index} className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-[var(--shadow-sm)] space-y-3">
               
               <p className="text-sm text-muted-foreground">
                 <strong>📅 Date:</strong> {item.date}
@@ -162,7 +162,7 @@ function TutorSchedulePage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="bg-green-500/10 text-green-600 hover:bg-green-500/20 hover:text-green-700 border-green-500/30"
+                    className="bg-green-500/10 text-green-600 hover:bg-green-500/20 hover:text-green-700 border-green-500/30 dark:bg-green-500/20 dark:text-green-400 dark:hover:text-green-300"
                     onClick={() => navigate(`/tutorials/chat?studentId=${item.studentId}`)}
                   >
                     💬 Message Student
