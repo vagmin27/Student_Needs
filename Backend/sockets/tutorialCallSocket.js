@@ -58,11 +58,11 @@ export const registerTutorCallHandlers = (io, socket) => {
         callSessionId
       });
 
-      console.log(`[CALL START] caller: ${userId} receiver: ${receiverId}`);
+      console.log(`[CALL START] timestamp=${new Date().toISOString()} socketId=${socket.id} userId=${userId} receiverId=${receiverId} conversationId=${conversationId} callSessionId=${callSessionId}`);
 
       const receiverIsOnline = onlineUsers.has(receiverId.toString()) && onlineUsers.get(receiverId.toString()).size > 0;
       if (receiverIsOnline) {
-        console.log(`[CALL INCOMING] to receiver: ${receiverId}`);
+        console.log(`[CALL INCOMING] timestamp=${new Date().toISOString()} userId=${receiverId} conversationId=${conversationId} callSessionId=${callSessionId}`);
         // Emit incoming call to receiver's user room
         io.to(`user:${receiverId.toString()}`).emit("call:incoming", {
           conversationId,
@@ -86,6 +86,7 @@ export const registerTutorCallHandlers = (io, socket) => {
 
   socket.on("call:accepted", ({ conversationId, callSessionId }) => {
     const call = activeCalls.get(conversationId);
+    console.log(`[CALL ACCEPT] timestamp=${new Date().toISOString()} socketId=${socket.id} userId=${userId} conversationId=${conversationId} callSessionId=${callSessionId}`);
     if (call && call.receiver.toString() === userId.toString()) {
       if (call.status === "calling") {
         clearTimeout(call.timeout); // Clear the 30-second timeout when answered
@@ -117,6 +118,7 @@ export const registerTutorCallHandlers = (io, socket) => {
 
   socket.on("call:offer", ({ conversationId, offer }) => {
     const call = activeCalls.get(conversationId);
+    console.log(`[CALL OFFER] timestamp=${new Date().toISOString()} socketId=${socket.id} userId=${userId} conversationId=${conversationId}`);
     if (call) {
       console.log(`[WEBRTC OFFER] for conversation: ${conversationId}`);
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
@@ -126,6 +128,7 @@ export const registerTutorCallHandlers = (io, socket) => {
 
   socket.on("call:answer", ({ conversationId, answer }) => {
     const call = activeCalls.get(conversationId);
+    console.log(`[CALL ANSWER] timestamp=${new Date().toISOString()} socketId=${socket.id} userId=${userId} conversationId=${conversationId}`);
     if (call) {
       console.log(`[WEBRTC ANSWER] for conversation: ${conversationId}`);
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
@@ -135,6 +138,7 @@ export const registerTutorCallHandlers = (io, socket) => {
 
   socket.on("call:ice_candidate", ({ conversationId, candidate }) => {
     const call = activeCalls.get(conversationId);
+    console.log(`[ICE CANDIDATE] timestamp=${new Date().toISOString()} socketId=${socket.id} userId=${userId} conversationId=${conversationId}`);
     if (call) {
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
       io.to(`user:${targetId.toString()}`).emit("call:ice_candidate", { conversationId, candidate });

@@ -55,9 +55,11 @@ export const VideoCallModal = ({
   // Sync internal machine with parent prop safely
   useEffect(() => {
     if (callState === "incoming" && (internalCallState === "idle" || internalCallState === "ended")) {
+      console.log(`[CALL MODAL OPEN] timestamp=${new Date().toISOString()} type=incoming conversationId=${conversationId}`);
       setInternalCallState("incoming");
       cleanupInProgress.current = false; // Reset cleanup lock
     } else if (callState === "calling" && (internalCallState === "idle" || internalCallState === "ended")) {
+      console.log(`[CALL MODAL OPEN] timestamp=${new Date().toISOString()} type=outgoing conversationId=${conversationId}`);
       setInternalCallState("connecting");
       cleanupInProgress.current = false; // Reset cleanup lock
       if (!callInitialized.current) {
@@ -291,6 +293,7 @@ export const VideoCallModal = ({
       streamRef.current = stream;
       setLocalStream(stream);
       setIsVideoMuted(type !== "video");
+      console.log(`[LOCAL STREAM READY] timestamp=${new Date().toISOString()} hasVideo=${type === "video"} conversationId=${conversationId}`);
       return stream;
     } catch (error) {
       console.error("[ERROR] Media devices access denied:", error);
@@ -326,6 +329,7 @@ export const VideoCallModal = ({
     };
 
     peerConnectionRef.current.ontrack = (event) => {
+      console.log(`[REMOTE STREAM RECEIVED] timestamp=${new Date().toISOString()} conversationId=${conversationId}`);
       console.log("[PEER] Received remote track");
       setRemoteStream(event.streams[0]);
     };

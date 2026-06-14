@@ -46,7 +46,7 @@ export const useWebSocket = () => {
     const onConnect = () => {
       setIsConnected(true);
       setError(null);
-      console.log("🟢 WebSocket Connected");
+      console.log(`[SOCKET CONNECTED] timestamp=${new Date().toISOString()} socketId=${socketInstance.id}`);
       
       // Request online users list on connection/reconnection
       if (socketInstance.connected) {
@@ -58,7 +58,7 @@ export const useWebSocket = () => {
 
     const onDisconnect = () => {
       setIsConnected(false);
-      console.log("🔴 WebSocket Disconnected");
+      console.log(`🔴 WebSocket Disconnected: timestamp=${new Date().toISOString()}`);
     };
 
     const onConnectError = (err) => {
@@ -69,7 +69,7 @@ export const useWebSocket = () => {
 
     // Socket.io reconnect event
     const onReconnect = (attemptNumber) => {
-      console.log(`🔄 WebSocket Reconnected after ${attemptNumber} attempts`);
+      console.log(`[SOCKET RECONNECTED] timestamp=${new Date().toISOString()} socketId=${socketInstance.id} attempt=${attemptNumber}`);
       // No explicit logic needed here; 'connect' will fire again and we re-fetch state if needed.
     };
 

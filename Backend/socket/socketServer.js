@@ -19,7 +19,7 @@ export const registerTutorChatHandlers = (io, socket) => {
     const { conversationId } = data || {};
     if (conversationId) {
       socket.join(conversationId);
-      console.log(`🗣️ Socket ${socket.id} joined conversation: ${conversationId}`);
+      console.log(`[JOIN CONVERSATION] timestamp=${new Date().toISOString()} socketId=${socket.id} userId=${stringUserId} conversationId=${conversationId}`);
     }
   });
 
