@@ -34,7 +34,7 @@ const MonthlyExpenseChart = ({ exdata }) => {
     <div className="glass-card flex flex-col h-[320px]">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-foreground">Expense Overview</h3>
-        <select className="bg-secondary border border-border text-foreground text-sm rounded-[var(--radius-sm)] outline-none px-3 py-1 cursor-pointer">
+        <select className="bg-[var(--input-bg)] border border-[var(--border-color)] text-[var(--text-primary)] text-sm rounded-[var(--radius-sm)] outline-none px-3 py-1 cursor-pointer">
           <option>Last 6 Months</option>
           <option>This Year</option>
         </select>
@@ -47,7 +47,7 @@ const MonthlyExpenseChart = ({ exdata }) => {
             <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value}`} />
             <Tooltip 
               cursor={{ fill: 'var(--neutral-bg)' }}
-              contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+              contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
               itemStyle={{ color: 'var(--text-secondary)' }}
               formatter={(value) => `₹${value.toLocaleString()}`}
             />

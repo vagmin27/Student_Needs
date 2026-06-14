@@ -9,19 +9,19 @@ const screenshotsData = [
     category: "dashboard",
     desc: "Overview of student progress logs, pending tutorials chat counters, and threshold warnings.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
-        <div className="flex justify-between border-b border-border/10 pb-1.5 mb-3">
-          <strong>👨‍🎓 Student Dashboard</strong>
+      <div className="p-4 bg-[var(--bg-primary)] rounded-[var(--radius-sm)] text-left text-[9px] text-[var(--text-secondary)] border border-[var(--border-color)]">
+        <div className="flex justify-between border-b border-[var(--border-color)] pb-1.5 mb-3">
+          <strong className="text-[var(--text-primary)]">👨‍🎓 Student Dashboard</strong>
           <span className="text-[8px] bg-primary/20 text-primary px-1.5 rounded">Anaya Sharma</span>
         </div>
         <div className="grid grid-cols-3 gap-2 mb-3">
-          <div className="p-1.5 bg-slate-800 rounded"><span>Attendance</span><strong className="block text-emerald-400">84.5%</strong></div>
-          <div className="p-1.5 bg-slate-800 rounded"><span>Bookings</span><strong className="block text-[var(--primary)]">3 Upcoming</strong></div>
-          <div className="p-1.5 bg-slate-800 rounded"><span>Budget left</span><strong className="block text-rose-400">$245.50</strong></div>
+          <div className="p-1.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded"><span>Attendance</span><strong className="block text-emerald-500">84.5%</strong></div>
+          <div className="p-1.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded"><span>Bookings</span><strong className="block text-[var(--primary)]">3 Upcoming</strong></div>
+          <div className="p-1.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded"><span>Budget left</span><strong className="block text-rose-400">$245.50</strong></div>
         </div>
-        <div className="p-2 bg-slate-950 rounded text-[8px] border-l-2 border-l-primary">
-          <strong>🔔 Notifications</strong>
-          <p className="text-muted-foreground mt-0.5">New tutor message from Dr. Rajesh Kumar (Math)</p>
+        <div className="p-2 bg-[var(--bg-tertiary)] rounded text-[8px] border-l-2 border-l-primary border border-[var(--border-color)]">
+          <strong className="text-[var(--text-primary)]">🔔 Notifications</strong>
+          <p className="text-[var(--text-secondary)] mt-0.5">New tutor message from Dr. Rajesh Kumar (Math)</p>
         </div>
       </div>
     )
@@ -32,23 +32,23 @@ const screenshotsData = [
     category: "tutorials",
     desc: "List of certified on-demand campus tutors grouped by academic subjects.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
-        <div className="flex justify-between border-b border-border/10 pb-1.5 mb-2">
-          <strong>📚 Search Tutors</strong>
-          <span className="text-[7px] text-muted-foreground">24 active tutors</span>
+      <div className="p-4 bg-[var(--bg-primary)] rounded-[var(--radius-sm)] text-left text-[9px] text-[var(--text-secondary)] border border-[var(--border-color)]">
+        <div className="flex justify-between border-b border-[var(--border-color)] pb-1.5 mb-2">
+          <strong className="text-[var(--text-primary)]">📚 Search Tutors</strong>
+          <span className="text-[7px] text-[var(--text-secondary)]">24 active tutors</span>
         </div>
         <div className="space-y-2">
-          <div className="p-2 bg-slate-800 rounded flex justify-between items-center">
+          <div className="p-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded flex justify-between items-center">
             <div>
-              <strong>Dr. Rajesh Kumar</strong>
-              <span className="block text-[7px] text-muted-foreground">Data Structures • Rating: 4.9 (42 reviews)</span>
+              <strong className="text-[var(--text-primary)]">Dr. Rajesh Kumar</strong>
+              <span className="block text-[7px] text-[var(--text-secondary)]">Data Structures • Rating: 4.9 (42 reviews)</span>
             </div>
             <span className="bg-primary text-white px-2 py-0.5 rounded text-[8px]">Message</span>
           </div>
-          <div className="p-2 bg-slate-800 rounded flex justify-between items-center">
+          <div className="p-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded flex justify-between items-center">
             <div>
-              <strong>Prof. Priya Nair</strong>
-              <span className="block text-[7px] text-muted-foreground">Database Management • Rating: 4.8 (30 reviews)</span>
+              <strong className="text-[var(--text-primary)]">Prof. Priya Nair</strong>
+              <span className="block text-[7px] text-[var(--text-secondary)]">Database Management • Rating: 4.8 (30 reviews)</span>
             </div>
             <span className="bg-primary text-white px-2 py-0.5 rounded text-[8px]">Message</span>
           </div>
@@ -62,17 +62,17 @@ const screenshotsData = [
     category: "chat",
     desc: "Real-time communication panel linking students and tutors with typing status.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
-        <div className="border-b border-border/10 pb-1.5 mb-3 flex justify-between">
-          <strong>💬 Dr. Rajesh Kumar</strong>
+      <div className="p-4 bg-[var(--bg-primary)] rounded-[var(--radius-sm)] text-left text-[9px] text-[var(--text-secondary)] border border-[var(--border-color)]">
+        <div className="border-b border-[var(--border-color)] pb-1.5 mb-3 flex justify-between">
+          <strong className="text-[var(--text-primary)]">💬 Dr. Rajesh Kumar</strong>
           <span className="text-[7px] text-emerald-400">typing...</span>
         </div>
         <div className="space-y-2 mb-3 h-[90px] overflow-y-auto">
-          <div className="p-1.5 bg-slate-800 rounded w-4/5">Hi Anaya, did you check the algorithm slides?</div>
+          <div className="p-1.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded w-4/5 text-[var(--text-primary)]">Hi Anaya, did you check the algorithm slides?</div>
           <div className="p-1.5 bg-[var(--primary)] text-white rounded w-4/5 ml-auto text-right">Yes, I checked them. Let's schedule tomorrow.</div>
         </div>
-        <div className="p-1 bg-slate-950 rounded flex justify-between">
-          <span className="text-muted-foreground">Type message...</span>
+        <div className="p-1 bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded flex justify-between">
+          <span className="text-[var(--text-secondary)]">Type message...</span>
           <span className="bg-primary text-white px-2 py-0.5 rounded text-[7px]">SEND</span>
         </div>
       </div>
@@ -84,14 +84,14 @@ const screenshotsData = [
     category: "attendance",
     desc: "Progress checklist tracking college thresholds and monthly logs.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
-        <strong className="block mb-2">📊 Attendance tracking</strong>
+      <div className="p-4 bg-[var(--bg-primary)] rounded-[var(--radius-sm)] text-left text-[9px] text-[var(--text-secondary)] border border-[var(--border-color)]">
+        <strong className="block mb-2 text-[var(--text-primary)]">📊 Attendance tracking</strong>
         <div className="space-y-1.5">
-          <div className="p-1.5 bg-slate-800 rounded flex justify-between border-l-2 border-l-emerald-500">
-            <span>Data Structures</span><strong>88.0%</strong>
+          <div className="p-1.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded flex justify-between border-l-2 border-l-emerald-500">
+            <span className="text-[var(--text-primary)]">Data Structures</span><strong className="text-emerald-500">88.0%</strong>
           </div>
-          <div className="p-1.5 bg-slate-800 rounded flex justify-between border-l-2 border-l-rose-500">
-            <span>Database Systems</span><strong>72.5%</strong>
+          <div className="p-1.5 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded flex justify-between border-l-2 border-l-rose-500">
+            <span className="text-[var(--text-primary)]">Database Systems</span><strong className="text-rose-500">72.5%</strong>
           </div>
         </div>
       </div>
@@ -103,10 +103,10 @@ const screenshotsData = [
     category: "expenses",
     desc: "Student personal budgeting sheet detailing transaction categories and limits.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
-        <strong className="block border-b border-border/10 pb-1 mb-2">💰 Spend Tracker</strong>
+      <div className="p-4 bg-[var(--bg-primary)] rounded-[var(--radius-sm)] text-left text-[9px] text-[var(--text-secondary)] border border-[var(--border-color)]">
+        <strong className="block border-b border-[var(--border-color)] pb-1 mb-2 text-[var(--text-primary)]">💰 Spend Tracker</strong>
         <div className="space-y-1">
-          <div className="flex justify-between py-1 border-b border-border/5"><span>Dinner at Cafeteria</span><span className="text-rose-400">-$12.40</span></div>
+          <div className="flex justify-between py-1 border-b border-[var(--border-color)]/20"><span>Dinner at Cafeteria</span><span className="text-rose-400">-$12.40</span></div>
           <div className="flex justify-between py-1"><span>Train Ticket Pass</span><span className="text-rose-400">-$45.00</span></div>
         </div>
       </div>
@@ -118,11 +118,11 @@ const screenshotsData = [
     category: "referrals",
     desc: "Direct alumni-posted corporate opportunities board.",
     renderScreen: () => (
-      <div className="p-4 bg-slate-900 rounded-[var(--radius-sm)] text-left text-[9px] text-muted-foreground">
-        <strong className="block mb-2">💼 Careers verifier listings</strong>
-        <div className="p-2 bg-slate-800 rounded border border-border/5">
-          <div className="flex justify-between"><span className="text-white font-semibold">Software Intern</span><span className="bg-cyan-500/20 text-cyan-400 px-1 rounded">Google</span></div>
-          <p className="text-[7px] text-muted-foreground mt-1">Endorsement from alumnus Priya Verma (Class of 2023)</p>
+      <div className="p-4 bg-[var(--bg-primary)] rounded-[var(--radius-sm)] text-left text-[9px] text-[var(--text-secondary)] border border-[var(--border-color)]">
+        <strong className="block mb-2 text-[var(--text-primary)]">💼 Careers verifier listings</strong>
+        <div className="p-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded">
+          <div className="flex justify-between"><span className="text-[var(--text-primary)] font-semibold">Software Intern</span><span className="bg-cyan-500/20 text-cyan-400 px-1 rounded">Google</span></div>
+          <p className="text-[7px] text-[var(--text-secondary)] mt-1">Endorsement from alumnus Priya Verma (Class of 2023)</p>
         </div>
       </div>
     )
@@ -172,7 +172,7 @@ export default function Gallery() {
             onClick={() => setLightboxIndex(idx)}
             className="p-4 bg-card border border-border rounded-[var(--radius-lg)] hover:border-primary hover:shadow-glow cursor-pointer transition-all flex flex-col justify-between"
           >
-            <div className="bg-slate-950 p-2 rounded-[var(--radius-md)] mb-4 overflow-hidden select-none border border-border/10">
+            <div className="bg-[var(--bg-tertiary)] p-2 rounded-[var(--radius-md)] mb-4 overflow-hidden select-none border border-[var(--border-color)]">
               {item.renderScreen()}
             </div>
             <div>
@@ -206,7 +206,7 @@ export default function Gallery() {
                 Category: {filtered[lightboxIndex]?.category}
               </span>
 
-              <div className="bg-slate-950 p-4 rounded-[var(--radius-md)] border border-border/10 mb-4 select-none">
+              <div className="bg-[var(--bg-tertiary)] p-4 rounded-[var(--radius-md)] border border-[var(--border-color)] mb-4 select-none">
                 {filtered[lightboxIndex]?.renderScreen()}
               </div>
 

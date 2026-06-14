@@ -192,10 +192,10 @@ export default function TutorAttendanceAnalytics() {
   const getStatusColor = (status) => {
     const normalizedStatus = (status || "").toLowerCase();
     if (normalizedStatus === "present")
-      return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
+      return "badge-success";
     if (normalizedStatus === "absent")
-      return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400";
-    return "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400";
+      return "badge-danger";
+    return "badge-neutral";
   };
 
   const getAttendancePercentage = (student) => {
@@ -224,9 +224,9 @@ export default function TutorAttendanceAnalytics() {
       </Link>
 
       {!isTeacher ? (
-        <Card className="border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-900/50">
+        <Card className="border-[var(--danger)] bg-[var(--danger-bg)] text-[var(--danger)]">
           <CardContent className="pt-6">
-            <p className="text-red-600 dark:text-red-400 font-medium">
+            <p className="font-medium">
               Attendance Analytics is for teachers only.
             </p>
           </CardContent>
@@ -390,7 +390,7 @@ export default function TutorAttendanceAnalytics() {
                                     {attendancePercentage}%
                                   </span>
                                 </div>
-                                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                                   <div
                                     className={`h-full transition-all ${getProgressBarColor(
                                       attendancePercentage,

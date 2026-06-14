@@ -51,7 +51,7 @@ const TopNavbar = () => {
           <span className="hidden sm:inline">Back to Dashboard</span>
         </Link>
         
-        <div className="hidden md:flex items-center bg-secondary/50 border border-border/50 rounded-[var(--radius-md)] px-4 py-2 hover:border-brand-primary/50 transition-colors min-w-0">
+        <div className="hidden md:flex items-center bg-secondary/50 border border-border/50 rounded-[var(--radius-md)] px-4 py-2 hover:border-[var(--primary)]/50 transition-colors min-w-0">
           <HiOutlineSearch size={20} className="text-muted-foreground mr-2" />
           <input 
             type="text" 
@@ -75,16 +75,16 @@ const TopNavbar = () => {
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right">
             <p className="text-sm font-semibold text-foreground">{user?.username || user?.name || "User"}</p>
-            <Link to="/student/settings?tab=expenses" className="text-xs text-brand-primary hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
+            <Link to="/student/settings?tab=expenses" className="text-xs text-[var(--primary)] hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
           </div>
           
-          <Link to="/student/settings?tab=expenses" className="w-10 h-10 rounded-[var(--radius-md)] bg-gradient-to-tr from-brand-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-[var(--shadow-lg)] shadow-brand-primary/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
+          <Link to="/student/settings?tab=expenses" className="w-10 h-10 rounded-[var(--radius-md)] bg-gradient-to-tr from-[var(--primary)] to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-[var(--shadow-lg)] shadow-[var(--primary)]/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
             {(user?.username?.charAt(0) || user?.name?.charAt(0) || user?.fullName?.charAt(0) || 'U').toUpperCase()}
           </Link>
 
           <button 
             onClick={logoutHandle}
-            className="ml-1 p-2 text-muted-foreground hover:text-brand-danger transition-colors focus-animation rounded-[var(--radius-sm)] group hidden sm:block"
+            className="ml-1 p-2 text-muted-foreground hover:text-[var(--danger)] transition-colors focus-animation rounded-[var(--radius-sm)] group hidden sm:block"
             title="Log out"
           >
             <FiLogOut size={22} className="group-hover:-translate-x-1 transition-transform" />

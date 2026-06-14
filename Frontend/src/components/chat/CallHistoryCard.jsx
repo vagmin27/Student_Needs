@@ -20,7 +20,7 @@ export const CallHistoryCard = ({ message, currentUserId }) => {
     titleColor = "text-orange-500";
   } else if (status === "cancelled") {
     title = `Cancelled ${isVideo ? "Video" : "Voice"} Call`;
-    titleColor = "text-gray-400";
+    titleColor = "text-muted-foreground";
   } else {
     titleColor = "text-emerald-500"; // green/neutral for answered
   }
@@ -40,7 +40,7 @@ export const CallHistoryCard = ({ message, currentUserId }) => {
   return (
     <div className={cn("flex flex-col p-3 rounded-[var(--radius-lg)] border backdrop-blur-md shadow-sm min-w-[200px]", bgClass, isOutgoing ? "rounded-tr-none" : "rounded-tl-none")}>
       <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800/50 text-lg">
+        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--bg-secondary)]/50 text-lg">
           {icon}
         </div>
         <div className="flex flex-col flex-1">

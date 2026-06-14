@@ -546,8 +546,8 @@ export const VideoCallModal = ({
           />
         ) : (
           <div className="flex flex-col items-center text-muted-foreground">
-            <div className="w-24 h-24 rounded-full bg-slate-900 flex items-center justify-center mb-4 animate-pulse">
-              <span className="text-3xl text-slate-700">👤</span>
+            <div className="w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center mb-4 animate-pulse">
+              <span className="text-3xl text-slate-400">👤</span>
             </div>
             <p>
               {internalCallState === "connecting" || internalCallState === "accepting" 

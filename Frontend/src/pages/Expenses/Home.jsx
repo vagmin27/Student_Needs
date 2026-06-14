@@ -216,7 +216,7 @@ const Home = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
-            <span className="text-brand-primary font-mont">Expense</span> Dashboard
+            <span className="text-[var(--primary)] font-mont">Expense</span> Dashboard
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
             Manage student budgets, track recurring bills, check predictions, and export financial summaries.
@@ -497,7 +497,7 @@ const Home = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsAddExpenseOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-primary to-indigo-600 text-white flex items-center justify-center shadow-[var(--shadow-lg)] shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer"
+          className="w-14 h-14 rounded-full bg-gradient-to-tr from-[var(--primary)] to-indigo-600 text-white flex items-center justify-center shadow-[var(--shadow-lg)] shadow-[var(--primary)]/30 hover:shadow-[var(--primary)]/50 transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer"
           title="Quick Add Expense"
         >
           <MdAdd size={28} />

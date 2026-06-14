@@ -100,7 +100,7 @@ export const ChatSidebar = ({
             placeholder="Search tutor or student name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-10 pl-9 pr-4 bg-slate-905 border border-border/30 rounded-[var(--radius-md)] text-sm outline-none focus:border-primary placeholder-muted-foreground/60 transition-colors"
+            className="w-full h-10 pl-9 pr-4 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[var(--radius-md)] text-sm outline-none focus:border-primary placeholder-muted-foreground/60 transition-colors"
           />
         </div>
       </div>
@@ -166,7 +166,7 @@ export const ChatSidebar = ({
               >
                 {/* Avatar with Online indicator */}
                 <div className="relative shrink-0">
-                  <div className="w-12 h-12 rounded-[var(--radius-md)] bg-slate-800/80 border border-slate-700 overflow-hidden flex items-center justify-center font-bold text-primary shadow-[var(--shadow-sm)]">
+                  <div className="w-12 h-12 rounded-[var(--radius-md)] bg-[var(--bg-nav-hover)] border border-[var(--border-subtle)] overflow-hidden flex items-center justify-center font-bold text-primary shadow-[var(--shadow-sm)]">
                     {chat.partner?.pic ? (
                       <img
                         src={chat.partner.pic.startsWith("http") ? chat.partner.pic : `http://localhost:8000/uploads/${chat.partner.pic}`}
@@ -178,7 +178,7 @@ export const ChatSidebar = ({
                     )}
                   </div>
                   {isOnline && (
-                    <OnlineBadge className="absolute -bottom-0.5 -right-0.5 border-2 border-slate-900 rounded-full w-3 h-3" />
+                    <OnlineBadge className="absolute -bottom-0.5 -right-0.5 border-2 border-[var(--bg-nav-container)] rounded-full w-3 h-3" />
                   )}
                 </div>
 
@@ -234,7 +234,7 @@ export const ChatSidebar = ({
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 ml-1">
                   <button
                     onClick={(e) => handleToggleMenu(e, chat._id)}
-                    className="p-1 hover:bg-slate-805 rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground"
+                    className="p-1 hover:bg-[var(--bg-nav-hover)] rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground"
                     title="Chat actions"
                   >
                     <MoreVertical className="w-4 h-4" />
@@ -242,7 +242,7 @@ export const ChatSidebar = ({
 
                   {/* Context menu popup */}
                   {openMenuId === chat._id && (
-                    <div className="absolute right-3 top-12 bg-slate-950 border border-slate-800 rounded-[var(--radius-md)] shadow-[var(--shadow-lg)] z-50 py-1.5 min-w-[150px] animate-in fade-in zoom-in-95 duration-100">
+                    <div className="absolute right-3 top-12 bg-[var(--bg-nav-container)] border border-[var(--border-subtle)] rounded-[var(--radius-md)] shadow-[var(--shadow-lg)] z-50 py-1.5 min-w-[150px] animate-in fade-in zoom-in-95 duration-100">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

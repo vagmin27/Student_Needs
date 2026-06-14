@@ -174,7 +174,7 @@ const RecurringTransactions = () => {
     if (!isActive)
       return {
         label: "Paused",
-        color: "bg-slate-500/20 text-slate-400 border-slate-500/30",
+        color: "bg-slate-500/20 text-slate-500 dark:text-slate-400 border-slate-500/30",
       };
     const diff = new Date(nextDateStr) - new Date();
     if (diff < 0)
@@ -204,8 +204,8 @@ const RecurringTransactions = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
-            <span className="text-brand-primary">Automated</span> Payments
+          <h2 className="text-2xl font-extrabold tracking-tight text-foreground flex items-center gap-2">
+            <span className="text-[var(--primary)]">Automated</span> Payments
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
             Manage your subscriptions and recurring bills effortlessly.
@@ -213,7 +213,7 @@ const RecurringTransactions = () => {
         </div>
         <button
           onClick={() => openForm()}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-[var(--shadow-lg)] shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-[var(--primary)] to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-[var(--shadow-lg)] shadow-[var(--primary)]/30 hover:shadow-[var(--primary)]/50 transition-all hover:-translate-y-0.5"
         >
           <AiOutlinePlus size={20} /> New Rule
         </button>
@@ -224,7 +224,7 @@ const RecurringTransactions = () => {
         {upcomingCards?.map((card, idx) => {
           const isOverdue = new Date(card.nextDate) < new Date();
           const gradients = [
-            "from-purple-600 to-brand-primary",
+            "from-purple-600 to-[var(--primary)]",
             "from-emerald-600 to-teal-500",
             "from-orange-500 to-rose-500",
           ];
@@ -290,14 +290,14 @@ const RecurringTransactions = () => {
 
       {/* Main Recurring List Table */}
       <div className="table-responsive w-full">
-        <div className="p-6 border-b border-border flex justify-between items-center bg-brand-800/80">
-          <h3 className="text-xl font-bold text-[var(--primary-foreground)]">Active Rules</h3>
+        <div className="p-6 border-b border-border flex justify-between items-center bg-[var(--bg-secondary)]">
+          <h3 className="text-xl font-bold text-[var(--text-primary)]">Active Rules</h3>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>
-              <tr className="bg-black/20 text-muted-foreground text-xs uppercase tracking-widest">
+              <tr className="bg-[var(--bg-secondary)] text-muted-foreground text-xs uppercase tracking-widest">
                 <th className="px-6 py-4 font-semibold">Subscription / Bill</th>
                 <th className="px-6 py-4 font-semibold">Amount</th>
                 <th className="px-6 py-4 font-semibold text-center">
@@ -349,7 +349,7 @@ const RecurringTransactions = () => {
                       {/* Premium Toggle Switch */}
                       <button
                         onClick={() => handleToggle(tx._id, tx.isActive)}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${tx.isActive ? "bg-brand-primary" : "bg-slate-600"}`}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${tx.isActive ? "bg-[var(--primary)]" : "bg-[var(--border-color)]"}`}
                       >
                         <span
                           className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${tx.isActive ? "translate-x-6" : "translate-x-1"}`}
@@ -360,13 +360,13 @@ const RecurringTransactions = () => {
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => openForm(tx)}
-                          className="p-2 text-muted-foreground hover:text-brand-primary hover:bg-brand-primary/10 rounded-[var(--radius-sm)] transition-colors"
+                          className="p-2 text-muted-foreground hover:text-[var(--primary)] hover:bg-[var(--primary)]/10 rounded-[var(--radius-sm)] transition-colors"
                         >
                           <AiOutlineEdit size={20} />
                         </button>
                         <button
                           onClick={() => handleDelete(tx._id)}
-                          className="p-2 text-muted-foreground hover:text-brand-danger hover:bg-brand-danger/10 rounded-[var(--radius-sm)] transition-colors"
+                          className="p-2 text-muted-foreground hover:text-[var(--danger)] hover:bg-[var(--danger)]/10 rounded-[var(--radius-sm)] transition-colors"
                         >
                           <AiOutlineDelete size={20} />
                         </button>
@@ -442,16 +442,16 @@ const RecurringTransactions = () => {
                 }
                 className="premium-input text-muted-foreground"
               >
-                <option className="bg-brand-900" value="Daily">
+                <option className="bg-[var(--bg-nav-container)] text-[var(--text-primary)]" value="Daily">
                   Daily
                 </option>
-                <option className="bg-brand-900" value="Weekly">
+                <option className="bg-[var(--bg-nav-container)] text-[var(--text-primary)]" value="Weekly">
                   Weekly
                 </option>
-                <option className="bg-brand-900" value="Monthly">
+                <option className="bg-[var(--bg-nav-container)] text-[var(--text-primary)]" value="Monthly">
                   Monthly
                 </option>
-                <option className="bg-brand-900" value="Yearly">
+                <option className="bg-[var(--bg-nav-container)] text-[var(--text-primary)]" value="Yearly">
                   Yearly
                 </option>
               </select>
@@ -495,7 +495,7 @@ const RecurringTransactions = () => {
                   "Fun",
                   "Other",
                 ]?.map((c) => (
-                  <option key={c} value={c} className="bg-brand-900">
+                  <option key={c} value={c} className="bg-[var(--bg-nav-container)] text-[var(--text-primary)]">
                     {c}
                   </option>
                 ))}
@@ -513,9 +513,9 @@ const RecurringTransactions = () => {
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-brand-primary to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-[var(--shadow-lg)] shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all"
+              className="px-6 py-2.5 rounded-[var(--radius-md)] bg-gradient-to-r from-[var(--primary)] to-indigo-600 text-[var(--primary-foreground)] font-bold shadow-[var(--shadow-lg)] shadow-[var(--primary)]/30 hover:shadow-[var(--primary)]/50 transition-all"
             >
-              Save Rule
+              {editingId ? "Save Changes" : "Create Rule"}
             </button>
           </div>
         </form>

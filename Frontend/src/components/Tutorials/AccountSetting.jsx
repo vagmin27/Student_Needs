@@ -278,7 +278,7 @@ function AccountSetting({ mode }) {
       {mode !== "expenses-only" && (
         <div>
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
-            <span className="text-brand-primary">Settings Panel</span>
+            <span className="text-[var(--primary)]">Settings Panel</span>
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
             Customize your profile, account preferences, theme options, notifications, and expense budgets.

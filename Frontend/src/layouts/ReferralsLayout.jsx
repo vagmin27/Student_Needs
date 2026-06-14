@@ -53,7 +53,7 @@ const ReferralsLayoutContent = () => {
           onMenuClick={toggleMobileMenu}
         />
         <div className="flex-1 min-h-0 overflow-y-auto dashboard-container">
-          <div className="max-w-7xl mx-auto space-y-6">
+          <div className="max-w-[1600px] mx-auto space-y-space-lg">
             <LayoutContext.Provider value={true}>
               <Outlet />
             </LayoutContext.Provider>

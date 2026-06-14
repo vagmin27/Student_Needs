@@ -290,11 +290,11 @@ export function StudentProfilePage() {
 
       {/* Interview & Profile Scores */}
       {scores && (scores.profileScore !== null || scores.interviewScore !== null) && (
-        <Card className="border-2 border-amber-200 bg-amber-50">
+        <Card className="border-2 border-amber-200 dark:border-amber-900/30 bg-amber-50 dark:bg-amber-950/10">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Award className="w-5 h-5 text-amber-600" />
+                <Award className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                 <div>
                   <CardTitle className="text-lg">Interview Performance</CardTitle>
                   <CardDescription>Your scores from interviews and applications</CardDescription>
@@ -309,15 +309,15 @@ export function StudentProfilePage() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white p-4 rounded-[var(--radius-sm)] border border-amber-200"
+                  className="bg-[var(--card-bg)] p-4 rounded-[var(--radius-sm)] border border-amber-200 dark:border-amber-900/20"
                 >
                   <div className="text-sm font-medium text-muted-foreground mb-2">Profile Score</div>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-amber-600">
+                    <span className="text-3xl font-bold text-amber-600 dark:text-amber-400">
                       {scores.profileScore.toFixed(1)}%
                     </span>
                   </div>
-                  <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+                  <div className="mt-2 w-full bg-[var(--bg-tertiary)] rounded-full h-2">
                     <div
                       className="bg-amber-500 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${scores.profileScore}%` }}
@@ -333,7 +333,7 @@ export function StudentProfilePage() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.1 }}
-                  className="bg-white p-4 rounded-[var(--radius-sm)] border border-blue-200"
+                  className="bg-[var(--card-bg)] p-4 rounded-[var(--radius-sm)] border border-blue-200 dark:border-blue-900/20"
                 >
                   <div className="text-sm font-medium text-muted-foreground mb-2">Interview Score</div>
                   <div className="flex items-baseline gap-2">
@@ -341,7 +341,7 @@ export function StudentProfilePage() {
                       {scores.interviewScore.toFixed(0)}/100
                     </span>
                   </div>
-                  <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+                  <div className="mt-2 w-full bg-[var(--bg-tertiary)] rounded-full h-2">
                     <div
                       className="bg-[var(--primary)] h-2 rounded-full transition-all duration-300"
                       style={{ width: `${Math.min(scores.interviewScore, 100)}%` }}
@@ -357,15 +357,15 @@ export function StudentProfilePage() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="bg-white p-4 rounded-[var(--radius-sm)] border border-green-200"
+                  className="bg-[var(--card-bg)] p-4 rounded-[var(--radius-sm)] border border-green-200 dark:border-green-900/20"
                 >
                   <div className="text-sm font-medium text-muted-foreground mb-2">Combined Score</div>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-green-600">
+                    <span className="text-3xl font-bold text-green-600 dark:text-green-400">
                       {scores.combinedScore.toFixed(2)}
                     </span>
                   </div>
-                  <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+                  <div className="mt-2 w-full bg-[var(--bg-tertiary)] rounded-full h-2">
                     <div
                       className="bg-green-500 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${Math.min((scores.combinedScore / 100) * 100, 100)}%` }}

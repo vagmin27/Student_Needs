@@ -3,13 +3,39 @@
    ====================================================== */
 
 :root {
-  --bg-main-page: #f4f1fb;        /* soft lavender canvas, was #ffffff/#f0f4f9 */
-  --bg-nav-container: #ffffff;     /* white cards/sidebar, was #f0f4f9 */
-  --bg-nav-hover: #ece6fb;          /* light purple hover, was #e1e6eb */
-  --text-primary: #1f1f1f;          /* unchanged */
-  --text-secondary: #6b6b6b;        /* unchanged-ish */
-  --nav-accent: #6c4cf1;            /* purple accent, was #1a73e8 */
-  --border-subtle: #e4def9;         /* lavender-tinted border, was #dde3ea */
+  /* Design Token System - Premium SaaS Light Theme */
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #F1F5F9;
+  --bg-tertiary: #E2E8F0;
+  
+  --surface-primary: #ffffff;
+  --surface-secondary: #f8fafc;
+
+  --card-bg: #ffffff;
+  --card-hover-bg: #f1f5f9;
+
+  --input-bg: #ffffff;
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  --border-color: #E2E8F0;
+
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --success: #059669;
+  --warning: #D97706;
+  --danger: #DC2626;
+  --info: #2563EB;
+
+  /* Legacy Backward Compatibility Mappings */
+  --bg-main-page: var(--bg-primary);
+  --bg-nav-container: var(--card-bg);
+  --bg-nav-hover: var(--card-hover-bg);
+  --nav-accent: var(--accent);
+  --border-subtle: var(--border-color);
+
   --theme-transition:
     background-color .3s ease,
     color .3s ease,
@@ -17,60 +43,88 @@
     box-shadow .3s ease;
 }
 
-[data-theme="dark"] {
-  --bg-main-page: #131314;
-  --bg-nav-container: #1e1f20;
-  --bg-nav-hover: #282a2c;
-  --text-primary: #e3e3e3;
-  --text-secondary: #c4c7c5;
-  --nav-accent: #7fc0ff;
-  --border-subtle: #444746;
+[data-theme="dark"],
+.dark,
+.dark-theme {
+  /* Design Token System - Premium SaaS Dark Theme (Midnight Navy) */
+  --bg-primary: #030712;
+  --bg-secondary: #050B18;
+  --bg-tertiary: #08101F;
+  
+  --surface-primary: rgba(255, 255, 255, 0.03);
+  --surface-secondary: rgba(255, 255, 255, 0.05);
+
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-hover-bg: rgba(255, 255, 255, 0.06);
+
+  --input-bg: rgba(255, 255, 255, 0.02);
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #FFFFFF;
+  --text-muted: #F8FAFC;
+
+  --border-color: rgba(255, 255, 255, 0.08);
+
+  --accent: #3B82F6;
+  --accent-hover: #2563EB;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #3B82F6;
+
+  /* Legacy Backward Compatibility Mappings */
+  --bg-main-page: var(--bg-primary);
+  --bg-nav-container: var(--card-bg);
+  --bg-nav-hover: var(--card-hover-bg);
+  --nav-accent: var(--accent);
+  --border-subtle: var(--border-color);
 }
 
 :root,
 .light-theme {
-  /* Primary Accent: Google Blue */
-  --primary: var(--nav-accent);
-  --primary-hover: var(--nav-accent);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
   
   /* Semantic Status Colors (Light Theme) */
-  --success: #2C6E49;
-  --success-bg: rgba(44, 110, 73, 0.08);
-  --warning: #A67C00;
-  --warning-bg: rgba(166, 124, 0, 0.08);
-  --danger: #9B2226;
-  --danger-bg: rgba(155, 34, 38, 0.08);
-  --info: var(--nav-accent);
-  --info-bg: rgba(26, 115, 232, 0.08);
-  --neutral: #5C6773;
-  --neutral-bg: rgba(92, 103, 115, 0.08);
+  --success-bg: rgba(5, 150, 105, 0.08);
+  --warning-bg: rgba(217, 119, 6, 0.08);
+  --danger-bg: rgba(220, 38, 38, 0.08);
+  --info-bg: rgba(37, 99, 235, 0.08);
+  --neutral: #64748B;
+  --neutral-bg: rgba(100, 116, 139, 0.08);
 
-  /* Surface System (Gemini Light) */
-  --background: var(--bg-main-page);
-  --bg-primary: var(--bg-main-page);
-  --bg-secondary: var(--bg-surface-2);
-  --card-bg: var(--bg-surface-2);
-  --sidebar-bg: var(--bg-surface-2);
-  --navbar-bg: var(--bg-main-page);
-
-  /* Text System */
-  --text-primary: var(--text-primary);
-  --text-secondary: var(--text-secondary);
+  /* Core Theme Tokens */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --muted: var(--bg-secondary);
+  --muted-foreground: var(--text-muted);
+  --secondary: var(--bg-secondary);
+  --sidebar-bg: var(--card-bg);
+  --navbar-bg: var(--card-bg);
+  --card: var(--card-bg);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-primary);
+  --popover-foreground: var(--text-primary);
+  --secondary-foreground: var(--text-secondary);
+  --accent-foreground: #ffffff;
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --ring: var(--accent);
 
   /* Borders: Soft neutral tone */
-  --border-color: var(--border-subtle);
-  --border: var(--border-subtle);
-  --input: var(--border-subtle);
+  --border: var(--border-color);
+  --input: var(--border-color);
 
-  /* Shadows (Three-tier elevation/shadow system - Light Mode) */
-  --elevation-1: 0 1px 3px rgba(15, 23, 42, 0.05);
-  --elevation-2: 0 8px 24px rgba(15, 23, 42, 0.08);
-  --elevation-3: 0 20px 40px rgba(15, 23, 42, 0.12);
-  
-  --shadow-sm: var(--elevation-1);
-  --shadow-md: var(--elevation-2);
-  --shadow-lg: var(--elevation-3);
-  --shadow-xl: var(--elevation-3);
+  /* Shadows System - Light Mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-xl: var(--shadow-lg);
+  --shadow-glow: 0 0 24px rgba(37, 99, 235, 0.15);
+
+  --elevation-1: var(--shadow-sm);
+  --elevation-2: var(--shadow-md);
+  --elevation-3: var(--shadow-lg);
 
   /* Centralized Typography Variables */
   --text-heading: var(--text-primary);
@@ -81,16 +135,16 @@
   --text-button: #ffffff;
   --text-navbar: var(--text-primary);
   --text-sidebar: var(--text-primary);
-  --text-placeholder: var(--text-secondary);
+  --text-placeholder: var(--text-muted);
   --text-white: #ffffff;
-  --text-black: #1f1f1f;
+  --text-black: #0f172a;
 
   /* Glassmorphism system variables for light mode */
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-blur: blur(24px);
-  --glass-border: var(--border-subtle);
-  --glass-shadow: 0 8px 32px rgba(15, 23, 42, 0.04);
-  --card-border-gradient: linear-gradient(135deg, var(--border-subtle), transparent, var(--border-subtle));
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-blur: blur(16px);
+  --glass-border: var(--border-color);
+  --glass-shadow: var(--shadow-sm);
+  --card-border-gradient: linear-gradient(135deg, var(--border-color), transparent, var(--border-color));
 
   /* Image controls */
   --image-filter: none;
@@ -102,48 +156,49 @@
 
 .dark,
 .dark-theme {
-  /* Primary Accent: Neon Blue */
-  --primary: var(--nav-accent);
-  --primary-hover: var(--nav-accent);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
   
   /* Semantic Status Colors (Dark Theme) */
-  --success: #469A6C;
-  --success-bg: rgba(70, 154, 108, 0.12);
-  --warning: #EBB134;
-  --warning-bg: rgba(235, 177, 52, 0.12);
-  --danger: #E2585B;
-  --danger-bg: rgba(226, 88, 91, 0.12);
-  --info: var(--nav-accent);
-  --info-bg: rgba(127, 192, 255, 0.12);
-  --neutral: #8390A1;
-  --neutral-bg: rgba(131, 144, 161, 0.12);
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --danger-bg: rgba(239, 68, 68, 0.12);
+  --info-bg: rgba(59, 130, 246, 0.12);
+  --neutral: #94A3B8;
+  --neutral-bg: rgba(148, 163, 184, 0.12);
 
-  /* Surface System (Gemini Dark) */
-  --background: var(--bg-main-page);
-  --bg-primary: var(--bg-main-page);
-  --bg-secondary: var(--bg-surface-2);
-  --card-bg: var(--bg-surface-2);
-  --sidebar-bg: var(--bg-surface-2);
-  --navbar-bg: var(--bg-main-page);
+  /* Core Theme Tokens */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --muted: var(--bg-secondary);
+  --muted-foreground: var(--text-muted);
+  --secondary: var(--bg-secondary);
+  --sidebar-bg: var(--card-bg);
+  --navbar-bg: var(--card-bg);
+  --card: var(--card-bg);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-primary);
+  --popover-foreground: var(--text-primary);
+  --secondary-foreground: var(--text-secondary);
+  --accent-foreground: #ffffff;
+  --destructive: var(--danger);
+  --destructive-foreground: #ffffff;
+  --ring: var(--accent);
 
-  /* Text System */
-  --text-primary: var(--text-primary);
-  --text-secondary: var(--text-secondary);
+  /* Borders */
+  --border: var(--border-color);
+  --input: var(--border-color);
 
-  /* Borders: Subtle transparent light borders */
-  --border-color: var(--border-subtle);
-  --border: var(--border-subtle);
-  --input: var(--border-subtle);
+  /* Shadows System - Dark Mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-xl: var(--shadow-lg);
+  --shadow-glow: 0 0 24px rgba(59, 130, 246, 0.15);
 
-  /* Shadows (Three-tier elevation/shadow system - Dark Mode) */
-  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --elevation-3: 0 20px 40px rgba(0, 0, 0, 0.5);
-  
-  --shadow-sm: var(--elevation-1);
-  --shadow-md: var(--elevation-2);
-  --shadow-lg: var(--elevation-3);
-  --shadow-xl: var(--elevation-3);
+  --elevation-1: var(--shadow-sm);
+  --elevation-2: var(--shadow-md);
+  --elevation-3: var(--shadow-lg);
 
   /* Centralized Typography Variables */
   --text-heading: var(--text-primary);
@@ -151,22 +206,22 @@
   --text-label: var(--text-primary);
   --text-table: var(--text-primary);
   --text-input: var(--text-primary);
-  --text-button: var(--bg-main-page);
+  --text-button: #ffffff;
   --text-navbar: var(--text-primary);
   --text-sidebar: var(--text-primary);
-  --text-placeholder: var(--text-secondary);
-  --text-white: var(--text-primary);
-  --text-black: var(--bg-main-page);
+  --text-placeholder: var(--text-muted);
+  --text-white: #ffffff;
+  --text-black: #030712;
 
   /* Glassmorphism system variables for dark mode */
-  --glass-bg: rgba(30, 31, 32, 0.7);
-  --glass-blur: blur(24px);
-  --glass-border: var(--border-subtle);
-  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-  --card-border-gradient: linear-gradient(135deg, var(--border-subtle), transparent, var(--border-subtle));
+  --glass-bg: rgba(5, 11, 24, 0.65);
+  --glass-blur: blur(16px);
+  --glass-border: var(--border-color);
+  --glass-shadow: var(--shadow-md);
+  --card-border-gradient: linear-gradient(135deg, var(--border-color), transparent, var(--border-color));
 
-  /* Dark mode archival image adjustments */
-  --image-filter: brightness(0.85) sepia(0.15) contrast(0.95);
+  /* Image controls */
+  --image-filter: brightness(0.85) contrast(0.95);
   --image-border-radius: var(--radius-md);
 
   /* Sidebar configuration mapping */
@@ -174,24 +229,173 @@
 }
 
 /* Theme transition adjustments */
+/* Theme transition and base alignment */
 html {
   transition: var(--theme-transition);
-  background-color: var(--bg-main-page);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
+body,
+#root,
+.app {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
 body {
-  background-color: var(--bg-main-page) !important;
+  background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
 
 /* Ensure clean themes apply to specific wrapper nodes */
 .light-theme, .light {
-  background-color: var(--bg-main-page) !important;
+  background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
 
 .dark-theme, .dark {
-  background-color: var(--bg-main-page) !important;
+  background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 }
+
+/* Global Typography Enforcement */
+body,
+#root,
+.app {
+  color: var(--text-primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+}
+
+p,
+span,
+label,
+small,
+li,
+td,
+th {
+  color: inherit;
+}
+
+strong,
+a {
+  color: inherit;
+}
+
+/* ======================================================
+   DARK MODE TEXT COLOR OVERRIDE (FORCE WHITE TEXT)
+   ====================================================== */
+[data-theme="dark"],
+.dark,
+.dark-theme {
+  --text-primary: #FFFFFF !important;
+  --text-secondary: #FFFFFF !important;
+  --text-muted: #F8FAFC !important;
+  --foreground: #FFFFFF !important;
+  --muted-foreground: #F8FAFC !important;
+}
+
+[data-theme="dark"] *,
+.dark *,
+.dark-theme * {
+  --text-primary: #FFFFFF !important;
+  --text-secondary: #FFFFFF !important;
+  --text-muted: #F8FAFC !important;
+  --foreground: #FFFFFF !important;
+  --muted-foreground: #F8FAFC !important;
+}
+
+/* Force standard text elements in dark mode to be white */
+[data-theme="dark"] :is(h1, h2, h3, h4, h5, h6, p, span, label, small, li, td, th, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]),
+.dark :is(h1, h2, h3, h4, h5, h6, p, span, label, small, li, td, th, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]),
+.dark-theme :is(h1, h2, h3, h4, h5, h6, p, span, label, small, li, td, th, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]) {
+  color: #FFFFFF !important;
+}
+
+/* Force Tailwind text gray/slate/zinc/neutral color classes to white in dark mode */
+.dark .text-slate-900,
+.dark .text-slate-800,
+.dark .text-slate-700,
+.dark .text-slate-600,
+.dark .text-slate-500,
+.dark .text-slate-400,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-neutral-900,
+.dark .text-neutral-800,
+.dark .text-neutral-700,
+.dark .text-neutral-600,
+.dark .text-neutral-500,
+.dark .text-neutral-400,
+.dark .text-zinc-900,
+.dark .text-zinc-800,
+.dark .text-zinc-700,
+.dark .text-zinc-600,
+.dark .text-zinc-500,
+.dark .text-zinc-400,
+.dark .text-black,
+.dark-theme .text-slate-900,
+.dark-theme .text-slate-800,
+.dark-theme .text-slate-700,
+.dark-theme .text-slate-600,
+.dark-theme .text-slate-500,
+.dark-theme .text-slate-400,
+.dark-theme .text-gray-900,
+.dark-theme .text-gray-800,
+.dark-theme .text-gray-700,
+.dark-theme .text-gray-600,
+.dark-theme .text-gray-500,
+.dark-theme .text-gray-400,
+.dark-theme .text-neutral-900,
+.dark-theme .text-neutral-800,
+.dark-theme .text-neutral-700,
+.dark-theme .text-neutral-600,
+.dark-theme .text-neutral-500,
+.dark-theme .text-neutral-400,
+.dark-theme .text-zinc-900,
+.dark-theme .text-zinc-800,
+.dark-theme .text-zinc-700,
+.dark-theme .text-zinc-600,
+.dark-theme .text-zinc-500,
+.dark-theme .text-zinc-400,
+.dark-theme .text-black,
+[data-theme="dark"] .text-slate-900,
+[data-theme="dark"] .text-slate-800,
+[data-theme="dark"] .text-slate-700,
+[data-theme="dark"] .text-slate-600,
+[data-theme="dark"] .text-slate-500,
+[data-theme="dark"] .text-slate-400,
+[data-theme="dark"] .text-gray-900,
+[data-theme="dark"] .text-gray-800,
+[data-theme="dark"] .text-gray-700,
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-500,
+[data-theme="dark"] .text-gray-400,
+[data-theme="dark"] .text-neutral-900,
+[data-theme="dark"] .text-neutral-800,
+[data-theme="dark"] .text-neutral-700,
+[data-theme="dark"] .text-neutral-600,
+[data-theme="dark"] .text-neutral-500,
+[data-theme="dark"] .text-neutral-400,
+[data-theme="dark"] .text-zinc-900,
+[data-theme="dark"] .text-zinc-800,
+[data-theme="dark"] .text-zinc-700,
+[data-theme="dark"] .text-zinc-600,
+[data-theme="dark"] .text-zinc-500,
+[data-theme="dark"] .text-zinc-400,
+[data-theme="dark"] .text-black {
+  color: #FFFFFF !important;
+}
+

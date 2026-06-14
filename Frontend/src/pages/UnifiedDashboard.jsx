@@ -35,7 +35,13 @@ import { toast } from "react-hot-toast";
 import {
   PremiumCard,
   GlassPanel,
+  DashboardHeader,
+  DashboardSection,
   SectionHeader,
+  StatCard,
+  MetricCard,
+  AnalyticsCard,
+  ActivityFeed,
   PremiumButton,
   PremiumInput,
   AnimatedCounter,
@@ -396,86 +402,42 @@ const UnifiedDashboard = () => {
     >
       {/* 📊 Summary Metrics Grid */}
       <motion.div variants={itemVariants}>
-        <SectionHeader title="Overview" description="Real-time summaries across active modules" />
+        <DashboardHeader title="Overview" description="Real-time summaries across active modules" />
         
         <DashboardGrid cols={4} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <PremiumCard glow={true}>
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-muted-foreground">Class Attendance</span>
-              <div className="w-10 h-10 rounded-[var(--radius-md)] bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
-                <CheckCircle className="w-5.5 h-5.5" />
-              </div>
-            </div>
-            <div className="mt-5">
-              <div className="text-3xl font-bold tracking-tight text-foreground">
-                <AnimatedCounter value={attendanceStats.percentage} decimals={1} suffix="%" />
-              </div>
-              <p className="text-xs text-muted-foreground mt-2 font-medium">
-                {attendanceStats.present} attended · {attendanceStats.total} total classes
-              </p>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Class Attendance"
+            value={`${attendanceStats.percentage}%`}
+            subtext={`${attendanceStats.present} attended · ${attendanceStats.total} total classes`}
+            icon={CheckCircle}
+          />
 
-          <PremiumCard glow={true}>
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-muted-foreground">Total Spending</span>
-              <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center border border-[var(--primary)]/30/20">
-                <Wallet className="w-5.5 h-5.5" />
-              </div>
-            </div>
-            <div className="mt-5">
-              <div className="text-3xl font-bold tracking-tight text-foreground">
-                <AnimatedCounter value={expenseSummary?.totalSpent || 0} prefix={currencySymbol} />
-              </div>
-              <p className="text-xs text-muted-foreground mt-2 font-medium">
-                {expenses.length} transaction{expenses.length === 1 ? "" : "s"} tracked
-              </p>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Total Spending"
+            value={`${currencySymbol}${expenseSummary?.totalSpent || 0}`}
+            subtext={`${expenses.length} transaction${expenses.length === 1 ? "" : "s"} tracked`}
+            icon={Wallet}
+          />
 
-          <PremiumCard glow={true}>
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-muted-foreground">Profile Progress</span>
-              <div className="w-10 h-10 rounded-[var(--radius-md)] bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20">
-                <GraduationCap className="w-5.5 h-5.5" />
-              </div>
-            </div>
-            <div className="mt-5">
-              <div className="text-3xl font-bold tracking-tight text-foreground">
-                {profileCompleteness != null ? (
-                  <AnimatedCounter value={profileCompleteness} suffix="%" />
-                ) : (
-                  "0%"
-                )}
-              </div>
-              <p className="text-xs text-muted-foreground mt-2 font-medium">
-                Referral profile completeness rate
-              </p>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Profile Progress"
+            value={profileCompleteness != null ? `${profileCompleteness}%` : "0%"}
+            subtext="Referral profile completeness rate"
+            icon={GraduationCap}
+          />
 
-          <PremiumCard glow={true}>
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-muted-foreground">Open Roles</span>
-              <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center border border-[var(--primary)]/30/20">
-                <Briefcase className="w-5.5 h-5.5" />
-              </div>
-            </div>
-            <div className="mt-5">
-              <div className="text-3xl font-bold tracking-tight text-foreground">
-                <AnimatedCounter value={opportunities.length} />
-              </div>
-              <p className="text-xs text-muted-foreground mt-2 font-medium">
-                Alumni opportunities available
-              </p>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Open Roles"
+            value={String(opportunities.length)}
+            subtext="Alumni opportunities available"
+            icon={Briefcase}
+          />
         </DashboardGrid>
       </motion.div>
 
       {/* 💰 Expense Tracker Quick Insights */}
       <motion.div variants={itemVariants}>
-        <SectionHeader
+        <DashboardSection
           title="Expense Insights"
           description="Real-time financial indicators"
           action={
@@ -484,49 +446,48 @@ const UnifiedDashboard = () => {
               size="sm"
               onClick={() => navigate("/expenses-tracker")}
               rightIcon={ArrowRight}
-              className="dark:text-[var(--nav-accent)] dark:border-[var(--nav-accent)] dark:hover:bg-[var(--nav-accent)] dark:hover:text-[var(--text-button)]"
             >
               Expense Tracker
             </PremiumButton>
           }
-        />
-        
-        <DashboardGrid cols={5} className="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Monthly Budget</span>
-            <span className="block text-xl font-bold text-foreground mt-1">
-              <AnimatedCounter value={expenseSummary?.monthlyBudget || 0} prefix={currencySymbol} />
-            </span>
-          </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Spent</span>
-            <span className="block text-xl font-bold text-red-500 mt-1">
-              <AnimatedCounter value={expenseSummary?.totalSpent || 0} prefix={currencySymbol} />
-            </span>
-          </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Remaining</span>
-            <span className={`block text-xl font-bold mt-1 ${
-              (expenseSummary?.remainingBudget || 0) < 0 ? "text-red-500" : "text-emerald-500"
-            }`}>
-              <AnimatedCounter value={expenseSummary?.remainingBudget || 0} prefix={currencySymbol} />
-            </span>
-          </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)]">
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Upcoming Bills</span>
-            <span className="block text-xl font-bold text-[var(--primary)] mt-1">
-              <AnimatedCounter value={expenseSummary?.upcomingCount || 0} />
-            </span>
-          </div>
-          <div className="p-4 bg-[var(--bg-secondary)] border border-border/50 rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--primary)]/30 duration-200 shadow-[var(--shadow-sm)] col-span-2 sm:col-span-1">
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Overdue Bills</span>
-            <span className={`block text-xl font-bold mt-1 ${
-              (expenseSummary?.overdueCount || 0) > 0 ? "text-red-500 animate-pulse font-extrabold" : "text-muted-foreground/60"
-            }`}>
-              <AnimatedCounter value={expenseSummary?.overdueCount || 0} />
-            </span>
-          </div>
-        </DashboardGrid>
+        >
+          <DashboardGrid cols={5} className="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Monthly Budget</span>
+              <span className="block text-xl font-bold text-[var(--text-primary)] mt-1">
+                <AnimatedCounter value={expenseSummary?.monthlyBudget || 0} prefix={currencySymbol} />
+              </span>
+            </div>
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Spent</span>
+              <span className="block text-xl font-bold text-[var(--danger)] mt-1">
+                <AnimatedCounter value={expenseSummary?.totalSpent || 0} prefix={currencySymbol} />
+              </span>
+            </div>
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Remaining</span>
+              <span className={`block text-xl font-bold mt-1 ${
+                (expenseSummary?.remainingBudget || 0) < 0 ? "text-[var(--danger)]" : "text-[var(--success)]"
+              }`}>
+                <AnimatedCounter value={expenseSummary?.remainingBudget || 0} prefix={currencySymbol} />
+              </span>
+            </div>
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Upcoming Bills</span>
+              <span className="block text-xl font-bold text-[var(--accent)] mt-1">
+                <AnimatedCounter value={expenseSummary?.upcomingCount || 0} />
+              </span>
+            </div>
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm col-span-2 sm:col-span-1">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Overdue Bills</span>
+              <span className={`block text-xl font-bold mt-1 ${
+                (expenseSummary?.overdueCount || 0) > 0 ? "text-[var(--danger)] animate-pulse font-extrabold" : "text-[var(--text-muted)]/60"
+              }`}>
+                <AnimatedCounter value={expenseSummary?.overdueCount || 0} />
+              </span>
+            </div>
+          </DashboardGrid>
+        </DashboardSection>
       </motion.div>
 
       {/* Grid Content */}
@@ -759,30 +720,32 @@ const UnifiedDashboard = () => {
           {/* Recent Activity Feed */}
           <motion.div variants={itemVariants}>
             <PremiumCard title="Recent Logs" description="Real-time activity logs across portal modules">
-              {recentActivity.length === 0 ? (
-                <EmptyState
-                  icon={Activity}
-                  title="No Activity Logged"
-                  description="Your recent actions on the platform will appear here in chronological order."
-                />
-              ) : (
-                <ul className="space-y-3">
-                  {recentActivity.map((item) => (
-                    <li
-                      key={item.id}
-                      className="flex items-start justify-between gap-3.5 p-3.5 rounded-[var(--radius-md)] border border-border/80 bg-secondary/15 hover:border-[var(--primary)]/20 transition-all duration-200"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-semibold text-foreground line-clamp-1">{item.label}</p>
-                        <p className="text-[10px] text-muted-foreground mt-1">{item.meta}</p>
-                      </div>
-                      <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-1 rounded-[var(--radius-sm)] shrink-0 bg-secondary/85 text-muted-foreground border border-border/40">
-                        {item.module}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <ActivityFeed
+                items={recentActivity.map((act) => {
+                  let IconComponent = Activity;
+                  let iconClass = "bg-[var(--accent)]/10 text-[var(--accent)]";
+                  if (act.module === "Attendance") {
+                    IconComponent = CheckCircle;
+                    iconClass = "bg-emerald-500/10 text-emerald-500";
+                  } else if (act.module === "Expenses") {
+                    IconComponent = Wallet;
+                    iconClass = "bg-rose-500/10 text-rose-500";
+                  } else if (act.module === "Tutorials") {
+                    IconComponent = GraduationCap;
+                    iconClass = "bg-amber-500/10 text-amber-500";
+                  } else if (act.module === "Referrals") {
+                    IconComponent = Briefcase;
+                    iconClass = "bg-indigo-500/10 text-indigo-500";
+                  }
+                  return {
+                    title: act.label,
+                    description: act.meta,
+                    time: act.module,
+                    icon: <IconComponent className="w-4.5 h-4.5" />,
+                    iconClassName: iconClass,
+                  };
+                })}
+              />
             </PremiumCard>
           </motion.div>
         </div>

@@ -10,7 +10,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div style={{
-        background: "var(--bg-surface-1)", border: "1px solid var(--border-subtle)",
+        background: "var(--card-bg)", border: "1px solid var(--border-color)",
         borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "var(--text-primary)",
       }}>
         <p style={{ fontWeight: 600, marginBottom: 4 }}>{label}</p>
@@ -24,7 +24,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 function Charts({ attendanceStats }) {
-  const { isDark } = useTheme();
+  const { theme } = useTheme();
+  const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   const currentColors = isDark
     ? COLORS
     : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
@@ -41,7 +42,7 @@ function Charts({ attendanceStats }) {
         <div style={{ height: 260 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={attendanceStats} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
               <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
               <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} domain={[0, 100]} />
               <Tooltip content={<CustomTooltip />} />
@@ -59,7 +60,7 @@ function Charts({ attendanceStats }) {
         <div style={{ height: 260 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={attendanceStats} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
               <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
               <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
               <Tooltip content={<CustomTooltip />} />
@@ -84,7 +85,24 @@ function Charts({ attendanceStats }) {
                 outerRadius={110}
                 innerRadius={50}
                 paddingAngle={3}
-                label={({ subject, percentage }) => `${subject} ${percentage}%`}
+                label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index, subject, percentage }) => {
+                  const RADIAN = Math.PI / 180;
+                  const radius = innerRadius + (outerRadius - innerRadius) * 1.35;
+                  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      fill="var(--text-primary)"
+                      textAnchor={x > cx ? 'start' : 'end'}
+                      dominantBaseline="central"
+                      fontSize={11}
+                    >
+                      {`${subject} ${percentage}%`}
+                    </text>
+                  );
+                }}
                 labelLine={{ stroke: "var(--text-secondary)" }}
               >
                 {attendanceStats?.map((_, index) => (

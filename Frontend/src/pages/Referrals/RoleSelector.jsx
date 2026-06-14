@@ -94,7 +94,7 @@ export function RoleSelector() {
                       {role.title}
                       <ChevronRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                     </h3>
-                    <p className="text-xs sm:text-sm max-w-sm text-popover-foreground leading-tight tracking-tight">
+                    <p className="text-xs sm:text-sm max-w-sm text-[var(--text-secondary)] leading-tight tracking-tight">
                       {role.description}
                     </p>
                   </div>

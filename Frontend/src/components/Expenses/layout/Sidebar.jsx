@@ -39,9 +39,9 @@ const Sidebar = () => {
       <div className="flex items-center justify-center h-20 border-b border-border shrink-0">
         <h1 className="text-2xl font-bold font-mont tracking-wider text-foreground">
           {isCollapsed ? (
-            <span className="text-brand-primary">F<span className="text-foreground">T</span></span>
+            <span className="text-[var(--primary)]">F<span className="text-foreground">T</span></span>
           ) : (
-            <><span className="text-brand-primary">Fin</span>Track</>
+            <><span className="text-[var(--primary)]">Fin</span>Track</>
           )}
         </h1>
       </div>

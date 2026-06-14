@@ -9,18 +9,18 @@ const WorkspaceContent = () => {
   const { isCollapsed, isMobileMenuOpen, closeMobileMenu } = useSidebar();
 
   return (
-    <div className="font-inter relative h-screen overflow-hidden flex flex-col md:flex-row bg-background text-foreground animate-fade-in" data-lenis-prevent="true">
+    <div className="font-sans relative h-screen overflow-hidden flex flex-col md:flex-row bg-[var(--bg-primary)] text-[var(--text-primary)] animate-fade-in" data-lenis-prevent="true">
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-background/50 md:hidden backdrop-blur-sm transition-opacity duration-300"
+          className="fixed inset-0 z-40 bg-[var(--bg-primary)]/50 md:hidden backdrop-blur-sm transition-opacity duration-300"
           onClick={closeMobileMenu}
         />
       )}
 
       {/* Sidebar container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 bg-card border-r border-border sidebar-transition flex flex-col ${
+        className={`fixed inset-y-0 left-0 z-50 bg-[var(--card-bg)] border-r border-[var(--border-color)] sidebar-transition flex flex-col ${
           isMobileMenuOpen
             ? "translate-x-0 sidebar-expanded"
             : "-translate-x-full lg:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
@@ -37,8 +37,10 @@ const WorkspaceContent = () => {
       >
         <TutorialTopbar />
 
-        <div className="flex-1 overflow-y-auto min-h-0 bg-muted/20">
-          <Outlet />
+        <div className="flex-1 overflow-y-auto min-h-0 bg-[var(--bg-secondary)] p-space-md md:p-space-lg">
+          <div className="max-w-[1600px] mx-auto w-full space-y-space-lg">
+            <Outlet />
+          </div>
         </div>
         <GlobalCallListener />
       </main>
