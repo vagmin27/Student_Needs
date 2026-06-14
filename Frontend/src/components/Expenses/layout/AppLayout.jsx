@@ -16,7 +16,7 @@ const AppLayoutContent = () => {
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 md:hidden backdrop-blur-sm transition-opacity duration-300"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden backdrop-blur-sm transition-opacity duration-300"
           onClick={closeMobileMenu}
         />
       )}
@@ -26,7 +26,7 @@ const AppLayoutContent = () => {
         className={`fixed inset-y-0 left-0 z-50 bg-card border-r border-border sidebar-transition flex flex-col ${
           isMobileMenuOpen
             ? "translate-x-0 sidebar-expanded"
-            : "-translate-x-full md:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
+            : "-translate-x-full lg:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
         }`}
       >
         <Sidebar />

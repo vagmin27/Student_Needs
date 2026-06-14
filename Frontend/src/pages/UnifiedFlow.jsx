@@ -1306,7 +1306,7 @@ function RoleAuthShell({
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none text-xs font-semibold select-none cursor-pointer"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] focus:outline-none text-xs font-semibold select-none cursor-pointer"
                       >
                         {showPassword ? "HIDE" : "SHOW"}
                       </button>
@@ -1316,7 +1316,7 @@ function RoleAuthShell({
                     <div className="flex justify-end mt-1">
                       <Link
                         to={`/forgot-password?role=${role}`}
-                        className="text-xs text-[var(--primary)] hover:text-indigo-300 font-semibold transition-colors"
+                        className="text-xs text-[var(--primary)] hover:text-[var(--nav-accent)] font-semibold transition-colors"
                       >
                         Forgot Password?
                       </Link>
@@ -1330,10 +1330,10 @@ function RoleAuthShell({
             </div>
 
             {mode === "login" && (
-              <label className="flex items-center gap-2 mt-2 mb-4 text-sm text-slate-400 cursor-pointer select-none">
+              <label className="flex items-center gap-2 mt-2 mb-4 text-sm text-[var(--text-secondary)] cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-indigo-950/60 bg-indigo-950/20 text-[var(--primary)] focus:ring-[var(--primary)]/20/50 cursor-pointer"
+                  className="w-4 h-4 rounded border-[var(--border-subtle)] bg-[var(--bg-nav-container)] text-[var(--primary)] focus:ring-[var(--primary)]/20 cursor-pointer"
                 />
                 <span>Remember me</span>
               </label>
@@ -1348,15 +1348,15 @@ function RoleAuthShell({
           {(role === "student" || role === "alumni") && (
             <>
               <div className="uc-social-separator my-5 flex items-center justify-center gap-3 w-full">
-                <span className="h-[1px] bg-slate-800 flex-grow"></span>
-                <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">or continue with</span>
-                <span className="h-[1px] bg-slate-800 flex-grow"></span>
+                <span className="h-[1px] bg-[var(--border-subtle)] flex-grow"></span>
+                <span className="text-xs text-[var(--text-secondary)] font-medium uppercase tracking-wider">or continue with</span>
+                <span className="h-[1px] bg-[var(--border-subtle)] flex-grow"></span>
               </div>
               <div className="uc-social-buttons flex gap-3 w-full">
                 <button
                   type="button"
                   onClick={() => window.location.href = `http://localhost:8000/api/v1/student/auth/google?role=${role}`}
-                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-slate-300 hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-nav-container)] text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-nav-hover)] hover:text-[var(--text-primary)] transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -1369,7 +1369,7 @@ function RoleAuthShell({
                 <button
                   type="button"
                   onClick={() => window.location.href = `http://localhost:8000/api/v1/student/auth/github?role=${role}`}
-                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-indigo-950/60 bg-indigo-950/20 text-sm font-semibold text-slate-300 hover:bg-indigo-950/40 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-nav-container)] text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-nav-hover)] hover:text-[var(--text-primary)] transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.164 22 16.418 22 12c0-5.523-4.477-10-10-10z" />

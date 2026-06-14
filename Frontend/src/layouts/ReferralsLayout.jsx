@@ -25,7 +25,7 @@ const ReferralsLayoutContent = () => {
       {/* Mobile Sidebar overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
           onClick={closeMobileMenu}
         />
       )}
@@ -35,7 +35,7 @@ const ReferralsLayoutContent = () => {
         className={`fixed inset-y-0 left-0 z-50 bg-card border-r border-border sidebar-transition flex flex-col ${
           isMobileMenuOpen
             ? "translate-x-0 sidebar-expanded"
-            : "-translate-x-full md:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
+            : "-translate-x-full lg:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
         }`}
       >
         <ReferralsSidebar className="w-full h-full" />

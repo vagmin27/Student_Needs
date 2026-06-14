@@ -115,7 +115,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--border-subtle);
   border-radius: 10px;
 }
 
@@ -175,7 +175,7 @@ img {
 ====================================================== */
 
 .read-the-docs {
-  color: #888;
+  color: var(--text-secondary);
 }
 
 /* ======================================================
@@ -1425,9 +1425,9 @@ img {
   color: #0f172a !important;
 }
 
-.light-theme .browser-content .text-[var(--text-primary)],
-.light-theme .tablet-content .text-[var(--text-primary)],
-.light-theme .mobile-content .text-[var(--text-primary)] {
+.light-theme .browser-content .text-\[var\(--text-primary\)\],
+.light-theme .tablet-content .text-\[var\(--text-primary\)\],
+.light-theme .mobile-content .text-\[var\(--text-primary\)\] {
   color: #0f172a !important;
 }
 

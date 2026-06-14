@@ -39,7 +39,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
       STUDENT_MODULE_PATHS.some((p) => location.pathname.startsWith(p)));
 
   const handleHamburgerClick = () => {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1024) {
       toggleMobileMenu();
     } else {
       toggleSidebar();

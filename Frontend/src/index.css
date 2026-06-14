@@ -86,7 +86,7 @@
     color: var(--text-heading);
   }
 
-  p, li, span, div {
+  p, li {
     color: var(--text-paragraph);
   }
 

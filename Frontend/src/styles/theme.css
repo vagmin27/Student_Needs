@@ -3,13 +3,13 @@
    ====================================================== */
 
 :root {
-  --bg-main-page: var(--bg-nav-container);
-  --bg-nav-container: #f0f4f9;
-  --bg-nav-hover: #e1e6eb;
-  --text-primary: #1f1f1f;
-  --text-secondary: #474747;
-  --nav-accent: #1a73e8;
-  --border-subtle: #dde3ea;
+  --bg-main-page: #f4f1fb;        /* soft lavender canvas, was #ffffff/#f0f4f9 */
+  --bg-nav-container: #ffffff;     /* white cards/sidebar, was #f0f4f9 */
+  --bg-nav-hover: #ece6fb;          /* light purple hover, was #e1e6eb */
+  --text-primary: #1f1f1f;          /* unchanged */
+  --text-secondary: #6b6b6b;        /* unchanged-ish */
+  --nav-accent: #6c4cf1;            /* purple accent, was #1a73e8 */
+  --border-subtle: #e4def9;         /* lavender-tinted border, was #dde3ea */
   --theme-transition:
     background-color .3s ease,
     color .3s ease,
@@ -29,9 +29,9 @@
 
 :root,
 [data-theme="light"] {
-  /* Primary Accent: Muted Bronze */
-  --primary: #8C6239;
-  --primary-hover: #734e2c;
+  /* Primary Accent: Purple */
+  --primary: #6c4cf1;
+  --primary-hover: #5a3ddb;
   
   /* Semantic Status Colors (Light Theme) */
   --success: #2C6E49;
@@ -40,8 +40,8 @@
   --warning-bg: rgba(166, 124, 0, 0.08);
   --danger: #9B2226;
   --danger-bg: rgba(155, 34, 38, 0.08);
-  --info: #8C6239;
-  --info-bg: rgba(140, 98, 57, 0.08);
+  --info: #6c4cf1;
+  --info-bg: rgba(108, 76, 241, 0.08);
   --neutral: #5C6773;
   --neutral-bg: rgba(92, 103, 115, 0.08);
 
@@ -60,7 +60,7 @@
 
   /* Shadows (Three-tier elevation/shadow system - Light Mode) */
   --elevation-1: 0 1px 3px rgba(26, 37, 48, 0.05);
-  --elevation-2: 0 8px 24px rgba(140, 98, 57, 0.06);
+  --elevation-2: 0 8px 24px rgba(108, 76, 241, 0.06);
   --elevation-3: 0 20px 40px rgba(26, 37, 48, 0.08);
   
   --shadow-sm: var(--elevation-1);
@@ -82,11 +82,11 @@
   --text-black: #1A2530;
 
   /* Glassmorphism system variables for light mode */
-  --glass-bg: rgba(253, 251, 247, 0.85);
+  --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-blur: blur(24px);
-  --glass-border: rgba(140, 98, 57, 0.22);
-  --glass-shadow: 0 8px 32px rgba(140, 98, 57, 0.04);
-  --card-border-gradient: linear-gradient(135deg, rgba(140, 98, 57, 0.2), transparent, rgba(140, 98, 57, 0.05));
+  --glass-border: rgba(108, 76, 241, 0.22);
+  --glass-shadow: 0 8px 32px rgba(108, 76, 241, 0.04);
+  --card-border-gradient: linear-gradient(135deg, rgba(108, 76, 241, 0.2), transparent, rgba(108, 76, 241, 0.05));
 
   /* Image controls */
   --image-filter: none;
@@ -94,12 +94,13 @@
 
   /* Sidebar configuration mapping */
   --sidebar-link-color: #4A5868;
+
 }
 
 [data-theme="dark"] {
-  /* Primary Accent: Soft Gold */
-  --primary: #C5A059;
-  --primary-hover: #D8B774;
+  /* Primary Accent: Purple (brand-consistent with light mode) */
+  --primary: #9b7cf6;
+  --primary-hover: #b39bf9;
   
   /* Semantic Status Colors (Dark Theme) */
   --success: #469A6C;
@@ -108,8 +109,8 @@
   --warning-bg: rgba(235, 177, 52, 0.12);
   --danger: #E2585B;
   --danger-bg: rgba(226, 88, 91, 0.12);
-  --info: #C5A059;
-  --info-bg: rgba(197, 160, 89, 0.12);
+  --info: #9b7cf6;
+  --info-bg: rgba(155, 124, 246, 0.12);
   --neutral: #8390A1;
   --neutral-bg: rgba(131, 144, 161, 0.12);
 
@@ -129,7 +130,7 @@
   /* Shadows (Three-tier elevation/shadow system - Dark Mode) */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3);
   --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --elevation-3: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(197, 160, 89, 0.1);
+  --elevation-3: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(155, 124, 246, 0.1);
   
   --shadow-sm: var(--elevation-1);
   --shadow-md: var(--elevation-2);
@@ -162,6 +163,17 @@
 
   /* Sidebar configuration mapping */
   --sidebar-link-color: #B1B8C0;
+
+  /* Shadcn UI Dark Mode Overrides (Defaults used for light mode) */
+  --foreground: #e3e3e3;
+  --muted-foreground: #c4c7c5;
+  --card: #1e1f20;
+  --card-foreground: #e3e3e3;
+  --popover: #1e1f20;
+  --popover-foreground: #e3e3e3;
+  --secondary: #282a2c;
+  --secondary-foreground: #e3e3e3;
+  --muted: #282a2c;
 }
 
 /* Theme transition adjustments */

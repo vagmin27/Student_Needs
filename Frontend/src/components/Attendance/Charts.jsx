@@ -2,6 +2,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, Legend,
 } from "recharts";
+import { useTheme } from "../../context/ThemeContext";
 
 const COLORS = ["#6366f1", "#22c55e", "#ef4444", "#f59e0b", "#38bdf8", "#a855f7"];
 
@@ -23,6 +24,11 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 function Charts({ attendanceStats }) {
+  const { isDark } = useTheme();
+  const currentColors = isDark
+    ? COLORS
+    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
+
   if (!attendanceStats || attendanceStats.length === 0) return null;
 
   return (
@@ -39,7 +45,7 @@ function Charts({ attendanceStats }) {
               <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "#94a3b8" }} />
               <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} domain={[0, 100]} />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="percentage" name="Attendance %" fill="#6366f1" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#6c4cf1"} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -82,7 +88,7 @@ function Charts({ attendanceStats }) {
                 labelLine={{ stroke: "#475569" }}
               >
                 {attendanceStats?.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={currentColors[index % currentColors.length]} />
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />

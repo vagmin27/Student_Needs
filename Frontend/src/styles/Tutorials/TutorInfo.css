@@ -148,7 +148,7 @@
 }
 
 .backBtn:hover {
-  background: var(--bg-hover, #f5f5f5);
+  background: var(--bg-nav-hover);
 }
 
 /* REMOVE OLD TRANSFORMS */

@@ -484,6 +484,7 @@ const UnifiedDashboard = () => {
               size="sm"
               onClick={() => navigate("/expenses-tracker")}
               rightIcon={ArrowRight}
+              className="dark:text-[var(--nav-accent)] dark:border-[var(--nav-accent)] dark:hover:bg-[var(--nav-accent)] dark:hover:text-[var(--text-button)]"
             >
               Expense Tracker
             </PremiumButton>
@@ -829,7 +830,7 @@ const UnifiedDashboard = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground">Category</label>
               <select
