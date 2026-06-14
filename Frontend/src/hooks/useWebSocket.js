@@ -47,6 +47,13 @@ export const useWebSocket = () => {
       setIsConnected(true);
       setError(null);
       console.log("🟢 WebSocket Connected");
+      
+      // Request online users list on connection/reconnection
+      if (socketInstance.connected) {
+        socketInstance.emit("get_online_users", (users) => {
+          // You can dispatch an event or handle it, but ChatPage already does this.
+        });
+      }
     };
 
     const onDisconnect = () => {
@@ -60,22 +67,42 @@ export const useWebSocket = () => {
       console.error("WebSocket Connection Error:", err.message);
     };
 
+    // Socket.io reconnect event
+    const onReconnect = (attemptNumber) => {
+      console.log(`🔄 WebSocket Reconnected after ${attemptNumber} attempts`);
+      // No explicit logic needed here; 'connect' will fire again and we re-fetch state if needed.
+    };
+
     socketInstance.on("connect", onConnect);
     socketInstance.on("disconnect", onDisconnect);
     socketInstance.on("connect_error", onConnectError);
+    socketInstance.io.on("reconnect", onReconnect);
 
     // Cleanup listeners on unmount (but don't destroy singleton unless explicitly logging out)
     return () => {
       socketInstance.off("connect", onConnect);
       socketInstance.off("disconnect", onDisconnect);
       socketInstance.off("connect_error", onConnectError);
+      socketInstance.io.off("reconnect", onReconnect);
     };
   }, []);
 
   // Helper method to emit events
-  const emit = (event, data) => {
+  const emit = (event, data, ack) => {
     if (socketRef.current && isConnected) {
-      socketRef.current.emit(event, data);
+      if (ack) {
+        socketRef.current.timeout(5000).emit(event, data, (err, ...args) => {
+          if (err) {
+            console.error(`[SOCKET] Emit '${event}' ACK timeout or error:`, err);
+            // In case of timeout or err, we call ack with failure or null to avoid hanging
+            ack({ error: err.message || "Timeout" });
+          } else {
+            ack(...args);
+          }
+        });
+      } else {
+        socketRef.current.emit(event, data);
+      }
     } else {
       console.warn(`Cannot emit '${event}': WebSocket not connected`);
     }

@@ -30,16 +30,18 @@ export const registerTutorCallHandlers = (io, socket) => {
       // Check booking status if it exists, but for tutorials it might be in activeBookings or latestBookingId
       // The schema has latestBookingId. We won't block based on strict status checking here unless populated.
 
+      const callSessionId = `${conversationId}_${Date.now()}`;
+
       // 30 seconds timeout if not answered
       const timeout = setTimeout(async () => {
         const call = activeCalls.get(conversationId);
-        if (call && call.status === "calling") {
+        if (call && call.status === "calling" && call.callSessionId === callSessionId) {
           activeCalls.delete(conversationId);
           
-          io.to(call.caller.toString()).emit("call:timeout", { conversationId });
-          io.to(call.receiver.toString()).emit("call:missed", { conversationId });
-          io.to(call.caller.toString()).emit("call:end", { conversationId, reason: "No answer" });
-          io.to(call.receiver.toString()).emit("call:end", { conversationId, reason: "No answer" });
+          io.to(`user:${call.caller.toString()}`).emit("call:timeout", { conversationId });
+          io.to(`user:${call.receiver.toString()}`).emit("call:missed", { conversationId });
+          io.to(`user:${call.caller.toString()}`).emit("call:end", { conversationId, reason: "No answer" });
+          io.to(`user:${call.receiver.toString()}`).emit("call:end", { conversationId, reason: "No answer" });
           
           await saveCallHistory(conversationId, call, 0);
         }
@@ -52,19 +54,21 @@ export const registerTutorCallHandlers = (io, socket) => {
         timeout,
         type,
         conversationId,
-        status: "calling"
+        status: "calling",
+        callSessionId
       });
 
       console.log(`[CALL START] caller: ${userId} receiver: ${receiverId}`);
 
-      const receiverSocketId = onlineUsers.get(receiverId.toString());
-      if (receiverSocketId) {
-        console.log(`[CALL SENT] receiver socket: ${receiverSocketId}`);
-        // Emit incoming call to receiver
-        io.to(receiverSocketId).emit("call:incoming", {
+      const receiverIsOnline = onlineUsers.has(receiverId.toString()) && onlineUsers.get(receiverId.toString()).size > 0;
+      if (receiverIsOnline) {
+        console.log(`[CALL INCOMING] to receiver: ${receiverId}`);
+        // Emit incoming call to receiver's user room
+        io.to(`user:${receiverId.toString()}`).emit("call:incoming", {
           conversationId,
           callerId: userId,
           type,
+          callSessionId,
           callerInfo: {
             name: socket.user.name,
             role: socket.user.role,
@@ -80,12 +84,20 @@ export const registerTutorCallHandlers = (io, socket) => {
     }
   });
 
-  socket.on("call:accepted", ({ conversationId }) => {
+  socket.on("call:accepted", ({ conversationId, callSessionId }) => {
     const call = activeCalls.get(conversationId);
     if (call && call.receiver.toString() === userId.toString()) {
-      clearTimeout(call.timeout); // Clear the 30-second timeout when answered
-      call.status = "in_progress";
-      io.to(call.caller.toString()).emit("call:accepted", { conversationId });
+      if (call.status === "calling") {
+        clearTimeout(call.timeout); // Clear the 30-second timeout when answered
+        call.status = "in_progress";
+        call.acceptedSocketId = socket.id; // Lock to this socket
+        io.to(`user:${call.caller.toString()}`).emit("call:accepted", { conversationId });
+        // Cancel duplicate popups on receiver's other devices
+        socket.to(`user:${call.receiver.toString()}`).emit("call:cancel_duplicate", { conversationId });
+      } else if (call.status === "in_progress" && call.acceptedSocketId !== socket.id) {
+        // Prevent duplicate popup
+        socket.emit("call:cancel_duplicate", { conversationId });
+      }
     }
   });
 
@@ -94,7 +106,9 @@ export const registerTutorCallHandlers = (io, socket) => {
     if (call && call.receiver.toString() === userId.toString()) {
       clearTimeout(call.timeout);
       activeCalls.delete(conversationId);
-      io.to(call.caller.toString()).emit("call:declined", { conversationId });
+      io.to(`user:${call.caller.toString()}`).emit("call:declined", { conversationId });
+      // Cancel popups on receiver's other devices
+      socket.to(`user:${call.receiver.toString()}`).emit("call:cancel_duplicate", { conversationId });
       
       // Save history
       await saveCallHistory(conversationId, call, 0);
@@ -104,16 +118,18 @@ export const registerTutorCallHandlers = (io, socket) => {
   socket.on("call:offer", ({ conversationId, offer }) => {
     const call = activeCalls.get(conversationId);
     if (call) {
+      console.log(`[WEBRTC OFFER] for conversation: ${conversationId}`);
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
-      io.to(targetId.toString()).emit("call:offer", { conversationId, offer });
+      io.to(`user:${targetId.toString()}`).emit("call:offer", { conversationId, offer });
     }
   });
 
   socket.on("call:answer", ({ conversationId, answer }) => {
     const call = activeCalls.get(conversationId);
     if (call) {
+      console.log(`[WEBRTC ANSWER] for conversation: ${conversationId}`);
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
-      io.to(targetId.toString()).emit("call:answer", { conversationId, answer });
+      io.to(`user:${targetId.toString()}`).emit("call:answer", { conversationId, answer });
     }
   });
 
@@ -121,7 +137,7 @@ export const registerTutorCallHandlers = (io, socket) => {
     const call = activeCalls.get(conversationId);
     if (call) {
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
-      io.to(targetId.toString()).emit("call:ice_candidate", { conversationId, candidate });
+      io.to(`user:${targetId.toString()}`).emit("call:ice_candidate", { conversationId, candidate });
     }
   });
 
@@ -131,7 +147,11 @@ export const registerTutorCallHandlers = (io, socket) => {
 
   socket.on("disconnect", () => {
     activeCalls.forEach(async (call, convId) => {
-      if (call.caller.toString() === userId.toString() || call.receiver.toString() === userId.toString()) {
+      // If the specific socket that accepted the call disconnects, or if they were the caller
+      if (
+        call.caller.toString() === userId.toString() ||
+        (call.receiver.toString() === userId.toString() && call.acceptedSocketId === socket.id)
+      ) {
         await endCall(convId, io, "User disconnected");
       }
     });
@@ -144,8 +164,8 @@ const endCall = async (conversationId, io, reason) => {
     clearTimeout(call.timeout);
     activeCalls.delete(conversationId);
     
-    io.to(call.caller.toString()).emit("call:end", { conversationId, reason });
-    io.to(call.receiver.toString()).emit("call:end", { conversationId, reason });
+    io.to(`user:${call.caller.toString()}`).emit("call:end", { conversationId, reason });
+    io.to(`user:${call.receiver.toString()}`).emit("call:end", { conversationId, reason });
 
     const duration = Math.floor((new Date() - call.startTime) / 1000); // duration in seconds
     await saveCallHistory(conversationId, call, duration);

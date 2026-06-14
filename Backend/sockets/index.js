@@ -28,16 +28,31 @@ export const initSocket = (server) => {
   io.use(socketAuthMiddleware);
 
   io.on("connection", (socket) => {
-    // Automatically join a room for this specific user
-    const userId = socket.user.id || socket.user._id;
-    if (userId) {
-      socket.join(userId.toString());
-      onlineUsers.set(userId.toString(), socket.id);
-      console.log(`[CONNECT] user: ${userId} socket: ${socket.id}`);
+    const userId = socket.user?.id || socket.user?._id;
+    const stringUserId = userId?.toString();
+
+    if (stringUserId) {
+      socket.join(`user:${stringUserId}`);
+
+      if (!onlineUsers.has(stringUserId)) {
+        onlineUsers.set(stringUserId, new Set());
+      }
+      const userSockets = onlineUsers.get(stringUserId);
+      const isFirstConnection = userSockets.size === 0;
+      userSockets.add(socket.id);
+
+      console.log(`[SOCKET CONNECT] user: ${stringUserId} socket: ${socket.id}`);
+
+      if (isFirstConnection) {
+        console.log(`[PRESENCE ONLINE] user: ${stringUserId}`);
+        // Emit BOTH legacy and new events
+        io.emit("userOnline", { userId: stringUserId });
+        io.emit("user_status", { userId: stringUserId, status: "online", lastSeen: new Date() });
+      }
     }
 
     // Role-based rooms
-    const role = socket.user.role;
+    const role = socket.user?.role;
     if (role) {
       socket.join(`role:${role}`);
     }
@@ -47,13 +62,48 @@ export const initSocket = (server) => {
     registerTutorChatHandlers(io, socket);
     registerTutorCallHandlers(io, socket);
 
-    socket.on("disconnect", () => {
-      if (userId) {
-        onlineUsers.delete(userId.toString());
-        console.log(`[DISCONNECT] user: ${userId} socket: ${socket.id}`);
+    socket.on("get_online_users", (cb) => {
+      if (typeof cb === "function") {
+        cb([...onlineUsers.keys()]);
       }
     });
+
+    socket.on("disconnect", () => {
+      if (stringUserId && onlineUsers.has(stringUserId)) {
+        const userSockets = onlineUsers.get(stringUserId);
+        userSockets.delete(socket.id);
+
+        if (userSockets.size === 0) {
+          onlineUsers.delete(stringUserId);
+          console.log(`[PRESENCE OFFLINE] user: ${stringUserId}`);
+          // Emit BOTH legacy and new events
+          io.emit("userOffline", { userId: stringUserId, lastSeen: new Date() });
+          io.emit("user_status", { userId: stringUserId, status: "offline", lastSeen: new Date() });
+        }
+      }
+      console.log(`[DISCONNECT] user: ${stringUserId} socket: ${socket.id}`);
+    });
   });
+
+  // Stale Socket Cleanup Interval
+  setInterval(() => {
+    for (const [userId, sockets] of onlineUsers.entries()) {
+      let activeFound = false;
+      for (const socketId of sockets) {
+        if (io.sockets.sockets.has(socketId)) {
+          activeFound = true;
+        } else {
+          sockets.delete(socketId); // Remove stale socket
+        }
+      }
+      if (!activeFound || sockets.size === 0) {
+        onlineUsers.delete(userId);
+        console.log(`[PRESENCE OFFLINE] (Cleanup) user: ${userId}`);
+        io.emit("userOffline", { userId, lastSeen: new Date() });
+        io.emit("user_status", { userId, status: "offline", lastSeen: new Date() });
+      }
+    }
+  }, 60000); // Check every 60 seconds
 
   console.log("✅ WebSocket Server Initialized");
   return io;

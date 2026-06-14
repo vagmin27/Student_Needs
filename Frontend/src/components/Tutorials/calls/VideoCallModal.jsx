@@ -425,7 +425,10 @@ export const VideoCallModal = ({
     setInternalCallState("accepting");
     if (onAccept) onAccept(); // Tell parent to hide incoming UI and set callState to active
     
-    socket.emit("call:accepted", { conversationId });
+    socket.emit("call:accepted", { 
+      conversationId,
+      callSessionId: incomingCallData?.callSessionId
+    });
     
     // Proactively initialize call constraints so peer exists before offer arrives
     if (!callInitialized.current) {
