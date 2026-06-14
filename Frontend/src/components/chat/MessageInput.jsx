@@ -128,9 +128,9 @@ export const MessageInput = ({
     <form onSubmit={handleSend} className="border-t border-border/45 bg-card/75 backdrop-blur-md p-3 md:p-4 flex flex-col gap-2 relative">
       {/* File attachment preview bar */}
       {file && (
-        <div className="flex items-center justify-between gap-3 p-2.5 bg-slate-900/50 border border-border/20 rounded-[var(--radius-md)] max-w-sm animate-in slide-in-from-bottom-2 duration-200">
+        <div className="flex items-center justify-between gap-3 p-2.5 bg-[var(--bg-secondary)]/50 border border-[var(--border-color)] rounded-[var(--radius-md)] max-w-sm animate-in slide-in-from-bottom-2 duration-200">
           <div className="flex items-center gap-2 min-w-0">
-            <div className="p-2 bg-slate-800 rounded-[var(--radius-sm)] text-primary shrink-0">
+            <div className="p-2 bg-[var(--bg-tertiary)] rounded-[var(--radius-sm)] text-primary shrink-0">
               {isImageFile ? <ImageIcon className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
             </div>
             <div className="flex flex-col min-w-0">
@@ -141,7 +141,7 @@ export const MessageInput = ({
           <button
             type="button"
             onClick={handleRemoveFile}
-            className="p-1 hover:bg-slate-800 rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-colors shrink-0"
+            className="p-1 hover:bg-[var(--bg-tertiary)] rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-colors shrink-0"
             title="Remove attachment"
           >
             <X className="w-4 h-4" />
@@ -164,7 +164,7 @@ export const MessageInput = ({
           onClick={() => fileInputRef.current?.click()}
           disabled={isBlocked || isUploading}
           className={cn(
-            "p-3 rounded-[var(--radius-md)] bg-slate-850 hover:bg-slate-800 text-slate-400 hover:text-foreground border border-border/30 hover:border-border transition-all duration-200 cursor-pointer",
+            "p-3 rounded-[var(--radius-md)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-foreground border border-[var(--border-color)] transition-all duration-200 cursor-pointer",
             (isBlocked || isUploading) && "opacity-45 cursor-not-allowed"
           )}
           title="Attach study materials (Max 10MB)"
@@ -185,7 +185,7 @@ export const MessageInput = ({
             }
             disabled={isBlocked || isUploading}
             rows={1}
-            className="w-full min-h-[44px] max-h-[120px] py-2.5 px-4 bg-slate-905 border border-border/30 rounded-[var(--radius-md)] outline-none focus:border-primary text-[14.5px] text-foreground placeholder-muted-foreground/60 transition-colors resize-none overflow-y-auto"
+            className="w-full min-h-[44px] max-h-[120px] py-2.5 px-4 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[var(--radius-md)] outline-none focus:border-primary text-[14.5px] text-[var(--text-primary)] placeholder-muted-foreground/60 transition-colors resize-none overflow-y-auto"
             style={{ height: "44px" }}
           />
         </div>

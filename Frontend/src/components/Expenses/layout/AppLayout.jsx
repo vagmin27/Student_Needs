@@ -49,7 +49,7 @@ const AppLayoutContent = () => {
       <div className="fixed bottom-6 left-6 z-50">
         <Link
           to="/student/dashboard"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900/80 dark:bg-slate-950/80 backdrop-blur-xl border border-white/10 dark:border-cyan-500/20 text-muted-foreground hover:text-white shadow-[var(--shadow-lg)] hover:shadow-cyan-500/10 hover:scale-105 transition-all duration-300 text-sm font-semibold cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[var(--bg-nav-container)]/80 backdrop-blur-xl border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] shadow-[var(--shadow-lg)] hover:scale-105 transition-all duration-300 text-sm font-semibold cursor-pointer"
           title="Back to Student Dashboard"
         >
           <ArrowLeft className="w-4 h-4 text-[var(--primary)]" />

@@ -82,40 +82,40 @@ export default function Home() {
           aria-hidden="true"
         >
           {/* Central Live Environment Container */}
-          <div className="w-full max-w-[500px] bg-card/60 border border-border/80 rounded-[var(--radius-lg)] p-5 shadow-[var(--shadow-lg)] space-y-4 relative overflow-hidden backdrop-blur-md">
+          <div className="w-full max-w-[500px] bg-[var(--card-bg)] border border-[var(--border-color)] rounded-[var(--radius-lg)] p-5 shadow-[var(--shadow-lg)] space-y-4 relative overflow-hidden backdrop-blur-md">
             
             {/* Window bar */}
-            <div className="flex items-center justify-between border-b border-border/60 pb-3 mb-1.5">
+            <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-3 mb-1.5">
               <div className="flex items-center gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                 <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
               </div>
-              <span className="text-[10px] font-black tracking-widest text-muted-foreground uppercase">UniConnect Live Workspace</span>
+              <span className="text-[10px] font-black tracking-widest text-[var(--text-muted)] uppercase">UniConnect Live Workspace</span>
             </div>
             
             {/* Student Profile & Attendance Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Profile Widget */}
-              <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center font-black text-primary shrink-0">
+              <div className="p-3 bg-[var(--bg-secondary)]/35 border border-[var(--border-color)] rounded-[var(--radius-md)] flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-black shrink-0">
                   AR
                 </div>
                 <div className="text-left min-w-0">
-                  <h4 className="text-xs font-bold text-foreground truncate">Alex Rivera</h4>
-                  <p className="text-[9.5px] text-muted-foreground truncate font-medium">CS Junior • GPA 3.82</p>
+                  <h4 className="text-xs font-bold text-[var(--text-primary)] truncate">Alex Rivera</h4>
+                  <p className="text-[9.5px] text-[var(--text-muted)] truncate font-medium">CS Junior • GPA 3.82</p>
                 </div>
               </div>
 
               {/* Attendance Indicator */}
-              <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center justify-between">
+              <div className="p-3 bg-[var(--bg-secondary)]/35 border border-[var(--border-color)] rounded-[var(--radius-md)] flex items-center justify-between">
                 <div className="text-left">
-                  <h4 className="text-[9.5px] uppercase font-bold text-muted-foreground">Attendance</h4>
+                  <h4 className="text-[9.5px] uppercase font-bold text-[var(--text-muted)]">Attendance</h4>
                   <p className="text-base font-black text-emerald-500">94.2% Rate</p>
                 </div>
                 <div className="w-9 h-9 relative flex items-center justify-center shrink-0">
                   <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-muted-foreground/10" strokeWidth="2.5" fill="transparent" />
+                    <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-[var(--text-muted)]/10" strokeWidth="2.5" fill="transparent" />
                     <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-emerald-500" strokeWidth="2.5" strokeDasharray={88} strokeDashoffset={5} fill="transparent" />
                   </svg>
                   <span className="absolute text-[8px] font-bold text-emerald-500">94%</span>
@@ -124,20 +124,20 @@ export default function Home() {
             </div>
 
             {/* Expense Budget Indicator */}
-            <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] space-y-2">
+            <div className="p-3 bg-[var(--bg-secondary)]/35 border border-[var(--border-color)] rounded-[var(--radius-md)] space-y-2">
               <div className="flex justify-between items-center text-left">
                 <div>
-                  <h4 className="text-[9.5px] uppercase font-bold text-muted-foreground">Monthly Budget</h4>
-                  <p className="text-xs font-bold text-foreground">$428.50 / $600.00</p>
+                  <h4 className="text-[9.5px] uppercase font-bold text-[var(--text-muted)]">Monthly Budget</h4>
+                  <p className="text-xs font-bold text-[var(--text-primary)]">$428.50 / $600.00</p>
                 </div>
                 <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 font-bold">Within Limit</span>
               </div>
-              <div className="w-full h-2 bg-muted rounded-full overflow-hidden flex">
-                <div className="h-full bg-primary" style={{ width: "45%" }} />
+              <div className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden flex">
+                <div className="h-full bg-[var(--accent)]" style={{ width: "45%" }} />
                 <div className="h-full bg-indigo-400" style={{ width: "22%" }} />
                 <div className="h-full bg-cyan-400" style={{ width: "8%" }} />
               </div>
-              <div className="flex justify-between text-[9px] text-muted-foreground pt-0.5">
+              <div className="flex justify-between text-[9px] text-[var(--text-muted)] pt-0.5">
                 <span>🍔 Food: $210</span>
                 <span>📚 Books: $120</span>
                 <span>🚇 Transit: $48</span>
@@ -145,33 +145,33 @@ export default function Home() {
             </div>
 
             {/* Tutor Booking Slot */}
-            <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center gap-3">
-              <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center shrink-0 border border-[var(--primary)]/30/20">
+            <div className="p-3 bg-[var(--bg-secondary)]/35 border border-[var(--border-color)] rounded-[var(--radius-md)] flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center shrink-0 border border-[var(--accent)]/20">
                 <BookOpen className="w-4 h-4" />
               </div>
               <div className="text-left flex-grow min-w-0">
-                <h4 className="text-[9.5px] font-bold text-muted-foreground uppercase">Next Tutor Session</h4>
-                <p className="text-xs font-bold text-foreground truncate">CS-301 Algorithms with Dr. Marcus</p>
-                <p className="text-[9.5px] text-primary font-bold">Today at 4:30 PM (Online Match)</p>
+                <h4 className="text-[9.5px] font-bold text-[var(--text-muted)] uppercase">Next Tutor Session</h4>
+                <p className="text-xs font-bold text-[var(--text-primary)] truncate">CS-301 Algorithms with Dr. Marcus</p>
+                <p className="text-[9.5px] text-[var(--accent)] font-bold">Today at 4:30 PM (Online Match)</p>
               </div>
-              <span className="text-[8px] px-2 py-0.5 bg-[var(--primary)]/15 text-[var(--primary)] rounded font-black uppercase shrink-0 border border-[var(--primary)]/30/20">Pending</span>
+              <span className="text-[8px] px-2 py-0.5 bg-[var(--accent)]/15 text-[var(--accent)] rounded font-black uppercase shrink-0 border border-[var(--accent)]/20">Pending</span>
             </div>
 
             {/* Referral Alert Match */}
-            <div className="p-3 bg-secondary/35 border border-border/40 rounded-[var(--radius-md)] flex items-center gap-3">
+            <div className="p-3 bg-[var(--bg-secondary)]/35 border border-[var(--border-color)] rounded-[var(--radius-md)] flex items-center gap-3">
               <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-cyan-500/10 text-cyan-500 flex items-center justify-center shrink-0 border border-cyan-500/20">
                 <Briefcase className="w-4 h-4" />
               </div>
               <div className="text-left flex-grow min-w-0">
-                <h4 className="text-[9.5px] font-bold text-muted-foreground uppercase">Referrals & Jobs</h4>
-                <p className="text-xs font-bold text-foreground truncate">Stripe Intern Referral Approved</p>
+                <h4 className="text-[9.5px] font-bold text-[var(--text-muted)] uppercase">Referrals & Jobs</h4>
+                <p className="text-xs font-bold text-[var(--text-primary)] truncate">Stripe Intern Referral Approved</p>
                 <p className="text-[9.5px] text-cyan-400 font-bold">Referred by Priya S. (Alumni '23)</p>
               </div>
               <span className="text-[8px] px-2 py-0.5 bg-cyan-500/15 text-cyan-400 rounded-full font-black uppercase shrink-0 border border-cyan-500/20 animate-pulse">Matched</span>
             </div>
             
             {/* Glowing Accent Ring */}
-            <div className="absolute -inset-px rounded-[var(--radius-lg)] border border-primary/20 pointer-events-none" />
+            <div className="absolute -inset-px rounded-[var(--radius-lg)] border border-[var(--accent)]/20 pointer-events-none" />
           </div>
         </motion.div>
       </section>

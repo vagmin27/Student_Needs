@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
-import { Button } from '@/components/Referrals/ui/button.jsx';
-import { Input } from '@/components/Referrals/ui/input.jsx';
-import { Label } from '@/components/Referrals/ui/label.jsx';
-import { Textarea } from '@/components/Referrals/ui/textarea.jsx';
+import { Button } from '@/components/ui/button.jsx';
+import { Input } from '@/components/ui/input.jsx';
+import { Label } from '@/components/ui/label.jsx';
+import { Textarea } from '@/components/ui/textarea.jsx';
 import { cn } from '@/lib/Referrals/utils.js';
 import { showToast, dismissToast } from '@/components/Referrals/TransactionToast.jsx';
 import { AlumniStats } from '@/components/Referrals/Alumni/AlumniStats.jsx';

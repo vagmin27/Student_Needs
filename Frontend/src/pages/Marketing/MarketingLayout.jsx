@@ -128,7 +128,7 @@ export default function MarketingLayout() {
       <nav 
         className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4 flex items-center justify-between border-b ${
           isScrolled 
-            ? "bg-background/80 backdrop-blur-md border-border/80 shadow-md py-3.5" 
+            ? "bg-[var(--glass-bg)] backdrop-blur-md border-[var(--border-color)] shadow-[var(--shadow-sm)] py-3.5" 
             : "bg-transparent border-transparent"
         }`} 
         role="navigation" 
@@ -266,8 +266,8 @@ export default function MarketingLayout() {
       </AnimatePresence>
 
       {/* 🚀 CONSOLIDATED COMPACT PREMIUM FOOTER (280px-350px height) */}
-      <footer className="uc-footer bg-card border-t border-border mt-16 px-6 py-8 w-full text-xs">
-        <div className="max-w-7xl mx-auto uc-footer-grid-audit gap-8 text-left mb-6">
+      <footer className="uc-footer bg-[var(--card-bg)] border-t border-[var(--border-color)] mt-16 px-space-md md:px-space-lg py-space-lg w-full text-xs text-[var(--text-secondary)]">
+        <div className="max-w-[1600px] mx-auto uc-footer-grid-audit gap-space-lg text-left mb-space-lg">
           {/* Section 1: About UniConnect */}
           <div className="space-y-3">
             <h5 className="font-bold text-foreground text-sm uppercase tracking-wider">About UniConnect</h5>

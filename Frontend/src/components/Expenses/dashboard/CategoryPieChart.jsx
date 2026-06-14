@@ -4,7 +4,8 @@ import { sortCategoryWise } from '../../../utils/Expenses/seperator';
 import { useTheme } from '../../../context/ThemeContext';
 
 export function CategoryPieChart({ exdata }) {
-  const { isDark } = useTheme();
+  const { theme } = useTheme();
+  const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   const categories = ['Grocery', 'Vehicle', 'Shopping', 'Travel', 'Food', 'Fun', 'Other'];
   const totalexp = sortCategoryWise(exdata, categories);
 
@@ -54,7 +55,7 @@ export function CategoryPieChart({ exdata }) {
               </Pie>
               <Tooltip 
                 formatter={(value) => `₹ ${value.toLocaleString()}`}
-                contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+                contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
                 itemStyle={{ color: 'var(--text-secondary)' }}
               />
               <Legend 

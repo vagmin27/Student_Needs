@@ -92,7 +92,7 @@ const DashboardLayoutContent = ({ children, pageTitle, role }) => {
           onMenuClick={toggleMobileMenu}
         />
         <div className="flex-1 min-h-0 overflow-y-auto">
-          <div className="dashboard-container space-y-6">
+          <div className="dashboard-container space-y-space-lg">
             {children || <Outlet />}
           </div>
         </div>

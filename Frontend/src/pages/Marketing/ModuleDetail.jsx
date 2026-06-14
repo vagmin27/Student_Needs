@@ -365,7 +365,7 @@ export default function ModuleDetail() {
                       </div>
                     </div>
                     <div>
-                      <span className={`text-[10.5px] font-bold block transition-colors ${activePipelineStage >= item.stage ? "text-cyan-400 font-extrabold" : "text-slate-400"}`}>{item.label}</span>
+                      <span className={`text-[10.5px] font-bold block transition-colors ${activePipelineStage >= item.stage ? "text-cyan-400 font-extrabold" : "text-muted-foreground"}`}>{item.label}</span>
                       <span className="text-[9px] text-muted-foreground font-medium">{item.desc}</span>
                     </div>
                   </div>

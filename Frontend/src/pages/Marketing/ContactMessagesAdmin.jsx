@@ -159,7 +159,7 @@ export default function ContactMessagesAdmin() {
                   <span className="text-[9px] text-muted-foreground flex items-center gap-1">
                     <Calendar className="w-3 h-3" /> {new Date(msg.createdAt).toLocaleDateString()}
                   </span>
-                  <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded ${msg.isRead ? "bg-slate-800 text-slate-400" : "bg-primary/20 text-primary border border-primary/25 animate-pulse"}`}>
+                  <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded ${msg.isRead ? "bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-400" : "bg-primary/20 text-primary border border-primary/25 animate-pulse"}`}>
                     {msg.isRead ? "Read" : "New"}
                   </span>
                 </div>

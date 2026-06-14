@@ -16,20 +16,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
 
 :root {
-  --bg-main-page: #ffffff;
-  --bg-surface-1: #f8fafc; /* elevated dropdowns, popovers, modals */
-  --bg-surface-2: #f0f4f9; /* sidebar, cards, panels */
-  --bg-surface-3: #e9eef6; /* hovers, active element bg */
+  --bg-main-page: var(--bg-primary);
+  --bg-surface-1: var(--surface-primary); /* elevated dropdowns, popovers, modals */
+  --bg-surface-2: var(--surface-secondary); /* sidebar, cards, panels */
+  --bg-surface-3: var(--bg-tertiary); /* hovers, active element bg */
 
-  --text-primary: #1f1f1f;
-  --text-secondary: #474747;
+  --nav-accent: var(--accent);
 
-  --nav-accent: #1a73e8;
+  --border-subtle: var(--border-color);
 
-  --border-subtle: #dde3ea;
-
-  --focus-ring: rgba(26, 115, 232, 0.25);
-  --active-bg: rgba(26, 115, 232, 0.12);
+  --focus-ring: rgba(108, 76, 241, 0.25);
+  --active-bg: rgba(108, 76, 241, 0.12);
 
   --theme-transition:
     background-color 0.3s ease,
@@ -41,17 +38,14 @@
 }
 
 [data-theme="dark"] {
-  --bg-main-page: #131314;
-  --bg-surface-1: #1b1c1d;
-  --bg-surface-2: #1e1f20;
-  --bg-surface-3: #282a2c;
+  --bg-main-page: var(--bg-primary);
+  --bg-surface-1: var(--surface-primary);
+  --bg-surface-2: var(--surface-secondary);
+  --bg-surface-3: var(--bg-tertiary);
 
-  --text-primary: #ffffff;
-  --text-secondary: #c4c7c5;
+  --nav-accent: var(--accent);
 
-  --nav-accent: #7fc0ff;
-
-  --border-subtle: #444746;
+  --border-subtle: var(--border-color);
 
   --focus-ring: rgba(127, 192, 255, 0.35);
   --active-bg: rgba(127, 192, 255, 0.15);
@@ -131,6 +125,17 @@ a:focus-visible {
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  /* Design Token Colors Mapping */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-card-bg: var(--card-bg);
+  --color-border-color: var(--border-color);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: monospace;
   --font-serif: "Libre Baskerville", Georgia, Cambria, serif;
@@ -146,6 +151,20 @@ a:focus-visible {
   --spacing-lg: var(--spacing-lg);
   --spacing-xl: var(--spacing-xl);
   --spacing-2xl: var(--spacing-2xl);
+
+  /* Explicit --space-* spacing mappings */
+  --spacing-space-xs: var(--space-xs);
+  --spacing-space-sm: var(--space-sm);
+  --spacing-space-md: var(--space-md);
+  --spacing-space-lg: var(--space-lg);
+  --spacing-space-xl: var(--space-xl);
+  --spacing-space-2xl: var(--space-2xl);
+
+  /* Shadows Mapping */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-glow: var(--shadow-glow);
 }
 
 @layer base {
@@ -369,48 +388,55 @@ html.lenis body {
      GEMINI THEME UTILITIES
      ====================================================== */
   .gemini-sidebar {
-    background: var(--bg-nav-container) !important;
-    border-color: var(--border-subtle) !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border-color: var(--border-color) !important;
     border-right-width: 1px;
     color: var(--text-primary) !important;
     transition: var(--theme-transition);
   }
 
   .gemini-navbar {
-    background: var(--bg-nav-container) !important;
-    border-color: var(--border-subtle) !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border-color: var(--border-color) !important;
     border-bottom-width: 1px;
     color: var(--text-primary) !important;
     transition: var(--theme-transition);
   }
 
   .gemini-card {
-    background: var(--bg-nav-container) !important;
-    border: 1px solid var(--border-subtle) !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border: 1px solid var(--border-color) !important;
     transition: var(--theme-transition);
   }
 
   .sidebar-link-btn {
     color: var(--text-secondary) !important;
+    font-weight: 500;
     transition: var(--theme-transition);
   }
 
   .sidebar-link-btn:hover {
-    background: var(--bg-nav-hover) !important;
-  }
-
-
-  .sidebar-link-btn:hover {
-    background: var(--bg-nav-hover) !important;
+    background: var(--card-hover-bg) !important;
+    color: var(--text-primary) !important;
   }
 
   .sidebar-link-btn.active-link,
   .active-link {
-    color: var(--nav-accent) !important;
+    color: var(--accent) !important;
+    background: rgba(59, 130, 246, 0.08) !important;
+    font-weight: 600;
+    border-left: 2px solid var(--accent);
   }
 
   [data-theme="dark"] .sidebar-link-btn.active-link,
   [data-theme="dark"] .active-link {
-    background: rgba(127, 192, 255, 0.15) !important;
+    background: rgba(59, 130, 246, 0.12) !important;
+    border-left: 2px solid var(--accent);
   }
 

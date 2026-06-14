@@ -1,24 +1,33 @@
 /* ======================================================
    DESIGN SYSTEM VARIABLES
    ====================================================== */
-
 :root {
-  /* Spacing Scale - Oxford Spacing System */
-  --spacing-xs: 8px;
-  --spacing-sm: 16px;
-  --spacing-md: 24px;
-  --spacing-lg: 32px;
-  --spacing-xl: 40px;
-  --spacing-2xl: 48px;
+  /* Spacing Scale - Premium Design System Spacing Scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Legacy spacing mappings for backward compatibility */
+  --spacing-xs: var(--space-xs);
+  --spacing-sm: var(--space-sm);
+  --spacing-md: var(--space-md);
+  --spacing-lg: var(--space-lg);
+  --spacing-xl: var(--space-xl);
+  --spacing-2xl: var(--space-2xl);
 
   /* Border Radii Scale */
-  --radius-xs: 6px;
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 20px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-2xl: 28px;
   --radius-full: 9999px;
+
+  /* Legacy radius mappings for backward compatibility */
+  --radius-xs: var(--radius-sm);
 
   /* Transitions & Animation Easing */
   --transition-fast: 150ms;

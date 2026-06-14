@@ -121,7 +121,11 @@ const DashboardLayoutContent = ({ children, pageTitle }) => {
           </div>
         </header>
 
-        <main className="page-content">{children}</main>
+        <main className="page-content" style={{ padding: 0 }}>
+          <div className="max-w-[1600px] mx-auto w-full p-space-md md:p-space-lg space-y-space-lg">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

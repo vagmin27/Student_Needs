@@ -8,20 +8,22 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary-hover shadow-sm border border-transparent",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm",
-        success: "bg-success text-success-foreground hover:bg-success/90 shadow-sm",
-        warning: "bg-warning text-warning-foreground hover:bg-warning/90 shadow-sm",
-        outline: "border border-input bg-background hover:bg-secondary hover:text-foreground shadow-sm",
-        secondary: "bg-secondary text-foreground hover:bg-secondary/80 border border-border shadow-sm",
-        ghost: "hover:bg-secondary hover:text-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        default: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] shadow-sm border border-transparent hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5",
+        primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] shadow-sm border border-transparent hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5",
+        destructive: "bg-[var(--danger)] text-white hover:opacity-90 shadow-sm hover:-translate-y-0.5",
+        success: "bg-[var(--success)] text-white hover:opacity-90 shadow-sm hover:-translate-y-0.5",
+        warning: "bg-[var(--warning)] text-white hover:opacity-90 shadow-sm hover:-translate-y-0.5",
+        outline: "border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] shadow-sm hover:-translate-y-0.5",
+        secondary: "bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] shadow-sm hover:-translate-y-0.5",
+        ghost: "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]",
+        link: "text-[var(--accent)] underline-offset-4 hover:underline",
+        glass: "bg-white/5 backdrop-blur-md text-[var(--text-primary)] border border-white/10 hover:bg-white/10 hover:-translate-y-0.5",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-[var(--radius-sm)] px-3",
-        lg: "h-10 rounded-[var(--radius-sm)] px-8",
-        icon: "h-9 w-9",
+        default: "h-10 px-4 py-2",
+        sm: "h-8 rounded-[var(--radius-sm)] px-3 text-xs",
+        lg: "h-12 rounded-[var(--radius-md)] px-8 text-base",
+        icon: "h-10 w-10",
       },
     },
     defaultVariants: {
@@ -43,4 +45,19 @@ const Button = React.forwardRef(({ className, variant, size, asChild = false, ..
 })
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+const PrimaryButton = React.forwardRef(({ className, ...props }, ref) => (
+  <Button ref={ref} variant="primary" className={className} {...props} />
+))
+PrimaryButton.displayName = "PrimaryButton"
+
+const SecondaryButton = React.forwardRef(({ className, ...props }, ref) => (
+  <Button ref={ref} variant="secondary" className={className} {...props} />
+))
+SecondaryButton.displayName = "SecondaryButton"
+
+const GhostButton = React.forwardRef(({ className, ...props }, ref) => (
+  <Button ref={ref} variant="ghost" className={className} {...props} />
+))
+GhostButton.displayName = "GhostButton"
+
+export { Button, buttonVariants, PrimaryButton, SecondaryButton, GhostButton }

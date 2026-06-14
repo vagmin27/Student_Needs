@@ -1,24 +1,18 @@
 import React, { useMemo } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { ChartContainer } from "../shared/ChartContainer";
-import { EmptyState } from "../shared/EmptyState";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { ChartContainer, ChartTooltip, chartColors } from "../shared/ChartContainer";
+import { EmptyState } from "../shared/Primitives";
 import { Wallet } from "lucide-react";
-import { useTheme } from "../../../context/ThemeContext";
-
-const COLORS = [
-  '#D4A373', // Primary Gold
-  '#E6C594', // Soft Gold
-  '#B88654', // Muted Amber
-  '#FAEDCD', // Warm Sand
-  '#8B949E', // Refined Slate
-];
 
 export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
-  const { isDark } = useTheme();
-  const colors = useMemo(() => isDark 
-    ? COLORS
-    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"]
-  , [isDark]);
+  const colors = useMemo(() => [
+    chartColors.primary,
+    chartColors.success,
+    chartColors.warning,
+    chartColors.danger,
+    chartColors.info,
+    chartColors.neutral
+  ], []);
 
   const chartData = useMemo(() => data?.filter(d => d.amount > 0), [data]);
 
@@ -50,24 +44,13 @@ export const ExpenseBreakdownChart = React.memo(({ data = [] }) => {
             <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>
-        <Tooltip 
-          formatter={(value) => `₹ ${value.toLocaleString()}`}
-          contentStyle={{ 
-            backgroundColor: 'var(--bg-secondary)', 
-            border: '1px solid var(--border-color)', 
-            color: 'var(--text-primary)', 
-            borderRadius: 'var(--radius-md)',
-            boxShadow: "var(--shadow-md)"
-          }}
-          itemStyle={{ color: 'var(--text-primary)' }}
-          animationDuration={300}
-        />
+        <Tooltip content={<ChartTooltip formatter={(value) => `₹ ${value.toLocaleString()}`} />} />
         <Legend 
           layout="horizontal" 
           verticalAlign="bottom" 
           align="center"
           iconType="circle"
-          wrapperStyle={{ color: 'var(--text-secondary)', fontSize: '12px', paddingTop: '10px' }}
+          wrapperStyle={{ color: "var(--text-secondary)", fontSize: "12px", paddingTop: "10px" }}
         />
       </PieChart>
     </ChartContainer>

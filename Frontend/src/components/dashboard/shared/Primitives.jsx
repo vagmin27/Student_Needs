@@ -2,6 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, animate } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MetricCard } from "../../ui/card";
+
+// Re-export MetricCard and alias as StatCard
+export { MetricCard };
+export const StatCard = MetricCard;
 
 // 1. PremiumCard Component
 export const PremiumCard = React.forwardRef(({
@@ -29,7 +34,7 @@ export const PremiumCard = React.forwardRef(({
         }
       }}
       className={cn(
-        "premium-dashboard-card rounded-lg flex flex-col h-full relative overflow-hidden",
+        "premium-card rounded-[var(--radius-lg)] border border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-primary)] shadow-sm flex flex-col h-full relative overflow-hidden",
         hoverEffect && "cursor-pointer",
         gradient && "bg-gradient-to-b from-[var(--card-bg)] to-[var(--bg-secondary)]",
         className
@@ -38,19 +43,19 @@ export const PremiumCard = React.forwardRef(({
     >
       {/* Subtle radial glow background if requested */}
       {glow && (
-        <div className="absolute -right-20 -top-20 w-40 h-40 rounded-full bg-[var(--primary)]/10 blur-3xl pointer-events-none z-0" />
+        <div className="absolute -right-20 -top-20 w-40 h-40 rounded-full bg-[var(--accent)]/10 blur-3xl pointer-events-none z-0" />
       )}
       
       {(title || description || action) && (
-        <div className="pb-4 flex flex-row items-start justify-between z-10">
+        <div className="pb-4 flex flex-row items-start justify-between z-10 border-b border-[var(--border-color)] mb-4">
           <div className="flex flex-col gap-y-1">
             {title && (
-              <h3 className="section-title text-foreground tracking-tight">
+              <h3 className="text-base font-semibold leading-none tracking-tight text-[var(--text-primary)]">
                 {title}
               </h3>
             )}
             {description && (
-              <p className="text-xs text-muted-foreground description-text">
+              <p className="text-xs text-[var(--text-muted)] description-text">
                 {description}
               </p>
             )}
@@ -77,8 +82,8 @@ export const GlassPanel = React.forwardRef(({
     <div
       ref={ref}
       className={cn(
-        "glass-panel rounded-lg relative overflow-hidden",
-        hoverEffect && "hover:translate-y-[-4px] hover:scale-[1.01] hover:border-[var(--primary)] hover:shadow-[var(--elevation-3)]",
+        "bg-[var(--glass-bg)] backdrop-blur-[var(--glass-blur)] border border-[var(--border-color)] rounded-[var(--radius-md)] relative overflow-hidden",
+        hoverEffect && "hover:translate-y-[-4px] hover:scale-[1.01] hover:border-[var(--accent)] hover:shadow-md transition-all duration-300",
         className
       )}
       {...props}
@@ -89,8 +94,8 @@ export const GlassPanel = React.forwardRef(({
 });
 GlassPanel.displayName = "GlassPanel";
 
-// 3. SectionHeader Component
-export const SectionHeader = ({
+// 3. DashboardHeader (Step 4 standard)
+export const DashboardHeader = ({
   title,
   description,
   badge,
@@ -99,30 +104,136 @@ export const SectionHeader = ({
   ...props
 }) => {
   return (
-    <div className={cn("flex flex-row items-center justify-between pb-4 border-b border-border/40 mb-6", className)} {...props}>
+    <div className={cn("flex flex-col sm:flex-row sm:items-center justify-between pb-space-md border-b border-[var(--border-color)] mb-space-lg gap-space-md w-full", className)} {...props}>
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-2.5">
-          <h2 className="section-title text-foreground tracking-tight">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <h1 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             {title}
-          </h2>
+          </h1>
           {badge !== undefined && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20">
               {badge}
             </span>
           )}
         </div>
         {description && (
-          <p className="text-sm text-muted-foreground description-text">
+          <p className="text-sm text-[var(--text-muted)] mt-0.5">
             {description}
           </p>
         )}
       </div>
-      {action && <div className="shrink-0">{action}</div>}
+      {action && <div className="shrink-0 flex items-center gap-2">{action}</div>}
     </div>
   );
 };
 
-// 4. PremiumButton Component
+// Keep legacy SectionHeader alias for compatibility
+export const SectionHeader = DashboardHeader;
+
+// 4. DashboardSection (Step 4 standard)
+export const DashboardSection = ({
+  title,
+  description,
+  action,
+  children,
+  className,
+  ...props
+}) => {
+  return (
+    <section className={cn("space-y-space-md w-full mb-space-xl", className)} {...props}>
+      {(title || description || action) && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md mb-space-sm">
+          <div>
+            {title && (
+              <h2 className="text-lg font-bold tracking-tight text-[var(--text-primary)]">
+                {title}
+              </h2>
+            )}
+            {description && (
+              <p className="text-sm text-[var(--text-muted)] mt-0.5">
+                {description}
+              </p>
+            )}
+          </div>
+          {action && <div className="shrink-0">{action}</div>}
+        </div>
+      )}
+      <div>{children}</div>
+    </section>
+  );
+};
+
+// 5. AnalyticsCard (Step 4 standard)
+export const AnalyticsCard = React.forwardRef(({
+  title,
+  description,
+  action,
+  children,
+  isLoading = false,
+  isEmpty = false,
+  emptyMessage = "No data available",
+  emptyIcon,
+  className,
+  ...props
+}, ref) => {
+  return (
+    <PremiumCard
+      ref={ref}
+      title={title}
+      description={description}
+      action={action}
+      className={className}
+      glow={false}
+      {...props}
+    >
+      <div className="relative w-full h-full min-h-[300px] flex flex-col justify-center">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-[var(--card-bg)]/80 z-20 backdrop-blur-xs">
+            <Loader2 className="w-8 h-8 animate-spin text-[var(--accent)]" />
+          </div>
+        )}
+        {isEmpty && !isLoading ? (
+          <EmptyState title="No analytics details" description={emptyMessage} icon={emptyIcon} />
+        ) : (
+          <div className="w-full flex-1 z-10 relative">
+            {children}
+          </div>
+        )}
+      </div>
+    </PremiumCard>
+  );
+});
+AnalyticsCard.displayName = "AnalyticsCard";
+
+// 6. ActivityFeed (Step 4 standard)
+export const ActivityFeed = ({ items, className, ...props }) => {
+  return (
+    <div className={cn("space-y-space-md", className)} {...props}>
+      {items && items.length > 0 ? (
+        items.map((item, idx) => (
+          <div key={idx} className="flex gap-space-md items-start p-space-sm hover:bg-[var(--bg-secondary)]/50 rounded-[var(--radius-sm)] transition-all border-b border-[var(--border-color)]/30 last:border-0 pb-3">
+            {item.icon && (
+              <div className={cn("p-2 rounded-full shrink-0 flex items-center justify-center bg-[var(--accent)]/10 text-[var(--accent)]", item.iconClassName)}>
+                {item.icon}
+              </div>
+            )}
+            <div className="flex-1 space-y-0.5">
+              <div className="flex items-center justify-between gap-space-md">
+                <p className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</p>
+                {item.time && <span className="text-xs text-[var(--text-muted)] font-medium shrink-0">{item.time}</span>}
+              </div>
+              {item.description && <p className="text-xs text-[var(--text-secondary)]">{item.description}</p>}
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className="text-sm text-[var(--text-muted)] text-center py-4">No recent activity.</p>
+      )}
+    </div>
+  );
+};
+
+// 7. PremiumButton Component
 export const PremiumButton = React.forwardRef(({
   children,
   className,
@@ -134,22 +245,22 @@ export const PremiumButton = React.forwardRef(({
   disabled,
   ...props
 }, ref) => {
-  const baseStyles = "btn font-ui focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] active:scale-[0.98]";
+  const baseStyles = "inline-flex items-center justify-center font-medium transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none rounded-[var(--radius-sm)]";
   
   const variants = {
-    default: "btn-primary",
-    primary: "btn-primary",
-    secondary: "btn-secondary",
-    outline: "btn-outline",
-    ghost: "btn-ghost",
-    destructive: "btn-danger",
-    danger: "btn-danger",
-    success: "btn-success",
-    glass: "bg-white/5 backdrop-blur-md text-foreground border border-white/10 hover:bg-white/10",
+    default: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] border border-transparent shadow-sm",
+    primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] border border-transparent shadow-sm",
+    secondary: "bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)]",
+    outline: "border border-[var(--border-color)] bg-transparent hover:bg-[var(--bg-secondary)] text-[var(--text-primary)]",
+    ghost: "hover:bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
+    destructive: "bg-[var(--danger)] text-white hover:opacity-90",
+    danger: "bg-[var(--danger)] text-white hover:opacity-90",
+    success: "bg-[var(--success)] text-white hover:opacity-90",
+    glass: "bg-white/5 backdrop-blur-md text-[var(--text-primary)] border border-white/10 hover:bg-white/10",
   };
 
   const sizes = {
-    default: "h-10 px-4",
+    default: "h-10 px-4 text-sm",
     sm: "h-8 px-3 text-xs rounded-[var(--radius-sm)]",
     lg: "h-12 px-6 text-base rounded-[var(--radius-lg)]",
     icon: "h-10 w-10 p-0",
@@ -165,18 +276,22 @@ export const PremiumButton = React.forwardRef(({
       {isLoading ? (
         <Loader2 className="w-4 h-4 mr-2 animate-spin text-current" />
       ) : LeftIcon ? (
-        <LeftIcon className="w-4 h-4 mr-2 text-current" />
+        <span className="mr-2 text-current flex items-center justify-center">
+          {React.isValidElement(LeftIcon) ? LeftIcon : <LeftIcon className="w-4 h-4" />}
+        </span>
       ) : null}
       {children}
       {!isLoading && RightIcon && (
-        <RightIcon className="w-4 h-4 ml-2 text-current" />
+        <span className="ml-2 text-current flex items-center justify-center">
+          {React.isValidElement(RightIcon) ? RightIcon : <RightIcon className="w-4 h-4" />}
+        </span>
       )}
     </button>
   );
 });
 PremiumButton.displayName = "PremiumButton";
 
-// 5. PremiumInput Component
+// 8. PremiumInput Component
 export const PremiumInput = React.forwardRef(({
   className,
   type = "text",
@@ -189,28 +304,30 @@ export const PremiumInput = React.forwardRef(({
     <div className="relative w-full flex flex-col gap-1.5">
       <div className="relative flex items-center w-full">
         {LeftIcon && (
-          <LeftIcon className="absolute left-3.5 h-4.5 w-4.5 text-muted-foreground pointer-events-none" />
+          <div className="absolute left-3.5 h-5 w-5 text-[var(--text-muted)] pointer-events-none flex items-center justify-center">
+            {React.isValidElement(LeftIcon) ? LeftIcon : <LeftIcon className="w-4 h-4" />}
+          </div>
         )}
         <input
           ref={ref}
           type={type}
           className={cn(
-            "flex h-11 w-full rounded-[var(--radius-md)] border border-border bg-[var(--bg-secondary)] px-3.5 py-2.5 text-sm transition-all placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-11 w-full rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)] px-3.5 py-2.5 text-sm text-[var(--text-primary)] transition-all placeholder:text-[var(--text-muted)]/60 focus-visible:outline-none focus-visible:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)]/10 disabled:cursor-not-allowed disabled:opacity-50",
             LeftIcon && "pl-11",
             RightIcon && "pr-11",
-            error && "border-red-500 focus-visible:ring-red-500/10 focus-visible:border-red-500",
+            error && "border-[var(--danger)] focus-visible:ring-[var(--danger)]/10 focus-visible:border-[var(--danger)]",
             className
           )}
           {...props}
         />
         {RightIcon && (
-          <div className="absolute right-3.5 h-4.5 w-4.5 text-muted-foreground flex items-center justify-center">
-            {RightIcon}
+          <div className="absolute right-3.5 h-5 w-5 text-[var(--text-muted)] flex items-center justify-center">
+            {React.isValidElement(RightIcon) ? RightIcon : <RightIcon className="w-4 h-4" />}
           </div>
         )}
       </div>
       {error && (
-        <span className="text-xs font-medium text-red-500 px-1">
+        <span className="text-xs font-medium text-[var(--danger)] px-1">
           {error}
         </span>
       )}
@@ -219,7 +336,7 @@ export const PremiumInput = React.forwardRef(({
 });
 PremiumInput.displayName = "PremiumInput";
 
-// 6. AnimatedCounter Component
+// 9. AnimatedCounter Component
 export const AnimatedCounter = ({
   value,
   duration = 1.2,
@@ -231,14 +348,13 @@ export const AnimatedCounter = ({
   const prevValueRef = useRef(0);
 
   useEffect(() => {
-    // Standardize to clean number representation
     const numericValue = typeof value === "number" 
       ? value 
       : parseFloat(String(value).replace(/[^0-9.-]/g, "")) || 0;
       
     const controls = animate(prevValueRef.current, numericValue, {
       duration,
-      ease: [0.22, 1, 0.36, 1], // premium cubic bezier easing
+      ease: [0.22, 1, 0.36, 1],
       onUpdate(latest) {
         setCount(latest);
       }
@@ -257,7 +373,7 @@ export const AnimatedCounter = ({
   );
 };
 
-// 7. EmptyState Component
+// 10. EmptyState Component
 export const EmptyState = React.memo(({
   icon: Icon,
   title = "No information found",
@@ -268,19 +384,19 @@ export const EmptyState = React.memo(({
 }) => {
   return (
     <div className={cn(
-      "flex flex-col items-center justify-center p-8 md:p-12 text-center border border-dashed border-border/60 rounded-[var(--radius-lg)] bg-white/[0.01] backdrop-blur-sm hover:border-[var(--primary)]/30 transition-all duration-300 group max-w-lg mx-auto w-full",
+      "flex flex-col items-center justify-center p-8 md:p-12 text-center border border-dashed border-[var(--border-color)] rounded-[var(--radius-lg)] bg-[var(--bg-secondary)]/10 backdrop-blur-sm hover:border-[var(--accent)]/30 transition-all duration-300 group max-w-lg mx-auto w-full",
       className
     )}>
       {Icon && (
-        <div className="w-16 h-16 rounded-[var(--radius-lg)] bg-[var(--primary)]/[0.03] border border-[var(--primary)]/10 flex items-center justify-center mb-5 text-muted-foreground group-hover:text-[var(--primary)] group-hover:scale-105 transition-all duration-300 shadow-[var(--shadow-sm)]">
-          <Icon className="w-7 h-7 text-muted-foreground group-hover:text-[var(--primary)] transition-colors duration-300" />
+        <div className="w-16 h-16 rounded-[var(--radius-lg)] bg-[var(--accent)]/[0.03] border border-[var(--accent)]/10 flex items-center justify-center mb-5 text-[var(--text-secondary)] group-hover:text-[var(--accent)] group-hover:scale-105 transition-all duration-300 shadow-sm">
+          <Icon className="w-7 h-7 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors duration-300" />
         </div>
       )}
-      <h4 className="text-base font-semibold text-foreground mb-1.5">
+      <h4 className="text-base font-semibold text-[var(--text-primary)] mb-1.5">
         {title}
       </h4>
       {description && (
-        <p className="text-sm text-muted-foreground description-text mb-6 max-w-md leading-relaxed">
+        <p className="text-sm text-[var(--text-muted)] description-text mb-6 max-w-md leading-relaxed">
           {description}
         </p>
       )}
@@ -298,39 +414,39 @@ export const EmptyState = React.memo(({
 });
 EmptyState.displayName = "EmptyState";
 
-// 8. PageLayout Component
+// 11. PageLayout Component
 export const PageLayout = ({ children, className, ...props }) => {
   return (
-    <div className={cn("w-full py-md px-md md:px-lg flex flex-col gap-lg max-w-[1600px] mx-auto", className)} {...props}>
+    <div className={cn("w-full py-space-md px-space-md md:px-space-lg flex flex-col gap-space-lg max-w-[1600px] mx-auto", className)} {...props}>
       {children}
     </div>
   );
 };
 
-// 9. ContentContainer Component
+// 12. ContentContainer Component
 export const ContentContainer = ({ children, className, ...props }) => {
   return (
-    <div className={cn("w-full max-w-7xl mx-auto px-sm sm:px-md md:px-lg", className)} {...props}>
+    <div className={cn("w-full max-w-7xl mx-auto px-space-xs sm:px-space-sm md:px-space-md", className)} {...props}>
       {children}
     </div>
   );
 };
 
-// 10. SectionContainer Component
+// 13. SectionContainer Component
 export const SectionContainer = ({ children, className, ...props }) => {
   return (
-    <section className={cn("space-y-md md:space-y-lg py-sm md:py-md", className)} {...props}>
+    <section className={cn("space-y-space-md md:space-y-space-lg py-space-xs md:py-space-md", className)} {...props}>
       {children}
     </section>
   );
 };
 
-// 11. DashboardGrid Component
+// 14. DashboardGrid Component
 export const DashboardGrid = ({ children, className, cols = 3, ...props }) => {
   return (
     <div 
       className={cn(
-        "grid grid-cols-1 gap-md md:gap-lg",
+        "grid grid-cols-1 gap-space-md md:gap-space-lg",
         cols === 2 && "md:grid-cols-2",
         cols === 3 && "md:grid-cols-2 lg:grid-cols-3",
         cols === 4 && "md:grid-cols-2 lg:grid-cols-4",
@@ -343,10 +459,10 @@ export const DashboardGrid = ({ children, className, cols = 3, ...props }) => {
   );
 };
 
-// 12. CardGrid Component
+// 15. CardGrid Component
 export const CardGrid = ({ children, className, ...props }) => {
   return (
-    <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-sm md:gap-md", className)} {...props}>
+    <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-space-sm md:gap-space-md", className)} {...props}>
       {children}
     </div>
   );

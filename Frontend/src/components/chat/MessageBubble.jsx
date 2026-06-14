@@ -102,14 +102,14 @@ export const MessageBubble = ({
             <div className="opacity-0 group-hover:opacity-100 flex gap-1.5 mr-2 transition-opacity duration-200">
               <button
                 onClick={() => setIsEditing(true)}
-                className="p-1.5 bg-slate-800 hover:bg-slate-700 text-muted-foreground hover:text-white rounded-[var(--radius-sm)] border border-slate-700 transition-colors"
+                className="p-1.5 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-[var(--radius-sm)] border border-[var(--border-color)] transition-colors"
                 title="Edit message"
               >
                 <Edit2 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onDeleteMessage(normalizedMessage._id)}
-                className="p-1.5 bg-slate-800 hover:bg-red-950/80 text-muted-foreground hover:text-red-400 rounded-[var(--radius-sm)] border border-slate-700 hover:border-red-900 transition-colors"
+                className="p-1.5 bg-[var(--bg-secondary)] hover:bg-red-950/85 text-[var(--text-secondary)] hover:text-red-400 rounded-[var(--radius-sm)] border border-[var(--border-color)] hover:border-red-900 transition-colors"
                 title="Delete message"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -125,7 +125,7 @@ export const MessageBubble = ({
                 ? "bg-transparent border-transparent p-0" // Call card has its own styling
                 : "px-4 py-2.5 rounded-[var(--radius-lg)] border backdrop-blur-md shadow-sm",
               normalizedMessage.type !== "system" && normalizedMessage.type !== "meeting_link" && normalizedMessage.type !== "call" && normalizedMessage.deleted
-                ? "bg-slate-900/40 border-slate-800 text-muted-foreground/60 italic"
+                ? "bg-[var(--bg-secondary)]/40 border-[var(--border-color)] text-muted-foreground/60 italic"
                 : normalizedMessage.type !== "system" && normalizedMessage.type !== "meeting_link" && normalizedMessage.type !== "call" && isSelf
                 ? "bg-primary/20 border-primary/30 text-foreground rounded-tr-none"
                 : normalizedMessage.type !== "system" && normalizedMessage.type !== "meeting_link" && normalizedMessage.type !== "call"
@@ -139,13 +139,13 @@ export const MessageBubble = ({
                 <textarea
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
-                  className="w-full text-sm bg-slate-950 border border-border rounded-[var(--radius-sm)] p-2 outline-none text-foreground"
+                  className="w-full text-sm bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[var(--radius-sm)] p-2 outline-none text-foreground"
                   rows={2}
                 />
                 <div className="flex justify-end gap-1.5">
                   <button
                     onClick={handleCancelEdit}
-                    className="flex items-center gap-1 text-xs px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-muted-foreground rounded-[var(--radius-sm)] transition-colors"
+                    className="flex items-center gap-1 text-xs px-2.5 py-1 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] rounded-[var(--radius-sm)] transition-colors"
                   >
                     <X className="w-3.5 h-3.5" /> Cancel
                   </button>
@@ -193,9 +193,9 @@ export const MessageBubble = ({
                           </div>
                         ) : (
                           // Document Cards (PDF, DOCX)
-                          <div className="flex items-center justify-between gap-4 p-3 bg-slate-900/60 border border-slate-800 rounded-[var(--radius-md)] max-w-[280px]">
+                          <div className="flex items-center justify-between gap-4 p-3 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-md)] max-w-[280px]">
                             <div className="flex items-center gap-2.5 min-w-0">
-                              <div className="p-2 bg-slate-850 rounded-[var(--radius-sm)] text-primary">
+                              <div className="p-2 bg-[var(--bg-tertiary)] rounded-[var(--radius-sm)] text-primary">
                                 <FileText className="w-5 h-5" />
                               </div>
                               <div className="flex flex-col min-w-0">
@@ -212,7 +212,7 @@ export const MessageBubble = ({
                               download={att.name}
                               target="_blank"
                               rel="noreferrer"
-                              className="p-1.5 hover:bg-slate-850 rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-colors"
+                              className="p-1.5 hover:bg-[var(--bg-tertiary)] rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-colors"
                               title="Download document"
                             >
                               <Download className="w-4 h-4" />
