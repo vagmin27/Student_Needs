@@ -24,6 +24,7 @@ export const GlobalCallListener = () => {
     };
     
     const handleCallAccepted = () => {
+      console.log("[CALL ACCEPTED]");
       setCallState("active");
     };
 

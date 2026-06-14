@@ -66,6 +66,11 @@ export const registerTutorCallHandlers = (io, socket) => {
       if (receiverIsOnline) {
         console.log(`[CALL INCOMING] timestamp=${new Date().toISOString()} userId=${receiverId} conversationId=${conversationId} callSessionId=${callSessionId}`);
         console.log("[EMIT CALL INCOMING]", receiverId.toString());
+        console.log({
+          targetUser: receiverId.toString(),
+          roomExists: io.sockets.adapter.rooms.has(`user:${receiverId.toString()}`),
+          sockets: [...(io.sockets.adapter.rooms.get(`user:${receiverId.toString()}`) || [])]
+        });
         // Emit incoming call to receiver's user room
         io.to(`user:${receiverId.toString()}`).emit("call:incoming", {
           conversationId,
@@ -125,6 +130,11 @@ export const registerTutorCallHandlers = (io, socket) => {
     if (call) {
       console.log(`[WEBRTC OFFER] for conversation: ${conversationId}`);
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
+      console.log({
+        targetUser: targetId.toString(),
+        roomExists: io.sockets.adapter.rooms.has(`user:${targetId.toString()}`),
+        sockets: [...(io.sockets.adapter.rooms.get(`user:${targetId.toString()}`) || [])]
+      });
       io.to(`user:${targetId.toString()}`).emit("call:offer", { conversationId, offer });
     }
   });
@@ -135,6 +145,11 @@ export const registerTutorCallHandlers = (io, socket) => {
     if (call) {
       console.log(`[WEBRTC ANSWER] for conversation: ${conversationId}`);
       const targetId = call.caller.toString() === userId.toString() ? call.receiver : call.caller;
+      console.log({
+        targetUser: targetId.toString(),
+        roomExists: io.sockets.adapter.rooms.has(`user:${targetId.toString()}`),
+        sockets: [...(io.sockets.adapter.rooms.get(`user:${targetId.toString()}`) || [])]
+      });
       io.to(`user:${targetId.toString()}`).emit("call:answer", { conversationId, answer });
     }
   });

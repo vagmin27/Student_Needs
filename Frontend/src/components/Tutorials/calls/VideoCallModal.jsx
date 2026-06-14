@@ -55,10 +55,12 @@ export const VideoCallModal = ({
   // Sync internal machine with parent prop safely
   useEffect(() => {
     if (callState === "incoming" && (internalCallState === "idle" || internalCallState === "ended")) {
+      console.log("[MODAL OPENED]");
       console.log(`[CALL MODAL OPEN] timestamp=${new Date().toISOString()} type=incoming conversationId=${conversationId}`);
       setInternalCallState("incoming");
       cleanupInProgress.current = false; // Reset cleanup lock
     } else if (callState === "calling" && (internalCallState === "idle" || internalCallState === "ended")) {
+      console.log("[MODAL OPENED]");
       console.log(`[CALL MODAL OPEN] timestamp=${new Date().toISOString()} type=outgoing conversationId=${conversationId}`);
       setInternalCallState("connecting");
       cleanupInProgress.current = false; // Reset cleanup lock

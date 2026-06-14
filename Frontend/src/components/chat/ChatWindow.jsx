@@ -151,6 +151,10 @@ export const ChatWindow = ({
   }
 
   const handleStartCall = async (type) => {
+    if (isCallLoading || callState) {
+      console.log("[START CALL CLICKED] Blocked - call already in progress or loading");
+      return;
+    }
     console.log(`[START CALL CLICKED] timestamp=${new Date().toISOString()} type=${type} conversationId=${chat?._id}`);
     if (!socket || !chat?.partner?._id) return;
     setIsCallLoading(true);
@@ -235,7 +239,7 @@ export const ChatWindow = ({
         <div className="flex items-center gap-1.5 md:gap-2 shrink-0">
           <button
             onClick={() => handleStartCall("audio")}
-            disabled={chat.isBlocked || isCallLoading}
+            disabled={chat.isBlocked || isCallLoading || !!callState}
             className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-[var(--radius-md)] text-xs font-medium text-slate-300 hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
             title="Audio call tutor"
           >
@@ -244,7 +248,7 @@ export const ChatWindow = ({
           </button>
           <button
             onClick={() => handleStartCall("video")}
-            disabled={chat.isBlocked || isCallLoading}
+            disabled={chat.isBlocked || isCallLoading || !!callState}
             className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/50 hover:bg-slate-800 rounded-[var(--radius-md)] text-xs font-medium text-slate-300 hover:text-white transition-all duration-200 cursor-pointer disabled:opacity-40 border border-slate-700/50"
             title="Video consult tutor"
           >
