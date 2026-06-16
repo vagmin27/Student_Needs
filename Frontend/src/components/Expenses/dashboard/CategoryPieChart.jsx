@@ -19,7 +19,7 @@ export function CategoryPieChart({ exdata }) {
         'rgba(52, 211, 153, 0.8)',  // Emerald
         'rgba(148, 163, 184, 0.8)', // Slate
       ]
-    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
+    : ["#4F46E5", "#6366F1", "#818CF8", "#A5B4FC", "#C7D2FE"];
 
   const chartData = categories?.map((cat, index) => ({
     name: cat,

@@ -12,22 +12,22 @@
   --surface-secondary: #f8fafc;
 
   --card-bg: #ffffff;
-  --card-hover-bg: #f1f5f9;
+  --card-hover-bg: #f8fafc;
 
   --input-bg: #ffffff;
 
   --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
 
   --border-color: #E2E8F0;
 
-  --accent: #2563EB;
-  --accent-hover: #1D4ED8;
-  --success: #059669;
-  --warning: #D97706;
-  --danger: #DC2626;
-  --info: #2563EB;
+  --accent: #4F46E5;
+  --accent-hover: #4338CA;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #4F46E5;
 
   /* Legacy Backward Compatibility Mappings */
   --bg-main-page: var(--bg-primary);
@@ -46,31 +46,31 @@
 [data-theme="dark"],
 .dark,
 .dark-theme {
-  /* Design Token System - Premium SaaS Dark Theme (Midnight Navy) */
-  --bg-primary: #030712;
-  --bg-secondary: #050B18;
-  --bg-tertiary: #08101F;
+  /* Design Token System - Premium SaaS Dark Theme (Deep Midnight Navy) */
+  --bg-primary: #020617;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1F2937;
   
-  --surface-primary: rgba(255, 255, 255, 0.03);
-  --surface-secondary: rgba(255, 255, 255, 0.05);
+  --surface-primary: #0F172A;
+  --surface-secondary: #111827;
 
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-hover-bg: rgba(255, 255, 255, 0.06);
+  --card-bg: #0F172A;
+  --card-hover-bg: #1F2937;
 
-  --input-bg: rgba(255, 255, 255, 0.02);
+  --input-bg: #111827;
 
-  --text-primary: #FFFFFF;
-  --text-secondary: #FFFFFF;
-  --text-muted: #F8FAFC;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
 
   --border-color: rgba(255, 255, 255, 0.08);
 
-  --accent: #3B82F6;
-  --accent-hover: #2563EB;
+  --accent: #6366F1;
+  --accent-hover: #4F46E5;
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
-  --info: #3B82F6;
+  --info: #6366F1;
 
   /* Legacy Backward Compatibility Mappings */
   --bg-main-page: var(--bg-primary);
@@ -121,6 +121,7 @@
   --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   --shadow-xl: var(--shadow-lg);
   --shadow-glow: 0 0 24px rgba(37, 99, 235, 0.15);
+  --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 
   --elevation-1: var(--shadow-sm);
   --elevation-2: var(--shadow-md);
@@ -195,6 +196,7 @@
   --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
   --shadow-xl: var(--shadow-lg);
   --shadow-glow: 0 0 24px rgba(59, 130, 246, 0.15);
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 
   --elevation-1: var(--shadow-sm);
   --elevation-2: var(--shadow-md);
@@ -291,112 +293,64 @@ a {
 }
 
 /* ======================================================
-   DARK MODE TEXT COLOR OVERRIDE (FORCE WHITE TEXT)
+   DARK MODE TEXT COLOR OVERRIDE (ELEGANT CONTRAST)
    ====================================================== */
 [data-theme="dark"],
 .dark,
 .dark-theme {
-  --text-primary: #FFFFFF !important;
-  --text-secondary: #FFFFFF !important;
-  --text-muted: #F8FAFC !important;
-  --foreground: #FFFFFF !important;
-  --muted-foreground: #F8FAFC !important;
+  --text-primary: #F8FAFC !important;
+  --text-secondary: #94A3B8 !important;
+  --text-muted: #64748B !important;
+  --foreground: #F8FAFC !important;
+  --muted-foreground: #64748B !important;
 }
 
 [data-theme="dark"] *,
 .dark *,
 .dark-theme * {
-  --text-primary: #FFFFFF !important;
-  --text-secondary: #FFFFFF !important;
-  --text-muted: #F8FAFC !important;
-  --foreground: #FFFFFF !important;
-  --muted-foreground: #F8FAFC !important;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --foreground: #F8FAFC;
+  --muted-foreground: #64748B;
 }
 
-/* Force standard text elements in dark mode to be white */
-[data-theme="dark"] :is(h1, h2, h3, h4, h5, h6, p, span, label, small, li, td, th, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]),
-.dark :is(h1, h2, h3, h4, h5, h6, p, span, label, small, li, td, th, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]),
-.dark-theme :is(h1, h2, h3, h4, h5, h6, p, span, label, small, li, td, th, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]) {
-  color: #FFFFFF !important;
+/* Map heading and paragraph elements in dark mode to preserve contrast */
+.dark :is(h1, h2, h3, h4, h5, h6),
+.dark-theme :is(h1, h2, h3, h4, h5, h6),
+[data-theme="dark"] :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--text-primary) !important;
 }
 
-/* Force Tailwind text gray/slate/zinc/neutral color classes to white in dark mode */
-.dark .text-slate-900,
-.dark .text-slate-800,
-.dark .text-slate-700,
-.dark .text-slate-600,
-.dark .text-slate-500,
-.dark .text-slate-400,
-.dark .text-gray-900,
-.dark .text-gray-800,
-.dark .text-gray-700,
-.dark .text-gray-600,
-.dark .text-gray-500,
-.dark .text-gray-400,
-.dark .text-neutral-900,
-.dark .text-neutral-800,
-.dark .text-neutral-700,
-.dark .text-neutral-600,
-.dark .text-neutral-500,
-.dark .text-neutral-400,
-.dark .text-zinc-900,
-.dark .text-zinc-800,
-.dark .text-zinc-700,
-.dark .text-zinc-600,
-.dark .text-zinc-500,
-.dark .text-zinc-400,
-.dark .text-black,
-.dark-theme .text-slate-900,
-.dark-theme .text-slate-800,
-.dark-theme .text-slate-700,
-.dark-theme .text-slate-600,
-.dark-theme .text-slate-500,
-.dark-theme .text-slate-400,
-.dark-theme .text-gray-900,
-.dark-theme .text-gray-800,
-.dark-theme .text-gray-700,
-.dark-theme .text-gray-600,
-.dark-theme .text-gray-500,
-.dark-theme .text-gray-400,
-.dark-theme .text-neutral-900,
-.dark-theme .text-neutral-800,
-.dark-theme .text-neutral-700,
-.dark-theme .text-neutral-600,
-.dark-theme .text-neutral-500,
-.dark-theme .text-neutral-400,
-.dark-theme .text-zinc-900,
-.dark-theme .text-zinc-800,
-.dark-theme .text-zinc-700,
-.dark-theme .text-zinc-600,
-.dark-theme .text-zinc-500,
-.dark-theme .text-zinc-400,
-.dark-theme .text-black,
-[data-theme="dark"] .text-slate-900,
-[data-theme="dark"] .text-slate-800,
-[data-theme="dark"] .text-slate-700,
-[data-theme="dark"] .text-slate-600,
-[data-theme="dark"] .text-slate-500,
-[data-theme="dark"] .text-slate-400,
-[data-theme="dark"] .text-gray-900,
-[data-theme="dark"] .text-gray-800,
-[data-theme="dark"] .text-gray-700,
-[data-theme="dark"] .text-gray-600,
-[data-theme="dark"] .text-gray-500,
-[data-theme="dark"] .text-gray-400,
-[data-theme="dark"] .text-neutral-900,
-[data-theme="dark"] .text-neutral-800,
-[data-theme="dark"] .text-neutral-700,
-[data-theme="dark"] .text-neutral-600,
-[data-theme="dark"] .text-neutral-500,
-[data-theme="dark"] .text-neutral-400,
-[data-theme="dark"] .text-zinc-900,
-[data-theme="dark"] .text-zinc-800,
-[data-theme="dark"] .text-zinc-700,
-[data-theme="dark"] .text-zinc-600,
-[data-theme="dark"] .text-zinc-500,
-[data-theme="dark"] .text-zinc-400,
-[data-theme="dark"] .text-black {
-  color: #FFFFFF !important;
+.dark :is(p, li, td, th),
+.dark-theme :is(p, li, td, th),
+[data-theme="dark"] :is(p, li, td, th) {
+  color: var(--text-secondary) !important;
+}
+
+.dark :is(label, span, small, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]),
+.dark-theme :is(label, span, small, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]),
+[data-theme="dark"] :is(label, span, small, a, strong, b, i, em):not(.text-success):not(.text-danger):not(.text-warning):not(.text-info):not([class*="text-green"]):not([class*="text-red"]):not([class*="text-amber"]):not([class*="text-yellow"]):not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-emerald"]):not([class*="text-rose"]) {
+  color: var(--text-secondary);
+}
+
+/* Map Tailwind text color classes to high contrast equivalents in dark mode */
+.dark :is(.text-slate-900, .text-gray-900, .text-neutral-900, .text-zinc-900, .text-black),
+.dark-theme :is(.text-slate-900, .text-gray-900, .text-neutral-900, .text-zinc-900, .text-black),
+[data-theme="dark"] :is(.text-slate-900, .text-gray-900, .text-neutral-900, .text-zinc-900, .text-black) {
+  color: var(--text-primary) !important;
+}
+
+.dark :is(.text-slate-800, .text-slate-700, .text-slate-600, .text-gray-800, .text-gray-700, .text-gray-600, .text-neutral-800, .text-neutral-700, .text-zinc-800, .text-zinc-700),
+.dark-theme :is(.text-slate-800, .text-slate-700, .text-slate-600, .text-gray-800, .text-gray-700, .text-gray-600, .text-neutral-800, .text-neutral-700, .text-zinc-800, .text-zinc-700),
+[data-theme="dark"] :is(.text-slate-800, .text-slate-700, .text-slate-600, .text-gray-800, .text-gray-700, .text-gray-600, .text-neutral-800, .text-neutral-700, .text-zinc-800, .text-zinc-700) {
+  color: var(--text-secondary) !important;
+}
+
+.dark :is(.text-slate-500, .text-slate-400, .text-gray-500, .text-gray-400, .text-neutral-500, .text-neutral-400, .text-zinc-500, .text-zinc-400),
+.dark-theme :is(.text-slate-500, .text-slate-400, .text-gray-500, .text-gray-400, .text-neutral-500, .text-neutral-400, .text-zinc-500, .text-zinc-400),
+[data-theme="dark"] :is(.text-slate-500, .text-slate-400, .text-gray-500, .text-gray-400, .text-neutral-500, .text-neutral-400, .text-zinc-500, .text-zinc-400) {
+  color: var(--text-muted) !important;
 }
 
 /* Status indicators for timelines */

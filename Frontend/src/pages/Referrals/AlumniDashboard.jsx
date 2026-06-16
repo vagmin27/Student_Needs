@@ -671,7 +671,7 @@ export function AlumniDashboard() {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex flex-col items-start justify-center">
-          <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">
+          <h1 className="font-sans text-3xl font-bold tracking-tight text-foreground">
             Alumni Referral Dashboard
           </h1>
           <p className="text-sm text-muted-foreground mt-1">

@@ -92,7 +92,7 @@
 
 /* Sidebar Sizing Constants */
 :root {
-  --sidebar-w-expanded: 280px;
+  --sidebar-w-expanded: 260px;
   --sidebar-w-collapsed: 80px;
 }
 
@@ -185,10 +185,11 @@ nav[id="mainNavbar"] {
 .hero-card,
 .highlight-card,
 .feature-card {
-  background: var(--bg-surface-2);
+  background: var(--card-bg);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
-  box-shadow: var(--elevation-1);
+  box-shadow: var(--card-shadow);
+  transition: var(--theme-transition);
 }
 
 /* Modals & Dialogs Backdrop */

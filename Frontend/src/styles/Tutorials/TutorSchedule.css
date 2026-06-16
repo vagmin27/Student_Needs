@@ -1,6 +1,6 @@
 /* 🌍 PAGE */
 .schedule-page {
-  font-family: Arial, sans-serif;
+  font-family: var(--font-sans);
   background: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;

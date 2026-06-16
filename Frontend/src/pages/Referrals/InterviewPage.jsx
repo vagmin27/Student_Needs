@@ -467,7 +467,7 @@ export default function InterviewPage() {
             <ArrowLeft className="w-4 h-4 mr-2" />
           </Button>
           <div className="flex-1">
-            <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">
+            <h1 className="font-sans text-3xl font-bold tracking-tight text-foreground">
               AI Interview Session
             </h1>
           </div>

@@ -215,8 +215,8 @@ const Home = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
-            <span className="text-[var(--primary)] font-mont">Expense</span> Dashboard
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-sans text-foreground tracking-tight flex items-center gap-3">
+            <span className="text-[var(--primary)] font-sans">Expense</span> Dashboard
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
             Manage student budgets, track recurring bills, check predictions, and export financial summaries.

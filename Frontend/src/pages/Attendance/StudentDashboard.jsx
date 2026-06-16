@@ -518,7 +518,7 @@ const StudentDashboard = () => {
       >
         <DialogContent className="sm:max-w-[425px] p-lg">
           <DialogHeader>
-            <DialogTitle className="font-serif text-lg font-bold">
+            <DialogTitle className="font-sans text-lg font-bold">
               {subjectModal.mode === "add" ? "Add subject" : "Edit subject"}
             </DialogTitle>
           </DialogHeader>
@@ -547,7 +547,7 @@ const StudentDashboard = () => {
       >
         <DialogContent className="sm:max-w-[450px] p-lg">
           <DialogHeader>
-            <DialogTitle className="font-serif text-lg font-bold">Mark attendance</DialogTitle>
+            <DialogTitle className="font-sans text-lg font-bold">Mark attendance</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div>
@@ -613,7 +613,7 @@ const StudentDashboard = () => {
       >
         <DialogContent className="sm:max-w-[450px] p-lg">
           <DialogHeader>
-            <DialogTitle className="font-serif text-lg font-bold">Edit attendance</DialogTitle>
+            <DialogTitle className="font-sans text-lg font-bold">Edit attendance</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div>

@@ -1,0 +1,1618 @@
+[
+  {
+    "file": "src/pages/About.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/AlumniDashboard.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Attendance/AddStudent.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Attendance/AddSubject.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Attendance/Attendance.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Attendance/Dashboard.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded border-radius (e.g. rounded-lg, rounded-md, rounded-xl) instead of var(--radius-*)"
+    ]
+  },
+  {
+    "file": "src/pages/Attendance/RemoveStudent.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Attendance/Reports.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Attendance/StudentDashboard.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/ChatPage.jsx",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Expenses/Analytics.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Expenses/BillHistory.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Expenses/Home.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Expenses/Login.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Expenses/RecurringTransactions.jsx",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Expenses/Settings.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Expenses/Signup.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/ForgotPassword.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Marketing/About.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/Architecture.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/Blog.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Marketing/Careers.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/ContactMessagesAdmin.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Marketing/Features.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/Gallery.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/Home.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/HowItWorks.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/MarketingLayout.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/ModuleDetail.jsx",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Marketing/Security.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Marketing/Updates.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Referrals/About.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Referrals/AlumniDashboard.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Referrals/ChatPage.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Referrals/Home.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Referrals/Index.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Referrals/InterviewPage.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Referrals/LandingPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Referrals/NotFound.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Referrals/RoleSelector.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Referrals/StudentDashboard.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Referrals/StudentProfile.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/SocialSuccess.jsx",
+    "issues": [
+      "Hardcoded border-radius (e.g. rounded-lg, rounded-md, rounded-xl) instead of var(--radius-*)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/StudentProfile.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/AccountSettingPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/AttendanceManagementHub.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Tutorials/BookClass.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/ClassHistoryPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/EditProfile.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/Landing.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/LoginPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/ManageBookingPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/NotFound.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/OnlineAttendanceView.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/ProfilePage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/RegisterPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/SelectRole.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Tutorials/TutorAcceptPage.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Tutorials/TutorAttendanceAnalytics.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorAvailabilty.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorDashboard.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/pages/Tutorials/TutorEditProfilePage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorialDashboard.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/Tutorials/TutorialsHome.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorLoginPage.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorLoginPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorManageSubjects.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorMarkAttendance.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorRegisterPage.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/pages/Tutorials/TutorSchedulePage.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/UnifiedDashboard.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/UnifiedFlow.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/pages/VerifyOtp.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Attendance/AttendanceCharts.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Attendance/Charts.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Attendance/DashboardCards.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Attendance/Navbar.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Attendance/SearchBar.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Attendance/StudentForm.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Attendance/StudentTable.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/chat/CallHistoryCard.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/chat/ChatSidebar.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/chat/ChatWindow.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/chat/MessageBubble.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/chat/MessageInput.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/chat/OnlineBadge.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/chat/TutorialAssistantDrawer.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/chat/TypingIndicator.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/common/index.js",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/common/ThemeToggle.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/alumni/ApplicantStatusIndicator.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/alumni/InteractiveJobsTable.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/BackToStudentDashboard.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/Navbar.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/shared/ChartContainer.jsx",
+    "issues": [
+      "Inline CSS color styling",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/shared/DashboardCard.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/shared/DashboardSection.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/shared/EmptyState.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/shared/MetricCard.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/shared/Primitives.jsx",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/shared/Skeleton.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/Sidebar.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/student/CGPAProgressionChart.jsx",
+    "issues": [
+      "Inline CSS color styling",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/student/ExpenseBreakdownChart.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/student/RecommendedOpportunities.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/student/UpcomingTasks.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/dashboard/tutor/BookingActivityTimeline.jsx",
+    "issues": [
+      "Hardcoded border-radius (e.g. rounded-lg, rounded-md, rounded-xl) instead of var(--radius-*)"
+    ]
+  },
+  {
+    "file": "src/components/dashboard/tutor/RecentRequestsFeed.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ErrorBoundary.jsx",
+    "issues": [
+      "Inline CSS color styling",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/analytics/TrendChart.jsx",
+    "issues": [
+      "Inline CSS color styling"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/analytics/WeeklySpendingChart.jsx",
+    "issues": [
+      "Inline CSS color styling"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/dashboard/CategoryPieChart.jsx",
+    "issues": [
+      "Inline CSS color styling"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/dashboard/MonthlyExpenseChart.jsx",
+    "issues": [
+      "Inline CSS color styling"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/dashboard/StatCard.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Expenses/dashboard/TransactionsTable.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Expenses/layout/AppLayout.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/layout/Sidebar.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/layout/TopNavbar.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Expenses/ui/Modal.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Expenses/ui/Skeleton.jsx",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)"
+    ]
+  },
+  {
+    "file": "src/components/GlobalProtectedRoute.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/layout/index.js",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/layouts/DashboardLayout.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/profile/AlumniProfileView.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/profile/StudentProfileView.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/profile/TutorProfileView.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/AlumniStats.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Alumni/AlumniTabNavigation.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/ApplicationCard.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/Auth/AlumniLogin.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Alumni/Auth/AlumniSignup.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Alumni/BackendOpportunitiesList.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/CandidateDetails.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/CreateJobModal.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/EditOpportunityModal.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/JobApplications.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/JobPostsList.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/PostReferralModal.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/ReferralApplications.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/ReferralPostsList.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/StudentProfileModal.jsx",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Alumni/VerifiedCandidatesList.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Chat/ChatList.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Chat/ChatSkeleton.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Chat/ChatWindow.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Chat/MessageBubble.jsx",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Footer.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/GetStarted.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Home/Features.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Home/LandingHero.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Home/WorkProcess.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Navbar.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/NavLink.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/QRScanner.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ReferralsSidebar.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/StatusBadge.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/AppliedJobsList.jsx",
+    "issues": [
+      "Inline CSS color styling"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/Auth/StudentLogin.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/Auth/StudentSignup.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/ExternalJobsList.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/GitHubSection.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/LinkedInSection.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/OpportunitiesList.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/OpportunityDetailModal.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/PortfolioSection.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/ProfileCompletionModal.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/ProfileForm.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/QRCodeSection.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/ReferralsList.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/ResumeSection.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/Student/ResumeUpload.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/Student/TabNavigation.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ThemeToggle.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/TransactionToast.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/alert.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/animated-shiny-text.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/badge.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/border-beam.jsx",
+    "issues": [
+      "Hardcoded border-radius (e.g. rounded-lg, rounded-md, rounded-xl) instead of var(--radius-*)"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/button.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/card.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/input.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/label.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/magic-card.jsx",
+    "issues": [
+      "Hardcoded border-radius (e.g. rounded-lg, rounded-md, rounded-xl) instead of var(--radius-*)"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/shine-border.jsx",
+    "issues": [
+      "Hardcoded border-radius (e.g. rounded-lg, rounded-md, rounded-xl) instead of var(--radius-*)"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/sonner.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/textarea.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/toast.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/toaster.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Referrals/ui/tooltip.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Referrals/ui/use-toast.js",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/routing/AttendanceDashboardRoute.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/routing/TutorialModuleEntry.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/shared/AsyncStateWrapper.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/shared/ErrorBoundary.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/shared/index.js",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ThemePreference.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/ThemeToggle.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/AccountSetting.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/BookModal.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/calls/CallControls.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/calls/CallOverlay.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/calls/GlobalCallListener.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/calls/VideoCallModal.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/ClassHistory.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/EditProfile.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/ErrorBoundary.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/Footer.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/Login.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/MyBookings.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/Navbar.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/PricePanel.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/PricePanelData.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/Profile.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/Rate.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/Register.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/ReviewModal.jsx",
+    "issues": [
+      "Inline CSS color styling"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/SearchTutor.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/sidebarData.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/SideNav.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/TutorialSidebar.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/TutorialTopbar.jsx",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/components/Tutorials/TutorInfo.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/TutorPagination.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/Tutorials/TutorProfile.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/badge.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/button.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/card.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/DashboardSkeleton.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/dialog.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/dropdown.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/EmptyState.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/form.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/input.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/label.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/NetworkFallback.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/NotificationCenter.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/pagination.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/search.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/select.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/skeleton.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/table.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/tabs.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/textarea.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/toast.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/components/ui/tooltip.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/layouts/Attendance/DashboardLayout.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/layouts/ReferralsLayout.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/layouts/TutorialStudentLayout.jsx",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/layouts/TutorialWorkspaceLayout.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Attendance/main.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/components.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/layout.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/responsive.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/theme.css",
+    "issues": [
+      "Hardcoded Tailwind gray/white color classes (e.g. bg-white, border-gray-200)",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/AccountSetting.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/BookClass.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/BookModal.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/ClassHistory.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/EditProfile.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/Landing.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/Login.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/LoginRegister.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/ManageBook.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/Navbar.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/PricePanel.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/Profile.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/Rate.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/Register.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/ReviewModal.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/SearchTutor.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/SideNav.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/theme.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/TutorAccept.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/TutorAvailability.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/TutorDashboard.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/TutorInfo.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/TutorLogin.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/TutorModal.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/TutorPagination.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/styles/Tutorials/TutorProfile.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/TutorRegistration.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/Tutorials/TutorSchedule.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/ui-tokens.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/styles/utilities.css",
+    "issues": [
+      "Font family override/non-Inter font stack"
+    ]
+  },
+  {
+    "file": "src/styles/variables.css",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/App.css",
+    "issues": [
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/App.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/index.css",
+    "issues": [
+      "Font family override/non-Inter font stack",
+      "Hardcoded shadow utility classes instead of design variables"
+    ]
+  },
+  {
+    "file": "src/main.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/reportWebVitals.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  },
+  {
+    "file": "src/setupTests.jsx",
+    "issues": [],
+    "status": "No modification required (standardized or logic-only)"
+  }
+]
