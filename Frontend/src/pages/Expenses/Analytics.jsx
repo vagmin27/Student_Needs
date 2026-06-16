@@ -83,7 +83,7 @@ const Analytics = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
+          <h1 className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
             Financial Analytics
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
@@ -168,7 +168,7 @@ const Analytics = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg">
           {/* Trend Chart */}
           <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col">
-            <h3 className="font-serif text-lg font-bold text-foreground mb-4">
+            <h3 className="font-sans text-lg font-bold text-foreground mb-4">
               {viewType === "monthly" ? "Monthly Spend Trend" : "Yearly Spend Trend"}
             </h3>
             <div className="flex-1 w-full relative min-h-[280px]">
@@ -183,7 +183,7 @@ const Analytics = () => {
 
           {/* Weekly Chart */}
           <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col">
-            <h3 className="font-serif text-lg font-bold text-foreground mb-4">
+            <h3 className="font-sans text-lg font-bold text-foreground mb-4">
               Weekly Spend Comparison
             </h3>
             <div className="flex-1 w-full relative min-h-[280px]">
@@ -199,7 +199,7 @@ const Analytics = () => {
       {/* Category Chart */}
       <SectionContainer>
         <PremiumCard hoverEffect={false} className="p-6">
-          <h3 className="font-serif text-lg font-bold text-foreground mb-4">Category breakdown</h3>
+          <h3 className="font-sans text-lg font-bold text-foreground mb-4">Category breakdown</h3>
           <CategoryPieChart exdata={userexp} />
         </PremiumCard>
       </SectionContainer>

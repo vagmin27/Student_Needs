@@ -145,7 +145,7 @@ export default function MarketingLayout() {
           <div className="hidden md:block">
             <ThemeToggle />
           </div>
-          <Link className="hidden md:inline-flex uc-btn-primary animate-pulse" to="/role-selection">
+          <Link className="hidden md:inline-flex uc-btn-primary hover:scale-[1.03] transition-all duration-300" to="/role-selection">
             Get Started
           </Link>
           <button 

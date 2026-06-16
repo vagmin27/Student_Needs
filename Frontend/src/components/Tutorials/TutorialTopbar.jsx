@@ -16,7 +16,7 @@ const TutorialTopbar = () => {
         <Button variant="ghost" size="icon" onClick={toggleMobileMenu} className="lg:hidden">
           <Menu className="w-5 h-5" />
         </Button>
-        <h1 className="text-xl font-serif font-bold tracking-tight hidden sm:block">Tutorials</h1>
+        <h1 className="text-xl font-sans font-bold tracking-tight hidden sm:block">Tutorials</h1>
       </div>
 
       {/* search removed */}

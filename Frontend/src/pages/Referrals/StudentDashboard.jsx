@@ -352,7 +352,7 @@ export function StudentDashboard() {
       {!isReferralRoute && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
           <div className="flex flex-col items-start justify-center gap-4">
-            <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">
+            <h1 className="font-sans text-3xl font-bold tracking-tight text-foreground">
               Student Referral Dashboard
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
@@ -380,7 +380,7 @@ export function StudentDashboard() {
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="mb-4">
-            <h2 className="font-serif text-2xl font-bold tracking-tight text-foreground">
+            <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">
               Referral Opportunities from Alumni
             </h2>
             <p className="text-sm text-muted-foreground mt-1">
@@ -410,7 +410,7 @@ export function StudentDashboard() {
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="mb-4">
-            <h2 className="font-serif text-2xl font-bold tracking-tight text-foreground">
+            <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">
               My Applications
             </h2>
             <p className="text-sm text-muted-foreground mt-1">
@@ -431,7 +431,7 @@ export function StudentDashboard() {
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="mb-4">
-            <h2 className="font-serif text-2xl font-bold tracking-tight text-foreground">
+            <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">
               Jobs Posted by Alumni
             </h2>
             <p className="text-sm text-muted-foreground mt-1">

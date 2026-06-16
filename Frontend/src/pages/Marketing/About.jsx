@@ -68,7 +68,7 @@ export default function About() {
           Unifying Student Operations
         </h1>
         <p className="uc-subheading uc-long-form-text-audit mx-auto text-base text-muted-foreground text-center">
-          UniConnect was designed to solve the fragmentation of university life, replacing scattered sheets with a secure operating system.
+          {/* UniConnect was designed to solve the fragmentation of university life, replacing scattered sheets with a secure operating system. */}
         </p>
       </div>
 

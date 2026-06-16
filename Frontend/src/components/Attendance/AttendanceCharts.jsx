@@ -37,7 +37,7 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
   const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   const currentColors = isDark
     ? COLORS
-    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
+    : ["#4F46E5", "#6366F1", "#818CF8", "#A5B4FC", "#C7D2FE"];
 
   const barData = bySubject.map((s) => ({
     subject: s.subjectName || s.subject,
@@ -73,7 +73,7 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
                   <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
                   <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#6c4cf1"} radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#4F46E5"} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

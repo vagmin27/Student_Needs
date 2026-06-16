@@ -19,7 +19,7 @@
   --spacing-2xl: var(--space-2xl);
 
   /* Border Radii Scale */
-  --radius-sm: 8px;
+  --radius-sm: 12px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
@@ -27,7 +27,7 @@
   --radius-full: 9999px;
 
   /* Legacy radius mappings for backward compatibility */
-  --radius-xs: var(--radius-sm);
+  --radius-xs: 8px;
 
   /* Transitions & Animation Easing */
   --transition-fast: 150ms;

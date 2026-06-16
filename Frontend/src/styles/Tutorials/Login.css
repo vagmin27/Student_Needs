@@ -6,7 +6,7 @@
   align-items: center;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: Arial, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* 🧱 ROW + COL FIX */

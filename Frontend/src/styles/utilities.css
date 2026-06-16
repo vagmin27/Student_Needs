@@ -116,7 +116,6 @@ img {
   color: var(--text-primary) !important;
 }
 
-/* Ambient Radial Spotlight Glow for Premium SaaS UI */
 .bg-radial-spotlight {
   position: relative;
   overflow: hidden;
@@ -132,4 +131,36 @@ img {
   pointer-events: none;
   z-index: 0;
   filter: blur(40px);
+}
+
+/* Unified Spacing & Typography Recovery Classes */
+.uc-description {
+  display: block;
+  line-height: 1.7;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  max-width: 70ch;
+  min-width: 0;
+}
+
+.uc-subheading {
+  display: block;
+  line-height: 1.7;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  max-width: 65ch;
+  min-width: 0;
+}
+
+.uc-card-description {
+  display: block;
+  width: 100%;
+  max-width: none;
+  line-height: 1.6;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  min-width: 0;
 }

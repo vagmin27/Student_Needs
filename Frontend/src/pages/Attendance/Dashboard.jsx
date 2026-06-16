@@ -125,7 +125,7 @@ function Dashboard() {
   return (
     <PageLayout className="attendance-module">
       <div className="page-header">
-        <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">Teacher Dashboard</h1>
+        <h1 className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">Teacher Dashboard</h1>
         <p className="text-sm text-muted-foreground mt-1">Overview of attendance and student performance</p>
       </div>
 

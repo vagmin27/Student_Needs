@@ -13,7 +13,7 @@
 ====================================================== */
 
 :root {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.5;
   font-weight: 400;
 
@@ -35,7 +35,7 @@ body {
   min-height: 100vh;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.5;
 }
 
@@ -301,7 +301,7 @@ img {
 
 .uc-hero-copy h1 {
   max-width: 800px;
-  font-size: clamp(40px, 6vw, 76px);
+  font-size: clamp(28px, 6vw, 76px);
   line-height: 1.02;
   letter-spacing: 0;
   margin-bottom: 24px;
@@ -1667,8 +1667,9 @@ body,
   
   /* Modern SaaS Radius System */
   --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 }
 
 /* 1. Global Spacing System (Reduced by 15-20% for visual density) */
@@ -1710,21 +1711,21 @@ body,
 
 /* 2. Typography system */
 .uc-hero-title {
-  font-family: "Libre Baskerville", Georgia, serif;
-  font-size: clamp(40px, 8vw, 72px);
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 8vw, 72px);
   line-height: 1.1;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
 }
 
 .uc-hero-title span {
-  font-family: "Inter", -apple-system, sans-serif;
+  font-family: var(--font-sans);
   color: var(--accent);
 }
 
 .uc-page-heading {
-  font-size: clamp(32px, 6vw, 56px);
+  font-size: clamp(24px, 6vw, 56px);
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -1732,7 +1733,7 @@ body,
 }
 
 .uc-section-heading {
-  font-size: clamp(26px, 4.5vw, 42px);
+  font-size: clamp(20px, 4.5vw, 42px);
   line-height: 1.15;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -1740,7 +1741,7 @@ body,
 }
 
 .uc-card-heading {
-  font-size: clamp(18px, 2.5vw, 24px);
+  font-size: clamp(16px, 2.5vw, 24px);
   line-height: 1.25;
   font-weight: 700;
   color: var(--text-heading);

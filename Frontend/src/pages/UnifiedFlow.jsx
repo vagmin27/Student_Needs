@@ -90,25 +90,24 @@ const roles = [
   {
     id: "student",
     title: "Student",
-    description: "Access all student features and tools",
+    description: "Access academic tools, tutorials, expenses, referrals, and student services.",
     icon: GraduationCap,
     loginTo: "/login/student",
   },
   {
     id: "tutor",
     title: "Tutor",
-    description: "Teach, manage students and track performance",
+    description: "Manage students, track performance, and provide academic guidance.",
     icon: BookOpen,
     loginTo: "/login/tutor",
   },
   {
     id: "alumni",
     title: "Alumni",
-    description: "Provide referrals and opportunities",
+    description: "Support students through mentorship, referrals, and opportunities.",
     icon: Briefcase,
     loginTo: "/login/alumni",
   },
-
 ];
 
 const studentModules = [
@@ -133,9 +132,13 @@ const sidebarItems = [
 
 function Brand() {
   return (
-    <Link to="/" className="uc-brand" aria-label="UniConnect home">
-      <span className="uc-brand-mark">U</span>
-      <span>UniConnect</span>
+    <Link to="/" className="flex items-center gap-2.5 font-bold text-foreground select-none group focus:outline-none" aria-label="UniConnect home">
+      <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#4f46e5] to-[#3b82f6] flex items-center justify-center shadow-[0_4px_12px_rgba(79,70,229,0.25)] group-hover:scale-105 transition-transform duration-300">
+        <span className="text-white font-extrabold text-base leading-none">U</span>
+      </div>
+      <span className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">
+        UniConnect
+      </span>
     </Link>
   );
 }
@@ -172,7 +175,7 @@ export function useCountUp(target, active) {
 
 export function UnifiedLanding() {
   const { theme } = useTheme();
-  
+
   // Section active states for scrolling and metrics trigger
   const [statsActive, setStatsActive] = useState(false);
   const [activeNav, setActiveNav] = useState("hero");
@@ -347,7 +350,7 @@ export function UnifiedLanding() {
   // Auto-sliding interval for carousel (every 6 seconds)
   useEffect(() => {
     const slideTimer = setInterval(() => {
-      setTestimonialIdx((prev) => 
+      setTestimonialIdx((prev) =>
         prev === filteredTestimonials.length - 1 ? 0 : prev + 1
       );
     }, 6000);
@@ -389,7 +392,7 @@ export function UnifiedLanding() {
   return (
     <main className="uc-page">
       {/* Dynamic SEO JSON-LD Scheme is mounted */}
-      
+
       {/* 🚀 NAVBAR SECTION */}
       <nav className="uc-topbar" role="navigation" aria-label="Main menu">
         <Brand />
@@ -704,19 +707,19 @@ export function UnifiedLanding() {
 
         {/* Tab Selector */}
         <div className="flex justify-center gap-3 mb-8">
-          <button 
+          <button
             onClick={() => setActivePreviewTab("laptop")}
             className={cn("px-4 py-2 rounded-[var(--radius-sm)] text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "laptop" ? "bg-primary text-white" : "bg-card text-foreground")}
           >
             <Laptop className="w-4 h-4" /> Laptop: Dashboard
           </button>
-          <button 
+          <button
             onClick={() => setActivePreviewTab("tablet")}
             className={cn("px-4 py-2 rounded-[var(--radius-sm)] text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "tablet" ? "bg-primary text-white" : "bg-card text-foreground")}
           >
             <Tablet className="w-4 h-4" /> Tablet: Tutorials & Chat
           </button>
-          <button 
+          <button
             onClick={() => setActivePreviewTab("mobile")}
             className={cn("px-4 py-2 rounded-[var(--radius-sm)] text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer border border-border/60", activePreviewTab === "mobile" ? "bg-primary text-white" : "bg-card text-foreground")}
           >
@@ -726,7 +729,7 @@ export function UnifiedLanding() {
 
         {/* Device frame container */}
         <div className="device-mockup-wrapper max-w-4xl mx-auto flex items-center justify-center p-4">
-          
+
           {/* Laptop Mockup */}
           {activePreviewTab === "laptop" && (
             <div className="laptop-mockup w-full">
@@ -742,7 +745,7 @@ export function UnifiedLanding() {
                     uniconnect.com/student/dashboard
                   </div>
                 </div>
-                
+
                 {/* Simulated Student Dashboard Content */}
                 <div className="browser-content p-4 text-left text-xs text-muted-foreground min-h-[300px]">
                   <div className="flex justify-between items-center mb-4 border-b border-border/10 pb-2">
@@ -752,7 +755,7 @@ export function UnifiedLanding() {
                     </div>
                     <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded font-semibold border border-primary/25">IT Branch</span>
                   </div>
-                  
+
                   <div className="grid grid-cols-3 gap-3">
                     <div className="p-3 bg-slate-800/60 rounded-[var(--radius-sm)] border border-border/10">
                       <span className="text-[10px] text-muted-foreground">Class Attendance</span>
@@ -770,7 +773,7 @@ export function UnifiedLanding() {
                       <span className="text-[8px] text-muted-foreground">Goal alert: 82% spent</span>
                     </div>
                   </div>
-                  
+
                   <div className="mt-4 p-3 bg-slate-800/40 rounded-[var(--radius-sm)] border border-border/10">
                     <h5 className="font-semibold text-white mb-2 text-[11px]">🔔 System Alerts & Notifications</h5>
                     <div className="space-y-1.5">
@@ -796,7 +799,7 @@ export function UnifiedLanding() {
             <div className="tablet-mockup w-[80%] max-w-lg bg-slate-900 border-[8px] border-slate-700 rounded-[var(--radius-xl)] overflow-hidden shadow-[var(--shadow-lg)] relative">
               {/* Speaker & camera dots */}
               <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-slate-800 rounded-full"></div>
-              
+
               {/* Browser Header */}
               <div className="browser-header bg-slate-800/80 px-4 py-2 flex justify-between items-center border-b border-border/20 pt-4">
                 <span className="text-[8px] text-muted-foreground">uniconnect.com/tutorials/chat</span>
@@ -806,7 +809,7 @@ export function UnifiedLanding() {
               {/* Tablet Content */}
               <div className="tablet-content p-4 text-left text-xs text-muted-foreground min-h-[300px]">
                 <h4 className="font-bold text-white text-sm mb-3">📚 Tutorials & Class Chat</h4>
-                
+
                 <div className="grid grid-cols-5 gap-3">
                   {/* Left contacts list */}
                   <div className="col-span-2 border-r border-border/10 pr-2 space-y-1.5">
@@ -922,7 +925,7 @@ export function UnifiedLanding() {
 
         {/* Carousel Component */}
         <div className="testimonial-carousel max-w-xl mx-auto glass-panel p-6 sm:p-8 text-center relative">
-          
+
           {filteredTestimonials.length === 0 ? (
             <div className="py-8 text-muted-foreground text-sm">No reviews available in this category.</div>
           ) : (
@@ -952,14 +955,14 @@ export function UnifiedLanding() {
           {/* Manual next/prev arrow buttons */}
           {filteredTestimonials.length > 1 && (
             <div className="flex justify-center gap-4 mt-6">
-              <button 
+              <button
                 onClick={() => setTestimonialIdx(prev => prev === 0 ? filteredTestimonials.length - 1 : prev - 1)}
                 className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all cursor-pointer bg-card text-xs font-bold"
                 aria-label="Previous review"
               >
                 {"<"}
               </button>
-              <button 
+              <button
                 onClick={() => setTestimonialIdx(prev => prev === filteredTestimonials.length - 1 ? 0 : prev + 1)}
                 className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all cursor-pointer bg-card text-xs font-bold"
                 aria-label="Next review"
@@ -972,8 +975,8 @@ export function UnifiedLanding() {
           {/* Dots Indicators */}
           <div className="flex justify-center gap-1.5 mt-4">
             {filteredTestimonials.map((_, i) => (
-              <span 
-                key={i} 
+              <span
+                key={i}
                 onClick={() => setTestimonialIdx(i)}
                 className={cn("w-1.5 h-1.5 rounded-full transition-all cursor-pointer", testimonialIdx === i ? "bg-primary w-3" : "bg-border")}
               />
@@ -985,14 +988,14 @@ export function UnifiedLanding() {
       {/* 🚀 ABOUT US & COUNT-UP STATS SECTION */}
       <section id="about" className="uc-section uc-about" ref={statsRef}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-          
+
           {/* Mission & Vision Copy */}
           <div className="space-y-6 text-left">
             <h2 className="text-3xl font-bold tracking-tight">Our Mission & Vision</h2>
             <p className="text-muted-foreground text-sm leading-relaxed">
               We empower students to succeed in university life by unifying essential resources into a single central operating system. No student should struggle finding academic support, planning budget lines, or applying for jobs.
             </p>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 bg-secondary/10 border border-border/30 rounded-[var(--radius-md)]">
                 <h4 className="font-bold text-sm text-foreground flex items-center gap-1.5">
@@ -1075,7 +1078,7 @@ export function UnifiedLanding() {
           {faqs.map((faq, idx) => {
             const isOpen = openFaq === idx;
             return (
-              <div 
+              <div
                 className="faq-panel border border-border rounded-[var(--radius-md)] overflow-hidden bg-card transition-all"
                 key={idx}
               >
@@ -1087,7 +1090,7 @@ export function UnifiedLanding() {
                   <span>{faq.q}</span>
                   <ChevronDown className={cn("w-4.5 h-4.5 text-muted-foreground transition-transform duration-300", isOpen ? "rotate-180" : "")} />
                 </button>
-                <div 
+                <div
                   className="faq-answer-container transition-all duration-300 ease-in-out"
                   style={{
                     maxHeight: isOpen ? "150px" : "0px",
@@ -1107,10 +1110,10 @@ export function UnifiedLanding() {
 
       {/* 🚀 CTA: TRANSFORM YOUR STUDENT JOURNEY */}
       <section className="uc-section uc-cta">
-        <div className="cta-gradient-box glass-panel p-8 sm:p-12 max-w-4xl mx-auto text-center relative overflow-hidden rounded-[var(--radius-lg)] border border-primary/25">
+        <div className="cta-gradient-box glass-panel p-5 sm:p-8 md:p-12 max-w-4xl mx-auto text-center relative overflow-hidden rounded-[var(--radius-lg)] border border-primary/25">
           {/* Animated gradient blob background */}
           <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-indigo-500/5 to-cyan-500/10 z-0 pointer-events-none"></div>
-          
+
           <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-4 relative z-10">
             Start Building Your Academic Success Story
           </h2>
@@ -1131,7 +1134,7 @@ export function UnifiedLanding() {
       {/* 🚀 EXPANDED FOOTER SECTION */}
       <footer className="uc-footer bg-card border-t border-border mt-16 px-6 py-12">
         <div className="max-w-5xl mx-auto uc-footer-grid-audit gap-8 text-left text-xs mb-8">
-          
+
           {/* Col 1 Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 font-bold text-sm text-foreground">
@@ -1194,27 +1197,64 @@ export function UnifiedLanding() {
 
 export function RoleSelectionPage() {
   return (
-    <main className="uc-auth-shell">
-      <Brand />
+    <main className="uc-auth-shell bg-gradient-to-tr from-slate-50/50 via-slate-100/30 to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-zinc-950 min-h-screen relative overflow-hidden font-sans">
+      {/* Background layered radial glows - low opacity */}
+      <div className="absolute -top-40 -left-40 w-[450px] h-[450px] rounded-full bg-indigo-500/[0.02] dark:bg-indigo-500/[0.015] blur-[100px] pointer-events-none select-none" />
+      <div className="absolute -top-40 -right-40 w-[450px] h-[450px] rounded-full bg-cyan-500/[0.02] dark:bg-cyan-500/[0.015] blur-[100px] pointer-events-none select-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] bg-white/[0.04] dark:bg-slate-900/[0.005] blur-[120px] pointer-events-none select-none" />
+
+      <Link to="/" className="uc-brand" aria-label="UniConnect home">
+        <span className="uc-brand-mark">U</span>
+        UniConnect
+      </Link>
+
       <section className="uc-role-panel">
-        <h1>Choose how you want to continue</h1>
+        <h1 className="text-slate-900 dark:text-slate-50 font-semibold">
+          Choose how you want to continue
+        </h1>
+
         <div className="uc-role-list">
           {roles?.map((role) => {
             const Icon = role.icon;
+
+            // Design variants for icons
+            let iconBox = "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20";
+            if (role.id === "tutor") {
+              iconBox = "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20";
+            } else if (role.id === "alumni") {
+              iconBox = "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
+            }
+
             return (
-              <Link className="uc-role-card" to={role.loginTo} key={role.id}>
-                <span className="uc-role-avatar"><Icon /></span>
-                <span>
-                  <strong>{role.title}</strong>
-                  <small>{role.description}</small>
+              <Link
+                key={role.id}
+                to={role.loginTo}
+                className="uc-role-card backdrop-blur-lg border border-slate-200/50 dark:border-white/20 bg-white/60 dark:bg-slate-900/50 hover:bg-white/80 dark:hover:bg-slate-900/70 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group min-w-0 max-w-full box-border"
+              >
+                <span className={`uc-role-avatar rounded-2xl flex items-center justify-center shrink-0 border ${iconBox} transition-transform duration-300 group-hover:scale-105`}>
+                  <Icon size={28} className="shrink-0" />
                 </span>
-                <span className="uc-arrow">{"->"}</span>
+                <div className="min-w-0 flex-1 text-left">
+                  <strong className="text-base font-semibold text-slate-800 dark:text-slate-100 leading-tight block">
+                    {role.title}
+                  </strong>
+                  <small className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium leading-normal block mt-2">
+                    {role.description}
+                  </small>
+                </div>
+                <span className="uc-arrow transition-transform duration-300 group-hover:translate-x-1 text-slate-800 dark:text-slate-200">
+                  →
+                </span>
               </Link>
             );
           })}
         </div>
-        <p className="uc-auth-switch">
-          Already have an account? <Link to="/login/student">Login</Link>
+
+        <p className="uc-auth-switch text-slate-500 dark:text-slate-400">
+          Already have an account?
+          <Link to="/login/student" className="ml-1.5 text-primary hover:text-primary-hover font-semibold transition-colors duration-200 hover:underline">
+            Login
+          </Link>
         </p>
       </section>
     </main>
@@ -1359,10 +1399,10 @@ function RoleAuthShell({
                   className="uc-social-btn flex-grow py-2.5 px-4 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)] text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05" />
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335" />
                   </svg>
                   Google
                 </button>

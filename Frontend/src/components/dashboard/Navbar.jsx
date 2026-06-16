@@ -75,7 +75,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
             <span className="hidden sm:inline">Dashboard</span>
           </Link>
         )}
-        <h1 className="text-lg font-serif font-semibold text-foreground tracking-tight truncate">
+        <h1 className="text-lg font-sans font-semibold text-foreground tracking-tight truncate">
           {pageTitle}
         </h1>
       </div>

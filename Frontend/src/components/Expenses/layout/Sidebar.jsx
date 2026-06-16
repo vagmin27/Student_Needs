@@ -37,7 +37,7 @@ const Sidebar = () => {
     )}>
       {/* Branding */}
       <div className="flex items-center justify-center h-20 border-b border-border shrink-0">
-        <h1 className="text-2xl font-bold font-mont tracking-wider text-foreground">
+        <h1 className="text-2xl font-bold font-sans tracking-wider text-foreground">
           {isCollapsed ? (
             <span className="text-[var(--primary)]">F<span className="text-foreground">T</span></span>
           ) : (

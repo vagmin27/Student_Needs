@@ -84,7 +84,7 @@ const BillHistory = () => {
           >
             <MdArrowBack /> Back to Expense Dashboard
           </Link>
-          <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
+          <h1 className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
             Bill Payment History
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
