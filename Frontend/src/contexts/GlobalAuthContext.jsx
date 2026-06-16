@@ -341,6 +341,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const tutorForgotPassword = async (email) => {
+    try {
+      const { data } = await tutorsApiClient.post("/forgot-password", { email });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Request failed' };
+    }
+  };
+
+  const tutorVerifyResetOtp = async (email, otp) => {
+    try {
+      const { data } = await tutorsApiClient.post("/verify-reset-otp", { email, otp });
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'OTP verification failed' };
+    }
+  };
+
+  const tutorResetPassword = async (payload) => {
+    try {
+      const { data } = await tutorsApiClient.post("/reset-password", payload);
+      return data;
+    } catch (err) {
+      return { success: false, message: err.response?.data?.message || 'Reset password failed' };
+    }
+  };
+
   const login = async (email, password) => {
     try {
       const { data } = await attendanceApiClient.post('/auth/login', { email, password });
@@ -420,6 +447,9 @@ export const AuthProvider = ({ children }) => {
     alumniForgotPassword,
     alumniVerifyResetOtp,
     alumniResetPassword,
+    tutorForgotPassword,
+    tutorVerifyResetOtp,
+    tutorResetPassword,
     fetchUser,
     clearError,
     setUser: stableSetUser

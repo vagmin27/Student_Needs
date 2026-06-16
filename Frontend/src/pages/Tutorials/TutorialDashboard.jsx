@@ -60,12 +60,12 @@ const LoadingSkeleton = () => (
 );
 
 const EmptyExperience = () => (
-  <div className="flex flex-col items-center justify-center py-20 px-4 text-center gap-4">
+  <div className="flex flex-col items-center justify-center py-20 px-4 text-center gap-4 max-w-[600px] mx-auto">
     <div className="w-24 h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
       <GraduationCap className="w-12 h-12" />
     </div>
     <h2 className="text-3xl font-bold tracking-tight mb-3">Start your learning journey</h2>
-    <p className="text-muted-foreground max-w-md mx-auto mb-8">
+    <p className="text-muted-foreground mb-8 text-balance">
       You haven't booked any sessions or started any conversations yet. Discover the perfect tutor and kickstart your progress.
     </p>
     <div className="flex flex-col sm:flex-row gap-4">
@@ -84,9 +84,14 @@ const EmptyExperience = () => (
 );
 
 export default function TutorialDashboard() {
-  const { metrics, upcomingSessions, recentActivity, hasData, loading } = useTutorialDashboard();
+  const { metrics, upcomingSessions, recentActivity, bookings, loading } = useTutorialDashboard();
 
   if (loading) return <LoadingSkeleton />;
+
+  const isEmpty = 
+    (!bookings || bookings.length === 0) && 
+    (!upcomingSessions || upcomingSessions.length === 0) && 
+    (!recentActivity || recentActivity.length === 0);
 
   return (
     <div className="p-6 md:p-8 max-w-6xl mx-auto space-y-8 pb-20">
@@ -96,7 +101,7 @@ export default function TutorialDashboard() {
         <p className="text-muted-foreground mt-2 font-medium">Manage tutoring, bookings and learning activity</p>
       </div>
 
-      {!hasData ? (
+      {isEmpty ? (
         <EmptyExperience />
       ) : (
         <>
@@ -205,18 +210,22 @@ export default function TutorialDashboard() {
                       No recent activity
                     </div>
                   ) : (
-                    <div className="divide-y border-transparent">
+                    <div className="flex flex-col gap-0 p-4 border-transparent">
                       {recentActivity.map((activity, i) => (
-                        <div key={i} className="flex items-start gap-4 p-4 hover:bg-muted/30 transition-colors">
-                          <div className={`p-2 rounded-full bg-muted/50 ${activity.type === 'chat' ? 'text-pink-500' : 'text-[var(--primary)]'}`}>
-                            {activity.type === 'chat' ? <MessageSquare className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
+                        <div key={i} className="flex items-start gap-4 py-3 hover:bg-muted/30 transition-colors px-2 rounded-md">
+                          <div className="mt-1 flex-shrink-0">
+                            {activity.type === 'chat' ? (
+                              <MessageSquare className="w-4 h-4 text-pink-500" />
+                            ) : (
+                              <div className={`activity-dot ${activity.color || 'text-[var(--primary)]'}`} />
+                            )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm text-foreground">{activity.title}</p>
-                            <p className="text-sm text-muted-foreground truncate">{activity.desc}</p>
+                            <p className="font-semibold text-sm text-foreground">{activity.title}</p>
+                            <p className="text-sm text-muted-foreground truncate">{activity.subtitle || activity.desc}</p>
                           </div>
-                          <span className="text-xs text-muted-foreground whitespace-nowrap">
-                            {new Date(activity.time).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                          <span className="text-xs text-muted-foreground whitespace-nowrap pt-0.5">
+                            {new Date(activity.timestamp || activity.time).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}
                           </span>
                         </div>
                       ))}

@@ -248,15 +248,15 @@ export const PremiumButton = React.forwardRef(({
   const baseStyles = "inline-flex items-center justify-center font-medium transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none rounded-[var(--radius-sm)]";
   
   const variants = {
-    default: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] border border-transparent shadow-sm",
-    primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] border border-transparent shadow-sm",
-    secondary: "bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)]",
-    outline: "border border-[var(--border-color)] bg-transparent hover:bg-[var(--bg-secondary)] text-[var(--text-primary)]",
-    ghost: "hover:bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
-    destructive: "bg-[var(--danger)] text-white hover:opacity-90",
-    danger: "bg-[var(--danger)] text-white hover:opacity-90",
-    success: "bg-[var(--success)] text-white hover:opacity-90",
-    glass: "bg-white/5 backdrop-blur-md text-[var(--text-primary)] border border-white/10 hover:bg-white/10",
+    default: "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover border border-transparent shadow-sm",
+    primary: "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover border border-transparent shadow-sm",
+    secondary: "bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover border border-[var(--border-color)]",
+    outline: "border border-[var(--border-color)] bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text",
+    ghost: "bg-transparent hover:bg-btn-ghost-hover text-btn-ghost-text hover:text-btn-ghost-hover-text",
+    destructive: "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover",
+    danger: "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover",
+    success: "bg-btn-success text-btn-success-text hover:bg-btn-success-hover",
+    glass: "bg-white/5 backdrop-blur-md text-btn-secondary-text border border-white/10 hover:bg-btn-secondary-hover",
   };
 
   const sizes = {

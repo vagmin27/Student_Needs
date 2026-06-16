@@ -46,8 +46,8 @@
   width: 60px;
   height: 100%;
   border: none;
-  background: var(--primary);
-  color: var(--text-white);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   cursor: pointer;
   font-size: 18px;
   transition: 0.3s;
@@ -55,7 +55,7 @@
 
 /* BUTTON HOVER */
 .searchButton:hover {
-  background: var(--primary-hover);
+  background: var(--btn-primary-hover);
 }
 
 /* IMAGE SECTION */

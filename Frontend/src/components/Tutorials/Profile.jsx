@@ -96,7 +96,7 @@ function Profile() {
               <button
                 className="btnEditProfile"
                 style={{ marginLeft: "10px" }}
-                onClick={() => navigate("/profile/editProfile")}
+                onClick={() => navigate("/tutorials/profile/editProfile")}
               >
                 ✏️ Edit Profile
               </button>

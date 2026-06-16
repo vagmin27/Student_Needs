@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getBookings } from "@/services/api/tutorialsApi";
-import { tutorsApiClient } from "@/services/apiClient";
+import { tutorsApiClient, apiClient } from "@/services/apiClient";
 import { useAuth } from "@/contexts/GlobalAuthContext";
 
 export function useTutorialDashboard() {
@@ -15,6 +15,7 @@ export function useTutorialDashboard() {
     upcomingSessions: [],
     recentActivity: [],
     hasData: true,
+    bookings: []
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,58 +29,80 @@ export function useTutorialDashboard() {
       try {
         setLoading(true);
 
-        const [bookingsRes, chatsRes] = await Promise.allSettled([
+        const [bookingsRes, chatsRes, analyticsRes] = await Promise.allSettled([
           getBookings(),
           tutorsApiClient.get("/tutorial-chat/conversations"),
+          apiClient.get("/api/analytics/student-dashboard")
         ]);
 
         if (!isMounted) return;
 
         const bookings = bookingsRes.status === "fulfilled" ? bookingsRes.value : [];
         const chats = chatsRes.status === "fulfilled" ? chatsRes.value?.data : [];
+        const analytics = analyticsRes.status === "fulfilled" && analyticsRes.value?.data?.success 
+          ? analyticsRes.value.data.data 
+          : null;
 
         // Normalize string statuses
         const getStatus = (b) => (b.status || "").toLowerCase();
 
-        // Parse metrics
+        // Parse metrics exactly as original
         const pendingBookings = bookings.filter(b => getStatus(b) === "pending" || getStatus(b) === "requested");
         const upcomingBookings = bookings.filter(b => getStatus(b) === "upcoming" || getStatus(b) === "accepted" || getStatus(b) === "scheduled");
         const completedClasses = bookings.filter(b => getStatus(b) === "completed");
 
-        // Parse upcoming sessions
+        // Parse upcoming sessions exactly as original
         const upcomingSessions = bookings
           .filter(b => ["upcoming", "accepted", "pending", "scheduled"].includes(getStatus(b)))
           .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        // Synthesize recent activity
-        const bookingActivity = bookings.map(b => {
-          const timestamp = new Date(b.updatedAt || b.createdAt || b.date).getTime();
-          return {
-            id: `booking-${b.id || Math.random()}`,
-            type: "booking",
-            title: `Booking ${b.status || "created"}`,
-            desc: `${b.subject || "Session"} with ${b.tutorName || "Tutor"}`,
-            time: timestamp,
-            status: b.status,
-            dateString: b.date
-          };
-        });
+        // Format recent activity using the unified timeline
+        let recentActivity = [];
+        if (analytics && analytics.activityTimeline) {
+           const timeline = analytics.activityTimeline;
+           const chatActivity = Array.isArray(chats) ? chats.map(c => {
+             const timestamp = new Date(c.updatedAt || c.createdAt).getTime();
+             return {
+               id: `chat-${c._id || Math.random()}`,
+               type: "chat",
+               title: "Active Conversation",
+               subtitle: "Chat activity recorded",
+               timestamp: timestamp,
+             };
+           }) : [];
 
-        const chatActivity = Array.isArray(chats) ? chats.map(c => {
-          const timestamp = new Date(c.updatedAt || c.createdAt).getTime();
-          return {
-            id: `chat-${c._id || Math.random()}`,
-            type: "chat",
-            title: "Active Conversation",
-            desc: "Chat activity recorded",
-            time: timestamp,
-          };
-        }) : [];
+           recentActivity = [...timeline, ...chatActivity]
+             .sort((a, b) => new Date(b.timestamp || b.time) - new Date(a.timestamp || a.time))
+             .slice(0, 10);
+        } else {
+           // Fallback to original raw booking mapping if analytics fails
+           const bookingActivity = bookings.map(b => {
+            const timestamp = new Date(b.updatedAt || b.createdAt || b.date).getTime();
+            return {
+              id: `booking-${b.id || Math.random()}`,
+              type: "booking",
+              title: `Booking ${b.status || "created"}`,
+              subtitle: `${b.subject || "Session"} with ${b.tutorName || "Tutor"}`,
+              timestamp: timestamp,
+              color: 'text-[var(--primary)]'
+            };
+          });
+          const chatActivity = Array.isArray(chats) ? chats.map(c => {
+            const timestamp = new Date(c.updatedAt || c.createdAt).getTime();
+            return {
+              id: `chat-${c._id || Math.random()}`,
+              type: "chat",
+              title: "Active Conversation",
+              subtitle: "Chat activity recorded",
+              timestamp: timestamp,
+            };
+          }) : [];
 
-        const recentActivity = [...bookingActivity, ...chatActivity]
-          .filter(a => !isNaN(a.time))
-          .sort((a, b) => b.time - a.time)
-          .slice(0, 10);
+          recentActivity = [...bookingActivity, ...chatActivity]
+            .filter(a => !isNaN(a.timestamp))
+            .sort((a, b) => b.timestamp - a.timestamp)
+            .slice(0, 10);
+        }
 
         setData({
           metrics: {
@@ -90,6 +113,7 @@ export function useTutorialDashboard() {
           },
           upcomingSessions,
           recentActivity,
+          bookings,
           hasData: bookings.length > 0 || (Array.isArray(chats) && chats.length > 0),
         });
 

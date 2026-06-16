@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, Bell, Moon, Sun, Menu } from "lucide-react";
+import { Bell, Moon, Sun, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -19,18 +19,9 @@ const TutorialTopbar = () => {
         <h1 className="text-xl font-serif font-bold tracking-tight hidden sm:block">Tutorials</h1>
       </div>
 
-      <div className="flex-1 max-w-md px-4 hidden md:block">
-        <div className="relative">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search tutorials..."
-            className="w-full pl-9 pr-4 py-2 text-sm bg-[var(--bg-secondary)] border border-border rounded-full focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 transition-all text-[var(--text-primary)]"
-          />
-        </div>
-      </div>
+      {/* search removed */}
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 ml-auto">
         <ThemeToggle className="border-border/60" />
 
         <div className="hidden sm:block">

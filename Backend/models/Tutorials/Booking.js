@@ -43,6 +43,26 @@ meetingLink: {
   type: String,
   default: "",
 },
+meetingLinkPublished: {
+  type: Boolean,
+  default: false,
+},
+meetingPublishedAt: {
+  type: Date,
+  default: null,
+},
+tutorJoinedAt: {
+  type: Date,
+  default: null,
+},
+studentJoinedAt: {
+  type: Date,
+  default: null,
+},
+cancelledAt: {
+  type: Date,
+  default: null,
+},
 
 },
 { timestamps: true }

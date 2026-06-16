@@ -31,26 +31,26 @@
 
 /* PREV BUTTON */
 .leftButton {
-  background: var(--bg-secondary);
-  color: var(--text-paragraph);
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   border: 1px solid var(--border-color);
 }
 
 /* NEXT BUTTON */
 .rightButton {
-  background: var(--primary);
-  color: var(--text-white);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
 }
 
 /* PREV BUTTON HOVER */
 .leftButton:hover {
-  background: var(--bg-hover);
+  background: var(--btn-secondary-hover);
   transform: translateY(-2px);
 }
 
 .rightButton:hover {
   transform: translateY(-2px);
-  background: var(--primary-hover);
+  background: var(--btn-primary-hover);
   box-shadow: var(--shadow-md);
 }
 

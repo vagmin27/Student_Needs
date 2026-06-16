@@ -466,4 +466,66 @@ router.patch("/:id/cancel", async (req, res) => {
   }
 });
 
+/**
+ * ✅ PUBLISH MEETING LINK (TUTOR)
+ */
+router.patch("/:id/meeting-link", async (req, res) => {
+  try {
+    const tutorId = req.session?.user?.id;
+    if (!tutorId || req.session?.user?.role !== "tutor") {
+      return res.status(401).json({ success: false, msg: "Unauthorized. Only tutors can publish links." });
+    }
+
+    const { meetingLink } = req.body;
+    if (!meetingLink || typeof meetingLink !== "string" || !meetingLink.trim().startsWith("http")) {
+      return res.status(400).json({ success: false, msg: "Invalid meeting link." });
+    }
+
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ success: false, msg: "Booking not found." });
+    }
+
+    if (booking.tutorId.toString() !== tutorId.toString()) {
+      return res.status(403).json({ success: false, msg: "Not authorized to publish link for this booking." });
+    }
+
+    if (booking.status !== "upcoming" && booking.status !== "accepted") {
+      return res.status(400).json({ success: false, msg: "Booking must be accepted or upcoming to publish a link." });
+    }
+
+    booking.meetingLink = meetingLink.trim();
+    booking.meetingLinkPublished = true;
+    booking.meetingPublishedAt = new Date();
+    
+    await booking.save();
+
+    await notificationService.createAndEmitNotification({
+      recipientId: booking.userId,
+      type: "MEETING_LINK",
+      title: "Meeting Link Published",
+      message: `Your tutor has published the meeting link for your ${booking.subject} class.`,
+      link: "/tutorials/profile/manageBook",
+    });
+
+    import("../../sockets/index.js").then(({ getIO, getIo }) => {
+      try {
+        const fn = getIO || getIo;
+        const io = fn?.();
+
+        if (io?.to) {
+          io.to(booking.userId.toString()).emit("dashboard_refresh");
+        }
+      } catch (e) {
+        console.warn("Socket emit skipped", e.message);
+      }
+    }).catch(e => console.warn("Socket module import failed", e.message));
+
+    res.json({ success: true, meetingLinkPublished: true, booking });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, msg: "Server error publishing link." });
+  }
+});
+
 export default router;

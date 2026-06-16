@@ -399,3 +399,21 @@ a {
   color: #FFFFFF !important;
 }
 
+/* Status indicators for timelines */
+.activity-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  flex-shrink: 0;
+}
+
+/* Timeline Status Dots */
+.timeline-status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  background: currentColor;
+}
+
