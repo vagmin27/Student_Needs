@@ -22,7 +22,7 @@ function TutorPagination({ choosePage }) {
                     choosePage("prev");
                   }}
                 >
-                  <i className="fa-solid fa-angles-left " />
+                  <i className="fa-solid fa-angles-left" />
                   Prev
                 </button>
               </label>

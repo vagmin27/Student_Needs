@@ -123,7 +123,7 @@ export default function TutorManageSubjects() {
               No subjects yet. Add a subject before marking attendance.
             </p>
           ) : (
-            <ul className="divide-y rounded-lg border">
+            <ul className="divide-y rounded-[var(--radius-sm)] border">
               {subjects.map((s) => (
                 <li
                   key={s._id}
@@ -171,7 +171,7 @@ export default function TutorManageSubjects() {
           </DialogHeader>
           <input
             type="text"
-            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+            className="w-full rounded-[var(--radius-sm)] border border-input bg-background px-3 py-2 text-sm"
             placeholder="e.g. Java Programming"
             value={modal.name}
             onChange={(e) => setModal({ ...modal, name: e.target.value })}

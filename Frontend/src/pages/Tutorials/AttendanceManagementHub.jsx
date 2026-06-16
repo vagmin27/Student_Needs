@@ -90,7 +90,7 @@ export default function AttendanceManagementHub() {
               <Link key={index} to={action.to} className="group outline-none">
                 <Card className="h-full transition-all duration-200 hover:shadow-md hover:border-primary/50 group-focus-visible:ring-2 ring-primary">
                   <CardHeader>
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-primary/10 flex items-center justify-center mb-4 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                       <Icon className="w-5 h-5" />
                     </div>
                     <CardTitle className="text-xl">{action.title}</CardTitle>

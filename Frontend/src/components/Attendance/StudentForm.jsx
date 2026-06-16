@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import API from "../../services/Attendance/api";
 import { MdPersonAdd } from "react-icons/md";
+import { PremiumButton } from "../dashboard/shared/Primitives";
 
 function StudentForm({ refreshStudents }) {
   const [formData, setFormData] = useState({
@@ -47,12 +48,14 @@ function StudentForm({ refreshStudents }) {
   };
 
   return (
-    <form onSubmit={submitForm}>
-      <div className="card-title"><MdPersonAdd /> Student Information</div>
+    <form onSubmit={submitForm} className="space-y-md">
+      <h3 className="text-base font-semibold text-foreground flex items-center gap-2 mb-4">
+        <MdPersonAdd className="text-[var(--primary)]" /> Student Information
+      </h3>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-md">
         <div className="form-group">
-          <label className="form-label">Full Name *</label>
+          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Full Name *</label>
           <input
             type="text"
             name="Name"
@@ -64,7 +67,7 @@ function StudentForm({ refreshStudents }) {
           />
         </div>
         <div className="form-group">
-          <label className="form-label">Register Number *</label>
+          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Register Number *</label>
           <input
             type="text"
             name="Register_number"
@@ -76,7 +79,7 @@ function StudentForm({ refreshStudents }) {
           />
         </div>
         <div className="form-group">
-          <label className="form-label">Year of Study</label>
+          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Year of Study</label>
           <input
             type="text"
             name="Year_of_studying"
@@ -87,7 +90,7 @@ function StudentForm({ refreshStudents }) {
           />
         </div>
         <div className="form-group">
-          <label className="form-label">Branch / Department</label>
+          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Branch / Department</label>
           <input
             type="text"
             name="Branch_of_studying"
@@ -98,7 +101,7 @@ function StudentForm({ refreshStudents }) {
           />
         </div>
         <div className="form-group">
-          <label className="form-label">Gender</label>
+          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Gender</label>
           <select name="Gender" className="form-select" value={formData.Gender} onChange={handleChange}>
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
@@ -107,7 +110,7 @@ function StudentForm({ refreshStudents }) {
           </select>
         </div>
         <div className="form-group">
-          <label className="form-label">Mobile Number</label>
+          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Mobile Number</label>
           <input
             type="text"
             name="Mobile_number"
@@ -117,8 +120,8 @@ function StudentForm({ refreshStudents }) {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group" style={{ gridColumn: "1 / -1" }}>
-          <label className="form-label">Email Address</label>
+        <div className="form-group sm:col-span-2">
+          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Email Address</label>
           <input
             type="email"
             name="Email_id"
@@ -130,10 +133,16 @@ function StudentForm({ refreshStudents }) {
         </div>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
-        <button type="submit" className="btn btn-primary" disabled={loading} style={{ minWidth: 160 }}>
-          {loading ? <><span className="spinner" /> Adding...</> : <><MdPersonAdd /> Add Student</>}
-        </button>
+      <div className="flex justify-end pt-4">
+        <PremiumButton
+          type="submit"
+          variant="primary"
+          isLoading={loading}
+          leftIcon={MdPersonAdd}
+          className="min-w-[160px]"
+        >
+          Add Student
+        </PremiumButton>
       </div>
     </form>
   );

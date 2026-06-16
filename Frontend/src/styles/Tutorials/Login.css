@@ -28,7 +28,7 @@
   max-width: 400px;
   background: var(--card-bg);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-soft);
 }

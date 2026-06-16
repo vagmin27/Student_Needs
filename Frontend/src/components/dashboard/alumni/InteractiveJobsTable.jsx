@@ -60,7 +60,7 @@ export const InteractiveJobsTable = React.memo(({ jobs = [], onRowClick, onActio
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border border-border overflow-x-auto">
+      <div className="rounded-[var(--radius-sm)] border border-border overflow-x-auto table-responsive">
         <Table>
           <TableHeader>
             <TableRow>

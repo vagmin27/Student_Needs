@@ -1,0 +1,58 @@
+/* ======================================================
+   RESPONSIVE GRID & MEDIA ADJUSTMENTS
+   ====================================================== */
+
+@media (max-width: 1023px) {
+  .content-expanded-offset,
+  .content-collapsed-offset {
+    margin-left: 0 !important;
+  }
+
+  /* Attendance module overrides */
+  .attendance-module .sidebar {
+    transform: translateX(-100%) !important;
+  }
+  .attendance-module .sidebar.open {
+    transform: translateX(0) !important;
+    box-shadow: var(--shadow-lg) !important;
+  }
+  .attendance-module .main-content {
+    margin-left: 0 !important;
+  }
+  .attendance-module .hamburger {
+    display: block !important;
+  }
+  .attendance-module .page-content {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-dashboard-layout {
+    flex-direction: column;
+  }
+
+  .dashboard-container {
+    padding: var(--spacing-md);
+  }
+
+  /* Sticky table wrapper for mobile */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Form layouts */
+  .settings-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--spacing-md);
+  }
+}
+
+/* Specific margins for compact devices */
+@media (max-width: 640px) {
+  .premium-card,
+  .glass-card {
+    padding: var(--spacing-md);
+  }
+}

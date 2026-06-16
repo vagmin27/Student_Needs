@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import "../../styles/Tutorials/TutorInfo.css";
 import { BASE_URL } from "@/services/api/tutorialsApi.js";
 import defaultAvatar from "../../assets/images/bulb2.png";
 
 
 function TutorInfo({ tutorProfile, returnToSearch, handleModal }) {
+  const navigate = useNavigate();
   // ✅ SAFETY: prevent crash
   if (!tutorProfile) {
     return <div>Loading tutor...</div>;
@@ -118,9 +120,17 @@ function TutorInfo({ tutorProfile, returnToSearch, handleModal }) {
           </div>
 
           {/* BUTTON */}
-          <span className="btnSpan">
+          <span className="btnSpan flex gap-3 flex-wrap justify-center items-center">
             <button className="bookBtnTutor" onClick={handleModal}>
               Book Class with {firstName}
+            </button>
+            <button 
+              className="px-6 py-3.5 rounded-[var(--radius-md)] border border-primary text-primary hover:bg-primary/10 transition-all font-semibold flex items-center gap-2 cursor-pointer text-sm"
+              onClick={() => {
+                navigate(`/tutorials/chat?tutorId=${tutorProfile._id}`);
+              }}
+            >
+              Message {firstName}
             </button>
           </span>
         </div>

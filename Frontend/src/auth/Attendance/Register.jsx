@@ -85,9 +85,9 @@ const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-              />
+              className="rounded-[var(--input-radius)]" />
             </label>
-            {errors.name && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.name}</p>}
+            {errors.name && <p className="text-xs text-destructive mt-1">{errors.name}</p>}
 
             <label className="uc-field">
               <span>Email Address</span>
@@ -98,9 +98,9 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-              />
+              className="rounded-[var(--input-radius)]" />
             </label>
-            {errors.email && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.email}</p>}
+            {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
 
             <label className="uc-field">
               <span>Role</span>
@@ -117,7 +117,7 @@ const Register = () => {
 
             <label className="uc-field">
               <span>Password</span>
-              <div style={{ position: "relative" }}>
+              <div className="relative">
                 <input
                   name="password"
                   type={showPass ? "text" : "password"}
@@ -125,22 +125,21 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  style={{ paddingRight: "40px" }}
+                  className="pr-10 rounded-[var(--input-radius)]"
                 />
                 <span 
-                  className="input-icon-right" 
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--text-secondary)]" 
                   onClick={() => setShowPass(!showPass)}
-                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", color: "var(--text-secondary)" }}
                 >
                   {showPass ? <FiEyeOff /> : <FiEye />}
                 </span>
               </div>
             </label>
-            {errors.password && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.password}</p>}
+            {errors.password && <p className="text-xs text-destructive mt-1">{errors.password}</p>}
 
             <label className="uc-field">
               <span>Confirm Password</span>
-              <div style={{ position: "relative" }}>
+              <div className="relative">
                 <input
                   name="confirmPassword"
                   type={showConfirm ? "text" : "password"}
@@ -148,20 +147,19 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  style={{ paddingRight: "40px" }}
+                  className="pr-10 rounded-[var(--input-radius)]"
                 />
                 <span 
-                  className="input-icon-right" 
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--text-secondary)]" 
                   onClick={() => setShowConfirm(!showConfirm)}
-                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", color: "var(--text-secondary)" }}
                 >
                   {showConfirm ? <FiEyeOff /> : <FiEye />}
                 </span>
               </div>
             </label>
-            {errors.confirmPassword && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.confirmPassword}</p>}
+            {errors.confirmPassword && <p className="text-xs text-destructive mt-1">{errors.confirmPassword}</p>}
 
-            <button type="submit" className="uc-login-submit" disabled={loading} style={{ marginTop: 4 }}>
+            <button type="submit" className="uc-login-submit mt-1 rounded-[var(--button-radius)] transition-all hover:translate-y-[-2px] gap-6" disabled={loading}>
               {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>

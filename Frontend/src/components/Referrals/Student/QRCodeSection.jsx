@@ -65,7 +65,7 @@ export function QRCodeSection({ student, address }) {
 
   return (
     <div className="max-w-md mx-auto">
-      <div className="bg-card rounded-xl p-6 border border-border/50 shadow-sm">
+      <div className="bg-card rounded-[var(--radius-md)] p-6 border border-border/50 shadow-[var(--shadow-sm)]">
         <h3 className="text-lg font-semibold text-foreground mb-4 text-center">
           Your Student QR Code
         </h3>
@@ -78,7 +78,7 @@ export function QRCodeSection({ student, address }) {
         {qrCodeData ? (
           <div className="space-y-4 mb-2">
             <div className="flex justify-center">
-              <div className="p-4 bg-white rounded-xl shadow-sm border">
+              <div className="p-4 bg-white rounded-[var(--radius-md)] shadow-[var(--shadow-sm)] border">
                 <img 
                   src={qrCodeData.qrCodeUrl} 
                   alt="Student QR Code" 
@@ -87,7 +87,7 @@ export function QRCodeSection({ student, address }) {
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-muted/50 space-y-3">
+            <div className="p-4 rounded-[var(--radius-md)] bg-muted/50 space-y-3">
               <div>
                 <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
                   <Hash className="w-3 h-3" />
@@ -129,14 +129,14 @@ export function QRCodeSection({ student, address }) {
         ) : (
           <div className="space-y-4">
             <div className="flex justify-center mb-2">
-              <div className="w-64 h-64 bg-muted rounded-lg flex items-center justify-center border-2 border-dashed border-border">
+              <div className="w-64 h-64 bg-muted rounded-[var(--radius-sm)] flex items-center justify-center border-2 border-dashed border-border">
                 <QrCode className="w-16 h-16 text-muted-foreground" />
               </div>
             </div>
 
             <Button
               variant="student"
-              className="w-full bg-primary text-background rounded-md"
+              className="w-full bg-primary text-background rounded-[var(--radius-sm)]"
               onClick={handleGenerateQR}
               disabled={isGeneratingQR}
             >

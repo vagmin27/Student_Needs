@@ -22,43 +22,43 @@ export function AlumniStats({ backendOpportunities = [] }) {
   return (
     <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-7 gap-4">
       {/* Jobs Posted */}
-      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
+      <div className="bg-card rounded-[var(--radius-sm)] px-4 py-6 border border-border/50 space-y-2">
         <p className="text-3xl font-bold text-foreground">{jobsCount}</p>
         <p className="text-sm text-muted-foreground">Jobs Posted</p>
       </div>
 
       {/* Referrals Posted */}
-      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
+      <div className="bg-card rounded-[var(--radius-sm)] px-4 py-6 border border-border/50 space-y-2">
         <p className="text-3xl font-bold text-foreground">{referralsCount}</p>
         <p className="text-sm text-muted-foreground">Referrals Posted</p>
       </div>
 
       {/* Active Opportunities */}
-      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
+      <div className="bg-card rounded-[var(--radius-sm)] px-4 py-6 border border-border/50 space-y-2">
         <p className="text-3xl font-bold text-foreground">{activeOpportunities}</p>
         <p className="text-sm text-muted-foreground">Active Opportunities</p>
       </div>
 
       {/* Applications Received (New) */}
-      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
-        <p className="text-3xl font-bold text-blue-500">{applicationsReceived}</p>
+      <div className="bg-card rounded-[var(--radius-sm)] px-4 py-6 border border-border/50 space-y-2">
+        <p className="text-3xl font-bold text-[var(--primary)]">{applicationsReceived}</p>
         <p className="text-sm text-muted-foreground">Applications Received</p>
       </div>
 
       {/* Referrals Given */}
-      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
+      <div className="bg-card rounded-[var(--radius-sm)] px-4 py-6 border border-border/50 space-y-2">
         <p className="text-3xl font-bold text-success">{totalReferralsGiven}</p>
         <p className="text-sm text-muted-foreground">Referrals Given</p>
       </div>
 
       {/* Conversion Rate (New) */}
-      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
-        <p className="text-3xl font-bold text-purple-500">{conversionRate}%</p>
+      <div className="bg-card rounded-[var(--radius-sm)] px-4 py-6 border border-border/50 space-y-2">
+        <p className="text-3xl font-bold text-[var(--primary)]">{conversionRate}%</p>
         <p className="text-sm text-muted-foreground">Referral Conversion</p>
       </div>
 
       {/* Total Referrals Limit */}
-      <div className="bg-card rounded-lg px-4 py-6 border border-border/50 space-y-2">
+      <div className="bg-card rounded-[var(--radius-sm)] px-4 py-6 border border-border/50 space-y-2">
         <p className="text-3xl font-bold text-foreground">{totalReferralsPossible}</p>
         <p className="text-sm text-muted-foreground">Total Referrals Limit</p>
       </div>

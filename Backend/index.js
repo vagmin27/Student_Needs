@@ -51,6 +51,8 @@ import register from "./routes/Tutorials/register.js";
 import authTutorialRoutes from "./routes/Tutorials/auth.js";
 import tutorRoutes from "./routes/Tutorials/tutorRoutes.js";
 import uploadRoutes from "./routes/Tutorials/uploadRoutes.js";
+import tutorialChatRoutes from "./routes/Tutorials/tutorialChatRoutes.js";
+import assistantRoutes from "./routes/assistantRoutes.js";
 
 // =====================================================
 //                  ATTENDANCE ROUTES
@@ -103,6 +105,10 @@ import recurringRuleRouter from "./routes/Expenses/recurringRuleRouter.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
+import conversationRoutes from "./routes/conversationRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import tutorChatRoutes from "./routes/chatRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
 
 // =====================================================
 //                  EXPENSE SCHEDULERS
@@ -185,7 +191,7 @@ if (process.env.NODE_ENV !== 'production') {
       ':id :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
       {
         stream: winstonLogger.stream,
-        skip: (req, res) => res.statusCode < 400,
+        skip: (req, res) => res.statusCode < 400 || res.statusCode === 429,
       }
     )
   );
@@ -227,6 +233,7 @@ const authLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req, res) => process.env.NODE_ENV !== 'production',
 });
 
 const generalLimiter = rateLimit({
@@ -238,6 +245,7 @@ const generalLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req, res) => process.env.NODE_ENV !== 'production',
 });
 
 
@@ -282,6 +290,9 @@ app.use(passport.session());
 app.use("/api/admin", adminRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/chat", conversationRoutes);
+app.use("/api/chat", messageRoutes);
+app.use("/api/chat", tutorChatRoutes);
 
 // =====================================================
 //                    HOME ROUTE
@@ -341,6 +352,10 @@ app.use("/api/history", classHistory);
 app.use("/api/tutor", tutorRoutes);
 
 app.use("/api/upload", uploadRoutes);
+
+app.use("/api/tutorial-chat", tutorialChatRoutes);
+
+app.use("/api/tutorial-assistant", assistantRoutes);
 
 // =====================================================
 //                ATTENDANCE MODULE ROUTES
@@ -410,6 +425,7 @@ app.use("/api/expenses/expense-settings", expenseSettingsRouter);
 app.use("/api/expenses/reports", reportRouter);
 app.use("/api/expenses/recurring-rules", recurringRuleRouter);
 app.use("/api/expenses", billRouter);
+app.use("/api/contact", contactRoutes);
 
 // Legacy expense mounts removed for clean architecture.
 
@@ -532,7 +548,15 @@ const initializeServer = async () => {
 
     const gracefulShutdown = () => {
       console.log('SIGTERM/SIGINT signal received. Shutting down gracefully...');
+      
+      // Force exit after a timeout to prevent hanging on active WebSocket/keep-alive connections
+      const forceTimeout = setTimeout(() => {
+        console.log('Forced shutdown complete.');
+        process.exit(0);
+      }, 1000);
+
       server.close(async () => {
+        clearTimeout(forceTimeout);
         console.log('HTTP server closed.');
         try {
           await mongoose.disconnect();

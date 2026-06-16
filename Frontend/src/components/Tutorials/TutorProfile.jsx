@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import "../../styles/Tutorials/TutorProfile.css";
 import { BASE_URL } from "@/services/api/tutorialsApi.js";
 import defaultAvatar from "../../assets/images/bulb2.png";
@@ -16,6 +17,7 @@ function TutorProfile({
   searchProfile,
   searchSize,
 }) {
+  const navigate = useNavigate();
   const [displayPairs, setDisplayPairs] = useState([]);
 
   /**
@@ -70,7 +72,7 @@ function TutorProfile({
       </div>
       <div className="imgRender">
         {displayPairs?.map((tutorData, idx) => (
-          <div className="card-group " key={idx}>
+          <div className="card-group" key={idx}>
             {tutorData?.map((tutorProfile) => {
               // ✅ NORMALIZE FIELDS
               const tutorName =
@@ -125,7 +127,26 @@ function TutorProfile({
                         Education: {tutorEducation}
                       </p>
                     </div>
-                    <div className="cardlink"></div>
+                    <div className="cardlink flex gap-2.5 mt-3 select-none">
+                      <button
+                        className="flex-1 py-2.5 bg-primary text-white hover:bg-primary/95 rounded-[var(--radius-sm)] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          searchProfile(tutorProfile);
+                        }}
+                      >
+                        Details
+                      </button>
+                      <button
+                        className="flex-1 py-2.5 bg-secondary/80 hover:bg-secondary border border-border/50 text-foreground hover:text-primary rounded-[var(--radius-sm)] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/tutorials/chat?tutorId=${tutorProfile._id}`);
+                        }}
+                      >
+                        Message
+                      </button>
+                    </div>
                   </div>
                 </div>
               );

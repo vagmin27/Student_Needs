@@ -98,14 +98,14 @@ export const NotificationCenter = () => {
       >
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm animate-pulse">
+          <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-[var(--shadow-sm)] animate-pulse">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl border border-border bg-card shadow-2xl overflow-hidden z-50 animate-in slide-in-from-top-2 duration-200">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-[var(--radius-md)] border border-border bg-card shadow-[var(--shadow-lg)] overflow-hidden z-50 animate-in slide-in-from-top-2 duration-200">
           <div className="flex items-center justify-between p-4 border-b border-border bg-secondary/30">
             <h3 className="font-semibold text-foreground tracking-tight">Notifications</h3>
             {unreadCount > 0 && (

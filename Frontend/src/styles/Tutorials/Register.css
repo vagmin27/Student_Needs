@@ -42,7 +42,7 @@
   width: 100%;
   max-width: 400px;
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
@@ -58,7 +58,7 @@
 .form-control {
   width: 100%;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   margin-top: 0.3rem;
   margin-bottom: 0.8rem;
@@ -66,32 +66,33 @@
 }
 
 .form-control:focus {
-  border-color: #f5a440;
+  border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(245, 164, 64, 0.2);
+  box-shadow: 0 0 0 3px var(--info-bg);
 }
 
 /* BUTTON */
 .btn {
   width: 100%;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
-  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  background: var(--primary);
   color: var(--text-white);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal) var(--ease-standard);
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 122, 24, 0.3);
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-glow);
 }
 
 /* LINK */
 #sign-in {
-  color: #f57c00;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
 }
@@ -102,7 +103,7 @@
 
 /* ERROR */
 .err {
-  color: #e63946;
+  color: var(--danger);
   font-size: 0.8rem;
 }
 

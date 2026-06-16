@@ -215,8 +215,8 @@ const Home = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
-            <span className="text-brand-primary font-mont">Expense</span> Dashboard
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
+            <span className="text-[var(--primary)] font-mont">Expense</span> Dashboard
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
             Manage student budgets, track recurring bills, check predictions, and export financial summaries.
@@ -225,13 +225,13 @@ const Home = () => {
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setIsAddBillOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-secondary text-foreground border border-border font-bold hover:bg-secondary/80 transition-all cursor-pointer text-sm"
+            className="btn btn-secondary flex items-center gap-2"
           >
             <MdAdd size={18} /> Add Bill
           </button>
           <button
             onClick={() => setIsAddExpenseOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 transition-all hover:-translate-y-0.5 cursor-pointer text-sm"
+            className="btn btn-primary flex items-center gap-2"
           >
             <MdAdd size={18} /> Add Expense
           </button>
@@ -277,7 +277,7 @@ const Home = () => {
           {isLoading ? (
             <Skeleton type="card" lines={3} />
           ) : (
-            <div className={`glass-panel p-6 border rounded-2xl flex flex-col justify-between h-full bg-card ${budgetPercentage > 90 ? "border-rose-500/50 shadow-lg shadow-rose-500/5" : "border-border"}`}>
+            <div className={`glass-card flex flex-col justify-between h-full ${budgetPercentage > 90 ? "border-rose-500/50 shadow-lg shadow-rose-500/5" : ""}`}>
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="text-foreground font-bold text-sm uppercase tracking-wide">Budget Prediction</h4>
@@ -301,7 +301,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="bg-secondary/30 p-2.5 rounded-xl border border-border/40 text-[11px] text-muted-foreground">
+              <div className="bg-secondary/30 p-2.5 rounded-[var(--radius-md)] border border-border/40 text-[11px] text-muted-foreground">
                 Expected month-end savings: <span className="font-bold text-foreground">{currencySymbol}{(summary?.savingsGoal - (summary?.projectedSpend || 0)) > 0 ? (summary?.savingsGoal - (summary?.projectedSpend || 0)).toLocaleString() : "0"}</span>. Target was: <span className="font-semibold text-foreground">{currencySymbol}{summary?.savingsGoal?.toLocaleString()}</span>
               </div>
             </div>
@@ -315,65 +315,60 @@ const Home = () => {
         <div className="xl:col-span-2 space-y-6">
           {/* Charts Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="glass-panel p-6 bg-card border border-border rounded-2xl flex flex-col h-[320px]">
-              <h3 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
-                <MdShowChart className="text-brand-primary" /> Monthly Expense Trend
-              </h3>
-              {isLoading ? (
+            {isLoading ? (
+              <div className="glass-card flex flex-col h-[320px] gap-4">
                 <Skeleton type="chart" />
-              ) : userexp.length === 0 ? (
+              </div>
+            ) : userexp.length === 0 ? (
+              <div className="glass-card flex flex-col h-[320px] justify-center items-center gap-4">
                 <EmptyState title="No Trend Data" message="Add transactions to view monthly progress." />
-              ) : (
-                <div className="flex-1 min-h-0">
-                  <MonthlyExpenseChart exdata={userexp} />
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <MonthlyExpenseChart exdata={userexp} />
+            )}
 
-            <div className="glass-panel p-6 bg-card border border-border rounded-2xl flex flex-col h-[320px]">
-              <h3 className="text-base font-bold text-foreground mb-4">Category Breakdown</h3>
-              {isLoading ? (
+            {isLoading ? (
+              <div className="glass-card flex flex-col h-[320px] gap-4">
                 <Skeleton type="chart" />
-              ) : userexp.length === 0 ? (
+              </div>
+            ) : userexp.length === 0 ? (
+              <div className="glass-card flex flex-col h-[320px] justify-center items-center gap-4">
                 <EmptyState title="No Breakdown Found" />
-              ) : (
-                <div className="flex-1 min-h-0">
-                  <CategoryPieChart exdata={userexp} />
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <CategoryPieChart exdata={userexp} />
+            )}
           </div>
 
           {/* Recent Transactions Table */}
-          <div className="glass-panel p-6 bg-card border border-border rounded-2xl">
-            <h3 className="text-lg font-bold text-foreground mb-4">Recent Transactions</h3>
-            {isLoading ? (
+          {isLoading ? (
+            <div className="glass-card p-6">
               <Skeleton type="table" lines={5} />
-            ) : (
-              <TransactionsTable
-                transactions={userexp}
-                onUpdate={loadData}
-              />
-            )}
-          </div>
+            </div>
+          ) : (
+            <TransactionsTable
+              transactions={userexp}
+              onUpdate={loadData}
+            />
+          )}
         </div>
 
         {/* Bills Tracker Section */}
         <div className="xl:col-span-1 space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl border border-border bg-card text-center">
+            <div className="p-4 rounded-[var(--radius-md)] border border-border bg-card text-center">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Due Today</span>
               <span className="block text-2xl font-extrabold text-amber-500 mt-1">{summary?.dueTodayCount || 0}</span>
             </div>
-            <div className="p-4 rounded-xl border border-border bg-card text-center">
+            <div className="p-4 rounded-[var(--radius-md)] border border-border bg-card text-center">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Overdue Bills</span>
               <span className="block text-2xl font-extrabold text-rose-500 mt-1">{summary?.overdueCount || 0}</span>
             </div>
           </div>
 
           {/* Active Bills List */}
-          <div className="glass-panel p-6 bg-card border border-border rounded-2xl space-y-4">
+          <div className="glass-card space-y-4">
             <div className="flex justify-between items-center border-b border-border/40 pb-2">
               <h3 className="text-base font-bold text-foreground">Active Bills</h3>
               <span className="text-xs font-semibold px-2 py-0.5 rounded bg-secondary text-muted-foreground">
@@ -390,7 +385,7 @@ const Home = () => {
                 {bills.map((bill) => (
                   <div
                     key={bill._id}
-                    className={`p-3.5 rounded-xl border flex flex-col justify-between gap-3 bg-secondary/15 ${
+                    className={`p-3.5 rounded-[var(--radius-md)] border flex flex-col justify-between gap-3 bg-secondary/15 ${
                       bill.status === "Overdue" 
                         ? "border-rose-500/30 bg-rose-500/5" 
                         : bill.status === "Due Today" 
@@ -425,7 +420,7 @@ const Home = () => {
                             : bill.priority === "High" 
                             ? "bg-amber-500 text-white" 
                             : bill.priority === "Medium"
-                            ? "bg-blue-500 text-white"
+                            ? "bg-[var(--primary)] text-white"
                             : "bg-secondary text-muted-foreground"
                         }`}>
                           {bill.priority}
@@ -435,7 +430,7 @@ const Home = () => {
                             ? "text-rose-500 bg-rose-500/10" 
                             : bill.status === "Due Today" 
                             ? "text-amber-500 bg-amber-500/10" 
-                            : "text-blue-500 bg-blue-500/10"
+                            : "text-[var(--primary)] bg-[var(--primary)]/10"
                         }`}>
                           {bill.status}
                         </span>
@@ -444,7 +439,7 @@ const Home = () => {
                       <div className="flex gap-1.5 items-center">
                         <button
                           onClick={() => handlePayBill(bill._id)}
-                          className="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1"
+                          className="btn btn-success h-8 px-2.5 text-xs flex items-center gap-1"
                         >
                           <MdCheckCircle size={12} />
                           {bill.status === "Overdue" ? "Clear" : "Pay"}
@@ -457,14 +452,14 @@ const Home = () => {
                             });
                             setIsEditBillOpen(true);
                           }}
-                          className="p-1.5 rounded bg-secondary hover:bg-secondary/80 border border-border text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                          className="btn btn-secondary h-8 w-8 p-0"
                           title="Edit Bill"
                         >
                           <MdEdit size={12} />
                         </button>
                         <button
                           onClick={() => handleDeleteBill(bill._id)}
-                          className="p-1.5 rounded bg-secondary hover:bg-rose-950/20 border border-border text-muted-foreground hover:text-rose-400 transition-colors cursor-pointer"
+                          className="btn btn-danger h-8 w-8 p-0"
                           title="Delete Bill"
                         >
                           <MdDelete size={12} />
@@ -478,18 +473,18 @@ const Home = () => {
           </div>
 
           {/* Quick PDF/CSV Export buttons card */}
-          <div className="glass-panel p-4 bg-card border border-border rounded-2xl flex items-center justify-between gap-4">
+          <div className="glass-card flex items-center justify-between gap-4">
             <span className="text-xs font-bold text-foreground">Monthly Reports</span>
             <div className="flex gap-2">
               <button 
                 onClick={downloadCSV}
-                className="flex items-center gap-1 px-3 py-1.5 rounded bg-secondary text-foreground border border-border text-xs font-bold hover:bg-secondary/80 transition-colors cursor-pointer"
+                className="btn btn-secondary h-8 px-3 text-xs flex items-center gap-1"
               >
                 <MdOutlineFileDownload /> CSV
               </button>
               <button 
                 onClick={downloadPDF}
-                className="flex items-center gap-1 px-3 py-1.5 rounded bg-gradient-to-r from-primary to-indigo-600 text-white text-xs font-bold shadow shadow-primary/20 hover:shadow-primary/40 transition-colors cursor-pointer"
+                className="btn btn-primary h-8 px-3 text-xs flex items-center gap-1"
               >
                 <MdOutlineFileDownload /> PDF
               </button>
@@ -502,7 +497,7 @@ const Home = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsAddExpenseOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-primary to-indigo-600 text-white flex items-center justify-center shadow-xl shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer"
+          className="w-14 h-14 rounded-full bg-gradient-to-tr from-[var(--primary)] to-indigo-600 text-white flex items-center justify-center shadow-[var(--shadow-lg)] shadow-[var(--primary)]/30 hover:shadow-[var(--primary)]/50 transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer"
           title="Quick Add Expense"
         >
           <MdAdd size={28} />
@@ -544,7 +539,7 @@ const Home = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">Category</label>
               <select
@@ -599,13 +594,13 @@ const Home = () => {
             <button
               type="button"
               onClick={() => setIsAddExpenseOpen(false)}
-              className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              className="btn btn-secondary"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              className="btn btn-primary"
             >
               Confirm
             </button>
@@ -657,7 +652,7 @@ const Home = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">Priority Level</label>
               <select
@@ -696,13 +691,13 @@ const Home = () => {
             <button
               type="button"
               onClick={() => setIsAddBillOpen(false)}
-              className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              className="btn btn-secondary"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              className="btn btn-primary"
             >
               Confirm
             </button>
@@ -756,7 +751,7 @@ const Home = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-muted-foreground">Priority Level</label>
                 <select
@@ -798,13 +793,13 @@ const Home = () => {
                   setIsEditBillOpen(false);
                   setEditingBill(null);
                 }}
-                className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+                className="btn btn-secondary"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+                className="btn btn-primary"
               >
                 Save Changes
               </button>

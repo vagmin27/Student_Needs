@@ -65,7 +65,7 @@ const styles = {
     color: "var(--text-primary)",
     border: "1px solid var(--border-color)",
     borderRadius: "15px",
-    boxShadow: "var(--shadow-soft)",
+    boxShadow: "var(--shadow-md)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

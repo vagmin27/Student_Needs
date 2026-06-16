@@ -277,8 +277,8 @@ function AccountSetting({ mode }) {
       {/* Title */}
       {mode !== "expenses-only" && (
         <div>
-          <h2 className="text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
-            <span className="text-brand-primary">Settings Panel</span>
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mont text-foreground tracking-tight flex items-center gap-3">
+            <span className="text-[var(--primary)]">Settings Panel</span>
           </h2>
           <p className="text-muted-foreground text-sm mt-1">
             Customize your profile, account preferences, theme options, notifications, and expense budgets.
@@ -289,10 +289,10 @@ function AccountSetting({ mode }) {
       <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* Navigation Sidebar/Tabs */}
         {mode !== "expenses-only" && (
-          <div className="w-full lg:w-64 bg-card border border-border rounded-2xl p-4 flex flex-row lg:flex-col gap-2 overflow-x-auto shrink-0 select-none">
+          <div className="w-full lg:w-64 bg-card border border-border rounded-[var(--radius-lg)] p-4 flex flex-row lg:flex-col gap-2 overflow-x-auto shrink-0 select-none">
             <button
               onClick={() => handleTabChange("profile")}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-[var(--radius-md)] text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === "profile" 
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -304,7 +304,7 @@ function AccountSetting({ mode }) {
             
             <button
               onClick={() => handleTabChange("account")}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-[var(--radius-md)] text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === "account" 
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -316,7 +316,7 @@ function AccountSetting({ mode }) {
 
             <button
               onClick={() => handleTabChange("notifications")}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-[var(--radius-md)] text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
                 activeTab === "notifications" 
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -329,7 +329,7 @@ function AccountSetting({ mode }) {
             {showExpenseTab && (
               <button
                 onClick={() => handleTabChange("expenses")}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-[var(--radius-md)] text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === "expenses" 
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -346,7 +346,7 @@ function AccountSetting({ mode }) {
         <div className={mode === "expenses-only" ? "w-full" : "flex-1 w-full min-w-0"}>
           {/* Tab 1: Profile */}
           {activeTab === "profile" && (
-            <div className="glass-panel p-6 bg-card border border-border rounded-2xl shadow-sm">
+            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
               {role === "student" && <StudentProfileView />}
               {(role === "tutor" || role === "teacher") && <TutorProfileView />}
               {role === "alumni" && <AlumniProfileView />}
@@ -356,7 +356,7 @@ function AccountSetting({ mode }) {
           {/* Tab 2: Account */}
           {activeTab === "account" && (
             <div className="space-y-6">
-              <div className="glass-panel p-6 bg-card border border-border rounded-2xl shadow-sm">
+              <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
                 <ThemePreference
                   variant="inline"
                   title="Theme Preference"
@@ -364,7 +364,7 @@ function AccountSetting({ mode }) {
                 />
               </div>
 
-              <div className="glass-panel p-6 bg-card border border-border rounded-2xl shadow-sm space-y-4">
+              <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] space-y-4">
                 <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
                   <ShieldCheck className="text-primary w-5 h-5" /> Privacy Preferences
                 </h3>
@@ -387,14 +387,14 @@ function AccountSetting({ mode }) {
 
           {/* Tab 3: Notifications */}
           {activeTab === "notifications" && (
-            <div className="glass-panel p-6 bg-card border border-border rounded-2xl shadow-sm space-y-6">
+            <div className="glass-panel p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] space-y-6">
               <div>
                 <h3 className="text-lg font-bold text-foreground">General Platform Alerts</h3>
                 <p className="text-muted-foreground text-xs mt-1">Select channel notification defaults.</p>
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 rounded-xl border border-border/50 bg-secondary/10">
+                <div className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/50 bg-secondary/10">
                   <div>
                     <h4 className="text-sm font-semibold text-foreground">Class Booking Confirmations</h4>
                     <p className="text-xs text-muted-foreground">Receive real-time alerts when booking a new tutorial class.</p>
@@ -402,7 +402,7 @@ function AccountSetting({ mode }) {
                   <input type="checkbox" defaultChecked className="rounded h-4 w-4 accent-primary" />
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-xl border border-border/50 bg-secondary/10">
+                <div className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/50 bg-secondary/10">
                   <div>
                     <h4 className="text-sm font-semibold text-foreground">Referral Application Updates</h4>
                     <p className="text-xs text-muted-foreground">Receive notifications when alumni refer you or update job statuses.</p>
@@ -417,7 +417,7 @@ function AccountSetting({ mode }) {
           {activeTab === "expenses" && showExpenseTab && (
             <div className="space-y-6">
               {loadingSettings ? (
-                <div className="glass-panel p-8 text-center border border-border rounded-2xl bg-card">
+                <div className="glass-panel p-8 text-center border border-border rounded-[var(--radius-lg)] bg-card">
                   <span className="spinner spinner-lg block mx-auto mb-2" />
                   <p className="text-muted-foreground text-sm">Loading expense configuration...</p>
                 </div>
@@ -426,7 +426,7 @@ function AccountSetting({ mode }) {
                   {/* Overview Dashboard Cards */}
                   {summaryMetrics && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="glass-panel p-6 border border-border/60 bg-card rounded-2xl relative overflow-hidden flex flex-col justify-between">
+                      <div className="glass-panel p-6 border border-border/60 bg-card rounded-[var(--radius-lg)] relative overflow-hidden flex flex-col justify-between">
                         <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Budget Health</span>
                         <div className="mt-3 flex items-baseline gap-2">
                           <span className="text-3xl font-extrabold text-foreground">{summaryMetrics.utilizationPercentage}%</span>
@@ -442,7 +442,7 @@ function AccountSetting({ mode }) {
                         </div>
                       </div>
 
-                      <div className="glass-panel p-6 border border-border/60 bg-card rounded-2xl relative overflow-hidden flex flex-col justify-between">
+                      <div className="glass-panel p-6 border border-border/60 bg-card rounded-[var(--radius-lg)] relative overflow-hidden flex flex-col justify-between">
                         <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Savings Progress</span>
                         <div className="mt-3 flex items-baseline gap-2">
                           <span className={`text-3xl font-extrabold ${summaryMetrics.currentSavings >= summaryMetrics.savingsGoal ? "text-emerald-500" : "text-foreground"}`}>
@@ -456,27 +456,27 @@ function AccountSetting({ mode }) {
                       </div>
 
                       {/* Quick Actions Card inside settings */}
-                      <div className="glass-panel p-6 border border-border/60 bg-card rounded-2xl relative overflow-hidden flex flex-col justify-between">
+                      <div className="glass-panel p-6 border border-border/60 bg-card rounded-[var(--radius-lg)] relative overflow-hidden flex flex-col justify-between">
                         <span className="text-xs font-bold text-primary uppercase tracking-wider">Quick Actions</span>
                         <div className="grid grid-cols-2 gap-2 mt-4">
                           <button
                             type="button"
                             onClick={() => setIsAddExpenseOpen(true)}
-                            className="text-xs font-bold py-2 px-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 text-center transition-colors cursor-pointer"
+                            className="text-xs font-bold py-2 px-3 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 text-center transition-colors cursor-pointer"
                           >
                             + Add Expense
                           </button>
                           <button
                             type="button"
                             onClick={() => setIsAddBillOpen(true)}
-                            className="text-xs font-bold py-2 px-3 rounded-lg bg-secondary text-foreground hover:bg-secondary/80 border border-border text-center transition-colors cursor-pointer"
+                            className="text-xs font-bold py-2 px-3 rounded-[var(--radius-sm)] bg-secondary text-foreground hover:bg-secondary/80 border border-border text-center transition-colors cursor-pointer"
                           >
                             + Add Bill
                           </button>
                           <button
                             type="button"
                             onClick={() => navigate("/expenses-tracker/bills/history")}
-                            className="text-xs font-semibold py-2 px-3 rounded-lg bg-secondary/50 text-muted-foreground hover:text-foreground text-center border border-border transition-colors cursor-pointer col-span-2"
+                            className="text-xs font-semibold py-2 px-3 rounded-[var(--radius-sm)] bg-secondary/50 text-muted-foreground hover:text-foreground text-center border border-border transition-colors cursor-pointer col-span-2"
                           >
                             View Bill History
                           </button>
@@ -486,7 +486,7 @@ function AccountSetting({ mode }) {
                   )}
 
                   {/* Budget Configuration Card */}
-                  <div className="glass-panel p-6 border border-border bg-card rounded-2xl space-y-6">
+                  <div className="glass-panel p-6 border border-border bg-card rounded-[var(--radius-lg)] space-y-6">
                     <h3 className="text-lg font-bold text-foreground">💰 Budget Configuration</h3>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -558,13 +558,13 @@ function AccountSetting({ mode }) {
                   </div>
 
                   {/* Category Limits Card */}
-                  <div className="glass-panel p-6 border border-border bg-card rounded-2xl space-y-6">
+                  <div className="glass-panel p-6 border border-border bg-card rounded-[var(--radius-lg)] space-y-6">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                       <div>
                         <h3 className="text-lg font-bold text-foreground">Spending Limits by Category</h3>
                         <p className="text-muted-foreground text-xs mt-0.5">Control category limits inside monthly budget.</p>
                       </div>
-                      <label className="flex items-center gap-2.5 cursor-pointer p-2 rounded-xl border border-border bg-secondary/10 shrink-0">
+                      <label className="flex items-center gap-2.5 cursor-pointer p-2 rounded-[var(--radius-md)] border border-border bg-secondary/10 shrink-0">
                         <input 
                           type="checkbox"
                           checked={allowLimitsExceedBudget}
@@ -577,7 +577,7 @@ function AccountSetting({ mode }) {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                       {STUDENT_CATEGORIES.map((cat) => (
-                        <div key={cat} className="space-y-1.5 p-3.5 rounded-xl border border-border/50 bg-secondary/15">
+                        <div key={cat} className="space-y-1.5 p-3.5 rounded-[var(--radius-md)] border border-border/50 bg-secondary/15">
                           <label className="text-xs font-bold text-foreground">{cat}</label>
                           <input
                             type="number"
@@ -594,10 +594,10 @@ function AccountSetting({ mode }) {
 
                   {/* Notification and Alert Toggles */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="glass-panel p-6 border border-border bg-card rounded-2xl space-y-6">
+                    <div className="glass-panel p-6 border border-border bg-card rounded-[var(--radius-lg)] space-y-6">
                       <h3 className="text-lg font-bold text-foreground">⚠️ Budget Alert Thresholds</h3>
                       <div className="space-y-4">
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Notify at 50% Used</span>
                             <p className="text-[11px] text-muted-foreground">Alert when monthly expenses hit 50%.</p>
@@ -609,7 +609,7 @@ function AccountSetting({ mode }) {
                             className="rounded h-4 w-4 accent-primary"
                           />
                         </label>
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Notify at 75% Used</span>
                             <p className="text-[11px] text-muted-foreground">Alert when monthly expenses hit 75%.</p>
@@ -621,7 +621,7 @@ function AccountSetting({ mode }) {
                             className="rounded h-4 w-4 accent-primary"
                           />
                         </label>
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Notify at 90% Used</span>
                             <p className="text-[11px] text-muted-foreground">Alert when monthly expenses hit 90%.</p>
@@ -633,7 +633,7 @@ function AccountSetting({ mode }) {
                             className="rounded h-4 w-4 accent-primary"
                           />
                         </label>
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Notify at 100% Used</span>
                             <p className="text-[11px] text-muted-foreground">Alert when monthly budget limit is fully exhausted.</p>
@@ -648,10 +648,10 @@ function AccountSetting({ mode }) {
                       </div>
                     </div>
 
-                    <div className="glass-panel p-6 border border-border bg-card rounded-2xl space-y-6">
+                    <div className="glass-panel p-6 border border-border bg-card rounded-[var(--radius-lg)] space-y-6">
                       <h3 className="text-lg font-bold text-foreground">🔔 Expense Notifications</h3>
                       <div className="grid grid-cols-1 gap-4">
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Email Notifications</span>
                             <p className="text-[11px] text-muted-foreground">Send due bill reminders and warnings to email.</p>
@@ -663,7 +663,7 @@ function AccountSetting({ mode }) {
                             className="rounded h-4 w-4 accent-primary"
                           />
                         </label>
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Push Notifications</span>
                             <p className="text-[11px] text-muted-foreground">Receive browser in-app and push notification alerts.</p>
@@ -675,7 +675,7 @@ function AccountSetting({ mode }) {
                             className="rounded h-4 w-4 accent-primary"
                           />
                         </label>
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Bill Due Alerts</span>
                             <p className="text-[11px] text-muted-foreground">Alert 2 days, 1 day and morning before due date.</p>
@@ -687,7 +687,7 @@ function AccountSetting({ mode }) {
                             className="rounded h-4 w-4 accent-primary"
                           />
                         </label>
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Overdue Alerts</span>
                             <p className="text-[11px] text-muted-foreground">Immediate alerts if bills pass their due date unpaid.</p>
@@ -699,7 +699,7 @@ function AccountSetting({ mode }) {
                             className="rounded h-4 w-4 accent-primary"
                           />
                         </label>
-                        <label className="flex items-center justify-between p-3 rounded-xl border border-border/55 bg-secondary/10 cursor-pointer">
+                        <label className="flex items-center justify-between p-3 rounded-[var(--radius-md)] border border-border/55 bg-secondary/10 cursor-pointer">
                           <div>
                             <span className="text-sm font-semibold text-foreground">Savings Goal Alerts</span>
                             <p className="text-[11px] text-muted-foreground">Alert when monthly target savings goal is reached.</p>
@@ -720,7 +720,7 @@ function AccountSetting({ mode }) {
                     <button
                       type="submit"
                       disabled={savingSettings}
-                      className="px-8 py-3 rounded-xl bg-gradient-to-r from-brand-primary to-indigo-600 text-white font-bold shadow-lg shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all cursor-pointer flex items-center justify-center min-w-[150px]"
+                      className="px-8 py-3 rounded-[var(--radius-md)] bg-primary text-primary-foreground hover:bg-primary-hover font-bold shadow-[var(--shadow-sm)] transition-all cursor-pointer flex items-center justify-center min-w-[150px]"
                     >
                       {savingSettings ? (
                         <>
@@ -783,7 +783,7 @@ function AccountSetting({ mode }) {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">Priority Level</label>
               <select
@@ -822,13 +822,13 @@ function AccountSetting({ mode }) {
             <button
               type="button"
               onClick={() => setIsAddBillOpen(false)}
-              className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
             >
               Confirm
             </button>
@@ -869,7 +869,7 @@ function AccountSetting({ mode }) {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">Category</label>
               <select
@@ -913,13 +913,13 @@ function AccountSetting({ mode }) {
             <button
               type="button"
               onClick={() => setIsAddExpenseOpen(false)}
-              className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
             >
               Confirm
             </button>

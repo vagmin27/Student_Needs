@@ -17,6 +17,7 @@ import {
   Inbox,
   CalendarCheck,
   ChevronRight,
+  ChevronsLeft,
 } from "lucide-react";
 
 const Sidebar = ({ className, role = "student" }) => {
@@ -50,6 +51,7 @@ const Sidebar = ({ className, role = "student" }) => {
       { name: "Requests", href: "/tutorials/tutor/accept", icon: Inbox },
       { name: "Profile", href: "/tutorials/tutor/editProfile", icon: Users },
       { name: "Attendance", href: "/tutorials/attendance", icon: CalendarCheck },
+      { name: "Chat", href: "/tutorials/chat", icon: MessageSquare },
     ];
   } else if (currentRole === "teacher") {
     links = [
@@ -68,6 +70,19 @@ const Sidebar = ({ className, role = "student" }) => {
         name: "Chat",
         href: "/alumni/chat",
         icon: MessageSquare,
+      },
+    ];
+  } else if (currentRole === "admin") {
+    links = [
+      {
+        name: "Dashboard",
+        href: "/student/dashboard",
+        icon: LayoutDashboard,
+      },
+      {
+        name: "Contact Messages",
+        href: "/admin/contact-messages",
+        icon: Inbox,
       },
     ];
   } else {
@@ -95,7 +110,7 @@ const Sidebar = ({ className, role = "student" }) => {
       },
       {
         name: "Referrals",
-        href: "/student/referrals",
+        href: "/referrals/browse-referrals",
         icon: Briefcase,
       },
     ];
@@ -104,14 +119,14 @@ const Sidebar = ({ className, role = "student" }) => {
   return (
     <div
       className={cn(
-        "flex flex-col h-full bg-card overflow-y-auto overflow-x-hidden select-none sidebar-transition",
+        "flex flex-col h-full bg-card overflow-y-auto overflow-x-hidden select-none sidebar-transition gemini-sidebar",
         isCollapsed ? "px-2 py-6" : "p-4",
         className
       )}
     >
       {/* Logo */}
       <div className={cn("flex items-center gap-3 mb-8 px-2 shrink-0", isCollapsed ? "justify-center" : "")}>
-        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
+        <div className="w-8 h-8 rounded-[var(--radius-sm)] bg-primary flex items-center justify-center shrink-0">
           <span className="text-primary-foreground font-bold text-lg leading-none">
             U
           </span>
@@ -139,8 +154,8 @@ const Sidebar = ({ className, role = "student" }) => {
               className={cn(
                 "group relative flex items-center transition-all duration-200 sidebar-link-btn",
                 isCollapsed 
-                  ? "w-12 h-12 justify-center p-0 rounded-2xl" 
-                  : "gap-3 px-3 py-2.5 rounded-xl",
+                  ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
+                  : "gap-3 px-3 py-2.5 rounded-[var(--radius-md)]",
                 isActive ? "active-link" : ""
               )}
             >
@@ -149,7 +164,7 @@ const Sidebar = ({ className, role = "student" }) => {
               
               {/* Premium CSS Tooltip */}
               {isCollapsed && (
-                <div className="absolute left-16 scale-0 rounded-md px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+                <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                   {link.name}
                 </div>
               )}
@@ -168,19 +183,23 @@ const Sidebar = ({ className, role = "student" }) => {
                 ? "/student/settings"
                 : currentRole === "alumni"
                 ? "/alumni/settings"
+                : currentRole === "tutor"
+                ? "/tutorials/tutor/settings"
+                : currentRole === "admin"
+                ? "/admin/settings"
                 : "/tutorials/profile/accountSettings"
             }
             className={cn(
               "group relative flex items-center transition-colors sidebar-link-btn",
               isCollapsed 
-                ? "w-12 h-12 justify-center p-0 rounded-2xl" 
-                : "gap-3 px-3 py-2.5 rounded-xl"
+                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
+                : "gap-3 px-3 py-2.5 rounded-[var(--radius-md)]"
             )}
           >
             <Settings className="w-5 h-5 shrink-0" />
             {!isCollapsed && <span>Settings</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-md px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Settings
               </div>
             )}
@@ -191,14 +210,14 @@ const Sidebar = ({ className, role = "student" }) => {
             className={cn(
               "group relative flex items-center transition-colors cursor-pointer text-destructive hover:bg-destructive/10",
               isCollapsed 
-                ? "w-12 h-12 justify-center p-0 rounded-2xl" 
-                : "w-full gap-3 px-3 py-2.5 rounded-xl"
+                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
+                : "w-full gap-3 px-3 py-2.5 rounded-[var(--radius-md)]"
             )}
           >
             <LogOut className="w-5 h-5 shrink-0 text-destructive" />
             {!isCollapsed && <span className="font-medium text-destructive">Log out</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-md px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Log out
               </div>
             )}
@@ -213,7 +232,7 @@ const Sidebar = ({ className, role = "student" }) => {
       )}>
         {/* User Card */}
         <div className={cn(
-          "flex items-center rounded-2xl bg-secondary/35 border border-border/50 transition-all duration-200 overflow-hidden",
+          "flex items-center rounded-[var(--radius-lg)] bg-secondary/35 border border-border/50 transition-all duration-200 overflow-hidden",
           isCollapsed ? "w-12 h-12 justify-center p-0" : "gap-3 p-3"
         )}>
           {/* Avatar */}
@@ -246,21 +265,16 @@ const Sidebar = ({ className, role = "student" }) => {
           onClick={toggleSidebar}
           className={cn(
             "group relative flex items-center text-muted-foreground hover:bg-secondary hover:text-foreground transition-all duration-200 cursor-pointer",
-            isCollapsed ? "w-12 h-12 justify-center p-0 rounded-2xl" : "w-full gap-3 px-3 py-2.5 rounded-xl"
+            isCollapsed ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" : "w-full gap-3 px-3 py-2.5 rounded-[var(--radius-md)]"
           )}
           aria-label={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
-          <svg
+          <ChevronsLeft
             className={cn("w-5 h-5 shrink-0 transform transition-transform duration-300", isCollapsed ? "rotate-180" : "")}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-          </svg>
+          />
           {!isCollapsed && <span className="sidebar-label">Collapse</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-md px-2 py-1 bg-slate-900 text-white text-xs font-semibold shadow-md transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Expand
             </div>
           )}

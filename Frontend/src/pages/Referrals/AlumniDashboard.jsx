@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
-import { Button } from '@/components/Referrals/ui/button.jsx';
-import { Input } from '@/components/Referrals/ui/input.jsx';
-import { Label } from '@/components/Referrals/ui/label.jsx';
-import { Textarea } from '@/components/Referrals/ui/textarea.jsx';
+import { Button } from '@/components/ui/button.jsx';
+import { Input } from '@/components/ui/input.jsx';
+import { Label } from '@/components/ui/label.jsx';
+import { Textarea } from '@/components/ui/textarea.jsx';
 import { cn } from '@/lib/Referrals/utils.js';
 import { showToast, dismissToast } from '@/components/Referrals/TransactionToast.jsx';
 import { AlumniStats } from '@/components/Referrals/Alumni/AlumniStats.jsx';
@@ -17,6 +17,7 @@ import { StudentProfileModal } from '@/components/Referrals/Alumni/StudentProfil
 import { ApplicationCard } from '@/components/Referrals/Alumni/ApplicationCard.jsx';
 import { Briefcase, Plus, ArrowLeft, Star, Eye, Users, FileText, User, Trash2, Upload, TrendingUp, Globe, Edit3, Loader2 } from 'lucide-react';
 import AlumniProfileView from "@/components/profile/AlumniProfileView.jsx";
+import { PageLayout, SectionContainer, PremiumCard, PremiumButton, DashboardGrid } from "@/components/dashboard/shared/Primitives";
 
 const Linkedin = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
@@ -661,34 +662,41 @@ export function AlumniDashboard() {
       acc[roleName] = filteredList;
     }
     return acc;
-  }, {});
-
-  return (
-    <div className={cn("space-y-4 sm:space-y-6", isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24 px-4 sm:px-6 md:px-8")}>
+  }, {});  return (
+    <PageLayout
+      className={cn(
+        "pb-8",
+        isUnifiedLayout ? "mt-0" : "mt-20 sm:mt-24"
+      )}
+    >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex flex-col items-start justify-center">
-            <h1 className="dashboard-title text-foreground tracking-tight mb-2">
-              <span className="gradient-text2">Alumni </span> 
-              <span className="gradient-text3">Dashboard</span>
-            </h1>
-            <p className="text-muted-foreground description-text">
-              {user ? `Welcome back, ${alumniName}!` : 'Create jobs and provide signed referrals to verified students'}
-            </p>
+          <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">
+            Alumni Referral Dashboard
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            {user ? `Welcome back, ${alumniName}!` : 'Create jobs and provide signed referrals to verified students'}
+          </p>
         </div>
         <div className="flex flex-col xs:flex-row gap-2 w-full sm:w-auto">
-          <Button variant="alumni" onClick={() => setShowCreateJob(true)}
-          className='text-background rounded-md hover:bg-muted-foreground bg-primary text-sm sm:text-base'>
-            <Briefcase className="w-4 h-4" />
+          <PremiumButton
+            variant="primary"
+            onClick={() => setShowCreateJob(true)}
+            leftIcon={Briefcase}
+            className="text-sm font-semibold animate-fade-in"
+          >
             Post Job
-          </Button>
-          <Button variant="success" onClick={() => setShowCreateReferral(true)}
-          className='text-background rounded-md bg-muted-foreground hover:bg-primary text-sm sm:text-base'>
-            <Star className="w-4 h-4" />
+          </PremiumButton>
+          <PremiumButton
+            variant="success"
+            onClick={() => setShowCreateReferral(true)}
+            leftIcon={Star}
+            className="text-sm font-semibold animate-fade-in"
+          >
             Post Referral
-          </Button>
+          </PremiumButton>
         </div>
       </div>
-
       <AlumniStats backendOpportunities={backendOpportunities} />
 
       <AlumniTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -697,7 +705,7 @@ export function AlumniDashboard() {
         <div className="space-y-4 sm:space-y-6">
           {isAuthenticated && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-card rounded-xl border border-border/50 p-4">
+              <div className="bg-card rounded-[var(--radius-md)] border border-border/50 p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-foreground">
                     {activeTab === 'jobs' ? 'My Posted Jobs' : 'My Posted Referrals'}
@@ -717,7 +725,7 @@ export function AlumniDashboard() {
                   actionLabel="Edit"
                 />
               </div>
-              <div className="bg-card rounded-xl border border-border/50">
+              <div className="bg-card rounded-[var(--radius-md)] border border-border/50">
                 {selectedBackendOpportunity ? (
                   <div className="p-4 sm:p-6">
                     <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 truncate">
@@ -757,7 +765,7 @@ export function AlumniDashboard() {
 
       {activeTab === 'applications' && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-xl border border-border/50 p-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] border border-border/50 p-4">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Pending Applications</h3>
               <p className="text-xs text-muted-foreground">Review applications grouped dynamically by role</p>
@@ -797,7 +805,7 @@ export function AlumniDashboard() {
               ))}
             </div>
           ) : (
-            <div className="bg-card rounded-xl p-6 sm:p-8 md:p-12 border border-border/50 text-center">
+            <div className="bg-card rounded-[var(--radius-md)] p-6 sm:p-8 md:p-12 border border-border/50 text-center">
               <FileText className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
                 No Pending Applications
@@ -812,7 +820,7 @@ export function AlumniDashboard() {
 
       {activeTab === 'candidates' && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-xl border border-border/50 p-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] border border-border/50 p-4">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Verified Candidates</h3>
               <p className="text-xs text-muted-foreground">Candidates approved for referral grouped dynamically by role</p>
@@ -851,7 +859,7 @@ export function AlumniDashboard() {
               ))}
             </div>
           ) : (
-            <div className="bg-card rounded-xl p-6 sm:p-8 md:p-12 border border-border/50 text-center">
+            <div className="bg-card rounded-[var(--radius-md)] p-6 sm:p-8 md:p-12 border border-border/50 text-center">
               <Users className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
                 No Verified Candidates Yet
@@ -914,6 +922,6 @@ export function AlumniDashboard() {
         student={selectedStudentProfile}
         loading={loadingStudentProfile}
       />
-    </div>
+    </PageLayout>
   );
 }

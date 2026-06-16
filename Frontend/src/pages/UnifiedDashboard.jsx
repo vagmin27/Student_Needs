@@ -1,14 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  MdCheckCircle,
-  MdSchool,
-  MdAccountBalanceWallet,
-  MdWorkOutline,
-  MdAdd,
-  MdChevronLeft,
-  MdChevronRight
-} from "react-icons/md";
+import { motion } from "framer-motion";
 import {
   Briefcase,
   ReceiptText,
@@ -16,6 +8,17 @@ import {
   Search,
   ArrowRight,
   Calendar as CalendarIcon,
+  CheckCircle,
+  GraduationCap,
+  Wallet,
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  TrendingUp,
+  Activity,
+  ArrowUpRight,
+  Clock,
 } from "lucide-react";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import API, { ATTENDANCE_PATHS } from "@/services/Attendance/api";
@@ -24,17 +27,35 @@ import { expensesApi } from "@/services/api/expensesApi";
 import { getUserId } from "@/utils/Expenses/authHelper.js";
 import { opportunitiesApi } from "@/services/Referrals/opportunities.js";
 import { studentProfileApi } from "@/services/Referrals/studentProfile.js";
-import { DashboardSection } from "@/components/dashboard/shared/DashboardSection";
-import { DashboardCard } from "@/components/dashboard/shared/DashboardCard";
-import { MetricCard } from "@/components/dashboard/shared/MetricCard";
+import { TUTORIAL_PATHS } from "@/utils/tutorialRoutes";
+import Modal from "@/components/Expenses/ui/Modal";
+import { toast } from "react-hot-toast";
+
+// Import Custom Design System Primitives
+import {
+  PremiumCard,
+  GlassPanel,
+  DashboardHeader,
+  DashboardSection,
+  SectionHeader,
+  StatCard,
+  MetricCard,
+  AnalyticsCard,
+  ActivityFeed,
+  PremiumButton,
+  PremiumInput,
+  AnimatedCounter,
+  EmptyState,
+  PageLayout,
+  DashboardGrid,
+} from "@/components/dashboard/shared/Primitives";
+import { DashboardWideSkeleton } from "@/components/dashboard/shared/Skeleton";
+
+// Import charts/sub-widgets
 import { CGPAProgressionChart } from "@/components/dashboard/student/CGPAProgressionChart";
 import { ExpenseBreakdownChart } from "@/components/dashboard/student/ExpenseBreakdownChart";
 import { UpcomingTasks } from "@/components/dashboard/student/UpcomingTasks";
 import { RecommendedOpportunities } from "@/components/dashboard/student/RecommendedOpportunities";
-import { Button } from "@/components/ui/button";
-import { TUTORIAL_PATHS } from "@/utils/tutorialRoutes";
-import Modal from "@/components/Expenses/ui/Modal";
-import { toast } from "react-hot-toast";
 
 const QUICK_ACTIONS = [
   {
@@ -58,7 +79,7 @@ const QUICK_ACTIONS = [
   {
     label: "Referrals",
     description: "Browse opportunities",
-    to: "/student/referrals",
+    to: "/referrals/browse-referrals",
     icon: Briefcase,
   },
 ];
@@ -67,6 +88,30 @@ const parseTime = (value) => {
   if (!value) return 0;
   const t = new Date(value).getTime();
   return Number.isNaN(t) ? 0 : t;
+};
+
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 14,
+    },
+  },
 };
 
 const UnifiedDashboard = () => {
@@ -78,13 +123,13 @@ const UnifiedDashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [opportunities, setOpportunities] = useState([]);
   const [profileCompleteness, setProfileCompleteness] = useState(null);
-  
+
   // Expense integration states
   const [bills, setBills] = useState([]);
   const [expenseSummary, setExpenseSummary] = useState(null);
   const [isQuickAddExpenseOpen, setIsQuickAddExpenseOpen] = useState(false);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState(new Date());
-  
+
   // Quick Add Form
   const [quickExpenseForm, setQuickExpenseForm] = useState({
     amount: "",
@@ -93,7 +138,7 @@ const UnifiedDashboard = () => {
     title: "",
     type: "expense",
     paymentMethod: "UPI",
-    note: ""
+    note: "",
   });
 
   const load = async () => {
@@ -145,7 +190,10 @@ const UnifiedDashboard = () => {
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      // Add slight delay to make loading state transitions feel smoother and premium
+      setTimeout(() => {
+        setLoading(false);
+      }, 400);
     }
   };
 
@@ -258,15 +306,6 @@ const UnifiedDashboard = () => {
       .slice(0, 8);
   }, [attendanceData, expenseChartData.recent, bookings, opportunities]);
 
-  const initials = user?.name
-    ? user.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
-    : "S";
-
   const handleQuickAddExpenseSubmit = async (e) => {
     e.preventDefault();
     const expenseUser = JSON.parse(localStorage.getItem("User") || "null");
@@ -278,7 +317,7 @@ const UnifiedDashboard = () => {
     const res = await expensesApi.createExpense({
       ...quickExpenseForm,
       userId: expenseUserId,
-      amount: Number(quickExpenseForm.amount)
+      amount: Number(quickExpenseForm.amount),
     });
     if (res) {
       toast.success("Expense tracked successfully!");
@@ -290,7 +329,7 @@ const UnifiedDashboard = () => {
         title: "",
         type: "expense",
         paymentMethod: "UPI",
-        note: ""
+        note: "",
       });
       load();
     }
@@ -314,7 +353,7 @@ const UnifiedDashboard = () => {
   }, [selectedCalendarDate]);
 
   const handlePrevMonth = () => {
-    setSelectedCalendarDate(prev => {
+    setSelectedCalendarDate((prev) => {
       const d = new Date(prev);
       d.setMonth(d.getMonth() - 1);
       return d;
@@ -322,7 +361,7 @@ const UnifiedDashboard = () => {
   };
 
   const handleNextMonth = () => {
-    setSelectedCalendarDate(prev => {
+    setSelectedCalendarDate((prev) => {
       const d = new Date(prev);
       d.setMonth(d.getMonth() + 1);
       return d;
@@ -331,308 +370,395 @@ const UnifiedDashboard = () => {
 
   const getBillsForDate = (date) => {
     if (!date) return [];
-    return bills.filter(bill => {
+    return bills.filter((bill) => {
       const bDate = new Date(bill.dueDate);
-      return bDate.getDate() === date.getDate() &&
-             bDate.getMonth() === date.getMonth() &&
-             bDate.getFullYear() === date.getFullYear();
+      return (
+        bDate.getDate() === date.getDate() &&
+        bDate.getMonth() === date.getMonth() &&
+        bDate.getFullYear() === date.getFullYear()
+      );
     });
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center pt-20">
-        <span className="spinner spinner-lg" />
-      </div>
-    );
+    return <DashboardWideSkeleton />;
   }
 
-  const currencySymbol = expenseSummary?.currency === "USD" ? "$" : expenseSummary?.currency === "EUR" ? "€" : expenseSummary?.currency === "GBP" ? "£" : "₹";
+  const currencySymbol =
+    expenseSummary?.currency === "USD"
+      ? "$"
+      : expenseSummary?.currency === "EUR"
+      ? "€"
+      : expenseSummary?.currency === "GBP"
+      ? "£"
+      : "₹";
 
   return (
-    <div className="space-y-6 relative pb-16">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0">
-            {initials}
-          </div>
-          <div>
-            <h1 className="dashboard-title text-foreground tracking-tight">
-              Welcome, {user?.name || user?.firstName || "Student"}
-            </h1>
-            <p className="text-muted-foreground description-text">
-              Overview across attendance, expenses, tutorials, and referrals
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <DashboardSection title="Summary">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <MetricCard
-            title="Attendance"
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className="space-y-8 relative pb-16"
+    >
+      {/* 📊 Summary Metrics Grid */}
+      <motion.div variants={itemVariants}>
+        <DashboardHeader title="Overview" description="Real-time summaries across active modules" />
+        
+        <DashboardGrid cols={4} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <StatCard
+            title="Class Attendance"
             value={`${attendanceStats.percentage}%`}
-            subtext={`${attendanceStats.present} attended · ${attendanceStats.total} total`}
-            icon={MdCheckCircle}
-            iconClassName="bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"
+            subtext={`${attendanceStats.present} attended · ${attendanceStats.total} total classes`}
+            icon={CheckCircle}
           />
-          <MetricCard
-            title="Expenses"
-            value={`${currencySymbol}${expenseSummary?.totalSpent?.toLocaleString() || "0"}`}
-            subtext={`${expenses.length} transaction${expenses.length === 1 ? "" : "s"}`}
-            icon={MdAccountBalanceWallet}
-            iconClassName="bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400"
-          />
-          <MetricCard
-            title="Profile"
-            value={
-              profileCompleteness != null ? `${profileCompleteness}%` : "—"
-            }
-            subtext="Referrals profile completeness"
-            icon={MdSchool}
-            iconClassName="bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400"
-          />
-          <MetricCard
-            title="Opportunities"
-            value={opportunities.length}
-            subtext="Open referrals from your college"
-            icon={MdWorkOutline}
-            iconClassName="bg-violet-100 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400"
-          />
-        </div>
-      </DashboardSection>
 
-      {/* 💰 Expense Tracker Summary Widget */}
-      <DashboardSection title="Expense Tracker Overview">
-        <Link to="/expenses-tracker" className="block hover:scale-[1.005] active:scale-[0.998] transition-transform duration-200 cursor-pointer">
-          <div className="p-5 bg-card border border-border rounded-2xl shadow-md grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            <div className="p-3 bg-secondary/35 rounded-xl border border-border/50 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Monthly Budget</span>
-              <span className="block text-lg font-bold text-foreground mt-1">
-                {currencySymbol}{expenseSummary?.monthlyBudget?.toLocaleString() || "0"}
+          <StatCard
+            title="Total Spending"
+            value={`${currencySymbol}${expenseSummary?.totalSpent || 0}`}
+            subtext={`${expenses.length} transaction${expenses.length === 1 ? "" : "s"} tracked`}
+            icon={Wallet}
+          />
+
+          <StatCard
+            title="Profile Progress"
+            value={profileCompleteness != null ? `${profileCompleteness}%` : "0%"}
+            subtext="Referral profile completeness rate"
+            icon={GraduationCap}
+          />
+
+          <StatCard
+            title="Open Roles"
+            value={String(opportunities.length)}
+            subtext="Alumni opportunities available"
+            icon={Briefcase}
+          />
+        </DashboardGrid>
+      </motion.div>
+
+      {/* 💰 Expense Tracker Quick Insights */}
+      <motion.div variants={itemVariants}>
+        <DashboardSection
+          title="Expense Insights"
+          description="Real-time financial indicators"
+          action={
+            <PremiumButton
+              variant="outline"
+              size="sm"
+              onClick={() => navigate("/expenses-tracker")}
+              rightIcon={ArrowRight}
+            >
+              Expense Tracker
+            </PremiumButton>
+          }
+        >
+          <DashboardGrid cols={5} className="grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Monthly Budget</span>
+              <span className="block text-xl font-bold text-[var(--text-primary)] mt-1">
+                <AnimatedCounter value={expenseSummary?.monthlyBudget || 0} prefix={currencySymbol} />
               </span>
             </div>
-            <div className="p-3 bg-secondary/35 rounded-xl border border-border/50 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Spent</span>
-              <span className="block text-lg font-bold text-rose-500 mt-1">
-                {currencySymbol}{expenseSummary?.totalSpent?.toLocaleString() || "0"}
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Spent</span>
+              <span className="block text-xl font-bold text-[var(--danger)] mt-1">
+                <AnimatedCounter value={expenseSummary?.totalSpent || 0} prefix={currencySymbol} />
               </span>
             </div>
-            <div className="p-3 bg-secondary/35 rounded-xl border border-border/50 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Remaining</span>
-              <span className={`block text-lg font-bold mt-1 ${
-                (expenseSummary?.remainingBudget || 0) < 0 ? "text-rose-600" : "text-emerald-500"
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Remaining</span>
+              <span className={`block text-xl font-bold mt-1 ${
+                (expenseSummary?.remainingBudget || 0) < 0 ? "text-[var(--danger)]" : "text-[var(--success)]"
               }`}>
-                {currencySymbol}{expenseSummary?.remainingBudget?.toLocaleString() || "0"}
+                <AnimatedCounter value={expenseSummary?.remainingBudget || 0} prefix={currencySymbol} />
               </span>
             </div>
-            <div className="p-3 bg-secondary/35 rounded-xl border border-border/50 text-center">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Upcoming Bills</span>
-              <span className="block text-lg font-bold text-blue-500 mt-1">{expenseSummary?.upcomingCount || 0}</span>
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Upcoming Bills</span>
+              <span className="block text-xl font-bold text-[var(--accent)] mt-1">
+                <AnimatedCounter value={expenseSummary?.upcomingCount || 0} />
+              </span>
             </div>
-            <div className="p-3 bg-secondary/35 rounded-xl border border-border/50 text-center col-span-2 sm:col-span-1">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground">Overdue Bills</span>
-              <span className={`block text-lg font-extrabold mt-1 ${
-                (expenseSummary?.overdueCount || 0) > 0 ? "text-rose-600 animate-pulse" : "text-muted-foreground/60"
-              }`}>{expenseSummary?.overdueCount || 0}</span>
+            <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center flex flex-col justify-center transition-all hover:scale-[1.02] hover:border-[var(--accent)]/30 duration-200 shadow-sm col-span-2 sm:col-span-1">
+              <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Overdue Bills</span>
+              <span className={`block text-xl font-bold mt-1 ${
+                (expenseSummary?.overdueCount || 0) > 0 ? "text-[var(--danger)] animate-pulse font-extrabold" : "text-[var(--text-muted)]/60"
+              }`}>
+                <AnimatedCounter value={expenseSummary?.overdueCount || 0} />
+              </span>
             </div>
-          </div>
-        </Link>
-      </DashboardSection>
+          </DashboardGrid>
+        </DashboardSection>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Grid Content */}
+      <DashboardGrid cols={3} className="grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <DashboardCard
-            title="Upcoming Classes"
-            description="Tutorial sessions from your bookings"
-            action={
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/tutorials/profile/manageBooking">View all</Link>
-              </Button>
-            }
-          >
-            <UpcomingTasks tasks={upcomingClasses} />
-          </DashboardCard>
+          {/* Upcoming Classes */}
+          <motion.div variants={itemVariants}>
+            <PremiumCard
+              title="Upcoming Classes"
+              description="Tutorial sessions scheduled for your modules"
+              action={
+                <PremiumButton
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate("/tutorials/profile/manageBooking")}
+                >
+                  View all
+                </PremiumButton>
+              }
+            >
+              {upcomingClasses.length === 0 ? (
+                <div className="flex flex-col items-center justify-center text-center p-6 min-h-[290px] w-full max-w-[420px] mx-auto select-none gap-4">
+                  {/* Icon */}
+                  <div className="w-14 h-14 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5 shrink-0 border border-[var(--primary)]/20 shadow-[var(--shadow-sm)]">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  {/* Heading */}
+                  <h4 className="font-serif text-base font-bold text-foreground tracking-tight mb-2 text-center">
+                    No Scheduled Sessions
+                  </h4>
+                  {/* Description */}
+                  <p className="text-xs text-muted-foreground leading-relaxed text-center mb-6 max-w-sm">
+                    You don't have any upcoming tutorial classes booked. Search for a tutor to schedule one.
+                  </p>
+                  {/* CTA */}
+                  <PremiumButton
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(TUTORIAL_PATHS.unifiedEntry)}
+                    className="border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/10"
+                  >
+                    Book a Tutor
+                  </PremiumButton>
+                </div>
+              ) : (
+                <UpcomingTasks tasks={upcomingClasses} />
+              )}
+            </PremiumCard>
+          </motion.div>
 
           {/* Interactive billing due calendar */}
-          <DashboardCard 
-            title="📅 Upcoming Due Calendar"
-            description="Monthly billing schedule and productivity due dates"
-          >
-            <div className="space-y-4">
-              <div className="flex justify-between items-center bg-secondary/25 p-2 rounded-xl border border-border/60">
-                <button onClick={handlePrevMonth} className="p-1 rounded hover:bg-secondary cursor-pointer">
-                  <MdChevronLeft size={20} />
-                </button>
-                <span className="text-sm font-bold text-foreground">
-                  {selectedCalendarDate.toLocaleString("en-US", { month: "long", year: "numeric" })}
-                </span>
-                <button onClick={handleNextMonth} className="p-1 rounded hover:bg-secondary cursor-pointer">
-                  <MdChevronRight size={20} />
-                </button>
-              </div>
+          <motion.div variants={itemVariants}>
+            <PremiumCard
+              title="📅 Bills Due Calendar"
+              description="Monitor billing cycles and premium deadlines"
+            >
+              <div className="space-y-5">
+                <div className="flex justify-between items-center bg-secondary/35 p-2.5 rounded-[var(--radius-md)] border border-border/60">
+                  <button onClick={handlePrevMonth} className="p-1.5 rounded-[var(--radius-sm)] hover:bg-secondary cursor-pointer text-foreground">
+                    <ChevronLeft size={18} />
+                  </button>
+                  <span className="text-sm font-bold text-foreground">
+                    {selectedCalendarDate.toLocaleString("en-US", { month: "long", year: "numeric" })}
+                  </span>
+                  <button onClick={handleNextMonth} className="p-1.5 rounded-[var(--radius-sm)] hover:bg-secondary cursor-pointer text-foreground">
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
 
-              {/* Grid */}
-              <div className="grid grid-cols-7 gap-1 text-center text-xs">
-                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(d => (
-                  <span key={d} className="font-bold text-muted-foreground py-1">{d}</span>
-                ))}
-                {calendarCells.map((date, idx) => {
-                  if (!date) return <span key={`pad-${idx}`} className="py-2" />;
-                  
-                  const dueBills = getBillsForDate(date);
-                  const hasBills = dueBills.length > 0;
-                  const isCurrentDay = new Date().getDate() === date.getDate() && 
-                                       new Date().getMonth() === date.getMonth() && 
-                                       new Date().getFullYear() === date.getFullYear();
-                                       
-                  // Get critical level color
-                  let borderClass = "border-transparent";
-                  let dotClass = "";
-                  if (hasBills) {
-                    const priorities = dueBills.map(b => b.priority);
-                    if (priorities.includes("Critical")) {
-                      borderClass = "border-rose-500/50 bg-rose-500/5";
-                      dotClass = "bg-rose-500";
-                    } else if (priorities.includes("High")) {
-                      borderClass = "border-amber-500/50 bg-amber-500/5";
-                      dotClass = "bg-amber-500";
-                    } else {
-                      borderClass = "border-blue-500/50 bg-blue-500/5";
-                      dotClass = "bg-blue-500";
+                {/* Grid Calendar */}
+                <div className="grid grid-cols-7 gap-1.5 text-center text-xs">
+                  {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
+                    <span key={d} className="font-bold text-muted-foreground py-1">{d}</span>
+                  ))}
+                  {calendarCells.map((date, idx) => {
+                    if (!date) return <span key={`pad-${idx}`} className="py-2.5" />;
+
+                    const dueBills = getBillsForDate(date);
+                    const hasBills = dueBills.length > 0;
+                    const isCurrentDay =
+                      new Date().getDate() === date.getDate() &&
+                      new Date().getMonth() === date.getMonth() &&
+                      new Date().getFullYear() === date.getFullYear();
+
+                    // Get critical level color
+                    let borderClass = "border-transparent";
+                    let dotClass = "";
+                    if (hasBills) {
+                      const priorities = dueBills.map((b) => b.priority);
+                      if (priorities.includes("Critical")) {
+                        borderClass = "border-red-500/50 bg-red-500/5";
+                        dotClass = "bg-red-500";
+                      } else if (priorities.includes("High")) {
+                        borderClass = "border-amber-500/50 bg-amber-500/5";
+                        dotClass = "bg-amber-500";
+                      } else {
+                        borderClass = "border-[var(--primary)]/30/50 bg-[var(--primary)]/5";
+                        dotClass = "bg-[var(--primary)]";
+                      }
                     }
-                  }
 
+                    return (
+                      <div
+                        key={`day-${idx}`}
+                        className={`py-2 rounded-[var(--radius-sm)] border flex flex-col items-center justify-between min-h-[46px] transition-all relative ${borderClass} ${
+                          isCurrentDay ? "bg-[var(--primary)]/10 border-[var(--primary)] font-extrabold" : ""
+                        }`}
+                      >
+                        <span className="text-foreground text-xs">{date.getDate()}</span>
+                        {hasBills && (
+                          <span className={`w-1.5 h-1.5 rounded-full ${dotClass} animate-pulse`} title={`${dueBills.length} bill(s) due`} />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* List of bills for selected month */}
+                <div className="border-t border-border/40 pt-4">
+                  <span className="text-xs font-bold text-foreground">
+                    Due Payments in {selectedCalendarDate.toLocaleString("en-US", { month: "long" })}:
+                  </span>
+                  <div className="space-y-2 mt-3">
+                    {bills.filter((b) => {
+                      const bDate = new Date(b.dueDate);
+                      return (
+                        bDate.getMonth() === selectedCalendarDate.getMonth() &&
+                        bDate.getFullYear() === selectedCalendarDate.getFullYear()
+                      );
+                    }).length === 0 ? (
+                      <p className="text-xs text-muted-foreground italic">No payments due this month.</p>
+                    ) : (
+                      bills
+                        .filter((b) => {
+                          const bDate = new Date(b.dueDate);
+                          return (
+                            bDate.getMonth() === selectedCalendarDate.getMonth() &&
+                            bDate.getFullYear() === selectedCalendarDate.getFullYear()
+                          );
+                        })
+                        .map((b) => (
+                          <div
+                            key={b._id}
+                            className="flex justify-between items-center text-xs p-2.5 rounded-[var(--radius-md)] bg-secondary/35 border border-border/50"
+                          >
+                            <span className="font-semibold text-foreground">{b.billName}</span>
+                            <div className="flex gap-2.5 items-center">
+                              <span className="text-muted-foreground">Due: {new Date(b.dueDate).getDate()}</span>
+                              <span
+                                className={`px-2 py-0.5 rounded-[var(--radius-sm)] font-bold uppercase tracking-wider text-[8px] ${
+                                  b.priority === "Critical"
+                                    ? "bg-red-500 text-white"
+                                    : b.priority === "High"
+                                    ? "bg-amber-500 text-white"
+                                    : "bg-secondary text-muted-foreground"
+                                }`}
+                              >
+                                {b.priority}
+                              </span>
+                              <span className="font-extrabold">{currencySymbol}{b.amount}</span>
+                            </div>
+                          </div>
+                        ))
+                    )}
+                  </div>
+                </div>
+              </div>
+            </PremiumCard>
+          </motion.div>
+
+          {/* Expenses Chart */}
+          <motion.div variants={itemVariants}>
+            <PremiumCard title="Expenses by Category" description="Visual categorization of tracked expenditures">
+              <ExpenseBreakdownChart data={expenseChartData.chartData} />
+            </PremiumCard>
+          </motion.div>
+
+          {/* Referrals & Jobs */}
+          <motion.div variants={itemVariants}>
+            <SectionHeader
+              title="Referrals & Positions"
+              description="Positions recommended by active alumni connections"
+              action={
+                <PremiumButton
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate("/referrals/browse-referrals")}
+                >
+                  Browse all
+                </PremiumButton>
+              }
+            />
+            <PremiumCard>
+              <RecommendedOpportunities />
+            </PremiumCard>
+          </motion.div>
+        </div>
+
+        {/* Sidebar Actions Column */}
+        <div className="space-y-6">
+          {/* Quick Actions */}
+          <motion.div variants={itemVariants}>
+            <PremiumCard title="Quick Modules" description="Instant shortcuts to specific systems">
+              <div className="grid grid-cols-1 gap-3">
+                {QUICK_ACTIONS.map((action) => {
+                  const Icon = action.icon;
                   return (
-                    <div 
-                      key={`day-${idx}`} 
-                      className={`py-1.5 rounded-lg border flex flex-col items-center justify-between min-h-[44px] transition-all relative ${borderClass} ${
-                        isCurrentDay ? "bg-primary/10 border-primary font-extrabold" : ""
-                      }`}
+                    <Link
+                      key={action.label}
+                      to={action.to}
+                      className="flex items-center gap-3.5 p-3.5 rounded-[var(--radius-md)] border border-border hover:border-[var(--primary)]/40 hover:bg-secondary/40 transition-all hover:translate-x-1 duration-200"
                     >
-                      <span className="text-foreground text-xs">{date.getDate()}</span>
-                      {hasBills && (
-                        <span className={`w-1.5 h-1.5 rounded-full ${dotClass} animate-pulse`} title={`${dueBills.length} bill(s) due`} />
-                      )}
-                    </div>
+                      <div className="p-2.5 rounded-[var(--radius-md)] bg-[var(--primary)]/10 text-[var(--primary)] shrink-0">
+                        <Icon className="w-4.5 h-4.5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-semibold text-foreground">{action.label}</p>
+                        <p className="text-xs text-muted-foreground line-clamp-1">
+                          {action.description}
+                        </p>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0" />
+                    </Link>
                   );
                 })}
               </div>
+            </PremiumCard>
+          </motion.div>
 
-              {/* List of bills for selected month */}
-              <div className="border-t border-border/40 pt-3">
-                <span className="text-xs font-bold text-foreground">Upcoming Payments in {selectedCalendarDate.toLocaleString("en-US", { month: "long" })}:</span>
-                <div className="space-y-1.5 mt-2">
-                  {bills.filter(b => {
-                    const bDate = new Date(b.dueDate);
-                    return bDate.getMonth() === selectedCalendarDate.getMonth() && 
-                           bDate.getFullYear() === selectedCalendarDate.getFullYear();
-                  }).length === 0 ? (
-                    <p className="text-xs text-muted-foreground italic">No payments due this month.</p>
-                  ) : (
-                    bills.filter(b => {
-                      const bDate = new Date(b.dueDate);
-                      return bDate.getMonth() === selectedCalendarDate.getMonth() && 
-                             bDate.getFullYear() === selectedCalendarDate.getFullYear();
-                    }).map(b => (
-                      <div key={b._id} className="flex justify-between items-center text-xs p-2 rounded bg-secondary/20 border border-border/50">
-                        <span className="font-semibold text-foreground">{b.billName}</span>
-                        <div className="flex gap-2 items-center">
-                          <span className="text-muted-foreground">Due: {new Date(b.dueDate).getDate()}</span>
-                          <span className={`px-1.5 py-0.5 rounded font-bold uppercase tracking-wider text-[9px] ${
-                            b.priority === "Critical" ? "bg-rose-500 text-white" : b.priority === "High" ? "bg-amber-500 text-white" : "bg-secondary text-muted-foreground"
-                          }`}>{b.priority}</span>
-                          <span className="font-extrabold">{currencySymbol}{b.amount}</span>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
-          </DashboardCard>
-
-          <DashboardCard title="Expenses by Category" description="From your expense tracker">
-            <ExpenseBreakdownChart data={expenseChartData.chartData} />
-          </DashboardCard>
-
-          <DashboardSection
-            title="Referrals & Internships"
-            description="Recommended opportunities"
-            action={
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/student/referrals">Browse all</Link>
-              </Button>
-            }
-          >
-            <DashboardCard>
-              <RecommendedOpportunities />
-            </DashboardCard>
-          </DashboardSection>
+          {/* Recent Activity Feed */}
+          <motion.div variants={itemVariants}>
+            <PremiumCard title="Recent Logs" description="Real-time activity logs across portal modules">
+              <ActivityFeed
+                items={recentActivity.map((act) => {
+                  let IconComponent = Activity;
+                  let iconClass = "bg-[var(--accent)]/10 text-[var(--accent)]";
+                  if (act.module === "Attendance") {
+                    IconComponent = CheckCircle;
+                    iconClass = "bg-emerald-500/10 text-emerald-500";
+                  } else if (act.module === "Expenses") {
+                    IconComponent = Wallet;
+                    iconClass = "bg-rose-500/10 text-rose-500";
+                  } else if (act.module === "Tutorials") {
+                    IconComponent = GraduationCap;
+                    iconClass = "bg-amber-500/10 text-amber-500";
+                  } else if (act.module === "Referrals") {
+                    IconComponent = Briefcase;
+                    iconClass = "bg-indigo-500/10 text-indigo-500";
+                  }
+                  return {
+                    title: act.label,
+                    description: act.meta,
+                    time: act.module,
+                    icon: <IconComponent className="w-4.5 h-4.5" />,
+                    iconClassName: iconClass,
+                  };
+                })}
+              />
+            </PremiumCard>
+          </motion.div>
         </div>
-
-        <div className="space-y-6">
-          <DashboardCard title="Quick Actions" description="Open a module">
-            <div className="grid grid-cols-1 gap-2">
-              {QUICK_ACTIONS.map((action) => {
-                const Icon = action.icon;
-                return (
-                  <Link
-                    key={action.label}
-                    to={action.to}
-                    className="flex items-center gap-3 p-3 rounded-lg border border-border hover:border-primary/40 hover:bg-secondary/50 transition-colors"
-                  >
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary shrink-0">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium">{action.label}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {action.description}
-                      </p>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0" />
-                  </Link>
-                );
-              })}
-            </div>
-          </DashboardCard>
-
-          <DashboardCard title="Recent Activity" description="Latest across all modules">
-            {recentActivity.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-4 text-center">
-                No recent activity yet. Use a module to see updates here.
-              </p>
-            ) : (
-              <ul className="space-y-3">
-                {recentActivity.map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex items-start justify-between gap-2 p-3 rounded-lg border border-border bg-secondary/20"
-                  >
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium line-clamp-1">{item.label}</p>
-                      <p className="text-xs text-muted-foreground">{item.meta}</p>
-                    </div>
-                    <span className="text-[10px] uppercase font-semibold tracking-wide px-2 py-0.5 rounded shrink-0 bg-secondary text-muted-foreground">
-                      {item.module}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </DashboardCard>
-        </div>
-      </div>
+      </DashboardGrid>
 
       {/* Global floating action button on bottom right of student dashboard */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-8 right-8 z-50">
         <button
           onClick={() => setIsQuickAddExpenseOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-primary to-indigo-600 text-white flex items-center justify-center shadow-xl shadow-brand-primary/30 hover:shadow-brand-primary/50 transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer"
+          className="w-14 h-14 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-[0_4px_20px_rgba(212,163,115,0.3)] hover:shadow-[0_8px_30px_rgba(212,163,115,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-[var(--primary)]/10"
           title="Quick Add Expense"
         >
-          <MdAdd size={28} />
+          <Plus size={24} />
         </button>
       </div>
 
@@ -642,26 +768,24 @@ const UnifiedDashboard = () => {
         onClose={() => setIsQuickAddExpenseOpen(false)}
         title="Quick Add Expense"
       >
-        <form onSubmit={handleQuickAddExpenseSubmit} className="space-y-4">
-          <div className="space-y-1">
+        <form onSubmit={handleQuickAddExpenseSubmit} className="space-y-4 pt-1">
+          <div className="space-y-1.5">
             <label className="text-xs font-semibold text-muted-foreground">Description / Title</label>
-            <input
+            <PremiumInput
               type="text"
               value={quickExpenseForm.title}
               onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, title: e.target.value })}
-              className="premium-input text-foreground h-10 w-full"
-              placeholder="e.g. Books, Bus ticket"
+              placeholder="e.g. Textbook, Transit pass"
               required
             />
           </div>
 
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             <label className="text-xs font-semibold text-muted-foreground">Amount (₹)</label>
-            <input
+            <PremiumInput
               type="number"
               value={quickExpenseForm.amount}
               onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, amount: e.target.value })}
-              className="premium-input text-foreground h-10 w-full"
               placeholder="0.00"
               min="0.01"
               step="0.01"
@@ -669,13 +793,13 @@ const UnifiedDashboard = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground">Category</label>
               <select
                 value={quickExpenseForm.category}
                 onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, category: e.target.value })}
-                className="premium-input text-foreground h-10 w-full cursor-pointer"
+                className="premium-input text-foreground h-11 w-full cursor-pointer rounded-[var(--radius-md)] bg-[var(--bg-secondary)] border border-border/80 text-sm py-2 px-3 focus:outline-none focus:border-[var(--primary)]"
               >
                 {[
                   "Tuition Fees",
@@ -689,19 +813,19 @@ const UnifiedDashboard = () => {
                   "Food",
                   "Shopping",
                   "Healthcare",
-                  "Other"
-                ].map(c => (
+                  "Other",
+                ].map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground">Payment Method</label>
               <select
                 value={quickExpenseForm.paymentMethod}
                 onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, paymentMethod: e.target.value })}
-                className="premium-input text-foreground h-10 w-full cursor-pointer"
+                className="premium-input text-foreground h-11 w-full cursor-pointer rounded-[var(--radius-md)] bg-[var(--bg-secondary)] border border-border/80 text-sm py-2 px-3 focus:outline-none focus:border-[var(--primary)]"
               >
                 <option value="UPI">UPI</option>
                 <option value="Cash">Cash</option>
@@ -711,35 +835,34 @@ const UnifiedDashboard = () => {
             </div>
           </div>
 
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             <label className="text-xs font-semibold text-muted-foreground">Date</label>
-            <input
+            <PremiumInput
               type="date"
               value={quickExpenseForm.date}
               onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, date: e.target.value })}
-              className="premium-input text-foreground h-10 w-full cursor-pointer"
               required
             />
           </div>
 
-          <div className="flex gap-4 justify-end pt-4 border-t border-border/20">
-            <button
+          <div className="flex gap-3 justify-end pt-5 border-t border-border/30 mt-6">
+            <PremiumButton
               type="button"
+              variant="secondary"
               onClick={() => setIsQuickAddExpenseOpen(false)}
-              className="px-5 py-2.5 rounded-lg border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
             >
               Cancel
-            </button>
-            <button
+            </PremiumButton>
+            <PremiumButton
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              variant="default"
             >
               Confirm
-            </button>
+            </PremiumButton>
           </div>
         </form>
       </Modal>
-    </div>
+    </motion.div>
   );
 };
 

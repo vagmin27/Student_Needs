@@ -31,14 +31,14 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 
       {/* Modal core */}
       <div 
-        className={`relative w-full max-w-lg glass-panel max-h-[90vh] overflow-y-auto flex flex-col transition-all duration-300 transform ${animateIn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
+        className={`relative w-full max-w-lg glass-panel modal-core-container max-h-[90vh] overflow-y-auto flex flex-col transition-all duration-300 transform ${animateIn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
       >
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-border bg-card/95 backdrop-blur-md rounded-t-2xl">
           <h2 className="text-xl font-bold text-foreground tracking-wide">{title}</h2>
           <button 
             onClick={onClose}
-            className="p-2 -mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-all"
+            className="p-2 -mr-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-[var(--radius-md)] transition-all"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -47,7 +47,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         </div>
 
         {/* Body */}
-        <div className="p-6">
+        <div className="p-6 modal-body w-full flex-grow flex-1">
           {children}
         </div>
       </div>

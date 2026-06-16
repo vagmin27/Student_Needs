@@ -204,7 +204,7 @@ export default function TutorMarkAttendance() {
               Course / Subject
             </label>
             <select
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded-[var(--radius-sm)] border border-input bg-background px-3 py-2 text-sm"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               disabled={subjects.length === 0}
@@ -221,7 +221,7 @@ export default function TutorMarkAttendance() {
             <label className="text-sm font-medium mb-1 block">Date</label>
             <input
               type="date"
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded-[var(--radius-sm)] border border-input bg-background px-3 py-2 text-sm"
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
@@ -233,7 +233,7 @@ export default function TutorMarkAttendance() {
             <input
               type="text"
               placeholder="e.g. 10:00 AM"
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded-[var(--radius-sm)] border border-input bg-background px-3 py-2 text-sm"
               value={sessionTime}
               onChange={(e) => setSessionTime(e.target.value)}
             />
@@ -273,7 +273,7 @@ export default function TutorMarkAttendance() {
               booking a class with you for the same course name.
             </p>
           ) : (
-            <div className="divide-y rounded-lg border">
+            <div className="divide-y rounded-[var(--radius-sm)] border">
               {filteredStudents.map((student) => {
                 const status = marks[student.studentId];
                 return (

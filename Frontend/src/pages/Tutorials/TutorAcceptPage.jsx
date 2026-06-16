@@ -61,7 +61,7 @@ function TutorAcceptPage() {
           bookings?.map((b) => (
             <div
               key={b._id}
-              className="rounded-xl border border-border bg-card p-5 shadow-sm space-y-2"
+              className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-[var(--shadow-sm)] space-y-2"
             >
               <p><strong>📖 Subject:</strong> {b.subject}</p>
               <p><strong>📅 Date:</strong> {b.date}</p>
@@ -72,18 +72,22 @@ function TutorAcceptPage() {
                 <strong>Status:</strong>{" "}
                 <span
                   className={
-                    b.status === "Booked"
-                      ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                      : b.status === "Completed"
-                        ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
-                        : "text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                    b.status === "Booked" || b.status === "pending"
+                      ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
+                      : b.status === "upcoming" || b.status === "accepted"
+                        ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-[var(--primary)]/10 text-blue-700 dark:bg-blue-900/30 dark:text-[var(--primary)]"
+                        : b.status === "in_progress"
+                          ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                          : b.status === "Completed" || b.status === "completed"
+                            ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
+                            : "text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
                   }
                 >
                   {b.status}
                 </span>
               </p>
 
-              {b.status === "Booked" && (
+              {(b.status === "Booked" || b.status === "pending") && (
                 <div
                   style={{
                     display: "flex",
@@ -91,8 +95,8 @@ function TutorAcceptPage() {
                     marginTop: "12px",
                   }}
                 >
-                  <Button size="sm" onClick={() => updateStatus(b._id, "Completed")}>✅ Accept</Button>
-                  <Button size="sm" variant="destructive" onClick={() => updateStatus(b._id, "Cancelled")}>❌ Reject</Button>
+                  <Button size="sm" onClick={() => updateStatus(b._id, "upcoming")}>✅ Accept</Button>
+                  <Button size="sm" variant="destructive" onClick={() => updateStatus(b._id, "declined")}>❌ Reject</Button>
                 </div>
               )}
             </div>

@@ -1,6 +1,6 @@
 /* GLOBAL RESET */
 * {
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
@@ -33,7 +33,7 @@ body {
 .searchDiv {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   box-shadow: var(--shadow-soft);
   min-height: 400px;
@@ -42,7 +42,7 @@ body {
 
 /* SMOOTH PAGE TRANSITION */
 .searchDiv:hover {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
 }
 
 /* PAGINATION SECTION */

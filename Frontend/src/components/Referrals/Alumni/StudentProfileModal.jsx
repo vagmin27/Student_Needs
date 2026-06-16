@@ -41,7 +41,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/60 backdrop-blur-sm"
         onClick={onClose}
       >
         <motion.div
@@ -49,7 +49,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-card rounded-2xl shadow-2xl border border-border/50"
+          className="relative w-full max-w-3xl modal-core-container max-h-[90vh] overflow-y-auto bg-card rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] border border-border/50"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button */}
@@ -120,7 +120,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-500 text-sm hover:bg-blue-500/20 transition-colors"
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-sm hover:bg-[var(--primary)]/20 transition-colors"
                       >
                         <Link className="w-4 h-4" />
                         LinkedIn
@@ -136,7 +136,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-500/10 text-gray-400 text-sm hover:bg-gray-500/20 transition-colors"
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gray-500/10 text-muted-foreground text-sm hover:bg-gray-500/20 transition-colors"
                       >
                         <Code className="w-4 h-4" />
                         GitHub
@@ -148,7 +148,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         href={student.portfolioUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-500 text-sm hover:bg-purple-500/20 transition-colors"
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-sm hover:bg-[var(--primary)]/20 transition-colors"
                       >
                         <ExternalLink className="w-4 h-4" />
                         Portfolio
@@ -167,7 +167,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                       <Mail className="w-4 h-4" />
                       Contact Information
                     </h3>
-                    <div className="space-y-2 bg-muted/30 rounded-lg p-4">
+                    <div className="space-y-2 bg-muted/30 rounded-[var(--radius-sm)] p-4">
                       <div className="flex items-center gap-3 text-sm">
                         <Mail className="w-4 h-4 text-muted-foreground" />
                         <span className="text-foreground">{student.email}</span>
@@ -198,7 +198,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                       <GraduationCap className="w-4 h-4" />
                       Education
                     </h3>
-                    <div className="bg-muted/30 rounded-lg p-4">
+                    <div className="bg-muted/30 rounded-[var(--radius-sm)] p-4">
                       <div className="flex items-start gap-3">
                         <Building2 className="w-5 h-5 text-primary mt-0.5" />
                         <div>
@@ -224,10 +224,10 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         <FileText className="w-4 h-4" />
                         Resume
                       </h3>
-                      <div className="bg-muted/30 rounded-lg p-4">
+                      <div className="bg-muted/30 rounded-[var(--radius-sm)] p-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10">
+                            <div className="p-2 rounded-[var(--radius-sm)] bg-primary/10">
                               <FileText className="w-5 h-5 text-primary" />
                             </div>
                             <div>
@@ -278,7 +278,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         <User className="w-4 h-4" />
                         About
                       </h3>
-                      <div className="bg-muted/30 rounded-lg p-4">
+                      <div className="bg-muted/30 rounded-[var(--radius-sm)] p-4">
                         <p className="text-sm text-foreground leading-relaxed">
                           {student.bio}
                         </p>
@@ -315,7 +315,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         {student.experience?.map((exp, index) => (
                           <div
                             key={index}
-                            className="bg-muted/30 rounded-lg p-4"
+                            className="bg-muted/30 rounded-[var(--radius-sm)] p-4"
                           >
                             <p className="font-medium text-foreground">
                               {exp.title}
@@ -344,7 +344,7 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                         {student.projects?.map((project, index) => (
                           <div
                             key={index}
-                            className="bg-muted/30 rounded-lg p-4"
+                            className="bg-muted/30 rounded-[var(--radius-sm)] p-4"
                           >
                             <div className="flex items-center justify-between">
                               <p className="font-medium text-foreground">

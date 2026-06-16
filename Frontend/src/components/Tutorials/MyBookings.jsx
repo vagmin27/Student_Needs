@@ -39,38 +39,23 @@ await API.delete(`/booking/deleteClass/${id}`);
 };
 
 return (
-<div style={{ padding: "2rem" }}> <h1>📚 My Bookings</h1>
+<div className="p-8">
+  <h1 className="text-2xl font-bold mb-4">📚 My Bookings</h1>
 
   {bookings.length === 0 ? (
-    <p>No bookings found</p>
+    <p className="text-muted-foreground">No bookings found</p>
   ) : (
-    <div style={{ marginTop: "1rem" }}>
+    <div className="space-y-4">
       {bookings?.map((b) => (
-        <div
-          key={b.id}
-          style={{
-            border: "1px solid #ddd",
-            padding: "1rem",
-            borderRadius: "10px",
-            marginBottom: "1rem",
-          }}
-        >
-          <h3>{b.tutorName || "Tutor"}</h3>
-          <p><strong>Subject:</strong> {b.subject}</p>
-          <p><strong>Date:</strong> {b.date}</p>
-          <p><strong>Time:</strong> {b.time}</p>
+        <div key={b.id} className="card p-4">
+          <h3 className="font-semibold text-lg text-foreground">{b.tutorName || "Tutor"}</h3>
+          <p className="text-sm"><strong className="text-foreground">Subject:</strong> {b.subject}</p>
+          <p className="text-sm"><strong className="text-foreground">Date:</strong> {b.date}</p>
+          <p className="text-sm"><strong className="text-foreground">Time:</strong> {b.time}</p>
 
           <button
             onClick={() => handleDelete(b.id)}
-            style={{
-              marginTop: "10px",
-              background: "red",
-              color: "white",
-              border: "none",
-              padding: "8px 12px",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
+            className="btn btn-danger mt-2.5"
           >
             Cancel Booking
           </button>
@@ -82,12 +67,7 @@ return (
   {/* 🔙 Back Button */}
   <button
     onClick={() => navigate(-1)}
-    style={{
-      marginTop: "20px",
-      padding: "10px 15px",
-      borderRadius: "8px",
-      cursor: "pointer",
-    }}
+    className="btn btn-ghost mt-5"
   >
     ← Go Back
   </button>

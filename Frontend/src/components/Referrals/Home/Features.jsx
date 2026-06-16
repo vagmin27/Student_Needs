@@ -146,20 +146,20 @@ const Features = React.memo(() => {
             className="w-full h-80 sm:h-96"
           >
             <MagicCard
-              className="w-full h-full rounded-xl p-1.5 sm:p-2"
+              className="w-full h-full rounded-[var(--radius-md)] p-1.5 sm:p-2"
               gradientSize={250}
               gradientColor="oklch(74.443% 0.00008 271.152)"
               gradientOpacity={0.6}
               gradientFrom="oklch(0.2809 0 0)"
               gradientTo="oklch(0.5841 0.1031 171.6359)"
             >
-              <div className="w-full min-h-full h-full rounded-lg relative overflow-hidden border">
+              <div className="w-full min-h-full h-full rounded-[var(--radius-sm)] relative overflow-hidden border">
                 <img
                   src={feature.image}
                   alt={feature.title}
                   loading="lazy"
                   decoding="async"
-                  className="absolute inset-0 w-full h-full rounded-lg object-cover object-center"
+                  className="absolute inset-0 w-full h-full rounded-[var(--radius-sm)] object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none"></div>
                 <div className="absolute inset-0 flex flex-col items-start justify-end px-3 sm:px-4 pb-3 sm:pb-4">

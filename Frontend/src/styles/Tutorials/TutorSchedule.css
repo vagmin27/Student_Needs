@@ -71,7 +71,7 @@
 .schedule-left img {
   width: 100%;
   max-width: 380px; /* 🔥 increased size */
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
 }
 
 /* 📌 RIGHT CONTENT */
@@ -87,7 +87,7 @@
   background: var(--card-bg);
   color: var(--text-primary);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   width: 320px;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-soft, 0 5px 20px rgba(0,0,0,0.1));
@@ -95,7 +95,7 @@
 }
 
 .schedule-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px) scale(1.01);
 }
 
 /* 🔗 INPUT */
@@ -113,15 +113,16 @@
 .save-link-btn {
   margin-top: 8px;
   padding: 8px 12px;
-  background: #4CAF50;
+  background: var(--success);
   color: var(--text-white);
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: opacity var(--transition-fast) var(--ease-standard);
 }
 
 .save-link-btn:hover {
-  background: #3e8e41;
+  opacity: 0.9;
 }
 
 /* 📱 RESPONSIVE */

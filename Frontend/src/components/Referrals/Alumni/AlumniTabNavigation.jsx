@@ -9,12 +9,12 @@ import { Briefcase, Users, Star, FileText, User } from 'lucide-react';
  */
 export function AlumniTabNavigation({ activeTab, setActiveTab }) {
   return (
-    <div className="flex gap-2 p-1 bg-muted rounded-lg w-fit flex-wrap">
+    <div className="flex gap-2 p-1 bg-muted rounded-[var(--radius-sm)] w-fit flex-wrap">
       {/* Referrals Tab */}
       <button
         onClick={() => setActiveTab('referrals')}
         className={cn(
-          'px-4 py-2 rounded-md text-sm font-medium transition-all',
+          'px-4 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-all',
           activeTab === 'referrals'
             ? 'bg-card text-foreground shadow-sm'
             : 'text-muted-foreground hover:text-foreground'
@@ -28,7 +28,7 @@ export function AlumniTabNavigation({ activeTab, setActiveTab }) {
       <button
         onClick={() => setActiveTab('jobs')}
         className={cn(
-          'px-4 py-2 rounded-md text-sm font-medium transition-all',
+          'px-4 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-all',
           activeTab === 'jobs'
             ? 'bg-card text-foreground shadow-sm'
             : 'text-muted-foreground hover:text-foreground'
@@ -42,7 +42,7 @@ export function AlumniTabNavigation({ activeTab, setActiveTab }) {
       <button
         onClick={() => setActiveTab('applications')}
         className={cn(
-          'px-4 py-2 rounded-md text-sm font-medium transition-all',
+          'px-4 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-all',
           activeTab === 'applications'
             ? 'bg-card text-foreground shadow-sm'
             : 'text-muted-foreground hover:text-foreground'
@@ -56,7 +56,7 @@ export function AlumniTabNavigation({ activeTab, setActiveTab }) {
       <button
         onClick={() => setActiveTab('candidates')}
         className={cn(
-          'px-4 py-2 rounded-md text-sm font-medium transition-all',
+          'px-4 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-all',
           activeTab === 'candidates'
             ? 'bg-card text-foreground shadow-sm'
             : 'text-muted-foreground hover:text-foreground'
@@ -70,7 +70,7 @@ export function AlumniTabNavigation({ activeTab, setActiveTab }) {
       <button
         onClick={() => setActiveTab('profile')}
         className={cn(
-          'px-4 py-2 rounded-md text-sm font-medium transition-all',
+          'px-4 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-all',
           activeTab === 'profile'
             ? 'bg-card text-foreground shadow-sm'
             : 'text-muted-foreground hover:text-foreground'

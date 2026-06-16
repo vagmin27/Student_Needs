@@ -567,7 +567,7 @@ export default function StudentProfileView() {
       </div>
 
       {/* Live Completeness bar */}
-      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md">
+      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)]">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -589,7 +589,7 @@ export default function StudentProfileView() {
             />
           </div>
           {liveMissingFields.length > 0 && (
-            <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/30 p-2.5 rounded-lg border border-border/20">
+            <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/30 p-2.5 rounded-[var(--radius-sm)] border border-border/20">
               <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
               <div>
                 <span className="font-semibold text-foreground">Missing items:</span>{" "}
@@ -605,7 +605,7 @@ export default function StudentProfileView() {
         {/* Left column: Profile Pic & Info details */}
         <div className="space-y-6 lg:col-span-1">
           <div className="glass-panel p-6 flex flex-col items-center text-center">
-            <div className="relative group w-32 h-32 rounded-2xl overflow-hidden border-4 border-background bg-muted flex items-center justify-center shrink-0 shadow-md">
+            <div className="relative group w-32 h-32 rounded-[var(--radius-lg)] overflow-hidden border-4 border-background bg-muted flex items-center justify-center shrink-0 shadow-[var(--shadow-md)]">
               {displayImageSrc ? (
                 <img
                   src={displayImageSrc}
@@ -618,7 +618,7 @@ export default function StudentProfileView() {
                 </span>
               )}
               {isEditing && (
-                <label htmlFor="student-avatar-file" className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200">
+                <label htmlFor="student-avatar-file" className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200">
                   <Upload className="w-6 h-6 text-white mb-1" />
                   <span className="text-white text-xs font-semibold">Change Photo</span>
                   <input
@@ -652,7 +652,7 @@ export default function StudentProfileView() {
           </div>
 
           {/* Social Links card */}
-          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md">
+          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)]">
             <CardHeader className="pb-3">
               <CardTitle className="text-base font-bold">Social Links</CardTitle>
             </CardHeader>
@@ -660,8 +660,8 @@ export default function StudentProfileView() {
               {/* LinkedIn */}
               {!isEditing ? (
                 profile?.linkedinUrl ? (
-                  <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors py-1.5 px-2.5 rounded-lg bg-muted/20 border border-border/10">
-                    <Linkedin className="w-4 h-4 text-blue-400" />
+                  <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors py-1.5 px-2.5 rounded-[var(--radius-sm)] bg-muted/20 border border-border/10">
+                    <Linkedin className="w-4 h-4 text-[var(--primary)]" />
                     <span className="truncate text-foreground font-medium">{profile.linkedinUrl}</span>
                   </a>
                 ) : (
@@ -685,7 +685,7 @@ export default function StudentProfileView() {
               {/* GitHub */}
               {!isEditing ? (
                 profile?.githubUrl ? (
-                  <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors py-1.5 px-2.5 rounded-lg bg-muted/20 border border-border/10">
+                  <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors py-1.5 px-2.5 rounded-[var(--radius-sm)] bg-muted/20 border border-border/10">
                     <Github className="w-4 h-4 text-foreground" />
                     <span className="truncate text-foreground font-medium">{profile.githubUrl}</span>
                   </a>
@@ -710,7 +710,7 @@ export default function StudentProfileView() {
               {/* Portfolio */}
               {!isEditing ? (
                 profile?.portfolioUrl ? (
-                  <a href={profile.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors py-1.5 px-2.5 rounded-lg bg-muted/20 border border-border/10">
+                  <a href={profile.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors py-1.5 px-2.5 rounded-[var(--radius-sm)] bg-muted/20 border border-border/10">
                     <Globe className="w-4 h-4 text-emerald-400" />
                     <span className="truncate text-foreground font-medium">{profile.portfolioUrl}</span>
                   </a>
@@ -737,7 +737,7 @@ export default function StudentProfileView() {
 
         {/* Right column: Form Fields details */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md p-6 space-y-6">
+          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)] p-6 space-y-6">
             <h3 className="text-lg font-bold text-foreground border-b border-border/20 pb-2">Academic & Personal Profile</h3>
 
             {!isEditing ? (
@@ -772,7 +772,7 @@ export default function StudentProfileView() {
                 {profile?.bio && (
                   <div className="md:col-span-2">
                     <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Bio</h4>
-                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-xl border border-border/30">{profile.bio}</p>
+                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-[var(--radius-md)] border border-border/30">{profile.bio}</p>
                   </div>
                 )}
               </div>
@@ -841,12 +841,12 @@ export default function StudentProfileView() {
                   )}
 
                   {showSuggestions && collegeSuggestions.length > 0 && (
-                    <ul className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 max-h-48 overflow-y-auto bg-card border border-border shadow-lg rounded-xl p-1.5 space-y-0.5">
+                    <ul className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 max-h-48 overflow-y-auto bg-card border border-border shadow-[var(--shadow-lg)] rounded-[var(--radius-md)] p-1.5 space-y-0.5">
                       {collegeSuggestions.map((c) => (
                         <li
                           key={c._id}
                           onMouseDown={() => handleSelectCollege(c.name)}
-                          className="px-3 py-2 text-sm rounded-lg hover:bg-muted text-foreground cursor-pointer transition-colors"
+                          className="px-3 py-2 text-sm rounded-[var(--radius-sm)] hover:bg-muted text-foreground cursor-pointer transition-colors"
                         >
                           {c.name}
                         </li>
@@ -978,7 +978,7 @@ export default function StudentProfileView() {
                       <Plus className="w-4 h-4" />
                     </Button>
                   </div>
-                  <div className="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-muted/20 border border-border/30 rounded-lg">
+                  <div className="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-muted/20 border border-border/30 rounded-[var(--radius-sm)]">
                     {skills.map((skill) => (
                       <Badge key={skill} variant="secondary" className="gap-1 bg-primary/10 text-primary border border-primary/20">
                         {skill}
@@ -1003,7 +1003,7 @@ export default function StudentProfileView() {
                       <Plus className="w-4 h-4" />
                     </Button>
                   </div>
-                  <div className="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-muted/20 border border-border/30 rounded-lg">
+                  <div className="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-muted/20 border border-border/30 rounded-[var(--radius-sm)]">
                     {careerInterests.map((interest) => (
                       <Badge key={interest} variant="secondary" className="gap-1 bg-secondary text-secondary-foreground border border-border">
                         {interest}
@@ -1028,7 +1028,7 @@ export default function StudentProfileView() {
                       <Plus className="w-4 h-4" />
                     </Button>
                   </div>
-                  <div className="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-muted/20 border border-border/30 rounded-lg">
+                  <div className="flex flex-wrap gap-1.5 min-h-[40px] p-2 bg-muted/20 border border-border/30 rounded-[var(--radius-sm)]">
                     {preferredRoles.map((role) => (
                       <Badge key={role} variant="secondary" className="gap-1 bg-accent/20 text-accent-foreground border border-accent/30">
                         {role}
@@ -1043,11 +1043,11 @@ export default function StudentProfileView() {
 
           {/* Projects and Certifications */}
           {!isEditing && projects.length > 0 && (
-            <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md p-6 space-y-4">
+            <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)] p-6 space-y-4">
               <h3 className="text-lg font-bold text-foreground">Projects</h3>
               <div className="space-y-4">
                 {projects.map((project, idx) => (
-                  <div key={idx} className="p-4 rounded-xl border border-border/30 bg-muted/20 space-y-2">
+                  <div key={idx} className="p-4 rounded-[var(--radius-md)] border border-border/30 bg-muted/20 space-y-2">
                     <div className="flex justify-between items-start">
                       <h4 className="font-bold text-foreground">{project.title}</h4>
                       {project.link && (
@@ -1064,9 +1064,9 @@ export default function StudentProfileView() {
           )}
 
           {isEditing && (
-            <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md p-6 space-y-4">
+            <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)] p-6 space-y-4">
               <Label className="text-base font-bold text-foreground">Manage Projects</Label>
-              <div className="p-4 rounded-xl border border-border/30 bg-muted/10 space-y-3">
+              <div className="p-4 rounded-[var(--radius-md)] border border-border/30 bg-muted/10 space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
                     value={projectTitle}
@@ -1096,7 +1096,7 @@ export default function StudentProfileView() {
               </div>
               <div className="space-y-2">
                 {projects.map((project, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 rounded-lg border border-border/20 bg-muted/20 text-sm">
+                  <div key={idx} className="flex items-center justify-between p-3 rounded-[var(--radius-sm)] border border-border/20 bg-muted/20 text-sm">
                     <div>
                       <span className="font-semibold text-foreground">{project.title}</span>
                       {project.link && <span className="text-xs text-muted-foreground ml-2">({project.link})</span>}

@@ -115,11 +115,25 @@ const ReferralsInterviewPage = React.lazy(
   () => import("@/pages/Referrals/InterviewPage.jsx"),
 );
 const ChatPage = React.lazy(() => import("@/pages/Referrals/ChatPage.jsx"));
+const TutorStudentChatPage = React.lazy(() => import("./pages/ChatPage.jsx"));
 import {
   RoleAuthPage,
   RoleSelectionPage,
-  UnifiedLanding,
 } from "@/pages/UnifiedFlow.jsx";
+
+const MarketingLayout = React.lazy(() => import("@/pages/Marketing/MarketingLayout.jsx"));
+const MarketingHome = React.lazy(() => import("@/pages/Marketing/Home.jsx"));
+const MarketingFeatures = React.lazy(() => import("@/pages/Marketing/Features.jsx"));
+const ModuleDetail = React.lazy(() => import("@/pages/Marketing/ModuleDetail.jsx"));
+const MarketingHowItWorks = React.lazy(() => import("@/pages/Marketing/HowItWorks.jsx"));
+const MarketingAbout = React.lazy(() => import("@/pages/Marketing/About.jsx"));
+const MarketingGallery = React.lazy(() => import("@/pages/Marketing/Gallery.jsx"));
+const MarketingCareers = React.lazy(() => import("@/pages/Marketing/Careers.jsx"));
+const MarketingUpdates = React.lazy(() => import("@/pages/Marketing/Updates.jsx"));
+const MarketingSecurity = React.lazy(() => import("@/pages/Marketing/Security.jsx"));
+const MarketingArchitecture = React.lazy(() => import("@/pages/Marketing/Architecture.jsx"));
+const MarketingBlog = React.lazy(() => import("@/pages/Marketing/Blog.jsx"));
+const ContactMessagesAdmin = React.lazy(() => import("@/pages/Marketing/ContactMessagesAdmin.jsx"));
 import VerifyOtp from "@/pages/VerifyOtp.jsx";
 import ForgotPassword from "@/pages/ForgotPassword.jsx";
 import SocialSuccess from "@/pages/SocialSuccess.jsx";
@@ -154,6 +168,8 @@ const TutorDashboard = React.lazy(
 import TutorSchedulePage from "./pages/Tutorials/TutorSchedulePage";
 import TutorAcceptPage from "./pages/Tutorials/TutorAcceptPage";
 import TutorEditProfilePage from "./pages/Tutorials/TutorEditProfilePage";
+import TutorialWorkspaceLayout from "./layouts/TutorialWorkspaceLayout";
+import TutorialDashboard from "./pages/Tutorials/TutorialDashboard";
 
 // ======================================================
 //                    EXPENSES
@@ -215,7 +231,24 @@ const AttendanceRoutes = () => {
                       UNIFIED OPENING FLOW
       ====================================================== */}
 
-      <Route path="/" element={<UnifiedLanding />} />
+      <Route element={
+        <Suspense fallback={<DashboardSkeleton />}>
+          <MarketingLayout />
+        </Suspense>
+      }>
+        <Route path="/" element={<MarketingHome />} />
+        <Route path="/features" element={<MarketingFeatures />} />
+        <Route path="/features/:module" element={<ModuleDetail />} />
+        <Route path="/how-it-works" element={<MarketingHowItWorks />} />
+        <Route path="/about" element={<MarketingAbout />} />
+        <Route path="/gallery" element={<MarketingGallery />} />
+        <Route path="/blog" element={<MarketingBlog />} />
+        <Route path="/careers" element={<MarketingCareers />} />
+        <Route path="/updates" element={<MarketingUpdates />} />
+        <Route path="/security" element={<MarketingSecurity />} />
+        <Route path="/architecture" element={<MarketingArchitecture />} />
+        <Route path="/admin/contact-messages" element={<ContactMessagesAdmin />} />
+      </Route>
       <Route path="/role-selection" element={<RoleSelectionPage />} />
       <Route path="/verify-otp" element={<VerifyOtp />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -328,14 +361,6 @@ const AttendanceRoutes = () => {
           }
         />
         <Route
-          path="/tutorials/online-attendance"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <OnlineAttendanceView />
-            </Suspense>
-          }
-        />
-        <Route
           path="/tutorials/attendance/dashboard"
           element={
             <Suspense fallback={<DashboardSkeleton />}>
@@ -384,205 +409,6 @@ const AttendanceRoutes = () => {
           }
         />
 
-        {/* Referrals Routes */}
-        <Route
-          path="/student/referrals"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/jobs"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/profile"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/qrcode"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/applied"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/interview"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsInterviewPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/chat"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ChatPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student"
-          element={<Navigate to="/student/dashboard" replace />}
-        />
-        <Route
-          path="/referrals/*"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <Index />
-            </Suspense>
-          }
-        />
-
-        {/* Referrals */}
-        <Route
-          path="/student/referrals"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/jobs"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/profile"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/qrcode"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/applied"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsStudentDashboard />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/interview"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ReferralsInterviewPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/chat"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ChatPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student"
-          element={<Navigate to="/student/dashboard" replace />}
-        />
-
-        {/* Tutorials module home (entry hub — not search/book) */}
-        <Route
-          path="/tutorials/home"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <TutorialsHome />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/student/tutorials"
-          element={<Navigate to="/tutorials/home" />}
-        />
-
-        {/* Tutorials feature routes */}
-        <Route
-          path="/tutorials/searchTutor"
-          element={<Navigate to="/tutorials/home" replace />}
-        />
-        <Route
-          path="/tutorials/book"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <BookClass />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/tutorials/profile"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <Profile />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/tutorials/profile/editProfile"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <EditProfilePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/tutorials/profile/manageBooking"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ManageBookingPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/tutorials/profile/classHistory"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <ClassHistoryPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/tutorials/profile/accountSettings"
-          element={
-            <Suspense fallback={<DashboardSkeleton />}>
-              <AccountSettingPage />
-            </Suspense>
-          }
-        />
         <Route
           path="/student/settings"
           element={
@@ -591,6 +417,81 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
+
+        <Route
+          path="/student"
+          element={<Navigate to="/student/dashboard" replace />}
+        />
+
+      </Route>
+
+      {/* Referrals Routes (rendered standalone with their own layout) */}
+      <Route
+        path="/referrals/*"
+        element={
+          <Suspense fallback={<DashboardSkeleton />}>
+            <Index />
+          </Suspense>
+        }
+      />
+
+      {/* Backward Compatibility Redirects for Referrals */}
+      <Route
+        path="/student/referrals"
+        element={<Navigate to="/referrals/browse-referrals" replace />}
+      />
+      <Route
+        path="/student/jobs"
+        element={<Navigate to="/referrals/browse-jobs" replace />}
+      />
+      <Route
+        path="/student/profile"
+        element={<Navigate to="/referrals/profile" replace />}
+      />
+      <Route
+        path="/student/qrcode"
+        element={<Navigate to="/referrals/qrcode" replace />}
+      />
+      <Route
+        path="/student/applied"
+        element={<Navigate to="/referrals/applied-jobs" replace />}
+      />
+      <Route
+        path="/student/interview"
+        element={<Navigate to="/referrals/interview" replace />}
+      />
+      <Route
+        path="/student/chat"
+        element={<Navigate to="/referrals/chat" replace />}
+      />
+
+      {/* ======================================================
+                        STUDENT TUTORIALS MODULE (WORKSPACE)
+      ====================================================== */}
+      <Route
+        element={
+          <GlobalProtectedRoute allowedRoles={["student"]}>
+            <TutorialWorkspaceLayout />
+          </GlobalProtectedRoute>
+        }
+      >
+        <Route path="/tutorials/home" element={<Suspense fallback={<DashboardSkeleton />}><TutorialDashboard /></Suspense>} />
+        {/* Core feature routes */}
+        <Route path="/tutorials/find" element={<Suspense fallback={<DashboardSkeleton />}><BookClass /></Suspense>} />
+        <Route path="/tutorials/bookings" element={<Suspense fallback={<DashboardSkeleton />}><ManageBookingPage /></Suspense>} />
+        <Route path="/tutorials/history" element={<Suspense fallback={<DashboardSkeleton />}><ClassHistoryPage /></Suspense>} />
+        <Route path="/tutorials/online-attendance" element={<Suspense fallback={<DashboardSkeleton />}><OnlineAttendanceView /></Suspense>} />
+        <Route path="/tutorials/profile" element={<Suspense fallback={<DashboardSkeleton />}><Profile /></Suspense>} />
+        <Route path="/tutorials/profile/editProfile" element={<Suspense fallback={<DashboardSkeleton />}><EditProfilePage /></Suspense>} />
+        <Route path="/tutorials/settings" element={<Suspense fallback={<DashboardSkeleton />}><AccountSettingPage /></Suspense>} />
+        
+        {/* Backward compatibility redirects */}
+        <Route path="/student/tutorials" element={<Navigate to="/tutorials/home" replace />} />
+        <Route path="/tutorials/searchTutor" element={<Navigate to="/tutorials/find" replace />} />
+        <Route path="/tutorials/book" element={<Navigate to="/tutorials/find" replace />} />
+        <Route path="/tutorials/profile/manageBooking" element={<Navigate to="/tutorials/bookings" replace />} />
+        <Route path="/tutorials/profile/classHistory" element={<Navigate to="/tutorials/history" replace />} />
+        <Route path="/tutorials/profile/accountSettings" element={<Navigate to="/tutorials/settings" replace />} />
       </Route>
 
       {/* Expense Tracker Routes */}
@@ -683,6 +584,28 @@ const AttendanceRoutes = () => {
         <Route
           path="/alumni/*"
           element={<Navigate to="/alumni/dashboard" replace />}
+        />
+      </Route>
+
+      {/* Admin Protected Group */}
+      <Route
+        element={
+          <GlobalProtectedRoute allowedRoles={["admin"]}>
+            <DashboardLayout role="admin" />
+          </GlobalProtectedRoute>
+        }
+      >
+        <Route
+          path="/admin/settings"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <Settings />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={<Navigate to="/admin/settings" replace />}
         />
       </Route>
 
@@ -820,6 +743,42 @@ const AttendanceRoutes = () => {
             </Suspense>
           }
         />
+        <Route
+          path="/tutorials/tutor/settings"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <AccountSettingPage />
+            </Suspense>
+          }
+        />
+      </Route>
+
+      {/* ======================================================
+                        SHARED CHAT ROUTE
+      ====================================================== */}
+      <Route
+        element={
+          <GlobalProtectedRoute allowedRoles={["student", "tutor", "teacher"]}>
+            <ChatLayoutWrapper />
+          </GlobalProtectedRoute>
+        }
+      >
+        <Route
+          path="/tutorials/chat"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <TutorStudentChatPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/tutorials/chat/:conversationId"
+          element={
+            <Suspense fallback={<DashboardSkeleton />}>
+              <TutorStudentChatPage />
+            </Suspense>
+          }
+        />
       </Route>
 
       {/* ======================================================
@@ -844,6 +803,14 @@ const AttendanceRoutes = () => {
 // ======================================================
 //                    MAIN APP
 // ======================================================
+
+const ChatLayoutWrapper = () => {
+  const { user } = useAuth();
+  if (user?.role === "tutor" || user?.role === "teacher") {
+    return <DashboardLayout role={user?.role} />;
+  }
+  return <TutorialWorkspaceLayout />;
+};
 
 function App() {
   useEffect(() => {
@@ -900,11 +867,12 @@ function App() {
             toastOptions={{
               duration: 3500,
               style: {
-                background: "#1e293b",
-                color: "#f1f5f9",
-                border: "1px solid #334155",
+                background: "var(--bg-nav-container)",
+                color: "var(--text-primary)",
+                border: "1px solid var(--border-subtle)",
                 fontFamily: "Inter, sans-serif",
                 fontSize: "14px",
+                transition: "var(--theme-transition)",
               },
             }}
           />

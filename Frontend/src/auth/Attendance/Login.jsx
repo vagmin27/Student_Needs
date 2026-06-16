@@ -49,7 +49,7 @@ const Login = () => {
 
   return (
     <div className="uc-login-page">
-      <div className="uc-login-card">
+      <div className="uc-login-card bg-[var(--bg-nav-container)] rounded-[var(--card-radius)] p-[16px] gap-[var(--card-gap)] border border-[var(--border-subtle)]">
         <Link to="/role-selection" className="uc-back-link">
           <span>{"<- "}</span>
           Back to role selection
@@ -72,13 +72,13 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-              />
+              className="rounded-[var(--input-radius)]" />
             </label>
-            {errors.email && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.email}</p>}
+            {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
 
             <label className="uc-field">
               <span>Password</span>
-              <div style={{ position: "relative" }}>
+              <div className="relative">
                 <input
                   type={showPass ? "text" : "password"}
                   name="password"
@@ -86,23 +86,22 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  style={{ paddingRight: "40px" }}
+                  className="pr-10 rounded-[var(--input-radius)]"
                 />
                 <span 
                   onClick={() => setShowPass(!showPass)}
-                  style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", cursor: "pointer", color: "var(--text-secondary)" }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[var(--text-secondary)]"
                 >
                   {showPass ? <FiEyeOff /> : <FiEye />}
                 </span>
               </div>
             </label>
-            {errors.password && <p className="form-error" style={{ color: "var(--destructive)", fontSize: "12px" }}>{errors.password}</p>}
+            {errors.password && <p className="text-xs text-destructive mt-1">{errors.password}</p>}
 
             <button
               type="submit"
-              className="uc-login-submit"
+              className="uc-login-submit mt-2 rounded-[var(--button-radius)] transition-all hover:translate-y-[-2px]"
               disabled={loading}
-              style={{ marginTop: 8 }}
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>

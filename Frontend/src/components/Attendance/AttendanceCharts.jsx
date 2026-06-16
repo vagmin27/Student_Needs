@@ -13,13 +13,14 @@ import {
   LineChart,
   Line,
 } from "recharts";
+import { useTheme } from "../../context/ThemeContext";
 
 const COLORS = ["#6366f1", "#22c55e", "#ef4444", "#f59e0b", "#38bdf8", "#a855f7"];
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-lg border border-border bg-card px-3 py-2 text-sm shadow-md">
+    <div className="rounded-[var(--radius-sm)] border border-[var(--border-color)] bg-[var(--card-bg)] px-3 py-2 text-sm text-[var(--text-primary)] shadow-[var(--shadow-md)]">
       <p className="font-semibold mb-1">{label}</p>
       {payload.map((p, i) => (
         <p key={i} style={{ color: p.color }}>
@@ -32,6 +33,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectId = "" }) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const currentColors = isDark
+    ? COLORS
+    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
+
   const barData = bySubject.map((s) => ({
     subject: s.subjectName || s.subject,
     percentage: s.percentage ?? 0,
@@ -47,7 +54,7 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
 
   if (!barData.length && !filteredTimeline.length) {
     return (
-      <p className="text-sm text-muted-foreground text-center py-8">
+      <p className="text-sm text-[var(--text-muted)] text-center py-8">
         Add subjects and mark attendance to see charts.
       </p>
     );
@@ -58,22 +65,22 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
       {barData.length > 0 && (
         <>
           <div className="space-y-2 min-w-0 overflow-hidden">
-            <p className="text-sm font-medium text-muted-foreground">Attendance % by subject</p>
+            <p className="text-sm font-medium text-[var(--text-muted)]">Attendance % by subject</p>
             <div className="h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                  <XAxis dataKey="subject" tick={{ fontSize: 11 }} />
-                  <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
+                  <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="percentage" name="Attendance %" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#6c4cf1"} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
           {pieData.length > 0 && (
             <div className="space-y-2 min-w-0 overflow-hidden">
-              <p className="text-sm font-medium text-muted-foreground">Present classes by subject</p>
+              <p className="text-sm font-medium text-[var(--text-muted)]">Present classes by subject</p>
               <div className="h-[260px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -84,14 +91,31 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
                       outerRadius={90}
                       innerRadius={45}
                       paddingAngle={2}
-                      label={({ subject, percentage }) => `${subject} ${percentage}%`}
+                      label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index, subject, percentage }) => {
+                        const RADIAN = Math.PI / 180;
+                        const radius = innerRadius + (outerRadius - innerRadius) * 1.35;
+                        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                        return (
+                          <text
+                            x={x}
+                            y={y}
+                            fill="var(--text-primary)"
+                            textAnchor={x > cx ? 'start' : 'end'}
+                            dominantBaseline="central"
+                            fontSize={11}
+                          >
+                            {`${subject} ${percentage}%`}
+                          </text>
+                        );
+                      }}
                     >
                       {pieData.map((_, i) => (
-                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                        <Cell key={i} fill={currentColors[i % currentColors.length]} />
                       ))}
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />
-                    <Legend wrapperStyle={{ fontSize: 12 }} />
+                    <Legend wrapperStyle={{ fontSize: 12, color: "var(--text-secondary)" }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -101,15 +125,15 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
       )}
       {filteredTimeline.length > 0 && (
         <div className="xl:col-span-2 space-y-2 min-w-0 overflow-hidden">
-          <p className="text-sm font-medium text-muted-foreground">
+          <p className="text-sm font-medium text-[var(--text-muted)]">
             Attendance over time{filterSubjectId ? " (selected subject)" : ""}
           </p>
           <div className="h-[240px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={filteredTimeline} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
+                <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} allowDecimals={false} />
                 <Tooltip content={<CustomTooltip />} />
                 <Line type="monotone" dataKey="present" stroke="#22c55e" strokeWidth={2} name="Present" />
                 <Line type="monotone" dataKey="absent" stroke="#ef4444" strokeWidth={2} name="Absent" />

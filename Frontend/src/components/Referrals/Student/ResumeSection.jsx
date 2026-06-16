@@ -239,7 +239,7 @@ export function ResumeSection({ resume, onResumeChange }) {
 
         {hasResume ? (
           <div className="space-y-4">
-            <div className="p-4 rounded-lg bg-muted/50 border">
+            <div className="p-4 rounded-[var(--radius-sm)] bg-muted/50 border">
               <div className="flex items-start gap-3">
                 <FileText className="w-8 h-8 text-primary flex-shrink-0" />
                 <div className="flex-1 min-w-0">
@@ -303,7 +303,7 @@ export function ResumeSection({ resume, onResumeChange }) {
         ) : (
           <div className="space-y-4">
             <div
-              className="border-2 border-dashed rounded-lg p-8 text-center hover:border-primary/50 cursor-pointer transition-colors"
+              className="border-2 border-dashed rounded-[var(--radius-sm)] p-8 text-center hover:border-primary/50 cursor-pointer transition-colors"
               onClick={() => fileInputRef.current?.click()}
             >
               <div className="flex flex-col items-center gap-3">

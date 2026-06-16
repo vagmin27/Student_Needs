@@ -128,16 +128,16 @@ export default function VerifyOtp() {
             <RoleIcon />
           </div>
           <h1 id="verify-title">Verify Your Email</h1>
-          <p className="px-4 text-center">
-            We sent a 6-digit One-Time Password to <strong className="text-indigo-400">{email}</strong>. Enter the code below to verify your account.
+          <p className="px-4 text-center text-muted-foreground">
+            We sent a 6-digit One-Time Password to <strong className="text-primary font-semibold">{email}</strong>. Enter the code below to verify your account.
           </p>
-
+ 
           {errorMsg && (
             <div className="uc-form-error" role="alert">
               {errorMsg}
             </div>
           )}
-
+ 
           <form onSubmit={handleVerify} className="uc-login-form">
             <div className="flex justify-center gap-2 my-6" onPaste={handlePaste}>
               {otp.map((digit, index) => (
@@ -150,32 +150,28 @@ export default function VerifyOtp() {
                   disabled={isSubmitting}
                   onChange={(e) => handleChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
-                  className="w-12 h-14 text-center text-2xl font-bold bg-[#0f172a]/60 border border-indigo-900/60 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/80 focus:border-transparent transition-all"
-                  style={{
-                    boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.6)",
-                    textShadow: "0 0 8px rgba(99, 102, 241, 0.4)",
-                  }}
+                  className="w-12 h-14 text-center text-2xl font-bold bg-secondary border border-border rounded-[var(--radius-sm)] text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               ))}
             </div>
-
+ 
             <button type="submit" className="uc-login-submit" disabled={isSubmitting}>
               {isSubmitting && <Loader2 className="uc-spin" />}
               {isSubmitting ? "Verifying..." : "Verify Account"}
             </button>
           </form>
-
-          <div className="mt-6 text-center text-sm text-slate-400">
+ 
+          <div className="mt-6 text-center text-sm text-muted-foreground">
             Didn't receive the email?{" "}
             {resendCooldown > 0 ? (
-              <span className="text-slate-500 font-semibold">
+              <span className="text-muted-foreground/60 font-semibold">
                 Resend in {resendCooldown}s
               </span>
             ) : (
               <button
                 type="button"
                 onClick={handleResend}
-                className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors inline-flex items-center gap-1 focus:outline-none"
+                className="text-primary hover:underline font-semibold transition-colors inline-flex items-center gap-1 focus:outline-none"
               >
                 <RefreshCw size={14} /> Resend Code
               </button>

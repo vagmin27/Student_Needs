@@ -6,26 +6,26 @@
   flex-wrap: wrap;
   padding: 1.5rem;
   background-color: var(--bg-secondary);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
 }
 
 /* EACH CARD */
 .price-panelDiv {
   background: var(--card-bg);
   color: var(--text-primary);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   width: 280px;
   text-align: center;
-  box-shadow: var(--shadow-soft, 0 8px 20px rgba(0, 0, 0, 0.06));
+  box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
 
 /* HOVER EFFECT */
 .price-panelDiv:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--shadow-lg);
 }
 
 /* IMAGE */
@@ -39,7 +39,7 @@
 .pricing-features {
   font-size: 1.3rem;
   font-weight: 600;
-  color: var(--accent-purple, #c3591c);
+  color: var(--primary);
   margin: 1rem 0 0.5rem;
 }
 

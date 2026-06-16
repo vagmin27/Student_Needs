@@ -2,12 +2,12 @@ import React from 'react';
 
 const Skeleton = ({ type = 'card', lines = 3 }) => {
   const classes = {
-    card: "w-full h-32 rounded-2xl",
-    tableRow: "w-full h-12 rounded-lg",
-    stat: "w-1/2 h-8 rounded-lg mb-2",
+    card: "w-full h-32 rounded-[var(--radius-lg)]",
+    tableRow: "w-full h-12 rounded-[var(--radius-sm)]",
+    stat: "w-1/2 h-8 rounded-[var(--radius-sm)] mb-2",
     text: "w-full h-4 rounded mt-4",
     avatar: "w-12 h-12 rounded-full",
-    chart: "w-full h-[300px] rounded-2xl"
+    chart: "w-full h-[300px] rounded-[var(--radius-lg)]"
   };
 
   const baseClass = "bg-white/10 relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent";

@@ -29,7 +29,7 @@ export const UpcomingTasks = React.memo(({ tasks = [] }) => {
       {tasks?.map((task) => (
         <div 
           key={task.id} 
-          className="flex items-start justify-between p-3 sm:p-4 rounded-lg border border-border bg-secondary/40 hover:bg-secondary/70 transition-colors"
+          className="flex items-start justify-between p-3 sm:p-4 rounded-[var(--radius-sm)] border border-border bg-secondary/40 hover:bg-secondary/70 transition-colors"
         >
           <div className="flex flex-col space-y-1">
             <span className="font-medium text-sm sm:text-base text-foreground line-clamp-1">{task.title}</span>

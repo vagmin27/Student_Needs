@@ -91,7 +91,7 @@ const WorkProcess = React.memo(() => {
   return (
     <div
       ref={sectionRef}
-      className="rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 mb-16 sm:mb-20 relative overflow-visible"
+      className="rounded-[var(--radius-md)] sm:rounded-[var(--radius-lg)] p-4 sm:p-6 md:p-8 mb-16 sm:mb-20 relative overflow-visible"
     >      
     <img 
         src="/Side-BG3.png" 
@@ -119,17 +119,17 @@ const WorkProcess = React.memo(() => {
       <div className="flex flex-col gap-6 sm:gap-8 md:gap-10">
         {/* Process 1 */}
         <div className="process1 grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:h-[28rem]">
-          <div className="w-full max-w-md mx-auto lg:mx-0 lg:max-w-none lg:w-[32rem] aspect-[4/5] lg:aspect-auto lg:h-full rounded-lg relative overflow-hidden flex justify-center lg:justify-end items-center lg:ml-6 xl:ml-12 order-1">
+          <div className="w-full max-w-md mx-auto lg:mx-0 lg:max-w-none lg:w-[32rem] aspect-[4/5] lg:aspect-auto lg:h-full rounded-[var(--radius-sm)] relative overflow-hidden flex justify-center lg:justify-end items-center lg:ml-6 xl:ml-12 order-1">
             <img
               src="/W1.png"
               alt="Student Build Profile and Upload Resume"
               loading="lazy"
               decoding="async"
-              className="absolute w-full h-full rounded-xl object-fill object-center z-0 border"
+              className="absolute w-full h-full rounded-[var(--radius-md)] object-fill object-center z-0 border"
             />
           </div>
           <div className="w-full lg:w-[80%] xl:w-[60%] flex flex-col justify-center lg:justify-end items-start px-4 sm:px-0 order-2">
-            <div className="h-10 w-12 sm:h-12 sm:w-14 flex items-center justify-center py-2 border-2 border-border rounded-lg text-2xl sm:text-3xl mb-3 sm:mb-4">
+            <div className="h-10 w-12 sm:h-12 sm:w-14 flex items-center justify-center py-2 border-2 border-border rounded-[var(--radius-sm)] text-2xl sm:text-3xl mb-3 sm:mb-4">
               01
             </div>
 
@@ -159,13 +159,13 @@ const WorkProcess = React.memo(() => {
                     y1="0"
                     y2="1"
                   >
-                    <stop offset="0" stopColor="#145A4B" stopOpacity="1"></stop>
+                    <stop offset="0" stopColor="var(--primary)" stopOpacity="1"></stop>
                     <stop
                       offset="0.4318869650900901"
-                      stopColor="#838383"
+                      stopColor="var(--border-color)"
                       stopOpacity="1"
                     ></stop>
-                    <stop offset="1" stopColor="#020D0E" stopOpacity="1"></stop>
+                    <stop offset="1" stopColor="var(--bg-primary)" stopOpacity="1"></stop>
                   </linearGradient>
                   <clipPath id="clip1">
                     <rect id="clip1Rect" x="0" y="0" width="0" height="126.116" />
@@ -186,7 +186,7 @@ const WorkProcess = React.memo(() => {
         {/* Process 2 */}
         <div className="process2 grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:h-[28rem]">
           <div className="w-full lg:w-[80%] xl:w-[60%] flex flex-col justify-center lg:justify-end items-start lg:items-end text-left lg:text-right px-4 sm:px-0 lg:ml-auto xl:ml-48 order-2 lg:order-1">
-            <div className="h-10 w-12 sm:h-12 sm:w-14 flex items-center justify-center py-2 border-2 border-border rounded-lg text-2xl sm:text-3xl mb-3 sm:mb-4">
+            <div className="h-10 w-12 sm:h-12 sm:w-14 flex items-center justify-center py-2 border-2 border-border rounded-[var(--radius-sm)] text-2xl sm:text-3xl mb-3 sm:mb-4">
               02
             </div>
 
@@ -197,13 +197,13 @@ const WorkProcess = React.memo(() => {
               Students complete on-chain identity check and verify resume credentials
             </p>
           </div>
-          <div className="w-full max-w-md mx-auto lg:mx-0 lg:max-w-none lg:w-[32rem] aspect-[4/5] lg:aspect-auto lg:h-full relative overflow-hidden flex justify-center items-center border rounded-xl order-1 lg:order-2">
+          <div className="w-full max-w-md mx-auto lg:mx-0 lg:max-w-none lg:w-[32rem] aspect-[4/5] lg:aspect-auto lg:h-full relative overflow-hidden flex justify-center items-center border rounded-[var(--radius-md)] order-1 lg:order-2">
             <img
               src="/W2.png"
               alt="Verify Profile On-Chain"
               loading="lazy"
               decoding="async"
-              className="absolute w-full h-full rounded-lg object-fill object-center z-0"
+              className="absolute w-full h-full rounded-[var(--radius-sm)] object-fill object-center z-0"
             />
           </div>
         </div>
@@ -215,9 +215,9 @@ const WorkProcess = React.memo(() => {
               <g>
                 <defs>
                   <linearGradient id="connector2Gradient" x1="0.49751243781094523" x2="0.5024875621890548" y1="0" y2="1">
-                    <stop offset="0" stopColor="#1B5C4A" stopOpacity="1"></stop>
-                    <stop offset="0.45326576576576577" stopColor="#838383" stopOpacity="1"></stop>
-                    <stop offset="1" stopColor="#051F1A" stopOpacity="1"></stop>
+                    <stop offset="0" stopColor="var(--primary)" stopOpacity="1"></stop>
+                    <stop offset="0.45326576576576577" stopColor="var(--border-color)" stopOpacity="1"></stop>
+                    <stop offset="1" stopColor="var(--bg-primary)" stopOpacity="1"></stop>
                   </linearGradient>
                   <clipPath id="clip2">
                     <rect id="clip2Rect" x="0" y="0" width="0" height="126.116" />
@@ -237,17 +237,17 @@ const WorkProcess = React.memo(() => {
 
         {/* Process 3 */}
         <div className="process3 grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:h-[28rem]">
-          <div className="w-full max-w-md mx-auto lg:mx-0 lg:max-w-none lg:w-[32rem] aspect-[4/5] lg:aspect-auto lg:h-full rounded-lg relative overflow-hidden flex justify-center lg:justify-end items-center lg:ml-6 xl:ml-12 order-1">
+          <div className="w-full max-w-md mx-auto lg:mx-0 lg:max-w-none lg:w-[32rem] aspect-[4/5] lg:aspect-auto lg:h-full rounded-[var(--radius-sm)] relative overflow-hidden flex justify-center lg:justify-end items-center lg:ml-6 xl:ml-12 order-1">
             <img
               src="/W3.png"
               alt="Alumni Refers Based on Verified Credentials"
               loading="lazy"
               decoding="async"
-              className="border rounded-xl absolute w-full h-full object-fill object-center z-0"
+              className="border rounded-[var(--radius-md)] absolute w-full h-full object-fill object-center z-0"
             />
           </div>
           <div className="w-full lg:w-[80%] xl:w-[60%] flex flex-col justify-center lg:justify-end items-start px-4 sm:px-0 order-2">
-            <div className="h-10 w-12 sm:h-12 sm:w-14 flex items-center justify-center py-2 border-2 border-border rounded-lg text-2xl sm:text-3xl mb-3 sm:mb-4">
+            <div className="h-10 w-12 sm:h-12 sm:w-14 flex items-center justify-center py-2 border-2 border-border rounded-[var(--radius-sm)] text-2xl sm:text-3xl mb-3 sm:mb-4">
               03
             </div>
 

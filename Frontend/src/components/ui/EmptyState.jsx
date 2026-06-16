@@ -14,13 +14,13 @@ const EmptyState = ({
         <Icon size={40} />
       </div>
       <h3 className="text-xl font-bold text-foreground mb-2">{title}</h3>
-      <p className="text-muted-foreground text-sm max-w-sm mb-6 leading-relaxed">
+      <p className="text-muted-foreground text-sm max-w-md mb-6 leading-relaxed">
         {message}
       </p>
       {actionLabel && onAction && (
         <button 
           onClick={onAction}
-          className="px-6 py-2.5 rounded-xl border border-primary/50 text-primary font-semibold hover:bg-primary/10 transition-colors"
+          className="px-6 py-2.5 rounded-[var(--radius-md)] border border-primary/50 text-primary font-semibold hover:bg-primary/10 transition-colors"
         >
           {actionLabel}
         </button>

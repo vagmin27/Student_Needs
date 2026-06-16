@@ -131,7 +131,7 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     padding: "15px 40px",
-    background: "#8fa79a",
+    background: "var(--bg-surface-2)",
     color: "var(--text-white)",
   },
 
@@ -141,9 +141,9 @@ const styles = {
 
   navBtn: {
     padding: "8px 16px",
-    border: "1px solid var(--text-white)",
+    border: "1px solid var(--border-subtle)",
     background: "transparent",
-    color: "var(--text-white)",
+    color: "var(--text-primary)",
     cursor: "pointer",
     borderRadius: "4px",
   },
@@ -174,7 +174,7 @@ const styles = {
     background: "var(--card-bg)",
     padding: "35px",
     borderRadius: "20px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+    boxShadow: "var(--shadow-md)",
   },
 
   form: {
@@ -193,16 +193,16 @@ const styles = {
   submit: {
     marginTop: "15px",
     padding: "12px",
-    background: "#ff7a2f",
+    background: "var(--nav-accent)",
     border: "none",
-    color: "var(--text-white)",
+    color: "var(--text-button)",
     fontWeight: "bold",
     borderRadius: "6px",
     cursor: "pointer",
   },
 
   link: {
-    color: "#ff7a2f",
+    color: "var(--nav-accent)",
     cursor: "pointer",
     fontWeight: "bold",
   },

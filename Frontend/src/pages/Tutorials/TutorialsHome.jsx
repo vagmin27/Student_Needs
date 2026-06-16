@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Search,
@@ -7,10 +7,12 @@ import {
   History,
   ClipboardList,
   ArrowRight,
+  MessageSquare,
 } from "lucide-react";
 import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TUTORIAL_PATHS } from "@/utils/tutorialRoutes";
+import { tutorsApiClient } from "@/services/apiClient.js";
 
 const MODULE_ACTIONS = [
   {
@@ -43,12 +45,35 @@ const MODULE_ACTIONS = [
     to: TUTORIAL_PATHS.studentProfile,
     icon: User,
   },
+  {
+    title: "Tutor Chats",
+    description: "Chat with tutors and manage conversations",
+    to: "/tutorials/chat",
+    icon: MessageSquare,
+  },
 ];
 
 /**
  * Tutorial module home — entry hub (not the search/book page).
  */
 function TutorialsHome() {
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const fetchUnread = async () => {
+      try {
+        const { data } = await tutorsApiClient.get("/tutorial-chat/conversations");
+        if (data?.success && data?.data) {
+          const totalUnread = data.data.reduce((acc, chat) => acc + (chat.unreadCount || 0), 0);
+          setUnreadCount(totalUnread);
+        }
+      } catch (err) {
+        console.error("Failed to load chat unreads in dashboard", err);
+      }
+    };
+    fetchUnread();
+  }, []);
+
   return (
     <div className="space-y-6">
       <BackToStudentDashboard />
@@ -68,8 +93,13 @@ function TutorialsHome() {
               <Card className="h-full hover:border-primary/50 transition-colors">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
-                    <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                    <div className="p-2 rounded-[var(--radius-sm)] bg-primary/10 text-primary relative">
                       <Icon className="w-5 h-5" />
+                      {action.title === "Tutor Chats" && unreadCount > 0 && (
+                        <span className="absolute -top-1.5 -right-1.5 h-4 min-w-[16px] px-1 flex items-center justify-center text-[9px] font-bold text-white bg-primary rounded-full animate-pulse">
+                          {unreadCount}
+                        </span>
+                      )}
                     </div>
                     <ArrowRight className="w-4 h-4 text-muted-foreground" />
                   </div>

@@ -22,7 +22,7 @@ class ErrorBoundary extends React.Component {
       return (
         <div style={styles.container}>
           <div style={styles.card}>
-            <MdWarning size={48} color="#ef4444" />
+            <MdWarning size={48} color="var(--danger)" />
             <h2 style={styles.title}>System Error Encountered</h2>
             <p style={styles.text}>The application encountered an unexpected error.</p>
             <div style={styles.errorBox}>
@@ -49,16 +49,16 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#0f172a",
-    color: "#f8fafc",
+    backgroundColor: "var(--bg-main-page)",
+    color: "var(--text-primary)",
     fontFamily: "Inter, sans-serif"
   },
   card: {
-    backgroundColor: "#1e293b",
+    backgroundColor: "var(--bg-nav-container)",
     padding: "2rem",
     borderRadius: "1rem",
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-    border: "1px solid #334155",
+    boxShadow: "var(--shadow-md)",
+    border: "1px solid var(--border-subtle)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -72,22 +72,22 @@ const styles = {
     fontWeight: "bold"
   },
   text: {
-    color: "#94a3b8",
+    color: "var(--text-secondary)",
     marginBottom: "1.5rem"
   },
   errorBox: {
-    backgroundColor: "#000000",
+    backgroundColor: "var(--danger-bg)",
     padding: "1rem",
     borderRadius: "0.5rem",
     width: "100%",
     overflowX: "auto",
     textAlign: "left",
-    color: "#ef4444",
+    color: "var(--danger)",
     marginBottom: "1.5rem",
-    border: "1px solid #7f1d1d"
+    border: "1px solid var(--danger)"
   },
   button: {
-    backgroundColor: "#3b82f6",
+    backgroundColor: "var(--primary)",
     color: "white",
     border: "none",
     padding: "0.75rem 1.5rem",

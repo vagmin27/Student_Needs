@@ -66,6 +66,10 @@ export const AuthProvider = ({ children }) => {
     try { await tutorsApiClient.post("/logout"); } catch (_) {}
     setToken(null);
     setUser(null);
+    
+    // Save theme preference before clearing storage
+    const savedTheme = localStorage.getItem("student-needs-theme");
+
     [
       "token",
       "auth_token",
@@ -76,6 +80,12 @@ export const AuthProvider = ({ children }) => {
     ].forEach((key) => localStorage.removeItem(key));
     localStorage.clear();
     sessionStorage.clear();
+
+    // Restore theme preference
+    if (savedTheme) {
+      localStorage.setItem("student-needs-theme", savedTheme);
+    }
+
     authInitPromise = null;
     window.location.href = '/role-selection';
   }, []);

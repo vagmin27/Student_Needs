@@ -74,7 +74,7 @@ export default function OnlineAttendanceView() {
         </p>
       </div>
 
-      <div className="flex items-start gap-3 rounded-lg border border-blue-200 bg-blue-50/80 dark:bg-blue-950/20 dark:border-blue-900/50 p-4 text-sm text-blue-900 dark:text-blue-200">
+      <div className="flex items-start gap-3 rounded-[var(--radius-sm)] border border-blue-200 bg-[var(--primary)]/10/80 dark:bg-blue-950/20 dark:border-blue-900/50 p-4 text-sm text-blue-900 dark:text-blue-200">
         <Info className="w-5 h-5 shrink-0 mt-0.5" />
         <p>
           College attendance is tracked separately on{" "}
@@ -153,7 +153,7 @@ export default function OnlineAttendanceView() {
                           <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wide">
                             Attendance history
                           </p>
-                          <div className="divide-y rounded-md border">
+                          <div className="divide-y rounded-[var(--radius-sm)] border">
                             {course.history.map((row) => (
                               <div
                                 key={row.id}

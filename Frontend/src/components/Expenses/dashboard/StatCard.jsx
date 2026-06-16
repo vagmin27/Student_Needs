@@ -4,21 +4,21 @@ const StatCard = ({ title, amount, icon, tendency, type }) => {
   const isPositive = tendency > 0;
   
   return (
-    <div className="glass-panel p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300">
+    <div className="glass-card flex flex-col justify-between">
       <div className="flex justify-between items-start mb-4">
-        <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brand-primary">
+        <div className="p-3 rounded-[var(--radius-md)] bg-secondary border border-border text-primary">
           {icon}
         </div>
         {tendency !== undefined && tendency !== null && !isNaN(Number(tendency)) && (
-          <div className={`flex items-center gap-1 text-sm font-medium ${isPositive ? 'text-brand-accent' : tendency === 0 ? 'text-slate-400' : 'text-brand-danger'}`}>
+          <div className={`flex items-center gap-1 text-sm font-medium ${isPositive ? 'text-emerald-500' : tendency === 0 ? 'text-muted-foreground' : 'text-rose-500'}`}>
             {isPositive ? '↑' : tendency === 0 ? '-' : '↓'}
             <span>{Math.abs(tendency)}%</span>
           </div>
         )}
       </div>
       <div>
-        <p className="text-slate-400 text-sm font-medium mb-1">{title}</p>
-        <h3 className="text-3xl font-bold font-handjet text-white tracking-widest">
+        <p className="text-muted-foreground text-sm font-medium mb-1">{title}</p>
+        <h3 className="text-3xl font-bold text-foreground">
           ₹ {amount.toLocaleString()}
         </h3>
       </div>

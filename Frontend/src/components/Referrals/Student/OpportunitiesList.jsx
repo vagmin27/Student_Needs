@@ -58,7 +58,7 @@ export function OpportunitiesList({
   // Loading State
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto bg-card rounded-lg p-12 border border-border/50 text-center">
+      <div className="max-w-7xl mx-auto bg-card rounded-[var(--radius-lg)] p-12 border border-border text-center">
         <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4 animate-pulse" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           Loading Opportunities...
@@ -73,7 +73,7 @@ export function OpportunitiesList({
   // Empty State
   if (opportunities.length === 0) {
     return (
-      <div className="bg-card max-w-7xl mx-auto rounded-lg p-12 border border-border/50 text-center">
+      <div className="bg-card max-w-7xl mx-auto rounded-[var(--radius-lg)] p-12 border border-border text-center">
         <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Referral Opportunities Yet
@@ -96,7 +96,7 @@ export function OpportunitiesList({
         return (
           <div
             key={opportunity._id}
-            className="bg-card rounded-lg p-6 border border-border/50 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
+            className="bg-card rounded-[var(--radius-lg)] p-6 border border-border shadow-[var(--shadow-sm)] hover:shadow-md transition-all duration-200 flex flex-col hover:border-primary/30"
           >
             <div className="flex-1">
               {/* Header with Referral Count */}
@@ -113,7 +113,7 @@ export function OpportunitiesList({
               </div>
 
               {/* Posted By Info */}
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3 bg-muted/30 p-2 rounded-md">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3 bg-muted/30 p-2 rounded-[var(--radius-sm)]">
                 <Building2 className="w-4 h-4 flex-shrink-0" />
                 <div className="flex flex-col">
                   <span className="font-medium text-foreground">
@@ -136,13 +136,13 @@ export function OpportunitiesList({
                   {opportunity.requiredSkills.slice(0, 3)?.map((skill, index) => (
                     <span
                       key={index}
-                      className="inline-block px-2 py-1 rounded-lg text-xs font-medium bg-primary/10 text-primary border border-primary/20"
+                      className="inline-block px-2 py-1 rounded-[var(--radius-sm)] text-xs font-medium bg-primary/10 text-primary border border-primary/20"
                     >
                       {skill}
                     </span>
                   ))}
                   {opportunity.requiredSkills.length > 3 && (
-                    <span className="inline-block px-2 py-1 rounded-lg text-xs font-medium bg-muted text-muted-foreground">
+                    <span className="inline-block px-2 py-1 rounded-[var(--radius-sm)] text-xs font-medium bg-muted text-muted-foreground">
                       +{opportunity.requiredSkills.length - 3} more
                     </span>
                   )}
@@ -151,7 +151,7 @@ export function OpportunitiesList({
 
               {/* Experience Level & Date */}
               <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-3">
-                <span className="flex items-center gap-1 px-2 py-1 rounded-md bg-secondary/50">
+                <span className="flex items-center gap-1 px-2 py-1 rounded-[var(--radius-sm)] bg-secondary/50">
                   <Target className="w-3 h-3" />
                   {opportunity.experienceLevel}
                 </span>
@@ -188,7 +188,7 @@ export function OpportunitiesList({
                     <Users className="w-3.5 h-3.5 text-primary" />
                     Alumni Details
                   </h4>
-                  <div className="bg-secondary/40 border border-border/40 backdrop-blur-md rounded-xl p-3 flex flex-col gap-2.5">
+                  <div className="bg-secondary/40 border border-border/40 backdrop-blur-md rounded-[var(--radius-md)] p-3 flex flex-col gap-2.5">
                     <div className="flex items-center gap-3">
                       {opportunity.postedBy.image ? (
                         <img 

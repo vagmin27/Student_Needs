@@ -24,7 +24,7 @@ export function ReferralsList({ jobs, student, isApplying, onApply }) {
 
   if (referralJobs.length === 0) {
     return (
-      <div className="bg-card max-w-7xl mx-auto rounded-lg p-12 border border-border/50 text-center">
+      <div className="bg-card max-w-7xl mx-auto rounded-[var(--radius-sm)] p-12 border border-border/50 text-center">
         <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Referral Opportunities Yet
@@ -46,7 +46,7 @@ export function ReferralsList({ jobs, student, isApplying, onApply }) {
         return (
           <div
             key={job.id}
-            className="bg-card rounded-lg p-6 border border-border/50 shadow-sm hover:shadow-md transition-shadow flex flex-col mt-4"
+            className="bg-card rounded-[var(--radius-sm)] p-6 border border-border/50 shadow-[var(--shadow-sm)] hover:shadow-md transition-shadow flex flex-col mt-4"
           >
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
@@ -101,7 +101,7 @@ export function ReferralsList({ jobs, student, isApplying, onApply }) {
                   variant="student"
                   onClick={() => onApply(job.id)}
                   disabled={!canApply || isApplying === job.id}
-                  className="bg-primary text-background rounded-md w-full justify-center"
+                  className="bg-primary text-background rounded-[var(--radius-sm)] w-full justify-center"
                 >
                   {isApplying === job.id ? (
                     <>

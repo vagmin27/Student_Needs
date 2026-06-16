@@ -59,12 +59,12 @@ export default function SocialSuccess() {
   }, [searchParams, navigate, setUser]);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-[#070b19] text-white">
-      <div className="p-8 max-w-md w-full bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl flex flex-col items-center gap-6 shadow-2xl text-center">
-        <Loader2 className="w-12 h-12 text-indigo-500 animate-spin" />
+    <main className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground">
+      <div className="p-8 max-w-md w-full bg-card border border-border rounded-xl flex flex-col items-center gap-6 shadow-[var(--shadow-md)] text-center">
+        <Loader2 className="w-12 h-12 text-primary animate-spin" />
         <div>
           <h2 className="text-xl font-bold tracking-tight mb-2">Completing Login</h2>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-muted-foreground">
             Please wait while we establish your secure session dashboard...
           </p>
         </div>

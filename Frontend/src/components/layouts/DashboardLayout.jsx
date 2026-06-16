@@ -3,6 +3,7 @@ import Sidebar from "../dashboard/Sidebar";
 import Navbar from "../dashboard/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext";
+import GlobalCallListener from "../Tutorials/calls/GlobalCallListener";
 
 export const LayoutContext = createContext(false);
 
@@ -29,7 +30,7 @@ const DashboardLayoutContent = ({ children, pageTitle, role }) => {
       if (path.includes("/profile/editProfile")) return "Edit Profile";
       if (path.includes("/profile/manageBooking")) return "Manage Bookings";
       if (path.includes("/profile/classHistory")) return "Class History";
-      if (path.includes("/profile/accountSettings")) return "Account Settings";
+      if (path.includes("/profile/accountSettings") || path.includes("/tutor/settings")) return "Account Settings";
       if (path.includes("/profile")) return "Tutorial Profile";
       if (path.includes("/tutorials/online-attendance"))
         return "View Online Attendance";
@@ -63,7 +64,7 @@ const DashboardLayoutContent = ({ children, pageTitle, role }) => {
       {/* Mobile Sidebar overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
+          className="fixed inset-0 bg-background/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
           onClick={closeMobileMenu}
         />
       )}
@@ -73,7 +74,7 @@ const DashboardLayoutContent = ({ children, pageTitle, role }) => {
         className={`fixed inset-y-0 left-0 z-50 bg-card border-r border-border sidebar-transition flex flex-col ${
           isMobileMenuOpen
             ? "translate-x-0 sidebar-expanded"
-            : "-translate-x-full md:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
+            : "-translate-x-full lg:translate-x-0 " + (isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")
         }`}
       >
         <Sidebar className="w-full h-full" role={role} />
@@ -81,7 +82,7 @@ const DashboardLayoutContent = ({ children, pageTitle, role }) => {
 
       {/* Main Content */}
       <main
-        className={`flex-1 flex flex-col min-w-0 min-h-0 sidebar-transition ${
+        className={`flex-1 flex flex-col min-w-0 min-h-0 sidebar-transition dashboard-background ${
           isCollapsed ? "content-collapsed-offset" : "content-expanded-offset"
         }`}
         data-lenis-prevent="true"
@@ -90,11 +91,12 @@ const DashboardLayoutContent = ({ children, pageTitle, role }) => {
           pageTitle={getDynamicTitle()}
           onMenuClick={toggleMobileMenu}
         />
-        <div className="flex-1 min-h-0 overflow-y-auto dashboard-container">
-          <div className="max-w-7xl mx-auto space-y-6">
+        <div className="flex-1 min-h-0 overflow-y-auto">
+          <div className="dashboard-container space-y-space-lg">
             {children || <Outlet />}
           </div>
         </div>
+        <GlobalCallListener />
       </main>
     </div>
   );

@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API, { getBookings } from "@/services/api/tutorialsApi.js";
 import "../../styles/Tutorials/ManageBook.css";
+import { Button } from "@/components/ui/button";
 import Navbar from "../../components/Tutorials/Navbar";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
-import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboard";
+
 
 function ManageBookingPage() {
   const isUnifiedLayout = useContext(LayoutContext);
   const [bookings, setBookings] = useState([]);
+  const navigate = useNavigate();
 
   // ✅ FETCH BOOKINGS
   const fetchedRef = useRef(false);
@@ -56,7 +59,7 @@ function ManageBookingPage() {
   return (
     <>
       {!isUnifiedLayout && <Navbar />}
-      {isUnifiedLayout && <BackToStudentDashboard />}
+
 
       <div
         className={isUnifiedLayout ? "" : "mainDivBook h-[calc(100vh-100px)] md:h-screen overflow-y-auto"}
@@ -96,15 +99,19 @@ function ManageBookingPage() {
                       <span
                         style={{
                           color:
-                            b.status === "Booked"
-                              ? "orange"
-                              : b.status === "Completed"
-                                ? "green"
-                                : "red",
+                            b.status === "Booked" || b.status === "pending"
+                              ? "var(--warning)"
+                              : b.status === "upcoming" || b.status === "accepted"
+                                ? "var(--info)"
+                                : b.status === "in_progress"
+                                  ? "var(--success)"
+                                  : b.status === "Completed" || b.status === "completed"
+                                    ? "var(--success)"
+                                    : "var(--danger)",
                           fontWeight: "bold",
                         }}
                       >
-                        {b.status || "Booked"}
+                        {b.status || "pending"}
                       </span>
                     </p>
 
@@ -122,22 +129,51 @@ function ManageBookingPage() {
 
                   {/* ACTION BUTTONS */}
                   <div className="actionButtons">
-                    {b.status === "Booked" && (
-                      <button
-                        onClick={() => cancelBooking(b._id)}
-                        style={{
-                          marginTop: "10px",
-                          background: "#dc3545",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "8px",
-                          padding: "8px 18px",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        ❌ Cancel Booking
-                      </button>
+                    {(b.status === "Booked" || b.status === "pending" || b.status === "upcoming" || b.status === "accepted") && (
+                      <div className="flex gap-[10px] mt-[10px] flex-wrap">
+                        <Button
+                          variant="destructive"
+                          onClick={() => cancelBooking(b._id)}
+                        >
+                          ❌ Cancel Booking
+                        </Button>
+                        <Button
+                          variant="success"
+                          onClick={() => navigate(`/tutorials/chat?tutorId=${b.tutorId}`)}
+                        >
+                          💬 Message Tutor
+                        </Button>
+                      </div>
+                    )}
+                    
+                    {(b.status === "upcoming" || b.status === "in_progress") && (
+                      <div className="mt-[10px]">
+                        {b.meetingLink ? (
+                          <Button
+                            variant="default"
+                            className="ml-[10px]"
+                            onClick={async () => {
+                              if (b.status === "upcoming") {
+                                try {
+                                  await API.patch(`/booking/${b._id}/status`, { status: "in_progress" });
+                                  setBookings((prev) =>
+                                    prev?.map((bk) => (bk._id === b._id ? { ...bk, status: "in_progress" } : bk)),
+                                  );
+                                } catch (err) {
+                                  console.error("Failed to update status to in_progress:", err);
+                                }
+                              }
+                              window.open(b.meetingLink, "_blank");
+                            }}
+                          >
+                            🚀 Join Class
+                          </Button>
+                        ) : (
+                          <p className="text-sm text-muted-foreground italic mt-[10px]">
+                            Waiting for tutor to publish meeting link
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>

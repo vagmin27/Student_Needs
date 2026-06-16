@@ -2,6 +2,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, Legend,
 } from "recharts";
+import { useTheme } from "../../context/ThemeContext";
 
 const COLORS = ["#6366f1", "#22c55e", "#ef4444", "#f59e0b", "#38bdf8", "#a855f7"];
 
@@ -9,8 +10,8 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div style={{
-        background: "#1e293b", border: "1px solid #334155",
-        borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "#f1f5f9",
+        background: "var(--card-bg)", border: "1px solid var(--border-color)",
+        borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "var(--text-primary)",
       }}>
         <p style={{ fontWeight: 600, marginBottom: 4 }}>{label}</p>
         {payload?.map((p, i) => (
@@ -23,6 +24,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 function Charts({ attendanceStats }) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const currentColors = isDark
+    ? COLORS
+    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
+
   if (!attendanceStats || attendanceStats.length === 0) return null;
 
   return (
@@ -35,11 +42,11 @@ function Charts({ attendanceStats }) {
         <div style={{ height: 260 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={attendanceStats} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "#94a3b8" }} />
-              <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} domain={[0, 100]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
+              <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} domain={[0, 100]} />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="percentage" name="Attendance %" fill="#6366f1" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#6c4cf1"} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -53,9 +60,9 @@ function Charts({ attendanceStats }) {
         <div style={{ height: 260 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={attendanceStats} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "#94a3b8" }} />
-              <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+              <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
+              <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="presentDays" name="Present Days" fill="#22c55e" radius={[4, 4, 0, 0]} />
             </BarChart>
@@ -78,16 +85,33 @@ function Charts({ attendanceStats }) {
                 outerRadius={110}
                 innerRadius={50}
                 paddingAngle={3}
-                label={({ subject, percentage }) => `${subject} ${percentage}%`}
-                labelLine={{ stroke: "#475569" }}
+                label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index, subject, percentage }) => {
+                  const RADIAN = Math.PI / 180;
+                  const radius = innerRadius + (outerRadius - innerRadius) * 1.35;
+                  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      fill="var(--text-primary)"
+                      textAnchor={x > cx ? 'start' : 'end'}
+                      dominantBaseline="central"
+                      fontSize={11}
+                    >
+                      {`${subject} ${percentage}%`}
+                    </text>
+                  );
+                }}
+                labelLine={{ stroke: "var(--text-secondary)" }}
               >
                 {attendanceStats?.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={currentColors[index % currentColors.length]} />
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
               <Legend
-                wrapperStyle={{ fontSize: 12, color: "#94a3b8" }}
+                wrapperStyle={{ fontSize: 12, color: "var(--text-secondary)" }}
               />
             </PieChart>
           </ResponsiveContainer>

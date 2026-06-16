@@ -1,19 +1,29 @@
-import React from "react";
-import { cva } from "class-variance-authority";
-import { cn } from "./skeleton";
+import React from "react"
+import { cva } from "class-variance-authority"
+import { cn } from "../../lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:border-slate-800 dark:focus:ring-slate-300",
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-slate-900 text-slate-50 hover:bg-slate-900/80 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/80",
+          "border-transparent bg-[var(--accent)] text-white hover:opacity-90",
         secondary:
-          "border-transparent bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
+          "border-transparent bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]",
         destructive:
-          "border-transparent bg-red-500 text-slate-50 hover:bg-red-500/80 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/80",
-        outline: "text-slate-950 dark:text-slate-50",
+          "bg-[var(--danger-bg)] text-[var(--danger)] border-[var(--danger)]/20 hover:opacity-90",
+        danger:
+          "bg-[var(--danger-bg)] text-[var(--danger)] border-[var(--danger)]/20 hover:opacity-90",
+        success:
+          "bg-[var(--success-bg)] text-[var(--success)] border-[var(--success)]/20 hover:opacity-90",
+        warning:
+          "bg-[var(--warning-bg)] text-[var(--warning)] border-[var(--warning)]/20 hover:opacity-90",
+        info:
+          "bg-[var(--info-bg)] text-[var(--info)] border-[var(--info)]/20 hover:opacity-90",
+        neutral:
+          "bg-[var(--neutral-bg)] text-[var(--text-secondary)] border-[var(--border-color)]",
+        outline: "border-[var(--border-color)] text-[var(--text-primary)]",
       },
     },
     defaultVariants: {

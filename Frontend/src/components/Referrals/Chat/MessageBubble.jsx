@@ -66,7 +66,7 @@ export function MessageBubble({
 
     if (isImage) {
       return (
-        <div className="relative group max-w-xs rounded-lg overflow-hidden border border-border/20 mt-2 bg-card/60">
+        <div className="relative group max-w-xs rounded-[var(--radius-sm)] overflow-hidden border border-border/20 mt-2 bg-card/60">
           <img 
             src={downloadUrl} 
             alt={name} 
@@ -77,7 +77,7 @@ export function MessageBubble({
             <a 
               href={downloadUrl} 
               download={name}
-              className="p-1.5 bg-black/60 rounded-full text-white hover:bg-black/80 transition-colors"
+              className="p-1.5 bg-background/60 rounded-full text-white hover:bg-black/80 transition-colors"
               title="Download image"
             >
               <Download className="w-3.5 h-3.5" />
@@ -88,8 +88,8 @@ export function MessageBubble({
     }
 
     return (
-      <div className="flex items-center gap-3 p-3 bg-secondary/80 border border-border/40 rounded-xl max-w-xs mt-2">
-        <div className="p-2 bg-primary/10 rounded-lg text-primary">
+      <div className="flex items-center gap-3 p-3 bg-secondary/80 border border-border/40 rounded-[var(--radius-md)] max-w-xs mt-2">
+        <div className="p-2 bg-primary/10 rounded-[var(--radius-sm)] text-primary">
           <FileText className="w-5 h-5" />
         </div>
         <div className="flex-1 min-w-0">
@@ -101,7 +101,7 @@ export function MessageBubble({
         <a 
           href={downloadUrl} 
           download={name}
-          className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors"
+          className="p-2 hover:bg-muted rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-colors"
           title="Download file"
         >
           <Download className="w-4 h-4" />
@@ -118,7 +118,7 @@ export function MessageBubble({
     const refSenderName = refMsg.senderType === "student" ? "Student" : "Alumni";
 
     return (
-      <div className="p-2 mb-1.5 rounded-lg bg-black/5 dark:bg-white/5 border-l-3 border-primary/45 text-left text-xs opacity-75 max-w-full truncate">
+      <div className="p-2 mb-1.5 rounded-[var(--radius-sm)] bg-black/5 dark:bg-white/5 border-l-3 border-primary/45 text-left text-xs opacity-75 max-w-full truncate">
         <span className="font-semibold text-[10px] text-primary block uppercase">
           {refSenderName}
         </span>
@@ -186,7 +186,7 @@ export function MessageBubble({
           {/* Actual Bubble */}
           <div
             className={cn(
-              "p-3.5 rounded-2xl relative border",
+              "p-3.5 rounded-[var(--radius-lg)] relative border",
               message.isDeleted
                 ? "bg-muted/15 border-border/10 text-muted-foreground/60 italic"
                 : isMe

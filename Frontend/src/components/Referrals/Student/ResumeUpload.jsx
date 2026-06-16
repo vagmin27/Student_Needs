@@ -44,7 +44,7 @@ export function ResumeUpload({ student, formData, onSubmit, isUploading }) {
   };
 
   return (
-    <div className="bg-card rounded-xl p-6 border border-border/50 shadow-sm">
+    <div className="bg-card rounded-[var(--radius-md)] p-6 border border-border/50 shadow-[var(--shadow-sm)]">
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Resume Upload
       </h3>
@@ -52,7 +52,7 @@ export function ResumeUpload({ student, formData, onSubmit, isUploading }) {
       {student?.resumeHash ? (
         /* UI State: Resume already exists on-chain */
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-success/10 border border-success/20">
+          <div className="p-4 rounded-[var(--radius-md)] bg-success/10 border border-success/20">
             <div className="flex items-center gap-3 mb-2">
               <CheckCircle className="w-5 h-5 text-success" />
               <span className="font-medium text-foreground">
@@ -64,7 +64,7 @@ export function ResumeUpload({ student, formData, onSubmit, isUploading }) {
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-muted/50 space-y-3">
+          <div className="p-4 rounded-[var(--radius-md)] bg-muted/50 space-y-3">
             <div>
               <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
                 <Hash className="w-3 h-3" />
@@ -126,7 +126,7 @@ export function ResumeUpload({ student, formData, onSubmit, isUploading }) {
         <div className="space-y-4">
           <div
             className={cn(
-              'border-2 border-dashed rounded-xl p-8 text-center transition-colors',
+              'border-2 border-dashed rounded-[var(--radius-md)] p-8 text-center transition-colors',
               resumeFile
                 ? 'border-success bg-success/5'
                 : 'border-border hover:border-primary/50'
@@ -165,7 +165,7 @@ export function ResumeUpload({ student, formData, onSubmit, isUploading }) {
             </label>
           </div>
 
-          <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
+          <div className="p-3 rounded-[var(--radius-sm)] bg-primary/5 border border-primary/20">
             <p className="text-xs text-muted-foreground text-center">
               <strong className="text-foreground">Signing with Petra:</strong> Your resume hash will be recorded on Aptos Devnet. You'll need to approve the transaction in your wallet.
             </p>

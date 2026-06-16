@@ -44,7 +44,7 @@ export function AlumniSignupPage() {
         <Card className="border-2">
           <CardHeader className="space-y-1">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-primary/10 rounded-[var(--radius-sm)]">
                 <Briefcase className="w-6 h-6 text-primary" />
               </div>
             </div>
@@ -61,7 +61,7 @@ export function AlumniSignupPage() {
 
             <form onSubmit={onSubmit} className="space-y-4">
               {/* Name Row */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="firstName">First Name</Label>
                   <Input

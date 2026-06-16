@@ -14,7 +14,7 @@
 .booking-card {
   background: var(--card-bg);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
@@ -31,19 +31,29 @@
 }
 
 .accept-btn {
-  background: #4caf50;
+  background: var(--success);
   color: var(--text-white);
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
+  transition: opacity var(--transition-fast) var(--ease-standard);
+}
+
+.accept-btn:hover {
+  opacity: 0.9;
 }
 
 .reject-btn {
-  background: #f44336;
+  background: var(--danger);
   color: var(--text-white);
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
+  transition: opacity var(--transition-fast) var(--ease-standard);
+}
+
+.reject-btn:hover {
+  opacity: 0.9;
 }

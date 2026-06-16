@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import AccountSetting from "../../components/Tutorials/AccountSetting";
 import Navbar from "../../components/Tutorials/Navbar";
-import SideNav from "@/components/Tutorials/SideNav";
+
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
-import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboard";
+
 
 function AccountSettingPage() {
   const isUnifiedLayout = useContext(LayoutContext);
@@ -11,7 +11,7 @@ function AccountSettingPage() {
   return (
     <>
       {!isUnifiedLayout && <Navbar />}
-      {isUnifiedLayout && <BackToStudentDashboard />}
+
 
       {isUnifiedLayout ? (
         <AccountSetting />
@@ -21,7 +21,7 @@ function AccountSettingPage() {
           style={{}}
           data-lenis-prevent="true"
         >
-          <SideNav />
+
           <div className="flex-1 overflow-y-auto min-h-0 min-w-0">
             <AccountSetting />
           </div>

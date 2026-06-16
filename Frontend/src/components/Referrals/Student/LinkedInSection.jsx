@@ -169,7 +169,7 @@ export function LinkedInSection({ linkedinUrl: initialLinkedinUrl, onLinkedInCha
       <CardContent className="space-y-4">
         {hasLinkedinUrl && !isEditing ? (
           <div className="space-y-4">
-            <div className="p-4 rounded-lg bg-muted/50 border">
+            <div className="p-4 rounded-[var(--radius-sm)] bg-muted/50 border">
               <div className="flex items-center gap-3">
                 <Globe className="w-8 h-8 flex-shrink-0 text-[#0A66C2]" />
                 <div className="flex-1 min-w-0">

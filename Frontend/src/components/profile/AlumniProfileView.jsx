@@ -355,7 +355,7 @@ export default function AlumniProfileView() {
       </div>
 
       {/* Live Completeness bar */}
-      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md">
+      <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)]">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -377,7 +377,7 @@ export default function AlumniProfileView() {
             />
           </div>
           {liveMissingFields.length > 0 && (
-            <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/30 p-2.5 rounded-lg border border-border/20">
+            <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/30 p-2.5 rounded-[var(--radius-sm)] border border-border/20">
               <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
               <div>
                 <span className="font-semibold text-foreground">Missing items:</span>{" "}
@@ -392,7 +392,7 @@ export default function AlumniProfileView() {
         {/* Left column: Profile Photo & Social Links */}
         <div className="space-y-6 lg:col-span-1">
           <div className="glass-panel p-6 flex flex-col items-center text-center">
-            <div className="relative group w-32 h-32 rounded-2xl overflow-hidden border-4 border-background bg-muted flex items-center justify-center shrink-0 shadow-md">
+            <div className="relative group w-32 h-32 rounded-[var(--radius-lg)] overflow-hidden border-4 border-background bg-muted flex items-center justify-center shrink-0 shadow-[var(--shadow-md)]">
               {displayImageSrc ? (
                 <img
                   src={displayImageSrc}
@@ -405,7 +405,7 @@ export default function AlumniProfileView() {
                 </span>
               )}
               {isEditing && (
-                <label htmlFor="alumni-avatar-file" className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200">
+                <label htmlFor="alumni-avatar-file" className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-200">
                   <Upload className="w-6 h-6 text-white mb-1" />
                   <span className="text-white text-xs font-semibold">Change Photo</span>
                   <input
@@ -439,7 +439,7 @@ export default function AlumniProfileView() {
           </div>
 
           {/* Social Links card */}
-          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md">
+          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)]">
             <CardHeader className="pb-3">
               <CardTitle className="text-base font-bold">Social Connections</CardTitle>
             </CardHeader>
@@ -447,8 +447,8 @@ export default function AlumniProfileView() {
               {/* LinkedIn */}
               {!isEditing ? (
                 alumniProfile?.linkedinUrl ? (
-                  <a href={alumniProfile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-muted/30">
-                    <Linkedin className="w-5 h-5 text-blue-400" />
+                  <a href={alumniProfile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors py-2 px-3 rounded-[var(--radius-sm)] hover:bg-muted/30">
+                    <Linkedin className="w-5 h-5 text-[var(--primary)]" />
                     <span className="text-sm truncate">{alumniProfile.linkedinUrl}</span>
                   </a>
                 ) : (
@@ -472,7 +472,7 @@ export default function AlumniProfileView() {
               {/* GitHub */}
               {!isEditing ? (
                 alumniProfile?.githubUrl ? (
-                  <a href={alumniProfile.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-muted/30">
+                  <a href={alumniProfile.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors py-2 px-3 rounded-[var(--radius-sm)] hover:bg-muted/30">
                     <Github className="w-5 h-5 text-foreground" />
                     <span className="text-sm truncate">{alumniProfile.githubUrl}</span>
                   </a>
@@ -497,7 +497,7 @@ export default function AlumniProfileView() {
               {/* Portfolio */}
               {!isEditing ? (
                 alumniProfile?.portfolioUrl ? (
-                  <a href={alumniProfile.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-muted/30">
+                  <a href={alumniProfile.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors py-2 px-3 rounded-[var(--radius-sm)] hover:bg-muted/30">
                     <Globe className="w-5 h-5 text-emerald-400" />
                     <span className="text-sm truncate">{alumniProfile.portfolioUrl}</span>
                   </a>
@@ -524,7 +524,7 @@ export default function AlumniProfileView() {
 
         {/* Right column: Form Fields details */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-md p-6 space-y-6">
+          <Card className="bg-card/40 backdrop-blur-md border-border/50 shadow-[var(--shadow-md)] p-6 space-y-6">
             <h3 className="text-lg font-bold text-foreground border-b border-border/20 pb-2">Professional Details</h3>
 
             {!isEditing ? (
@@ -565,21 +565,21 @@ export default function AlumniProfileView() {
                 {alumniProfile?.hiringInterests && (
                   <div className="md:col-span-2">
                     <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Hiring Interests</h4>
-                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-xl border border-border/30">{alumniProfile.hiringInterests}</p>
+                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-[var(--radius-md)] border border-border/30">{alumniProfile.hiringInterests}</p>
                   </div>
                 )}
 
                 {alumniProfile?.bio && (
                   <div className="md:col-span-2">
                     <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Bio</h4>
-                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-xl border border-border/30">{alumniProfile.bio}</p>
+                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-[var(--radius-md)] border border-border/30">{alumniProfile.bio}</p>
                   </div>
                 )}
 
                 {alumniProfile?.careerJourney && (
                   <div className="md:col-span-2">
                     <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Career Journey</h4>
-                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-xl border border-border/30">{alumniProfile.careerJourney}</p>
+                    <p className="text-foreground leading-relaxed text-sm whitespace-pre-line bg-muted/10 p-3 rounded-[var(--radius-md)] border border-border/30">{alumniProfile.careerJourney}</p>
                   </div>
                 )}
               </div>

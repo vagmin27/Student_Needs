@@ -1,5 +1,5 @@
 import React from "react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Laptop } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme.js";
 import { cn } from "@/lib/utils";
 
@@ -16,8 +16,9 @@ export const ThemePreference = ({
   const { theme, setTheme } = useTheme();
 
   const options = [
-    { id: "light", label: "Light Mode", icon: Sun },
-    { id: "dark", label: "Dark Mode", icon: Moon },
+    { id: "light", label: "Light Mode", icon: Sun, desc: "Clean modern dashboard" },
+    { id: "system", label: "System Default", icon: Laptop, desc: "Sync with your device settings" },
+    { id: "dark", label: "Dark Mode", icon: Moon, desc: "Premium neon cyber style" },
   ];
 
   if (variant === "inline") {
@@ -27,14 +28,14 @@ export const ThemePreference = ({
           <h4 className="font-medium text-foreground">{title}</h4>
           <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
         </div>
-        <div className="flex rounded-lg border border-border p-1 bg-secondary/50">
+        <div className="flex rounded-[var(--radius-sm)] border border-border p-1 bg-secondary/50">
           {options.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               type="button"
               onClick={() => setTheme(id)}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-sm)] text-xs font-medium transition-colors",
                 theme === id
                   ? "bg-primary text-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground",
@@ -52,7 +53,7 @@ export const ThemePreference = ({
   return (
     <div
       className={cn(
-        "rounded-xl border border-border bg-card p-4 sm:p-5 space-y-4",
+        "rounded-[var(--radius-md)] border border-border bg-card p-4 sm:p-5 space-y-4",
         className,
       )}
     >
@@ -60,8 +61,8 @@ export const ThemePreference = ({
         <h3 className="text-lg font-semibold text-foreground">{title}</h3>
         <p className="text-sm text-muted-foreground mt-1">{description}</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {options.map(({ id, label, icon: Icon }) => {
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {options.map(({ id, label, icon: Icon, desc }) => {
           const active = theme === id;
           return (
             <button
@@ -69,7 +70,7 @@ export const ThemePreference = ({
               type="button"
               onClick={() => setTheme(id)}
               className={cn(
-                "flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all duration-300",
+                "flex items-center gap-3 p-4 rounded-[var(--radius-md)] border-2 text-left transition-all duration-300",
                 active
                   ? "border-primary bg-primary/10 shadow-[var(--shadow-glow)]"
                   : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-secondary/50",
@@ -77,7 +78,7 @@ export const ThemePreference = ({
             >
               <div
                 className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center",
+                  "w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0",
                   active
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground",
@@ -87,11 +88,7 @@ export const ThemePreference = ({
               </div>
               <div>
                 <p className="font-medium text-foreground">{label}</p>
-                <p className="text-xs text-muted-foreground">
-                  {id === "light"
-                    ? "Clean modern dashboard"
-                    : "Premium neon cyber style"}
-                </p>
+                <p className="text-xs text-muted-foreground">{desc}</p>
               </div>
             </button>
           );

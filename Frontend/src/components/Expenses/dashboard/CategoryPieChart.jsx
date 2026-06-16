@@ -1,20 +1,25 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { sortCategoryWise } from '../../../utils/Expenses/seperator';
+import { useTheme } from '../../../context/ThemeContext';
 
 export function CategoryPieChart({ exdata }) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   const categories = ['Grocery', 'Vehicle', 'Shopping', 'Travel', 'Food', 'Fun', 'Other'];
   const totalexp = sortCategoryWise(exdata, categories);
 
-  const COLORS = [
-    'rgba(251, 146, 60, 0.8)',  // Orange
-    'rgba(96, 165, 250, 0.8)',  // Blue
-    'rgba(192, 132, 252, 0.8)', // Purple
-    'rgba(129, 140, 248, 0.8)', // Indigo
-    'rgba(251, 113, 133, 0.8)', // Rose
-    'rgba(52, 211, 153, 0.8)',  // Emerald
-    'rgba(148, 163, 184, 0.8)', // Slate
-  ];
+  const COLORS = isDark
+    ? [
+        'rgba(251, 146, 60, 0.8)',  // Orange
+        'rgba(96, 165, 250, 0.8)',  // Blue
+        'rgba(192, 132, 252, 0.8)', // Purple
+        'rgba(129, 140, 248, 0.8)', // Indigo
+        'rgba(251, 113, 133, 0.8)', // Rose
+        'rgba(52, 211, 153, 0.8)',  // Emerald
+        'rgba(148, 163, 184, 0.8)', // Slate
+      ]
+    : ["#6c4cf1", "#9b7cf6", "#c4b5fd", "#ede9fe", "#4c2fc4"];
 
   const chartData = categories?.map((cat, index) => ({
     name: cat,
@@ -24,7 +29,7 @@ export function CategoryPieChart({ exdata }) {
   const isEmpty = chartData.length === 0;
 
   return (
-    <div className="glass-panel p-6 flex flex-col h-full min-h-[300px]">
+    <div className="glass-card flex flex-col h-[320px]">
       <h3 className="text-xl font-bold text-foreground mb-6">Expenses by Category</h3>
       <div className="flex-1 relative w-full h-full min-h-[220px]">
         {isEmpty ? (
@@ -50,7 +55,7 @@ export function CategoryPieChart({ exdata }) {
               </Pie>
               <Tooltip 
                 formatter={(value) => `₹ ${value.toLocaleString()}`}
-                contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
+                contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
                 itemStyle={{ color: 'var(--text-secondary)' }}
               />
               <Legend 

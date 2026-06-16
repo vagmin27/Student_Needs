@@ -3,7 +3,7 @@
   <head>
     <script>
       (function () {
-        var t = localStorage.getItem("student-needs-theme") || localStorage.getItem("theme");
+        var t = localStorage.getItem("student-needs-theme");
         if (t !== "light" && t !== "dark") {
           t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         }
@@ -16,13 +16,12 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>NextRef.</title>
+    <title>UniConnect - All-in-One Student Platform</title>
     <meta
       name="description"
-      content="NextRef - Your gateway to seamless alumni connections and career opportunities."
+      content="UniConnect is a unified student operating system. Find online tutors, mark attendance, track monthly expenses, discover job referrals, and network with university alumni."
     />
-    <meta name="author" content="NextRef" />
+    <meta name="author" content="UniConnect" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,11 +31,10 @@
     />
     <link rel="icon" type="image/png" href="/favicon.png" />
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="NextRef" />
+    <meta property="og:title" content="UniConnect" />
     <meta
       property="og:description"
-      content="NextRef - Your gateway to seamless alumni connections and career opportunities."
+      content="UniConnect is a unified student operating system. Find online tutors, mark attendance, track monthly expenses, discover job referrals, and network with university alumni."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -45,7 +43,7 @@
     />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@NextRef" />
+    <meta name="twitter:site" content="@UniConnect" />
     <meta
       name="twitter:image"
       content="https://res.cloudinary.com/dfjuuwtr6/image/upload/v1766189047/Screenshot_2025-12-20_053338_njitco.png"

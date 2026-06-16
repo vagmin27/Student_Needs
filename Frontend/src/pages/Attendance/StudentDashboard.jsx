@@ -26,6 +26,14 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  PageLayout,
+  DashboardGrid,
+  CardGrid,
+  PremiumCard,
+  PremiumButton,
+  PremiumInput
+} from "@/components/dashboard/shared/Primitives";
 
 const MIN_ATTENDANCE = 75;
 const todayISO = () => new Date().toISOString().split("T")[0];
@@ -239,17 +247,16 @@ const StudentDashboard = () => {
       </div>
     );
   }
-
   return (
-    <div className="attendance-module space-y-6 pb-8">
+    <PageLayout className="attendance-module pb-8">
       <BackToStudentDashboard />
 
       {loadError && (
-        <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center justify-between gap-3">
+        <div className="p-4 rounded-[var(--radius-sm)] bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center justify-between gap-3">
           <span className="text-sm">{loadError}</span>
-          <Button variant="outline" size="sm" onClick={loadData}>
+          <PremiumButton variant="outline" size="sm" onClick={loadData}>
             Retry
-          </Button>
+          </PremiumButton>
         </div>
       )}
 
@@ -266,10 +273,10 @@ const StudentDashboard = () => {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={openAddSubject}>
+          <PremiumButton variant="outline" size="sm" onClick={openAddSubject}>
             <Plus className="h-4 w-4 mr-1" /> Add subject
-          </Button>
-          <Button
+          </PremiumButton>
+          <PremiumButton
             size="sm"
             onClick={() =>
               setMarkModal({ open: true, subjectId: "", date: todayISO(), status: "present" })
@@ -277,12 +284,12 @@ const StudentDashboard = () => {
             disabled={subjects.length === 0}
           >
             <MdAdd className="mr-1" /> Mark attendance
-          </Button>
+          </PremiumButton>
         </div>
       </div>
 
       {lowAttendance.length > 0 && (
-        <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center gap-3">
+        <div className="p-4 rounded-[var(--radius-sm)] bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 flex items-center gap-3">
           <MdWarning size={20} className="shrink-0" />
           <span className="text-sm font-medium">
             Low attendance (&lt; {MIN_ATTENDANCE}%):{" "}
@@ -292,7 +299,7 @@ const StudentDashboard = () => {
       )}
 
       <DashboardSection title="Overview">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <DashboardGrid cols={4}>
           <MetricCard
             title="Overall Attendance"
             value={`${overall.percentage}%`}
@@ -324,10 +331,10 @@ const StudentDashboard = () => {
             subtext="All subjects"
             icon={MdCalendarToday}
           />
-        </div>
+        </DashboardGrid>
       </DashboardSection>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-lg">
         <div className="xl:col-span-2 space-y-6">
           <DashboardCard title="Analytics" description="Charts from your attendance data" className="h-auto">
             <AttendanceCharts
@@ -339,13 +346,13 @@ const StudentDashboard = () => {
 
           {subjectProgress.length > 0 && (
             <DashboardCard title="Subject-wise progress" description="Per-subject breakdown" className="h-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-md mt-2">
                 {subjectProgress.map((s) => {
                   const pct = s.percentage;
                   return (
                     <div
                       key={s.subjectId}
-                      className="p-4 rounded-lg border border-border bg-card dark:bg-secondary/20"
+                      className="p-4 rounded-[var(--radius-sm)] border border-border bg-card dark:bg-secondary/20"
                     >
                       <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold text-sm">{s.subjectName}</span>
@@ -394,7 +401,7 @@ const StudentDashboard = () => {
               {subjects.map((s) => (
                 <li
                   key={s._id}
-                  className="flex items-center justify-between gap-2 p-3 rounded-lg border border-border"
+                  className="flex items-center justify-between gap-2 p-3 rounded-[var(--radius-sm)] border border-border"
                 >
                   <span className="font-medium text-sm">{s.subjectName}</span>
                   <div className="flex gap-1">
@@ -418,9 +425,9 @@ const StudentDashboard = () => {
       </div>
 
       <DashboardCard title="Attendance history" description="Filter, edit, or delete records" contentClassName="pt-0">
-        <div className="flex flex-wrap gap-3 mb-4">
+        <div className="flex flex-wrap gap-md mb-4">
           <select
-            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="form-select max-w-[200px]"
             value={filterSubject}
             onChange={(e) => setFilterSubject(e.target.value)}
           >
@@ -433,26 +440,26 @@ const StudentDashboard = () => {
           </select>
           <input
             type="date"
-            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="form-input max-w-[160px]"
             value={filterFrom}
             onChange={(e) => setFilterFrom(e.target.value)}
             placeholder="From"
           />
           <input
             type="date"
-            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            className="form-input max-w-[160px]"
             value={filterTo}
             onChange={(e) => setFilterTo(e.target.value)}
           />
-          <Button variant="outline" size="sm" onClick={loadData}>
+          <PremiumButton variant="outline" size="sm" onClick={loadData}>
             Apply filters
-          </Button>
+          </PremiumButton>
         </div>
 
         {records.length === 0 ? (
           <p className="text-sm text-muted-foreground text-center py-6">No records found.</p>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="table-responsive">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-muted-foreground">
@@ -504,29 +511,32 @@ const StudentDashboard = () => {
         )}
       </DashboardCard>
 
+
       <Dialog
         open={subjectModal.open}
         onOpenChange={(open) => !open && setSubjectModal((m) => ({ ...m, open: false }))}
       >
-        <DialogContent>
+        <DialogContent className="sm:max-w-[425px] p-lg">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="font-serif text-lg font-bold">
               {subjectModal.mode === "add" ? "Add subject" : "Edit subject"}
             </DialogTitle>
           </DialogHeader>
-          <input
-            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
-            placeholder="Subject name"
-            value={subjectModal.name}
-            onChange={(e) => setSubjectModal((m) => ({ ...m, name: e.target.value }))}
-          />
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setSubjectModal((m) => ({ ...m, open: false }))}>
+          <div className="py-4">
+            <input
+              className="form-input"
+              placeholder="Subject name"
+              value={subjectModal.name}
+              onChange={(e) => setSubjectModal((m) => ({ ...m, name: e.target.value }))}
+            />
+          </div>
+          <DialogFooter className="gap-2">
+            <PremiumButton variant="outline" size="sm" onClick={() => setSubjectModal((m) => ({ ...m, open: false }))}>
               Cancel
-            </Button>
-            <Button onClick={saveSubject} disabled={submitting}>
+            </PremiumButton>
+            <PremiumButton size="sm" onClick={saveSubject} disabled={submitting}>
               {submitting ? "Saving…" : "Save"}
-            </Button>
+            </PremiumButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -535,15 +545,15 @@ const StudentDashboard = () => {
         open={markModal.open}
         onOpenChange={(open) => !open && setMarkModal((m) => ({ ...m, open: false }))}
       >
-        <DialogContent>
+        <DialogContent className="sm:max-w-[450px] p-lg">
           <DialogHeader>
-            <DialogTitle>Mark attendance</DialogTitle>
+            <DialogTitle className="font-serif text-lg font-bold">Mark attendance</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-4 py-4">
             <div>
-              <label className="text-sm font-medium mb-1 block">Subject</label>
+              <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Subject</label>
               <select
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="form-select"
                 value={markModal.subjectId}
                 onChange={(e) => setMarkModal((m) => ({ ...m, subjectId: e.target.value }))}
               >
@@ -556,43 +566,43 @@ const StudentDashboard = () => {
               </select>
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Date</label>
+              <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Date</label>
               <input
                 type="date"
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="form-input"
                 value={markModal.date}
                 onChange={(e) => setMarkModal((m) => ({ ...m, date: e.target.value }))}
               />
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Status</label>
+              <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Status</label>
               <div className="flex gap-2">
-                <Button
+                <PremiumButton
                   type="button"
                   variant={markModal.status === "present" ? "default" : "outline"}
                   className="flex-1"
                   onClick={() => setMarkModal((m) => ({ ...m, status: "present" }))}
                 >
                   Present
-                </Button>
-                <Button
+                </PremiumButton>
+                <PremiumButton
                   type="button"
                   variant={markModal.status === "absent" ? "destructive" : "outline"}
                   className="flex-1"
                   onClick={() => setMarkModal((m) => ({ ...m, status: "absent" }))}
                 >
                   Absent
-                </Button>
+                </PremiumButton>
               </div>
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setMarkModal((m) => ({ ...m, open: false }))}>
+          <DialogFooter className="gap-2">
+            <PremiumButton variant="outline" size="sm" onClick={() => setMarkModal((m) => ({ ...m, open: false }))}>
               Cancel
-            </Button>
-            <Button onClick={markAttendance} disabled={submitting}>
+            </PremiumButton>
+            <PremiumButton size="sm" onClick={markAttendance} disabled={submitting}>
               {submitting ? "Saving…" : "Mark"}
-            </Button>
+            </PremiumButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -601,15 +611,15 @@ const StudentDashboard = () => {
         open={editRecordModal.open}
         onOpenChange={(open) => !open && setEditRecordModal((m) => ({ ...m, open: false }))}
       >
-        <DialogContent>
+        <DialogContent className="sm:max-w-[450px] p-lg">
           <DialogHeader>
-            <DialogTitle>Edit attendance</DialogTitle>
+            <DialogTitle className="font-serif text-lg font-bold">Edit attendance</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-4 py-4">
             <div>
-              <label className="text-sm font-medium mb-1 block">Subject</label>
+              <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Subject</label>
               <select
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="form-select"
                 value={editRecordModal.subjectId}
                 onChange={(e) =>
                   setEditRecordModal((m) => ({ ...m, subjectId: e.target.value }))
@@ -623,47 +633,51 @@ const StudentDashboard = () => {
               </select>
             </div>
             <div>
-              <label className="text-sm font-medium mb-1 block">Date</label>
+              <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Date</label>
               <input
                 type="date"
-                className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                className="form-input"
                 value={editRecordModal.date}
                 onChange={(e) => setEditRecordModal((m) => ({ ...m, date: e.target.value }))}
               />
             </div>
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                variant={editRecordModal.status === "present" ? "default" : "outline"}
-                className="flex-1"
-                onClick={() => setEditRecordModal((m) => ({ ...m, status: "present" }))}
-              >
-                Present
-              </Button>
-              <Button
-                type="button"
-                variant={editRecordModal.status === "absent" ? "destructive" : "outline"}
-                className="flex-1"
-                onClick={() => setEditRecordModal((m) => ({ ...m, status: "absent" }))}
-              >
-                Absent
-              </Button>
+            <div>
+              <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Status</label>
+              <div className="flex gap-2">
+                <PremiumButton
+                  type="button"
+                  variant={editRecordModal.status === "present" ? "default" : "outline"}
+                  className="flex-1"
+                  onClick={() => setEditRecordModal((m) => ({ ...m, status: "present" }))}
+                >
+                  Present
+                </PremiumButton>
+                <PremiumButton
+                  type="button"
+                  variant={editRecordModal.status === "absent" ? "destructive" : "outline"}
+                  className="flex-1"
+                  onClick={() => setEditRecordModal((m) => ({ ...m, status: "absent" }))}
+                >
+                  Absent
+                </PremiumButton>
+              </div>
             </div>
           </div>
-          <DialogFooter>
-            <Button
+          <DialogFooter className="gap-2">
+            <PremiumButton
               variant="outline"
+              size="sm"
               onClick={() => setEditRecordModal((m) => ({ ...m, open: false }))}
             >
               Cancel
-            </Button>
-            <Button onClick={saveRecord} disabled={submitting}>
+            </PremiumButton>
+            <PremiumButton size="sm" onClick={saveRecord} disabled={submitting}>
               {submitting ? "Saving…" : "Update"}
-            </Button>
+            </PremiumButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </PageLayout>
   );
 };
 

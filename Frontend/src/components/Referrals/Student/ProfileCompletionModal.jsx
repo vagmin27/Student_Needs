@@ -359,7 +359,7 @@ export function ProfileCompletionModal({
         return (
           <div className="space-y-4">
             {projects?.map((project, index) => (
-              <div key={index} className="p-4 border rounded-lg space-y-3">
+              <div key={index} className="p-4 border rounded-[var(--radius-sm)] space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="font-medium">Project {index + 1}</span>
                   <button
@@ -419,7 +419,7 @@ export function ProfileCompletionModal({
       case "resume":
         return (
           <div className="space-y-4 text-center">
-            <div className="border-2 border-dashed rounded-lg p-8">
+            <div className="border-2 border-dashed rounded-[var(--radius-sm)] p-8">
               <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
               <input
                 type="file"
@@ -484,14 +484,14 @@ export function ProfileCompletionModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-background/50 backdrop-blur-sm"
             onClick={onClose}
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="relative bg-card border border-border rounded-xl p-8 max-w-md w-full mx-4 text-center"
+            className="relative bg-card border border-border rounded-[var(--radius-md)] p-8 max-w-md w-full mx-4 text-center modal-core-container"
           >
             <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Profile Complete!</h2>
@@ -514,14 +514,14 @@ export function ProfileCompletionModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="absolute inset-0 bg-background/50 backdrop-blur-sm"
           onClick={onClose}
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="relative bg-card border border-border rounded-xl p-6 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto"
+          className="relative bg-card border border-border rounded-[var(--radius-md)] p-6 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto modal-core-container flex flex-col"
         >
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -549,9 +549,9 @@ export function ProfileCompletionModal({
           </div>
 
           {currentStep && (
-            <div className="mb-6">
+            <div className="mb-6 modal-body w-full flex-grow flex-1 flex flex-col gap-4">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-primary/10">
+                <div className="p-2 rounded-[var(--radius-sm)] bg-primary/10">
                   <currentStep.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
@@ -562,7 +562,7 @@ export function ProfileCompletionModal({
                 </div>
               </div>
               {error && (
-                <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive flex items-center gap-2">
+                <div className="mb-4 p-3 rounded-[var(--radius-sm)] bg-destructive/10 text-destructive flex items-center gap-2">
                   <AlertCircle className="w-4 h-4" />
                   <span className="text-sm">{error}</span>
                 </div>

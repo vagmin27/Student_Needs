@@ -154,7 +154,7 @@ export default function ForgotPassword() {
               <label className="uc-field">
                 <span>Email Address</span>
                 <div className="relative">
-                  <span className="absolute left-3 top-3.5 text-slate-500">
+                  <span className="absolute left-3 top-3.5 text-muted-foreground">
                     <Mail size={18} />
                   </span>
                   <input
@@ -234,7 +234,7 @@ export default function ForgotPassword() {
           {step === "success" && (
             <div className="flex flex-col items-center gap-4 my-8 text-center">
               <CheckCircle2 size={64} className="text-emerald-500 animate-bounce" />
-              <p className="text-slate-300 font-medium">
+              <p className="text-muted-foreground font-medium">
                 Redirecting you to the login screen in a few seconds...
               </p>
             </div>

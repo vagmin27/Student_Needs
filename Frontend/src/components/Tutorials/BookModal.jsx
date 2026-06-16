@@ -87,20 +87,14 @@ function BookModal({
                           key={`${date}-${slot.time}-${i}`}
                           type="button"
                           onClick={() => setSelectedSlot(slot)}
-                          disabled={slot.isBooked}
-                          style={{
-                            padding: "8px 16px",
-                            borderRadius: "8px",
-                            border: isSelected
-                              ? "2px solid #ff7a2f"
-                              : "1px solid #ccc",
-                            background: isSelected ? "#fff3ec" : "#fff",
-                            color: isSelected ? "#ff7a2f" : "#333",
-                            fontWeight: isSelected ? "bold" : "normal",
-                            cursor: slot.isBooked ? "not-allowed" : "pointer",
-                          }}
+                          className={isSelected ? "hourBtnSelect" : "hourBtn"}
                         >
-                          {slot.time}
+                          <div>{slot.time}</div>
+                          {slot.bookingCount > 0 && (
+                            <div style={{ fontSize: "12px", opacity: 0.8, marginTop: "4px" }}>
+                              👥 {slot.bookingCount} enrolled
+                            </div>
+                          )}
                         </button>
                       );
                     })}
@@ -117,16 +111,6 @@ function BookModal({
             className="confirmBtn"
             onClick={() => confirmClasses(selectedSlot)}
             disabled={!selectedSlot}
-            style={{
-              background: selectedSlot ? "#ff7a2f" : "#ccc",
-              color: "#fff",
-              border: "none",
-              borderRadius: "10px",
-              padding: "12px 32px",
-              cursor: selectedSlot ? "pointer" : "not-allowed",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
           >
             Confirm Booking
           </button>

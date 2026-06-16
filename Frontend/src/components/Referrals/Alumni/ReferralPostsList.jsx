@@ -32,7 +32,7 @@ export function ReferralPostsList({
 
   if (referrals.length === 0) {
     return (
-      <div className="bg-card rounded-xl p-12 border border-border/50 text-center">
+      <div className="bg-card rounded-[var(--radius-md)] p-12 border border-border/50 text-center">
         <Star className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-foreground mb-2">
           No Referrals Posted Yet
@@ -57,7 +57,7 @@ export function ReferralPostsList({
           animate={{ opacity: 1, y: 0 }}
           onClick={() => onSelectReferral(referral)}
           className={cn(
-            'w-full bg-card rounded-xl p-4 border-2 text-left transition-all',
+            'w-full bg-card rounded-[var(--radius-md)] p-4 border-2 text-left transition-all',
             selectedReferral?.id === referral.id
               ? 'border-alumni shadow-md'
               : 'border-border/50 hover:border-alumni/50'

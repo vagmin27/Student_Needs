@@ -77,7 +77,7 @@ export function ChatList({ chats, activeChatId, onSelectChat, onlineUsersList })
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search contacts or companies..."
-            className="w-full pl-9 pr-4 py-2 text-sm bg-secondary/60 border border-border/50 rounded-lg text-foreground focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-muted-foreground"
+            className="w-full pl-9 pr-4 py-2 text-sm bg-secondary/60 border border-border/50 rounded-[var(--radius-sm)] text-foreground focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-muted-foreground"
           />
         </div>
       </div>
@@ -105,7 +105,7 @@ export function ChatList({ chats, activeChatId, onSelectChat, onlineUsersList })
                 key={chat._id}
                 onClick={() => onSelectChat(chat)}
                 className={cn(
-                  "w-full flex items-center gap-3 p-3 rounded-xl transition-all border text-left",
+                  "w-full flex items-center gap-3 p-3 rounded-[var(--radius-md)] transition-all border text-left",
                   isChatActive
                     ? "bg-primary/10 border-primary/25 text-foreground"
                     : "bg-transparent border-transparent hover:bg-secondary/45 text-foreground hover:border-border/10"
@@ -143,7 +143,7 @@ export function ChatList({ chats, activeChatId, onSelectChat, onlineUsersList })
                   {/* Company/Academic Role Info */}
                   <div className="flex items-center gap-1 text-[11px] text-muted-foreground truncate mb-1">
                     {currentRole === "student" && participant.company ? (
-                      <span className="flex items-center gap-1 text-[10px] bg-primary/5 text-primary border border-primary/10 px-1.5 py-0.2 rounded-md font-medium">
+                      <span className="flex items-center gap-1 text-[10px] bg-primary/5 text-primary border border-primary/10 px-1.5 py-0.2 rounded-[var(--radius-sm)] font-medium">
                         <Briefcase className="w-2.5 h-2.5" />
                         {participant.company}
                       </span>

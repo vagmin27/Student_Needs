@@ -15,7 +15,7 @@ export const TUTORIAL_PATHS = {
   studentRegister: "/tutorials/register",
   tutorRegister: "/tutorials/register/tutor",
   /** Search & book flow — only from module home */
-  studentSearch: "/tutorials/book",
+  studentSearch: "/tutorials/find",
   studentProfile: "/tutorials/profile",
   studentOnlineAttendance: "/tutorials/online-attendance",
   tutorAttendanceHub: "/tutorials/attendance",

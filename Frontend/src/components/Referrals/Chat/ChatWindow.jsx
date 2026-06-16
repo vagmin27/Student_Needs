@@ -130,7 +130,7 @@ export function ChatWindow({
 
   if (!chat) {
     return (
-      <div className="flex-1 h-full flex flex-col items-center justify-center bg-card/10 text-center p-8 border border-border/10 rounded-2xl m-2">
+      <div className="flex-1 h-full flex flex-col items-center justify-center bg-card/10 text-center p-8 border border-border/10 rounded-[var(--radius-lg)] m-2">
         <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
           <CornerDownRight className="w-8 h-8" />
         </div>
@@ -150,7 +150,7 @@ export function ChatWindow({
           {/* Mobile Back Button */}
           <button 
             onClick={onBack}
-            className="md:hidden p-2 hover:bg-secondary rounded-lg text-muted-foreground hover:text-foreground transition-all"
+            className="md:hidden p-2 hover:bg-secondary rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-all"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -190,7 +190,7 @@ export function ChatWindow({
               {/* Alumni Actions */}
               <button 
                 onClick={handleDownloadResume}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-secondary/80 border border-border/50 text-foreground hover:bg-secondary transition-all"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-[var(--radius-sm)] text-xs font-semibold bg-secondary/80 border border-border/50 text-foreground hover:bg-secondary transition-all"
               >
                 <Download className="w-3.5 h-3.5" />
                 Resume
@@ -200,7 +200,7 @@ export function ChatWindow({
                   href={participant.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-secondary/80 border border-border/50 text-foreground hover:bg-secondary transition-all"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-[var(--radius-sm)] text-xs font-semibold bg-secondary/80 border border-border/50 text-foreground hover:bg-secondary transition-all"
                 >
                   <Globe className="w-3.5 h-3.5" />
                   GitHub
@@ -211,7 +211,7 @@ export function ChatWindow({
                   href={participant.linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-secondary/80 border border-border/50 text-foreground hover:bg-secondary transition-all"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-[var(--radius-sm)] text-xs font-semibold bg-secondary/80 border border-border/50 text-foreground hover:bg-secondary transition-all"
                 >
                   <Globe className="w-3.5 h-3.5" />
                   LinkedIn
@@ -222,7 +222,7 @@ export function ChatWindow({
             <>
               {/* Student Actions */}
               {participant?.company && (
-                <span className="flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] bg-primary/10 border border-primary/20 text-primary font-bold">
+                <span className="flex items-center gap-1 px-2.5 py-1 rounded-[var(--radius-sm)] text-[10px] bg-primary/10 border border-primary/20 text-primary font-bold">
                   <Briefcase className="w-3 h-3" />
                   {participant.company}
                 </span>
@@ -274,7 +274,7 @@ export function ChatWindow({
         <form onSubmit={handleSubmit} className="space-y-2">
           {/* Reply Preview Header */}
           {replyTarget && (
-            <div className="flex items-center justify-between p-2 rounded-lg bg-secondary/80 border border-border/40 text-xs">
+            <div className="flex items-center justify-between p-2 rounded-[var(--radius-sm)] bg-secondary/80 border border-border/40 text-xs">
               <div className="flex items-center gap-2 text-muted-foreground truncate">
                 <CornerUpLeft className="w-3.5 h-3.5 flex-shrink-0 text-primary" />
                 <span className="truncate">
@@ -305,7 +305,7 @@ export function ChatWindow({
               type="button"
               onClick={handleAttachmentClick}
               disabled={uploading}
-              className="p-2 hover:bg-secondary rounded-lg text-muted-foreground hover:text-foreground transition-all flex-shrink-0"
+              className="p-2 hover:bg-secondary rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-all flex-shrink-0"
               title="Add attachment"
             >
               {uploading ? (
@@ -321,7 +321,7 @@ export function ChatWindow({
               value={text}
               onChange={handleInputChange}
               placeholder="Type your message..."
-              className="flex-1 py-2 px-3 border border-border/50 rounded-lg text-sm bg-secondary/60 text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all"
+              className="flex-1 py-2 px-3 border border-border/50 rounded-[var(--radius-sm)] text-sm bg-secondary/60 text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all"
             />
 
             {/* Emoji Trigger */}
@@ -329,14 +329,14 @@ export function ChatWindow({
               <button
                 type="button"
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                className="p-2 hover:bg-secondary rounded-lg text-muted-foreground hover:text-foreground transition-all"
+                className="p-2 hover:bg-secondary rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground transition-all"
                 title="Emojis"
               >
                 <Smile className="w-5 h-5" />
               </button>
               
               {showEmojiPicker && (
-                <div className="absolute bottom-12 right-0 p-2 bg-card border border-border rounded-lg shadow-lg flex gap-1.5 z-50">
+                <div className="absolute bottom-12 right-0 p-2 bg-card border border-border rounded-[var(--radius-sm)] shadow-[var(--shadow-lg)] flex gap-1.5 z-50">
                   {EMOJIS.map((emoji) => (
                     <button
                       key={emoji}
@@ -355,7 +355,7 @@ export function ChatWindow({
             <button
               type="submit"
               disabled={!text.trim() && !replyTarget}
-              className="p-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95 disabled:opacity-50 transition-all flex-shrink-0"
+              className="p-2 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 disabled:opacity-50 transition-all flex-shrink-0"
               title="Send message"
             >
               <Send className="w-5 h-5" />

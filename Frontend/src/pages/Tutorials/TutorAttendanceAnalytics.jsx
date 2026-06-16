@@ -192,10 +192,10 @@ export default function TutorAttendanceAnalytics() {
   const getStatusColor = (status) => {
     const normalizedStatus = (status || "").toLowerCase();
     if (normalizedStatus === "present")
-      return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
+      return "badge-success";
     if (normalizedStatus === "absent")
-      return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400";
-    return "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400";
+      return "badge-danger";
+    return "badge-neutral";
   };
 
   const getAttendancePercentage = (student) => {
@@ -224,9 +224,9 @@ export default function TutorAttendanceAnalytics() {
       </Link>
 
       {!isTeacher ? (
-        <Card className="border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-900/50">
+        <Card className="border-[var(--danger)] bg-[var(--danger-bg)] text-[var(--danger)]">
           <CardContent className="pt-6">
-            <p className="text-red-600 dark:text-red-400 font-medium">
+            <p className="font-medium">
               Attendance Analytics is for teachers only.
             </p>
           </CardContent>
@@ -258,7 +258,7 @@ export default function TutorAttendanceAnalytics() {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     disabled={loadingSubjects}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <option value="">Select a subject...</option>
                     {subjects.map((s) => (
@@ -278,7 +278,7 @@ export default function TutorAttendanceAnalytics() {
                     type="date"
                     value={dateFrom}
                     onChange={(e) => setDateFrom(e.target.value)}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
 
@@ -291,7 +291,7 @@ export default function TutorAttendanceAnalytics() {
                     type="date"
                     value={dateTo}
                     onChange={(e) => setDateTo(e.target.value)}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
 
@@ -305,7 +305,7 @@ export default function TutorAttendanceAnalytics() {
                     placeholder="Student name..."
                     value={searchStudent}
                     onChange={(e) => setSearchStudent(e.target.value)}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-3 py-2 rounded-[var(--radius-sm)] border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
               </div>
@@ -390,7 +390,7 @@ export default function TutorAttendanceAnalytics() {
                                     {attendancePercentage}%
                                   </span>
                                 </div>
-                                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div className="w-full h-2 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
                                   <div
                                     className={`h-full transition-all ${getProgressBarColor(
                                       attendancePercentage,

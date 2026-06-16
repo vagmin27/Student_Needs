@@ -18,7 +18,7 @@ export function CandidateDetails({ selectedStudent }) {
 
   if (!selectedStudent) {
     return (
-      <div className="bg-card rounded-lg border border-border/50 shadow-sm">
+      <div className="bg-card rounded-[var(--radius-sm)] border border-border/50 shadow-[var(--shadow-sm)]">
         <div className="p-12 text-center">
           <User className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <p className="text-muted-foreground">Select a candidate to view profile</p>
@@ -28,7 +28,7 @@ export function CandidateDetails({ selectedStudent }) {
   }
 
   return (
-    <div className="bg-card rounded-lg border border-border/50 shadow-sm overflow-hidden">
+    <div className="bg-card rounded-[var(--radius-sm)] border border-border/50 shadow-[var(--shadow-sm)] overflow-hidden">
       <div className="p-6 space-y-4">
         {/* Profile Header */}
         <div className="flex items-center gap-4">

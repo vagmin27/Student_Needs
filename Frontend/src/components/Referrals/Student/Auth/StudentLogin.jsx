@@ -47,7 +47,7 @@ export function StudentLoginPage() {
         <Card className="border-2">
           <CardHeader className="space-y-1">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-2 bg-primary/10 rounded-lg">
+              <div className="p-2 bg-primary/10 rounded-[var(--radius-sm)]">
                 <GraduationCap className="w-6 h-6 text-primary" />
               </div>
             </div>

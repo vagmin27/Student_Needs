@@ -1,0 +1,135 @@
+/* ======================================================
+   DESIGN SYSTEM UTILITIES
+   ====================================================== */
+
+/* Typography Utilities */
+.font-content {
+  font-family: "Libre Baskerville", Georgia, Cambria, serif !important;
+}
+
+.font-ui {
+  font-family: "Inter", -apple-system, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Libre Baskerville", Georgia, serif;
+  color: var(--text-heading);
+  letter-spacing: -0.01em;
+}
+
+p, li, span, label, div, button, input, textarea, select {
+  font-family: "Inter", sans-serif;
+}
+
+/* Image Filters - Warmed archival look in dark mode, normal in light mode */
+img {
+  border-radius: var(--image-border-radius);
+  transition: filter var(--transition-normal) var(--ease-standard);
+}
+
+.dark img,
+.dark-theme img,
+[data-theme="dark"] img {
+  filter: var(--image-filter) !important;
+}
+
+/* Shimmer Skeleton Loaders */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--border-color) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite var(--ease-standard);
+  border-radius: var(--radius-sm);
+}
+
+/* Ambient Spotlights */
+.dashboard-background {
+  position: relative;
+  z-index: 0;
+}
+
+.dashboard-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 20% 10%,
+    var(--info-bg),
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dashboard-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 80% 20%,
+    var(--info-bg),
+    transparent 45%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Future-Proofing Theme Utilities */
+.theme-text-primary {
+  color: var(--text-primary) !important;
+}
+
+.theme-text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.theme-text-muted {
+  color: var(--text-muted) !important;
+}
+
+.theme-card {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.theme-surface {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.theme-border {
+  border-color: var(--border-color) !important;
+}
+
+.theme-input {
+  background-color: var(--input-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Ambient Radial Spotlight Glow for Premium SaaS UI */
+.bg-radial-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.bg-radial-spotlight::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 30%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}

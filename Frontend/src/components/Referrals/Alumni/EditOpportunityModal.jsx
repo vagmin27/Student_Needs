@@ -86,17 +86,17 @@ export function EditOpportunityModal({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="bg-card rounded-lg px-6 py-4 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-xl border border-border/50"
+            className="bg-card rounded-[var(--radius-sm)] px-6 py-4 w-full max-w-lg modal-core-container max-h-[90vh] overflow-y-auto shadow-[var(--shadow-lg)] border border-border/50 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-semibold text-foreground">Edit Opportunity</h3>
-              <Button variant="ghost" size="icon" onClick={onClose} className="border p-1 rounded-sm">
+              <Button variant="ghost" size="icon" onClick={onClose} className="border p-1 rounded-[var(--radius-sm)]">
                 <X className="w-4 h-4" />
               </Button>
             </div>
 
-            <div className="space-y-4">
+            <form onSubmit={(e) => e.preventDefault()} className="modal-body flex flex-col gap-4 w-full flex-grow flex-1">
               {/* Job Title */}
               <div>
                 <Label htmlFor="edit-title">Job Title *</Label>
@@ -110,7 +110,7 @@ export function EditOpportunityModal({
               </div>
 
               {/* Company & Location Grid */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="edit-company">Company</Label>
                   <Input
@@ -138,7 +138,7 @@ export function EditOpportunityModal({
                   id="edit-type"
                   value={formData.experienceLevel}
                   onChange={(e) => setFormData({ ...formData, experienceLevel: e.target.value })}
-                  className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground"
+                  className="w-full h-10 px-3 rounded-[var(--radius-sm)] border border-input bg-background text-foreground"
                 >
                   <option value="full-time">Full-time</option>
                   <option value="part-time">Part-time</option>
@@ -217,7 +217,7 @@ export function EditOpportunityModal({
                   )}
                 </Button>
               </div>
-            </div>
+            </form>
           </motion.div>
         </motion.div>
       )}

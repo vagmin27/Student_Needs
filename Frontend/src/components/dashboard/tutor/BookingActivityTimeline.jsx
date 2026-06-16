@@ -20,7 +20,7 @@ export const BookingActivityTimeline = React.memo(({ activities = [] }) => {
       case 'destructive': return <XCircle className="w-4 h-4 text-red-500" />;
       case 'pending': return <Clock className="w-4 h-4 text-amber-500" />;
       case 'info':
-      default: return <Info className="w-4 h-4 text-blue-500" />;
+      default: return <Info className="w-4 h-4 text-[var(--primary)]" />;
     }
   };
 
