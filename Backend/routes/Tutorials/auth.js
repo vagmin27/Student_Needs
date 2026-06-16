@@ -1,5 +1,5 @@
 import express from "express";
-import { login, getUser, logOut } from "../../controllers/Tutorials/auth.js";
+import { login, getUser, logOut, forgotPassword, verifyResetOtp, resetPassword } from "../../controllers/Tutorials/auth.js";
 
 const router = express.Router();
 
@@ -11,5 +11,10 @@ router.get("/user", getUser);
 
 // ✅ LOGOUT
 router.post("/logout", logOut);
+
+// ✅ FORGOT PASSWORD
+router.post("/forgot-password", forgotPassword);
+router.post("/verify-reset-otp", verifyResetOtp);
+router.post("/reset-password", resetPassword);
 
 export default router;

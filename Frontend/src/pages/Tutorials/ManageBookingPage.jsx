@@ -148,7 +148,7 @@ function ManageBookingPage() {
                     
                     {(b.status === "upcoming" || b.status === "in_progress") && (
                       <div className="mt-[10px]">
-                        {b.meetingLink ? (
+                        {b.meetingLinkPublished && b.meetingLink ? (
                           <Button
                             variant="default"
                             className="ml-[10px]"
@@ -166,7 +166,7 @@ function ManageBookingPage() {
                               window.open(b.meetingLink, "_blank");
                             }}
                           >
-                            🚀 Join Class
+                            🟢 Join Session
                           </Button>
                         ) : (
                           <p className="text-sm text-muted-foreground italic mt-[10px]">

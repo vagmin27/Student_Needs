@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
+import { buildJwtPayload, buildFrontendUserPayload } from "../../utils/Referrals/oauthAdapter.js";
 import {
   signup,
   login,
@@ -49,9 +50,11 @@ router.get("/auth/google/callback", (req, res, next) => {
       );
     }
     try {
-      const { user } = result;
+      const { user, role } = result;
+      const jwtPayload = buildJwtPayload(role, user);
+      
       const token = jwt.sign(
-        { id: user._id, email: user.email, accountType: user.accountType },
+        jwtPayload,
         process.env.JWT_SECRET,
         { expiresIn: "15m" }
       );
@@ -74,18 +77,8 @@ router.get("/auth/google/callback", (req, res, next) => {
         maxAge: 15 * 60 * 1000,
       });
 
-      const userParam = encodeURIComponent(
-        JSON.stringify({
-          _id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          accountType: user.accountType,
-          image: user.image,
-          isVerified: user.isVerified,
-          provider: user.provider,
-        })
-      );
+      const frontendPayload = buildFrontendUserPayload(role, user);
+      const userParam = encodeURIComponent(JSON.stringify(frontendPayload));
 
       return res.redirect(
         `${process.env.FRONTEND_URL || "http://localhost:5173"}/auth/social-success?token=${token}&user=${userParam}`
@@ -114,9 +107,11 @@ router.get("/auth/github/callback", (req, res, next) => {
       );
     }
     try {
-      const { user } = result;
+      const { user, role } = result;
+      const jwtPayload = buildJwtPayload(role, user);
+      
       const token = jwt.sign(
-        { id: user._id, email: user.email, accountType: user.accountType },
+        jwtPayload,
         process.env.JWT_SECRET,
         { expiresIn: "15m" }
       );
@@ -139,18 +134,8 @@ router.get("/auth/github/callback", (req, res, next) => {
         maxAge: 15 * 60 * 1000,
       });
 
-      const userParam = encodeURIComponent(
-        JSON.stringify({
-          _id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          accountType: user.accountType,
-          image: user.image,
-          isVerified: user.isVerified,
-          provider: user.provider,
-        })
-      );
+      const frontendPayload = buildFrontendUserPayload(role, user);
+      const userParam = encodeURIComponent(JSON.stringify(frontendPayload));
 
       return res.redirect(
         `${process.env.FRONTEND_URL || "http://localhost:5173"}/auth/social-success?token=${token}&user=${userParam}`

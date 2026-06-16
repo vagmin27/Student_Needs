@@ -181,6 +181,10 @@ const studentSchema = new mongoose.Schema({
     enum: ["local", "google", "github"],
     default: "local",
   },
+  providerId: {
+    type: String,
+    default: null,
+  },
   refreshToken: {
     type: String,
     default: null,

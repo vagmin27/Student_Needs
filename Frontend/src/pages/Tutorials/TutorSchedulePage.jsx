@@ -160,9 +160,8 @@ function TutorSchedulePage() {
                 
                 {item.studentId && (
                   <Button
-                    variant="outline"
+                    variant="secondary"
                     size="sm"
-                    className="bg-green-500/10 text-green-600 hover:bg-green-500/20 hover:text-green-700 border-green-500/30 dark:bg-green-500/20 dark:text-green-400 dark:hover:text-green-300"
                     onClick={() => navigate(`/tutorials/chat?studentId=${item.studentId}`)}
                   >
                     💬 Message Student

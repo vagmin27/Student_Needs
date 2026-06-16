@@ -14,39 +14,51 @@ export const BookingActivityTimeline = React.memo(({ activities = [] }) => {
     );
   }
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'success': return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
-      case 'destructive': return <XCircle className="w-4 h-4 text-red-500" />;
-      case 'pending': return <Clock className="w-4 h-4 text-amber-500" />;
-      case 'info':
-      default: return <Info className="w-4 h-4 text-[var(--primary)]" />;
-    }
-  };
-
   return (
-    <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2">
-      <div className="relative border-l border-border ml-3 space-y-6 pb-2">
-        {activities?.map((activity, index) => (
-          <div key={activity.id} className="relative pl-6">
-            <span className="absolute -left-2.5 top-1 bg-background p-0.5 rounded-full ring-2 ring-background">
-              {getStatusIcon(activity.status)}
-            </span>
-            <div className="flex flex-col space-y-1.5">
-              <div className="flex items-center justify-between gap-4">
-                <span className="font-medium text-sm text-foreground">
-                  {activity.title}
-                </span>
-                <span className="text-xs text-muted-foreground shrink-0">
-                  {activity.timestamp}
-                </span>
+    <div className="space-y-2 max-h-[400px] overflow-y-auto">
+      <div className="flex flex-col gap-0 border-transparent">
+        {activities?.map((activity, index) => {
+          let formattedDate = activity.timestamp;
+          try {
+            const dateObj = new Date(activity.timestamp);
+            if (!isNaN(dateObj.getTime())) {
+              const datePart = new Intl.DateTimeFormat('en-US', {
+                month: 'short',
+                day: 'numeric',
+              }).format(dateObj);
+              const timePart = new Intl.DateTimeFormat('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+              }).format(dateObj);
+              formattedDate = `${datePart} • ${timePart}`;
+            }
+          } catch (e) {
+            // fallback to original if parsing fails
+          }
+
+          return (
+            <div key={activity.id || index} className="flex items-start gap-4 py-3 hover:bg-muted/30 transition-colors px-2 rounded-md">
+              <div className="mt-1 flex-shrink-0">
+                <div className={`timeline-status-dot ${activity.color || 'text-[var(--primary)]'}`} />
               </div>
-              <p className="text-sm text-muted-foreground">
-                {activity.description}
-              </p>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-sm text-foreground">{activity.title}</p>
+                <div className="flex flex-col mt-0.5">
+                  <span className="text-sm font-semibold text-foreground">
+                    {activity.subject || "Session"}
+                  </span>
+                  <span className="text-sm text-muted-foreground truncate">
+                    {activity.summary || activity.subtitle || activity.description}
+                  </span>
+                </div>
+              </div>
+              <span className="text-xs text-muted-foreground whitespace-nowrap pt-0.5">
+                {formattedDate}
+              </span>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

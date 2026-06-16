@@ -109,6 +109,15 @@ function BookClass() {
     };
   }, []);
 
+  // ================= URL PARAMS SEARCH =================
+  useEffect(() => {
+    const queryParam = searchParams.get("query");
+    if (queryParam && queryParam !== query) {
+      handleSubmit(queryParam, 0);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
   // ================= RENDER STATE =================
   useEffect(() => {
     if (search && query) setRender(2);

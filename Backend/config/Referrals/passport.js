@@ -3,10 +3,8 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
-import Student from "../../models/Referrals/StudentModel.js";
-import Alumni from "../../models/Referrals/AlumniModel.js";
-import College from "../../models/Referrals/CollegeModel.js";
 import dotenv from "dotenv";
+import { getModelByRole, mapOAuthProfileToRole } from "../../utils/Referrals/oauthAdapter.js";
 
 dotenv.config();
 
@@ -17,80 +15,61 @@ const handleSocialAuth = async (profile, targetRole = "student", done) => {
       return done(null, false, { message: "No email returned from provider" });
     }
 
-    let user = null;
-    let role = targetRole;
+    const Model = getModelByRole(targetRole);
 
-    if (targetRole === "alumni") {
-      // Search Alumni DB strictly
-      user = await Alumni.findOne({ email });
-    } else {
-      // Search Student DB strictly
-      user = await Student.findOne({ email });
-      if (user && user.accountType) {
-        role = user.accountType;
-      }
+    // Prevent duplicate creation: Match by providerId first
+    let user = null;
+    if (profile.id) {
+      user = await Model.findOne({ providerId: profile.id });
     }
 
+    // Fallback to email (case-insensitive match)
+    if (!user) {
+      user = await Model.findOne({ email: { $regex: new RegExp(`^${email}$`, "i") } });
+    }
+
+    // Role boundaries must remain separate: If email exists in another role, it won't be found here.
     if (user) {
-      // User exists: update provider and verification status
+      // User exists in THIS role: update provider and verification status
       user.isVerified = true;
-      if (user.provider === "local" || !user.provider) {
+      
+      // Update providerId to link the social account
+      if (!user.providerId) {
+        user.providerId = profile.id;
+      }
+      
+      // Update provider if local or empty
+      if (!user.provider || user.provider === "local") {
         user.provider = profile.provider;
       }
-      await user.save();
-      return done(null, { user, role });
-    }
-
-    // User does not exist, auto-create based on targetRole
-    const displayName = profile.displayName || "User";
-    const firstName = profile.name?.givenName || displayName.split(" ")[0];
-    const lastName = profile.name?.familyName || displayName.split(" ").slice(1).join(" ") || (targetRole === "alumni" ? "Alumni" : "Student");
-    const randomPassword = crypto.randomBytes(16).toString("hex");
-    const hashedPassword = await bcrypt.hash(randomPassword, 10);
-
-    if (targetRole === "alumni") {
-      const collegeName = "Default College";
-      const matchingName = "defaultcollege";
-      let college = await College.findOne({ matchingName });
-      if (!college) {
-        college = await College.create({
-          name: collegeName,
-          matchingName,
-          Student: [],
-          Alumni: [],
-        });
+      
+      // Optionally update profile picture if not set
+      if (profile.photos && profile.photos.length > 0) {
+        const photoUrl = profile.photos[0].value;
+        if (targetRole === "tutor" && (!user.profilePic || user.profilePic.includes("dicebear"))) {
+          user.profilePic = photoUrl;
+        } else if ((targetRole === "student" || targetRole === "alumni") && (!user.image || user.image.includes("dicebear"))) {
+          user.image = photoUrl;
+        }
       }
-
-      const newUser = await Alumni.create({
-        firstName,
-        lastName,
-        email,
-        password: hashedPassword,
-        isVerified: true,
-        provider: profile.provider,
-        accountType: "alumni",
-        college: college._id,
-        image: profile.photos?.[0]?.value || `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`,
-      });
-
-      college.Alumni.push(newUser._id);
-      await college.save();
-
-      return done(null, { user: newUser, role: "alumni" });
-    } else {
-      const newUser = await Student.create({
-        firstName,
-        lastName,
-        email,
-        password: hashedPassword,
-        isVerified: true,
-        provider: profile.provider,
-        accountType: "student",
-        image: profile.photos?.[0]?.value || `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`,
-      });
-
-      return done(null, { user: newUser, role: "student" });
+      
+      await user.save();
+      return done(null, { user, role: targetRole });
     }
+
+    // User does not exist in THIS role, auto-create based on targetRole
+    const profileData = await mapOAuthProfileToRole(targetRole, profile, email);
+    const newUser = await Model.create(profileData);
+
+    if (targetRole === "alumni" && profileData.college) {
+        // College updates handled inside mapOAuthProfileToRole via creation, 
+        // but need to push to Alumni array if college existed:
+        import("../../models/Referrals/CollegeModel.js").then(({ default: College }) => {
+           College.findByIdAndUpdate(profileData.college, { $push: { Alumni: newUser._id } }).exec();
+        });
+    }
+
+    return done(null, { user: newUser, role: targetRole });
   } catch (error) {
     return done(error, null);
   }

@@ -8,16 +8,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] shadow-sm border border-transparent hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5",
-        primary: "bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] shadow-sm border border-transparent hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5",
-        destructive: "bg-[var(--danger)] text-white hover:opacity-90 shadow-sm hover:-translate-y-0.5",
-        success: "bg-[var(--success)] text-white hover:opacity-90 shadow-sm hover:-translate-y-0.5",
-        warning: "bg-[var(--warning)] text-white hover:opacity-90 shadow-sm hover:-translate-y-0.5",
-        outline: "border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] shadow-sm hover:-translate-y-0.5",
-        secondary: "bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] border border-[var(--border-color)] shadow-sm hover:-translate-y-0.5",
-        ghost: "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]",
-        link: "text-[var(--accent)] underline-offset-4 hover:underline",
-        glass: "bg-white/5 backdrop-blur-md text-[var(--text-primary)] border border-white/10 hover:bg-white/10 hover:-translate-y-0.5",
+        default: "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover shadow-sm border border-transparent hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5",
+        primary: "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover shadow-sm border border-transparent hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5",
+        destructive: "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover shadow-sm hover:-translate-y-0.5",
+        success: "bg-btn-success text-btn-success-text hover:bg-btn-success-hover shadow-sm hover:-translate-y-0.5",
+        warning: "bg-btn-warning text-btn-warning-text hover:bg-btn-warning-hover shadow-sm hover:-translate-y-0.5",
+        outline: "border border-[var(--border-color)] bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover shadow-sm hover:-translate-y-0.5",
+        secondary: "bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover border border-[var(--border-color)] shadow-sm hover:-translate-y-0.5",
+        ghost: "bg-transparent text-btn-ghost-text hover:bg-btn-ghost-hover hover:text-btn-ghost-hover-text",
+        link: "bg-transparent text-[var(--link-color)] underline-offset-4 hover:underline hover:text-[var(--link-hover)]",
+        glass: "bg-white/5 backdrop-blur-md text-btn-secondary-text border border-[var(--border-color)] hover:bg-btn-secondary-hover hover:-translate-y-0.5",
       },
       size: {
         default: "h-10 px-4 py-2",

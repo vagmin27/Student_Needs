@@ -21,7 +21,13 @@ export default function SocialSuccess() {
 
     try {
       const decodedUser = JSON.parse(decodeURIComponent(userParam));
-      const role = (decodedUser.role || decodedUser.accountType || "student").toLowerCase();
+      const role = (decodedUser.role || decodedUser.accountType || "").toLowerCase();
+
+      if (!role) {
+        showToast("Authentication failed: Missing role information", "error");
+        navigate("/role-selection");
+        return;
+      }
 
       const normalizedUser = {
         ...decodedUser,
@@ -46,8 +52,13 @@ export default function SocialSuccess() {
       setTimeout(() => {
         if (role === "alumni") {
           navigate("/alumni/dashboard");
-        } else {
+        } else if (role === "tutor") {
+          navigate("/tutorials/tutor/dashboard");
+        } else if (role === "student") {
           navigate("/student/dashboard");
+        } else {
+          console.warn("Unrecognized role post-login:", role);
+          navigate("/role-selection");
         }
       }, 1000);
 

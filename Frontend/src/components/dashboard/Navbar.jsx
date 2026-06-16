@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Menu, ArrowLeft } from "lucide-react";
 import { Input } from "../ui/input";
 import { NotificationCenter } from "../ui/NotificationCenter.jsx";
@@ -28,6 +28,8 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
   const { user, isStudent } = useAuth();
   const { toggleSidebar, toggleMobileMenu } = useSidebar();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = React.useState("");
 
   const role = (user?.role || user?.accountType || "").toLowerCase();
   const isStudentUser = isStudent || role === "student";
@@ -43,6 +45,13 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
       toggleMobileMenu();
     } else {
       toggleSidebar();
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/tutorials/find?query=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
@@ -72,14 +81,28 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="relative hidden md:block w-64 md:w-[420px] transition-all duration-300">
+        <form onSubmit={handleSearchSubmit} className="relative hidden md:block w-64 md:w-[420px] transition-all duration-300">
+          <style>{`
+            .nav-search-input::placeholder {
+              color: rgba(100,116,139,.75) !important;
+              opacity: 1 !important;
+            }
+            .dark .nav-search-input::placeholder,
+            [data-theme="dark"] .nav-search-input::placeholder,
+            .dark-theme .nav-search-input::placeholder {
+              color: rgba(148,163,184,.75) !important;
+              opacity: 1 !important;
+            }
+          `}</style>
           <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground" />
           <input
             type="search"
-            placeholder="Search anything..."
-            className="w-full bg-[var(--bg-secondary)] border border-border pl-10 h-10 rounded-full text-sm placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 transition-all text-[var(--text-primary)]"
+            placeholder="Search tutorials, tutors, bookings..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="nav-search-input w-full bg-[var(--bg-secondary)] border border-border pl-10 h-10 rounded-full text-sm focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 transition-all text-[var(--text-primary)]"
           />
-        </div>
+        </form>
 
         <ThemeToggle />
 

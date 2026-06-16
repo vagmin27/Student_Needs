@@ -327,8 +327,7 @@ export default function TutorProfileView() {
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="btnEditProfile saveBtn"
-            style={{ margin: 0 }}
+            className="bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover px-4 py-2 rounded-md transition-colors"
           >
             <Edit3 className="w-4 h-4 inline-block mr-2" />
             Edit Profile
@@ -337,16 +336,14 @@ export default function TutorProfileView() {
           <div className="flex gap-2">
             <button
               onClick={handleCancel}
-              className="btnEditProfile"
-              style={{ background: "var(--neutral)", color: "var(--text-white)", margin: 0 }}
+              className="bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover border border-[var(--border-color)] px-4 py-2 rounded-md transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
               disabled={saving}
-              className="btnEditProfile saveBtn"
-              style={{ margin: 0 }}
+              className="bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover px-4 py-2 rounded-md transition-colors"
             >
               {saving ? (
                 <>
@@ -407,7 +404,7 @@ export default function TutorProfileView() {
 
             {isEditing && (
               <div className="flex flex-col gap-2 mt-2 w-full px-4">
-                <label htmlFor="tutor-avatar-file" className="btnEditProfile cursor-pointer flex items-center justify-center">
+                <label htmlFor="tutor-avatar-file" className="bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover px-4 py-2 rounded-md transition-colors cursor-pointer flex items-center justify-center">
                   <Upload className="w-4 h-4 inline-block mr-2" />
                   Select New Image
                 </label>
@@ -420,7 +417,7 @@ export default function TutorProfileView() {
                 />
                 {displayImageSrc !== bulb2 && (
                   <button
-                    className="btnEditProfile btn-danger"
+                    className="bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover px-4 py-2 rounded-md transition-colors"
                     type="button"
                     onClick={handleRemovePendingImage}
                   >

@@ -7,12 +7,9 @@ import { showToast } from "@/components/Referrals/TransactionToast.jsx";
 export default function ForgotPassword() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { 
-    studentForgotPassword, studentVerifyResetOtp, studentResetPassword,
-    alumniForgotPassword, alumniVerifyResetOtp, alumniResetPassword 
-  } = useAuth();
+  const auth = useAuth();
 
-  const role = searchParams.get("role") || "student";
+  const role = searchParams.get("role");
 
   // Flow steps: "email" | "otp" | "reset" | "success"
   const [step, setStep] = useState("email");
@@ -28,6 +25,45 @@ export default function ForgotPassword() {
     return regex.test(pwd);
   };
 
+  const ROLE_HANDLERS = {
+    student: {
+      forgotPassword: auth.studentForgotPassword,
+      verifyResetOtp: auth.studentVerifyResetOtp,
+      resetPassword: auth.studentResetPassword,
+      title: "Reset Student Password",
+      emailSubtitle: "Enter your registered student email.",
+      backText: "Back to Student Login"
+    },
+    alumni: {
+      forgotPassword: auth.alumniForgotPassword,
+      verifyResetOtp: auth.alumniVerifyResetOtp,
+      resetPassword: auth.alumniResetPassword,
+      title: "Reset Alumni Password",
+      emailSubtitle: "Enter your registered alumni email.",
+      backText: "Back to Alumni Login"
+    },
+    tutor: {
+      forgotPassword: auth.tutorForgotPassword,
+      verifyResetOtp: auth.tutorVerifyResetOtp,
+      resetPassword: auth.tutorResetPassword,
+      title: "Reset Tutor Password",
+      emailSubtitle: "Enter your registered tutor email.",
+      backText: "Back to Tutor Login"
+    }
+  };
+
+  const activeRoleHandler = ROLE_HANDLERS[role];
+
+  React.useEffect(() => {
+    if (!role || !activeRoleHandler) {
+      navigate("/role-selection", { replace: true });
+    }
+  }, [role, activeRoleHandler, navigate]);
+
+  if (!role || !activeRoleHandler) {
+    return null; // Return null while redirecting
+  }
+
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -39,9 +75,7 @@ export default function ForgotPassword() {
     setErrorMsg("");
 
     try {
-      const response = role === "alumni" 
-        ? await alumniForgotPassword(email)
-        : await studentForgotPassword(email);
+      const response = await activeRoleHandler.forgotPassword(email);
 
       if (response.success) {
         showToast("Reset password verification code sent to your email", "success");
@@ -67,9 +101,7 @@ export default function ForgotPassword() {
     setErrorMsg("");
 
     try {
-      const response = role === "alumni"
-        ? await alumniVerifyResetOtp(email, otp)
-        : await studentVerifyResetOtp(email, otp);
+      const response = await activeRoleHandler.verifyResetOtp(email, otp);
 
       if (response.success) {
         showToast("OTP verified successfully.", "success");
@@ -101,9 +133,7 @@ export default function ForgotPassword() {
 
     try {
       const payload = { email, otp, password, confirmPassword };
-      const response = role === "alumni"
-        ? await alumniResetPassword(payload)
-        : await studentResetPassword(payload);
+      const response = await activeRoleHandler.resetPassword(payload);
 
       if (response.success) {
         showToast("Password updated successfully! Redirecting to login...", "success");
@@ -127,7 +157,7 @@ export default function ForgotPassword() {
         {step !== "success" && (
           <Link to={`/login/${role}`} className="uc-back-link">
             <span>{"<-"}</span>
-            Back to Login
+            {activeRoleHandler.backText}
           </Link>
         )}
 
@@ -135,12 +165,12 @@ export default function ForgotPassword() {
           <div className="uc-login-icon">
             <KeyRound />
           </div>
-          <h1 id="forgot-title">Reset Password</h1>
+          <h1 id="forgot-title">{activeRoleHandler.title}</h1>
           <p className="px-4 text-center">
-            {step === "email" && "Enter your email address to receive a password reset verification code."}
+            {step === "email" && activeRoleHandler.emailSubtitle}
             {step === "otp" && `Enter the 6-digit OTP code sent to ${email}.`}
             {step === "reset" && "Create a secure new password for your account."}
-            {step === "success" && "Your password has been reset successfully!"}
+            {step === "success" && `Password reset link sent to your ${role} email.`}
           </p>
 
           {errorMsg && (

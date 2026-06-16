@@ -42,6 +42,10 @@ const tutorSchema = new mongoose.Schema({
   githubUrl: String,
   portfolioUrl: String,
   profileCompleteness: { type: Number, default: 0 },
+  provider: { type: String, enum: ["local", "google", "github"], default: "local" },
+  providerId: { type: String, default: null },
+  otp: { type: String, default: null },
+  otpExpiry: { type: Date, default: null },
 });
 
 export default mongoose.model("Tutor", tutorSchema);
