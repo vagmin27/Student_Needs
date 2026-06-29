@@ -538,7 +538,7 @@ const UnifiedDashboard = () => {
       variants={containerVariants}
       initial="hidden"
       animate="show"
-      className="space-y-8 relative pb-16 px-1 w-full min-w-0 max-w-full overflow-hidden box-border"
+      className="space-y-10 relative pb-16 px-1 w-full min-w-0 max-w-full overflow-hidden box-border"
     >
       {/* 👋 Welcome Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-[var(--border-color)] mb-2 w-full min-w-0 max-w-full box-border overflow-hidden">
@@ -562,7 +562,7 @@ const UnifiedDashboard = () => {
       </div>
 
       {/* Row 1: KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full min-w-0 max-w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full min-w-0 max-w-full">
         {/* Card 1: Attendance */}
         <PremiumCard className="hover:border-[var(--accent)]/30 min-h-[170px]" hoverEffect={true}>
           <div className="flex justify-between items-center gap-4 w-full min-w-0 pt-1">
@@ -684,7 +684,7 @@ const UnifiedDashboard = () => {
       </div>
 
       {/* Row 2: Upcoming Classes & Expense Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full min-w-0 max-w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full min-w-0 max-w-full">
         {/* Column 1: Upcoming Classes */}
         <PremiumCard className="lg:col-span-5" hoverEffect={false}>
           <div className="flex justify-between items-center pb-4 border-b border-[var(--border-color)] mb-4 w-full gap-2 min-w-0">
@@ -817,7 +817,7 @@ const UnifiedDashboard = () => {
       </div>
 
       {/* Row 3: Grid for Bills Due Calendar & Quick Modules */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full min-w-0 max-w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full min-w-0 max-w-full">
         {/* Column 1: Bills Due Calendar */}
         <PremiumCard className="lg:col-span-5" hoverEffect={false}>
           <div className="flex justify-between items-center pb-4 border-b border-[var(--border-color)] mb-4 w-full min-w-0">
