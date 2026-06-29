@@ -225,7 +225,10 @@ const RecurringTransactions = () => {
       </div>
 
       {/* Auto Debit Cards UI (Premium Standout) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        className="grid gap-5"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}
+      >
         {upcomingCards?.map((card, idx) => {
           const isOverdue = new Date(card.nextDate) < new Date();
           const gradients = [
@@ -239,7 +242,7 @@ const RecurringTransactions = () => {
           return (
             <div
               key={card._id}
-              className={`relative overflow-hidden rounded-[var(--radius-lg)] p-6 transition-transform hover:-translate-y-2 group bg-card ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-border"}`}
+              className={`relative overflow-hidden rounded-[var(--radius-lg)] p-5 transition-transform hover:-translate-y-2 group bg-card min-w-0 ${isOverdue ? "shadow-[0_0_25px_rgba(244,63,94,0.4)] border border-rose-500/50" : "shadow-glass border border-border"}`}
             >
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${bgGradient} opacity-20 group-hover:opacity-30 transition-opacity`}
@@ -249,30 +252,30 @@ const RecurringTransactions = () => {
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/10 blur-2xl rounded-full"></div>
 
               <div className="relative z-10 flex flex-col h-full justify-between">
-                <div className="flex justify-between items-start mb-8">
-                  <div>
-                    <h4 className="text-foreground font-bold text-lg">
+                <div className="flex justify-between items-start mb-6 gap-2 min-w-0">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-foreground font-bold text-base leading-tight truncate">
                       {card.title}
                     </h4>
-                    <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+                    <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider mt-0.5 truncate">
                       {catMeta.label}
                     </p>
                   </div>
-                  <Badge variant="secondary">
+                  <Badge variant="secondary" className="shrink-0 text-[10px]">
                     {card.frequency}
                   </Badge>
                 </div>
 
                 <div>
-                  <p className="text-muted-foreground text-sm mb-1">
+                  <p className="text-muted-foreground text-xs mb-1">
                     Auto Debit Amount
                   </p>
-                  <div className="flex justify-between items-end">
-                    <p className="text-3xl font-sans font-bold text-foreground tracking-tight">
+                  <div className="flex justify-between items-end gap-2 min-w-0">
+                    <p className="text-2xl font-sans font-bold text-foreground tracking-tight truncate min-w-0">
                       ₹ {card.amount.toLocaleString()}
                     </p>
                     <p
-                      className={`text-sm font-bold ${isOverdue ? "text-rose-400 animate-pulse" : "text-foreground"}`}
+                      className={`text-xs font-bold shrink-0 ${isOverdue ? "text-rose-400 animate-pulse" : "text-foreground"}`}
                     >
                       {isOverdue
                         ? "OVERDUE"

@@ -215,7 +215,7 @@ const Home = () => {
   const utilizationStatus = getExpenseStatus(budgetPercentage > 90 ? "Critical" : budgetPercentage > 75 ? "High" : "Active");
 
   return (
-    <div className="w-full space-y-6 sm:space-y-8 animate-fade-in-up relative pb-16 px-6 py-6">
+    <div className="w-full space-y-6 sm:space-y-8 animate-fade-in-up relative pb-16 px-6 py-5">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -314,7 +314,7 @@ const Home = () => {
       </div>
 
       {/* Main Dashboard Layout Splits: Analytics & Bills */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         {/* Analytics Section: Trends & Charts */}
         <div className="xl:col-span-2 space-y-6">
           {/* Charts Row */}
@@ -365,19 +365,19 @@ const Home = () => {
         {/* Bills Tracker Section */}
         <div className="xl:col-span-1 space-y-6">
           {/* Summary Cards */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 rounded-[var(--radius-md)] border border-border bg-card text-center shadow-sm">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-3 rounded-[var(--radius-md)] border border-border bg-card text-center shadow-sm">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Due Today</span>
-              <span className="block text-2xl font-extrabold text-amber-500 mt-1">{summary?.dueTodayCount || 0}</span>
+              <span className="block text-xl font-extrabold text-amber-500 mt-1">{summary?.dueTodayCount || 0}</span>
             </div>
-            <div className="p-4 rounded-[var(--radius-md)] border border-border bg-card text-center shadow-sm">
+            <div className="p-3 rounded-[var(--radius-md)] border border-border bg-card text-center shadow-sm">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Overdue Bills</span>
-              <span className="block text-2xl font-extrabold text-rose-500 mt-1">{summary?.overdueCount || 0}</span>
+              <span className="block text-xl font-extrabold text-rose-500 mt-1">{summary?.overdueCount || 0}</span>
             </div>
           </div>
 
           {/* Active Bills List */}
-          <div className="glass-card border border-border bg-card p-6 rounded-[var(--radius-lg)] shadow-sm space-y-4">
+          <div className="glass-card border border-border bg-card p-5 rounded-[var(--radius-lg)] shadow-sm space-y-4">
             <div className="flex justify-between items-center border-b border-border/40 pb-2">
               <h3 className="text-base font-bold text-foreground">Active Bills</h3>
               <Badge variant="secondary">
@@ -475,7 +475,7 @@ const Home = () => {
           </div>
 
           {/* Quick PDF/CSV Export buttons card */}
-          <div className="glass-card border border-border bg-card p-6 rounded-[var(--radius-lg)] shadow-sm flex items-center justify-between gap-4">
+          <div className="glass-card border border-border bg-card p-4 rounded-[var(--radius-lg)] shadow-sm flex items-center justify-between gap-4">
             <span className="text-xs font-bold text-foreground">Monthly Reports</span>
             <div className="flex gap-2">
               <button 

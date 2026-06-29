@@ -7,7 +7,6 @@ import { MdTrendingUp, MdLightbulbOutline, MdSavings } from "react-icons/md";
 import { getUserId } from "../../utils/Expenses/authHelper";
 import { PageLayout, SectionContainer, DashboardGrid, PremiumCard } from "../../components/dashboard/shared/Primitives";
 import { cn } from "@/lib/utils";
-import ExpenseFilters from "../../components/Expenses/shared/ExpenseFilters";
 import { getExpenseCategory } from "../../utils/Expenses/categories";
 
 const Analytics = () => {
@@ -83,9 +82,9 @@ const Analytics = () => {
   const yearlyTrendData = Object.values(yearlyTotals);
 
   return (
-    <PageLayout className="w-full animate-fade-in-up px-6 py-6">
+    <PageLayout className="w-full animate-fade-in-up px-6 py-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <div>
           <h1 className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
             Financial Analytics
@@ -95,7 +94,7 @@ const Analytics = () => {
           </p>
         </div>
 
-        {/* View Toggle integrated in a filter structure */}
+        {/* View Toggle */}
         <div className="bg-[var(--bg-secondary)] border border-border/60 rounded-[var(--radius-md)] p-1 flex">
           <button
             onClick={() => setViewType("monthly")}
@@ -123,26 +122,13 @@ const Analytics = () => {
         </div>
       </div>
 
-      {/* Canonical Filters Row (Empty state since filters are visual toggle type, but standardizes padding) */}
-      <SectionContainer className="mb-6">
-        <ExpenseFilters
-          sortBy={viewType}
-          onSortChange={setViewType}
-          sortOptions={[
-            { value: "monthly", label: "View Monthly Spend" },
-            { value: "yearly", label: "View Yearly Spend" }
-          ]}
-          className="rounded-[var(--radius-lg)] border border-border/40"
-        />
-      </SectionContainer>
-
       {/* Smart Insights */}
-      <SectionContainer className="mb-6">
+      <SectionContainer className="mb-4">
         <DashboardGrid cols={3}>
-          <PremiumCard hoverEffect={true} className="p-6 flex flex-col justify-between hover:border-amber-500/30 transition-colors group">
+          <PremiumCard hoverEffect={true} className="p-5 flex flex-col justify-between hover:border-amber-500/30 transition-colors group">
             <div>
-              <div className="p-3 bg-amber-500/10 text-amber-500 w-fit rounded-[var(--radius-md)] mb-4 group-hover:scale-105 transition-transform">
-                <MdLightbulbOutline size={24} />
+              <div className="p-2.5 bg-amber-500/10 text-amber-500 w-fit rounded-[var(--radius-md)] mb-3 group-hover:scale-105 transition-transform">
+                <MdLightbulbOutline size={22} />
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Your highest spending is on{" "}
@@ -152,10 +138,10 @@ const Analytics = () => {
             </div>
           </PremiumCard>
 
-          <PremiumCard hoverEffect={true} className="p-6 flex flex-col justify-between hover:border-emerald-500/30 transition-colors group">
+          <PremiumCard hoverEffect={true} className="p-5 flex flex-col justify-between hover:border-emerald-500/30 transition-colors group">
             <div>
-              <div className="p-3 bg-emerald-500/10 text-emerald-500 w-fit rounded-[var(--radius-md)] mb-4 group-hover:scale-105 transition-transform">
-                <MdSavings size={24} />
+              <div className="p-2.5 bg-emerald-500/10 text-emerald-500 w-fit rounded-[var(--radius-md)] mb-3 group-hover:scale-105 transition-transform">
+                <MdSavings size={22} />
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 You are on track to save{" "}
@@ -165,10 +151,10 @@ const Analytics = () => {
             </div>
           </PremiumCard>
 
-          <PremiumCard hoverEffect={true} className="p-6 flex flex-col justify-between hover:border-[var(--primary)]/30 transition-colors group">
+          <PremiumCard hoverEffect={true} className="p-5 flex flex-col justify-between hover:border-[var(--primary)]/30 transition-colors group">
             <div>
-              <div className="p-3 bg-[var(--primary)]/10 text-[var(--primary)] w-fit rounded-[var(--radius-md)] mb-4 group-hover:scale-105 transition-transform">
-                <MdTrendingUp size={24} />
+              <div className="p-2.5 bg-[var(--primary)]/10 text-[var(--primary)] w-fit rounded-[var(--radius-md)] mb-3 group-hover:scale-105 transition-transform">
+                <MdTrendingUp size={22} />
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Weekly spending peaked on{" "}
@@ -181,14 +167,14 @@ const Analytics = () => {
       </SectionContainer>
 
       {/* Charts */}
-      <SectionContainer className="mb-6">
+      <SectionContainer className="mb-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Trend Chart */}
-          <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
-            <h3 className="font-sans text-lg font-bold text-foreground mb-4">
+          <PremiumCard hoverEffect={false} className="p-5 min-h-[320px] flex flex-col bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+            <h3 className="font-sans text-base font-bold text-foreground mb-3">
               {viewType === "monthly" ? "Monthly Spend Trend" : "Yearly Spend Trend"}
             </h3>
-            <div className="flex-1 w-full relative min-h-[280px]">
+            <div className="flex-1 w-full relative min-h-[240px]">
               <TrendChart
                 data={viewType === "monthly" ? chartTrendData : yearlyTrendData}
                 labels={
@@ -199,11 +185,11 @@ const Analytics = () => {
           </PremiumCard>
 
           {/* Weekly Chart */}
-          <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
-            <h3 className="font-sans text-lg font-bold text-foreground mb-4">
+          <PremiumCard hoverEffect={false} className="p-5 min-h-[320px] flex flex-col bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+            <h3 className="font-sans text-base font-bold text-foreground mb-3">
               Weekly Spend Comparison
             </h3>
-            <div className="flex-1 w-full relative min-h-[280px]">
+            <div className="flex-1 w-full relative min-h-[240px]">
               <WeeklySpendingChart
                 data={chartWeeklyData}
                 labels={chartWeeklyLabels}
@@ -215,8 +201,8 @@ const Analytics = () => {
 
       {/* Category Chart */}
       <SectionContainer>
-        <PremiumCard hoverEffect={false} className="p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
-          <h3 className="font-sans text-lg font-bold text-foreground mb-4">Category breakdown</h3>
+        <PremiumCard hoverEffect={false} className="p-5 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
+          <h3 className="font-sans text-base font-bold text-foreground mb-3">Category breakdown</h3>
           <CategoryPieChart exdata={userexp} />
         </PremiumCard>
       </SectionContainer>
@@ -224,4 +210,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;
+export default Analytics;
