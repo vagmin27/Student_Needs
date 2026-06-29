@@ -61,7 +61,7 @@ body {
 ====================================================== */
 
 .container {
-  max-width: 1100px;
+  max-width: 1280px;
   margin: auto;
   padding: 1rem;
 }
@@ -1038,16 +1038,16 @@ img {
    SECTIONS & FEATURES SYSTEM
    ====================================================== */
 .uc-section {
-  padding: 80px 24px;
+  padding: 64px 24px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   text-align: center;
 }
 
 .uc-section-header {
   margin-bottom: 48px;
-  max-width: 650px;
+  max-width: 780px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1554,7 +1554,7 @@ img {
 
 @media (max-width: 768px) {
   .uc-section {
-    padding: 56px 18px;
+    padding: 44px 18px;
   }
   .uc-section-header h2 {
     font-size: 26px;
@@ -1662,8 +1662,8 @@ body,
    ====================================================== */
 
 :root {
-  --uc-modern-container: 1400px;
-  --uc-modern-content: 1200px;
+  --uc-modern-container: 1520px;
+  --uc-modern-content: 1360px;
   
   /* Modern SaaS Radius System */
   --radius-sm: 12px;
@@ -1674,22 +1674,22 @@ body,
 
 /* 1. Global Spacing System (Reduced by 15-20% for visual density) */
 .uc-modern-section {
-  padding-top: 96px;
-  padding-bottom: 96px;
+  padding-top: 80px;
+  padding-bottom: 80px;
   position: relative;
 }
 
 @media (max-width: 1024px) {
   .uc-modern-section {
-    padding-top: 76px;
-    padding-bottom: 76px;
+    padding-top: 60px;
+    padding-bottom: 60px;
   }
 }
 
 @media (max-width: 768px) {
   .uc-modern-section {
-    padding-top: 56px;
-    padding-bottom: 56px;
+    padding-top: 44px;
+    padding-bottom: 44px;
   }
 }
 
