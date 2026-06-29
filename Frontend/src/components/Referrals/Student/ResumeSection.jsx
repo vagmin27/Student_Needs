@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/Referrals/ui/card.jsx';
-import { Button } from '@/components/Referrals/ui/button.jsx';
-import { Badge } from '@/components/Referrals/ui/badge.jsx';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card.jsx";
+import { Button } from "@/components/ui/button.jsx";
+import { Badge } from "@/components/ui/badge.jsx";
 import { 
   FileText, 
   Upload, 

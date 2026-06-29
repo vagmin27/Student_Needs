@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import "../../styles/Tutorials/ReviewModal.css";
 import PropTypes from "prop-types";
 import Rate from "./Rate";
 import API from "@/services/api/tutorialsApi.js";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog.jsx";
+import { Button } from "@/components/ui/button.jsx";
 
 /**
  * @param {props} props from parent component ClassHistory.jsx
@@ -25,6 +32,7 @@ function ReviewModal({ handleModal, currTutor }) {
     try {
       const { data: resMsg } = await API.post("/addReview", comment);
       alert(resMsg.msg);
+      handleModal();
     } catch (err) {
       console.error(err);
     }
@@ -42,61 +50,61 @@ function ReviewModal({ handleModal, currTutor }) {
     }));
   };
 
-  return ReactDOM.createPortal(
-    <div
-      className="overlay"
-      style={{
-        position: "fixed",
-        top: "0",
-        bottom: "0",
-        left: "0",
-        right: "0",
-        display: "grid",
-        height: "100vh",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "var(--glass-bg)",
-      }}
-    >
-      <div className="modalContainerReview">
-        <div className="modalRightReview">
-          <p className="closeBtnReview" onClick={handleModal}>
-            <i className="fa-regular fa-x"></i>
-          </p>
-          <div className="contentReview">
-            <p className="titleReview">We appreciate your feedback ! </p>
-            <div className="StarDiv">
-              <Rate />
-            </div>
+  return (
+    <Dialog open={true} onOpenChange={(isOpen) => !isOpen && handleModal()}>
+      <DialogContent className="max-w-md bg-[var(--card-bg)] border border-[var(--border-color)] p-6">
+        <DialogHeader className="pb-2">
+          <DialogTitle className="text-xl font-bold text-[var(--text-primary)]">
+            We appreciate your feedback!
+          </DialogTitle>
+          <DialogDescription className="text-sm text-[var(--text-muted)] mt-1">
+            Rate your session and share your experience with the tutor.
+          </DialogDescription>
+        </DialogHeader>
 
-            <div className="form-group">
-              <form onSubmit={handleSubmit}>
-                <label
-                  className="textTitle"
-                  htmlFor="exampleFormControlTextarea1"
-                >
-                  Leave a review for the tutor
-                </label>
-                <textarea
-                  className="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows="6"
-                  name="review"
-                  value={comment.review}
-                  onChange={handleChange}
-                ></textarea>
-                <span className="submitBtnSpan">
-                  <button className="reviewBtn" type="submit">
-                    Submit Review
-                  </button>
-                </span>
-              </form>
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-6 my-4">
+          <div className="flex justify-center py-2 select-none">
+            <Rate />
           </div>
-        </div>
-      </div>
-    </div>,
-    document.getElementById("modalRootAddReview")
+
+          <div className="space-y-2">
+            <label
+              className="text-sm font-semibold text-[var(--text-secondary)] block"
+              htmlFor="tutor-review-text"
+            >
+              Leave a review for the tutor
+            </label>
+            <textarea
+              className="w-full min-h-[100px] p-3 text-sm rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-transparent transition-all resize-none"
+              id="tutor-review-text"
+              rows="4"
+              name="review"
+              value={comment.review}
+              onChange={handleChange}
+              placeholder="How was your session? What did you focus on?"
+              required
+            />
+          </div>
+
+          <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2 justify-end select-none">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleModal}
+              className="w-full sm:w-auto h-10 text-xs"
+            >
+              Cancel
+            </Button>
+            <Button 
+              className="w-full sm:w-auto h-10 text-xs font-bold" 
+              type="submit"
+            >
+              Submit Review
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -106,3 +114,4 @@ ReviewModal.propTypes = {
 };
 
 export default ReviewModal;
+

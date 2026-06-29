@@ -26,12 +26,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 //                    GLOBAL STYLES
 // ======================================================
 
-// Tutorials Styles
-import "./styles/Tutorials/LoginRegister.css";
-import "./styles/Tutorials/Login.css";
-
-// Attendance Styles
-import "./styles/Attendance/main.css";
+// Attendance Styles (deferred deletion)
+// import "./styles/Attendance/main.css";
 
 // ======================================================
 //                    ROOT

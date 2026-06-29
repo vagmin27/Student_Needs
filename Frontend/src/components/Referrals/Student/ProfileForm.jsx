@@ -1,5 +1,5 @@
-import { Input } from '@/components/Referrals/ui/input.jsx';
-import { Label } from '@/components/Referrals/ui/label.jsx';
+import { Input } from "@/components/ui/input.jsx";
+import { Label } from "@/components/ui/label.jsx";
 
 /**
  * ProfileForm Component

@@ -1,5 +1,5 @@
 import React from "react";
-import Skeleton from "../Expenses/ui/Skeleton";
+import { Skeleton } from "../ui/skeleton";
 import EmptyState from "../ui/EmptyState";
 import { AlertCircle } from "lucide-react";
 

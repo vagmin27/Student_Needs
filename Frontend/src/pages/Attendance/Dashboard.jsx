@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API, { ATTENDANCE_PATHS } from "../../services/Attendance/api";
-import Charts from "../../components/Attendance/Charts";
+import AttendanceCharts from "../../components/Attendance/AttendanceCharts";
 import {
   MdPeople, MdCheckCircle, MdCancel, MdCalendarToday, MdTrendingUp, MdBarChart,
 } from "react-icons/md";
@@ -8,7 +8,10 @@ import {
   PageLayout,
   SectionContainer,
   DashboardGrid,
-  PremiumCard
+  PremiumCard,
+  DashboardHeader,
+  StatCard,
+  AnalyticsCard,
 } from "../../components/dashboard/shared/Primitives";
 
 function Dashboard() {
@@ -96,15 +99,25 @@ function Dashboard() {
 
   const calculateSelectedDateAttendance = (data, studentsData, date) => {
     const selected = data?.filter((item) => item.date === date);
-    if (!selected.length) { setPresentStudents([]); setAbsentStudents([]); return; }
+    if (!selected.length) {
+      setPresentStudents([]);
+      setAbsentStudents([]);
+      return;
+    }
     const presentSet = new Set();
     const absentSet = new Set();
     selected.forEach((att) => {
       att.attendanceRecords.forEach((r) => {
         const student = studentsData.find((s) => s._id === r.studentId?.toString());
         if (!student) return;
-        if (r.attendance === "present") { presentSet.add(student.Name); absentSet.delete(student.Name); }
-        if (r.attendance === "absent")  { absentSet.add(student.Name);  presentSet.delete(student.Name); }
+        if (r.attendance === "present") {
+          presentSet.add(student.Name);
+          absentSet.delete(student.Name);
+        }
+        if (r.attendance === "absent") {
+          absentSet.add(student.Name);
+          presentSet.delete(student.Name);
+        }
       });
     });
     setPresentStudents([...presentSet]);
@@ -123,68 +136,42 @@ function Dashboard() {
   const presentPct = totalToday > 0 ? ((presentStudents.length / totalToday) * 100).toFixed(0) : 0;
 
   return (
-    <PageLayout className="attendance-module">
-      <div className="page-header">
-        <h1 className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">Teacher Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1">Overview of attendance and student performance</p>
-      </div>
+    <PageLayout>
+      <DashboardHeader
+        title="Teacher Dashboard"
+        description="Overview of attendance and student performance"
+      />
 
       {/* Stat Cards */}
       <SectionContainer>
         <DashboardGrid cols={4}>
-          <PremiumCard hoverEffect={true}>
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Students</p>
-                <h3 className="text-3xl font-bold mt-2 text-foreground">{students.length}</h3>
-                <p className="text-xs text-muted-foreground mt-1">Registered in system</p>
-              </div>
-              <div className="p-3 bg-indigo-500/10 text-indigo-500 rounded-lg text-2xl">
-                <MdPeople />
-              </div>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Total Students"
+            value={students.length}
+            subtext="Registered in system"
+            icon={MdPeople}
+          />
 
-          <PremiumCard hoverEffect={true}>
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Present Today</p>
-                <h3 className="text-3xl font-bold mt-2 text-[var(--success)]">{presentStudents.length}</h3>
-                <p className="text-xs text-muted-foreground mt-1">{presentPct}% attendance rate</p>
-              </div>
-              <div className="p-3 bg-[var(--success-bg)] text-[var(--success)] rounded-lg text-2xl">
-                <MdCheckCircle />
-              </div>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Present Today"
+            value={presentStudents.length}
+            subtext={`${presentPct}% attendance rate`}
+            icon={MdCheckCircle}
+          />
 
-          <PremiumCard hoverEffect={true}>
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Absent Today</p>
-                <h3 className="text-3xl font-bold mt-2 text-[var(--danger)]">{absentStudents.length}</h3>
-                <p className="text-xs text-muted-foreground mt-1">For selected date</p>
-              </div>
-              <div className="p-3 bg-[var(--danger-bg)] text-[var(--danger)] rounded-lg text-2xl">
-                <MdCancel />
-              </div>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Absent Today"
+            value={absentStudents.length}
+            subtext="For selected date"
+            icon={MdCancel}
+          />
 
-          <PremiumCard hoverEffect={true}>
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Latest Session</p>
-                <h3 className="text-lg font-bold mt-2 text-foreground truncate max-w-[150px]">
-                  {latestSubject || "—"}
-                </h3>
-                <p className="text-xs text-muted-foreground mt-1">{latestDate || "No sessions yet"}</p>
-              </div>
-              <div className="p-3 bg-amber-500/10 text-amber-500 rounded-lg text-2xl">
-                <MdTrendingUp />
-              </div>
-            </div>
-          </PremiumCard>
+          <StatCard
+            title="Latest Session"
+            value={latestSubject || "—"}
+            subtext={latestDate || "No sessions yet"}
+            icon={MdTrendingUp}
+          />
         </DashboardGrid>
       </SectionContainer>
 
@@ -193,7 +180,7 @@ function Dashboard() {
         <PremiumCard hoverEffect={false}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-              <MdCalendarToday className="text-[var(--primary)]" /> View Attendance By Date
+              <MdCalendarToday className="text-[var(--accent)]" /> View Attendance By Date
             </h3>
             <input
               type="date"
@@ -247,10 +234,9 @@ function Dashboard() {
       {/* Charts */}
       <SectionContainer>
         {attendanceStats.length > 0 ? (
-          <PremiumCard hoverEffect={false}>
-            <h3 className="text-base font-semibold text-foreground mb-4">Semester Analytics</h3>
-            <Charts attendanceStats={attendanceStats} />
-          </PremiumCard>
+          <AnalyticsCard title="Semester Analytics" description="Charts from teacher attendance records">
+            <AttendanceCharts bySubject={attendanceStats} />
+          </AnalyticsCard>
         ) : (
           <PremiumCard hoverEffect={false}>
             <div className="py-12 text-center text-muted-foreground">

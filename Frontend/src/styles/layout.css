@@ -93,7 +93,7 @@
 /* Sidebar Sizing Constants */
 :root {
   --sidebar-w-expanded: 260px;
-  --sidebar-w-collapsed: 80px;
+  --sidebar-w-collapsed: 72px;
 }
 
 .sidebar-expanded {

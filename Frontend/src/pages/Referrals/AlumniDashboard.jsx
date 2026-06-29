@@ -1,7 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
 import { Button } from '@/components/ui/button.jsx';
+import { CandidateTable } from "@/components/Referrals/shared/CandidateTable.jsx";
+import { ReferralFilters } from "@/components/Referrals/shared/ReferralFilters.jsx";
 import { Input } from '@/components/ui/input.jsx';
 import { Label } from '@/components/ui/label.jsx';
 import { Textarea } from '@/components/ui/textarea.jsx';
@@ -54,9 +56,24 @@ export function AlumniDashboard() {
   const [isCreating, setIsCreating] = useState(false);
   const [isCreatingReferral, setIsCreatingReferral] = useState(false);
   
-  // Search queries
-  const [appsSearchQuery, setAppsSearchQuery] = useState("");
-  const [candidatesSearchQuery, setCandidatesSearchQuery] = useState("");
+  // Search queries & filters
+  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [appsFilters, setAppsFilters] = useState({
+    search: "",
+    company: "",
+    role: "",
+    status: "pending",
+    stage: "",
+    sortBy: "date-desc"
+  });
+  const [candidatesFilters, setCandidatesFilters] = useState({
+    search: "",
+    company: "",
+    role: "",
+    status: "verified",
+    stage: "",
+    sortBy: "date-desc"
+  });
 
   // Alumni profile states
   const [alumniProfile, setAlumniProfile] = useState(null);
@@ -176,15 +193,16 @@ export function AlumniDashboard() {
   };
 
   // Load student profile
-  const loadStudentProfile = async (studentId, chatId = null) => {
+  const loadStudentProfile = async (studentId, application = null) => {
     setLoadingStudentProfile(true);
     setShowStudentProfile(true);
+    setSelectedApplication(application);
     try {
       const response = await applicationsApi.getStudentProfile(studentId);
       if (response.success) {
         setSelectedStudentProfile({
           ...response.data,
-          chatId: chatId
+          chatId: application?.chatId || null
         });
       }
     } catch (error) {
@@ -632,37 +650,153 @@ export function AlumniDashboard() {
     return `${BASE_URL}/${cleanImg.startsWith('uploads/') ? cleanImg : `uploads/${cleanImg}`}`;
   };
 
-  // Filter and group pending applications by role
-  const filteredApps = Object.entries(groupedApplications || {}).reduce((acc, [roleName, list]) => {
-    if (!Array.isArray(list)) return acc;
-    const filteredList = list.filter(app => {
-      const student = app.student || app.profileSnapshot || {};
-      const studentName = `${student.firstName || ''} ${student.lastName || ''}`.toLowerCase();
-      const jobTitle = (app.opportunity?.jobTitle || '').toLowerCase();
-      const search = appsSearchQuery.toLowerCase();
-      return studentName.includes(search) || jobTitle.includes(search);
-    });
-    if (filteredList.length > 0) {
-      acc[roleName] = filteredList;
-    }
-    return acc;
-  }, {});
+  // Flatten maps
+  const allApps = useMemo(() => {
+    return Object.values(groupedApplications || {}).flat();
+  }, [groupedApplications]);
 
-  // Filter and group verified candidates by role
-  const filteredCandidates = Object.entries(verifiedCandidates || {}).reduce((acc, [roleName, list]) => {
-    if (!Array.isArray(list)) return acc;
-    const filteredList = list.filter(app => {
-      const student = app.student || app.profileSnapshot || {};
-      const studentName = `${student.firstName || ''} ${student.lastName || ''}`.toLowerCase();
-      const jobTitle = (app.opportunity?.jobTitle || '').toLowerCase();
-      const search = candidatesSearchQuery.toLowerCase();
-      return studentName.includes(search) || jobTitle.includes(search);
+  const allCandidates = useMemo(() => {
+    return Object.values(verifiedCandidates || {}).flat();
+  }, [verifiedCandidates]);
+
+  // Companies & Roles
+  const appsCompanies = useMemo(() => {
+    const cos = new Set();
+    allApps.forEach(app => {
+      const co = app.opportunity?.postedBy?.company || app.alumni?.company || app.company;
+      if (co) cos.add(co);
     });
-    if (filteredList.length > 0) {
-      acc[roleName] = filteredList;
+    return Array.from(cos);
+  }, [allApps]);
+
+  const appsRoles = useMemo(() => {
+    const rs = new Set();
+    allApps.forEach(app => {
+      const r = app.opportunity?.jobTitle || app.role;
+      if (r) rs.add(r);
+    });
+    return Array.from(rs);
+  }, [allApps]);
+
+  const candidatesCompanies = useMemo(() => {
+    const cos = new Set();
+    allCandidates.forEach(c => {
+      const co = c.opportunity?.postedBy?.company || c.alumni?.company || c.company;
+      if (co) cos.add(co);
+    });
+    return Array.from(cos);
+  }, [allCandidates]);
+
+  const candidatesRoles = useMemo(() => {
+    const rs = new Set();
+    allCandidates.forEach(c => {
+      const r = c.opportunity?.jobTitle || c.role;
+      if (r) rs.add(r);
+    });
+    return Array.from(rs);
+  }, [allCandidates]);
+
+  // Filter apps
+  const filteredAppsList = useMemo(() => {
+    let result = [...allApps];
+    if (appsFilters.search) {
+      const s = appsFilters.search.toLowerCase();
+      result = result.filter(app => {
+        const student = app.student || {};
+        const name = `${student.firstName || ""} ${student.lastName || ""}`.toLowerCase();
+        const role = (app.opportunity?.jobTitle || app.role || "").toLowerCase();
+        const co = (app.opportunity?.postedBy?.company || app.alumni?.company || app.company || "").toLowerCase();
+        return name.includes(s) || role.includes(s) || co.includes(s);
+      });
     }
-    return acc;
-  }, {});  return (
+    if (appsFilters.company) {
+      result = result.filter(app => {
+        const co = app.opportunity?.postedBy?.company || app.alumni?.company || app.company || "";
+        return co.toLowerCase() === appsFilters.company.toLowerCase();
+      });
+    }
+    if (appsFilters.role) {
+      result = result.filter(app => {
+        const r = app.opportunity?.jobTitle || app.role || "";
+        return r.toLowerCase() === appsFilters.role.toLowerCase();
+      });
+    }
+    if (appsFilters.status) {
+      result = result.filter(app => (app.status || "").toLowerCase() === appsFilters.status.toLowerCase());
+    }
+    if (appsFilters.stage) {
+      result = result.filter(app => (app.stage || app.interviewStage || "").toLowerCase() === appsFilters.stage.toLowerCase());
+    }
+    if (appsFilters.sortBy === "date-desc") {
+      result.sort((a, b) => new Date(b.createdAt || b.appliedAt || 0) - new Date(a.createdAt || a.appliedAt || 0));
+    } else if (appsFilters.sortBy === "date-asc") {
+      result.sort((a, b) => new Date(a.createdAt || a.appliedAt || 0) - new Date(b.createdAt || b.appliedAt || 0));
+    } else if (appsFilters.sortBy === "name-asc") {
+      result.sort((a, b) => {
+        const nameA = `${a.student?.firstName || ""} ${a.student?.lastName || ""}`.toLowerCase();
+        const nameB = `${b.student?.firstName || ""} ${b.student?.lastName || ""}`.toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    } else if (appsFilters.sortBy === "name-desc") {
+      result.sort((a, b) => {
+        const nameA = `${a.student?.firstName || ""} ${a.student?.lastName || ""}`.toLowerCase();
+        const nameB = `${b.student?.firstName || ""} ${b.student?.lastName || ""}`.toLowerCase();
+        return nameB.localeCompare(nameA);
+      });
+    }
+    return result;
+  }, [allApps, appsFilters]);
+
+  // Filter candidates
+  const filteredCandidatesList = useMemo(() => {
+    let result = [...allCandidates];
+    if (candidatesFilters.search) {
+      const s = candidatesFilters.search.toLowerCase();
+      result = result.filter(c => {
+        const student = c.student || {};
+        const name = `${student.firstName || ""} ${student.lastName || ""}`.toLowerCase();
+        const role = (c.opportunity?.jobTitle || c.role || "").toLowerCase();
+        const co = (c.opportunity?.postedBy?.company || c.alumni?.company || c.company || "").toLowerCase();
+        return name.includes(s) || role.includes(s) || co.includes(s);
+      });
+    }
+    if (candidatesFilters.company) {
+      result = result.filter(c => {
+        const co = c.opportunity?.postedBy?.company || c.alumni?.company || c.company || "";
+        return co.toLowerCase() === candidatesFilters.company.toLowerCase();
+      });
+    }
+    if (candidatesFilters.role) {
+      result = result.filter(c => {
+        const r = c.opportunity?.jobTitle || c.role || "";
+        return r.toLowerCase() === candidatesFilters.role.toLowerCase();
+      });
+    }
+    if (candidatesFilters.status) {
+      result = result.filter(c => (c.status || "").toLowerCase() === candidatesFilters.status.toLowerCase());
+    }
+    if (candidatesFilters.stage) {
+      result = result.filter(c => (c.stage || c.interviewStage || "").toLowerCase() === candidatesFilters.stage.toLowerCase());
+    }
+    if (candidatesFilters.sortBy === "date-desc") {
+      result.sort((a, b) => new Date(b.createdAt || b.appliedAt || 0) - new Date(a.createdAt || a.appliedAt || 0));
+    } else if (candidatesFilters.sortBy === "date-asc") {
+      result.sort((a, b) => new Date(a.createdAt || a.appliedAt || 0) - new Date(b.createdAt || b.appliedAt || 0));
+    } else if (candidatesFilters.sortBy === "name-asc") {
+      result.sort((a, b) => {
+        const nameA = `${a.student?.firstName || ""} ${a.student?.lastName || ""}`.toLowerCase();
+        const nameB = `${b.student?.firstName || ""} ${b.student?.lastName || ""}`.toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    } else if (candidatesFilters.sortBy === "name-desc") {
+      result.sort((a, b) => {
+        const nameA = `${a.student?.firstName || ""} ${a.student?.lastName || ""}`.toLowerCase();
+        const nameB = `${b.student?.firstName || ""} ${b.student?.lastName || ""}`.toLowerCase();
+        return nameB.localeCompare(nameA);
+      });
+    }
+    return result;
+  }, [allCandidates, candidatesFilters]);  return (
     <PageLayout
       className={cn(
         "pb-8",
@@ -738,17 +872,14 @@ export function AlumniDashboard() {
                       </div>
                     ) : (
                       <div className="space-y-2 sm:space-y-3 max-h-[400px] sm:max-h-[600px] overflow-y-auto">
-                        {selectedOpportunityApplications?.map((application) => (
-                          <ApplicationCard
-                            key={application._id}
-                            application={application}
-                            opportunityId={selectedBackendOpportunity._id}
-                            onViewProfile={loadStudentProfile}
-                            onShortlist={handleShortlistBackend}
-                            onReject={handleRejectBackend}
-                            onRefer={handleReferBackend}
-                          />
-                        ))}
+                    <CandidateTable
+                      candidates={selectedOpportunityApplications}
+                      onActionClick={(app) => {
+                        loadStudentProfile(app.student?._id || app._id, app);
+                      }}
+                      actionLabel="Review"
+                      emptyMessage="No applications yet"
+                    />
                       </div>
                     )}
                   </div>
@@ -765,118 +896,53 @@ export function AlumniDashboard() {
 
       {activeTab === 'applications' && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] border border-border/50 p-4">
+          <div className="flex flex-col gap-4">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Pending Applications</h3>
-              <p className="text-xs text-muted-foreground">Review applications grouped dynamically by role</p>
+              <p className="text-xs text-muted-foreground">Review applications for your posted jobs and referrals</p>
             </div>
-            <Input
-              type="text"
-              placeholder="Search by student name or role..."
-              value={appsSearchQuery}
-              onChange={(e) => setAppsSearchQuery(e.target.value)}
-              className="max-w-md w-full bg-muted/50 border-border/50 text-foreground"
+            <ReferralFilters
+              filters={appsFilters}
+              onFilterChange={setAppsFilters}
+              companies={appsCompanies}
+              roles={appsRoles}
             />
           </div>
 
-          {Object.keys(filteredApps).length > 0 ? (
-            <div className="space-y-6">
-              {Object.entries(filteredApps).map(([roleName, apps]) => (
-                <div key={roleName} className="space-y-3">
-                  <div className="flex items-center gap-2 border-b border-border/30 pb-2">
-                    <FileText className="w-5 h-5 text-primary" />
-                    <h4 className="text-lg font-semibold text-foreground capitalize">
-                      {roleName} <span className="text-xs bg-primary/20 text-primary px-2.5 py-0.5 rounded-full font-medium ml-2">{apps.length} pending</span>
-                    </h4>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {apps.map((app) => (
-                      <ApplicationCard
-                        key={app._id}
-                        application={app}
-                        opportunityId={app.opportunity?._id}
-                        onViewProfile={loadStudentProfile}
-                        onApprove={handleApproveBackend}
-                        onReject={handleRejectBackend}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-card rounded-[var(--radius-md)] p-6 sm:p-8 md:p-12 border border-border/50 text-center">
-              <FileText className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
-              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
-                No Pending Applications
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground">
-                All applications have been reviewed or no matches were found.
-              </p>
-            </div>
-          )}
+          <CandidateTable
+            candidates={filteredAppsList}
+            onActionClick={(app) => {
+              loadStudentProfile(app.student?._id || app._id, app);
+            }}
+            actionLabel="Review"
+            emptyMessage="No pending applications found."
+          />
         </div>
       )}
 
       {activeTab === 'candidates' && (
         <div className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-card/40 backdrop-blur-md rounded-[var(--radius-md)] border border-border/50 p-4">
+          <div className="flex flex-col gap-4">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Verified Candidates</h3>
-              <p className="text-xs text-muted-foreground">Candidates approved for referral grouped dynamically by role</p>
+              <p className="text-xs text-muted-foreground">Review blockchain-verified student candidates for referral</p>
             </div>
-            <Input
-              type="text"
-              placeholder="Search by student name or role..."
-              value={candidatesSearchQuery}
-              onChange={(e) => setCandidatesSearchQuery(e.target.value)}
-              className="max-w-md w-full bg-muted/50 border-border/50 text-foreground"
+            <ReferralFilters
+              filters={candidatesFilters}
+              onFilterChange={setCandidatesFilters}
+              companies={candidatesCompanies}
+              roles={candidatesRoles}
             />
           </div>
 
-          {Object.keys(filteredCandidates).length > 0 ? (
-            <div className="space-y-6">
-              {Object.entries(filteredCandidates).map(([roleName, candidates]) => (
-                <div key={roleName} className="space-y-3">
-                  <div className="flex items-center gap-2 border-b border-border/30 pb-2">
-                    <Users className="w-5 h-5 text-emerald-400" />
-                    <h4 className="text-lg font-semibold text-foreground capitalize">
-                      {roleName} <span className="text-xs bg-emerald-400/20 text-emerald-400 px-2.5 py-0.5 rounded-full font-medium ml-2">{candidates.length} verified</span>
-                    </h4>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {candidates.map((candidate) => (
-                      <ApplicationCard
-                        key={candidate._id}
-                        application={candidate}
-                        opportunityId={candidate.opportunity?._id}
-                        onViewProfile={loadStudentProfile}
-                        onReject={handleRejectBackend}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-card rounded-[var(--radius-md)] p-6 sm:p-8 md:p-12 border border-border/50 text-center">
-              <Users className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3 sm:mb-4" />
-              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
-                No Verified Candidates Yet
-              </h3>
-              <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4">
-                Review applications and approve candidates to see them here.
-              </p>
-              <Button 
-                variant="alumni" 
-                onClick={() => setActiveTab('jobs')}
-                className='bg-primary text-background'
-              >
-                <Briefcase className="w-4 h-4 mr-2" />
-                Go to Opportunities
-              </Button>
-            </div>
-          )}
+          <CandidateTable
+            candidates={filteredCandidatesList}
+            onActionClick={(candidate) => {
+              loadStudentProfile(candidate.student?._id || candidate._id, candidate);
+            }}
+            actionLabel="Review"
+            emptyMessage="No verified candidates found."
+          />
         </div>
       )}
 
@@ -918,9 +984,15 @@ export function AlumniDashboard() {
         onClose={() => {
           setShowStudentProfile(false);
           setSelectedStudentProfile(null);
+          setSelectedApplication(null);
         }}
         student={selectedStudentProfile}
         loading={loadingStudentProfile}
+        application={selectedApplication}
+        onShortlist={handleShortlistBackend}
+        onReject={handleRejectBackend}
+        onRefer={handleReferBackend}
+        onApprove={handleApproveBackend}
       />
     </PageLayout>
   );

@@ -3,7 +3,6 @@ import API from "@/services/api/tutorialsApi.js";
 import { useNavigate, Link } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { API_PREFIXES, getApiUrl } from "@/config/api.js";
-import "./TutorLoginPage.css";
 
 // Google SVG Icon
 const GoogleIcon = () => (
@@ -63,18 +62,17 @@ function TutorRegisterPage() {
   };
 
   return (
-    <div className="uc-login-page">
+    <main className="uc-login-page">
       <div className="uc-login-card">
-        <Link to="/role-selection" className="uc-back-link">
-          <span>{"<- "}</span>
-          Back to role selection
+        <Link to="/role-selection" className="uc-back-link" aria-label="Back to role selection">
+          <span>{"<-"}</span> Back to role selection
         </Link>
 
-        <section className="uc-login-panel">
+        <section className="uc-login-panel" aria-labelledby="tutor-register-title">
           <div className="uc-login-icon">
-            <BookOpen />
+            <BookOpen className="w-7 h-7" />
           </div>
-          <h1>Tutor Sign Up</h1>
+          <h1 id="tutor-register-title">Tutor Sign Up</h1>
           <p>Register as a tutor to start teaching on UniConnect.</p>
 
           {step === "form" ? (
@@ -115,24 +113,35 @@ function TutorRegisterPage() {
                 />
               </label>
 
-              <button type="submit" className="uc-login-submit">
-                SEND OTP
+              <button 
+                type="submit" 
+                className="uc-primary-button w-full h-11 font-bold text-sm rounded-[var(--radius-sm)] transition-all duration-200 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[1px] mt-4 cursor-pointer"
+              >
+                Send OTP
               </button>
 
-              <p className="uc-login-switch">
-                Already have an account? <Link to="/login/tutor">Login</Link>
+              <p className="text-xs text-[var(--text-secondary)] text-center w-full pt-2">
+                Already have an account? <Link to="/login/tutor" className="text-[var(--primary)] hover:underline font-semibold ml-1">Login</Link>
               </p>
 
-              <div className="divider-container" style={{ marginTop: '20px', marginBottom: '20px' }}>
+              <div className="w-full flex items-center text-center my-6 text-xs text-[var(--text-muted)] tracking-wider font-semibold before:content-[''] before:flex-1 before:border-b before:border-[var(--border-color)] before:mr-3 after:content-[''] after:flex-1 after:border-b after:border-[var(--border-color)] after:ml-3">
                 OR CONTINUE WITH
               </div>
 
-              <div className="social-auth-grid">
-                <button type="button" className="social-btn" onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/google?role=tutor`}>
+              <div className="social-auth-grid w-full grid grid-cols-2 gap-4">
+                <button 
+                  type="button" 
+                  className="flex items-center justify-center gap-2 h-11 bg-transparent border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 rounded-[var(--radius-sm)] text-sm font-semibold text-[var(--text-primary)] transition-all cursor-pointer" 
+                  onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/google?role=tutor`}
+                >
                   <GoogleIcon />
                   Google
                 </button>
-                <button type="button" className="social-btn" onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/github?role=tutor`}>
+                <button 
+                  type="button" 
+                  className="flex items-center justify-center gap-2 h-11 bg-transparent border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 rounded-[var(--radius-sm)] text-sm font-semibold text-[var(--text-primary)] transition-all cursor-pointer" 
+                  onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/github?role=tutor`}
+                >
                   <GitHubIcon />
                   GitHub
                 </button>
@@ -140,7 +149,8 @@ function TutorRegisterPage() {
             </form>
           ) : (
             <form onSubmit={handleVerifyOtp} className="uc-login-form">
-              <p style={{ color: "var(--success, green)", marginBottom: "12px" }}>{message}</p>
+              <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 p-2.5 rounded-[var(--radius-sm)]">{message}</p>
+              
               <label className="uc-field">
                 <span>Enter OTP sent to {tutor.email}</span>
                 <input
@@ -149,16 +159,20 @@ function TutorRegisterPage() {
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   maxLength={6}
+                  className="tracking-wider text-center font-bold"
                   required
                 />
               </label>
 
-              <button type="submit" className="uc-login-submit">
-                VERIFY & REGISTER
+              <button 
+                type="submit" 
+                className="uc-primary-button w-full h-11 font-bold text-sm rounded-[var(--radius-sm)] transition-all duration-200 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[1px] mt-4 cursor-pointer"
+              >
+                Verify & Register
               </button>
 
-              <p className="uc-login-switch">
-                <span onClick={() => setStep("form")} style={{ cursor: "pointer", fontWeight: "bold" }}>
+              <p className="text-xs text-[var(--text-secondary)] text-center w-full pt-2">
+                <span onClick={() => setStep("form")} className="text-[var(--primary)] hover:underline font-semibold cursor-pointer">
                   ← Back to form
                 </span>
               </p>
@@ -166,7 +180,7 @@ function TutorRegisterPage() {
           )}
         </section>
       </div>
-    </div>
+    </main>
   );
 }
 

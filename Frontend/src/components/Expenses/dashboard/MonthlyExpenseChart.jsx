@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { ChartContainer, ChartTooltip } from '../../dashboard/shared/ChartContainer';
+import { chartPalette } from '../../../utils/chartPalette';
 
 const MonthlyExpenseChart = ({ exdata }) => {
   const chartData = useMemo(() => {
@@ -40,20 +42,18 @@ const MonthlyExpenseChart = ({ exdata }) => {
         </select>
       </div>
       <div className="flex-1 w-full relative min-h-[220px]">
-        <ResponsiveContainer width="100%" height="100%">
+        <ChartContainer height="100%" minHeight={220}>
           <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
             <XAxis dataKey="name" stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
             <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value}`} />
             <Tooltip 
               cursor={{ fill: 'var(--neutral-bg)' }}
-              contentStyle={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
-              itemStyle={{ color: 'var(--text-secondary)' }}
-              formatter={(value) => `₹${value.toLocaleString()}`}
+              content={<ChartTooltip formatter={(value) => `₹${value.toLocaleString()}`} />}
             />
-            <Bar dataKey="Expenses" fill="var(--primary)" radius={[6, 6, 0, 0]} barSize={32} />
+            <Bar dataKey="Expenses" fill={chartPalette.primary} radius={[6, 6, 0, 0]} barSize={32} />
           </BarChart>
-        </ResponsiveContainer>
+        </ChartContainer>
       </div>
     </div>
   );

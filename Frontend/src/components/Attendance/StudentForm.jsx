@@ -2,7 +2,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import API from "../../services/Attendance/api";
 import { MdPersonAdd } from "react-icons/md";
-import { PremiumButton } from "../dashboard/shared/Primitives";
+import { Button } from "../ui/button";
+import { FormGroup, FormLabel } from "../ui/form";
+import { PremiumInput } from "../ui/input";
+import { Select } from "../ui/select";
 
 function StudentForm({ refreshStudents }) {
   const [formData, setFormData] = useState({
@@ -48,93 +51,99 @@ function StudentForm({ refreshStudents }) {
   };
 
   return (
-    <form onSubmit={submitForm} className="space-y-md">
+    <form onSubmit={submitForm} className="space-y-4">
       <h3 className="text-base font-semibold text-foreground flex items-center gap-2 mb-4">
-        <MdPersonAdd className="text-[var(--primary)]" /> Student Information
+        <MdPersonAdd className="text-[var(--accent)]" /> Student Information
       </h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-md">
-        <div className="form-group">
-          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Full Name *</label>
-          <input
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <FormGroup>
+          <FormLabel required>Full Name</FormLabel>
+          <PremiumInput
             type="text"
             name="Name"
-            className="form-input"
             placeholder="Student full name"
             value={formData.Name}
             onChange={handleChange}
             required
           />
-        </div>
-        <div className="form-group">
-          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Register Number *</label>
-          <input
+        </FormGroup>
+
+        <FormGroup>
+          <FormLabel required>Register Number</FormLabel>
+          <PremiumInput
             type="text"
             name="Register_number"
-            className="form-input"
             placeholder="e.g. CS2021001"
             value={formData.Register_number}
             onChange={handleChange}
             required
           />
-        </div>
-        <div className="form-group">
-          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Year of Study</label>
-          <input
+        </FormGroup>
+
+        <FormGroup>
+          <FormLabel>Year of Study</FormLabel>
+          <PremiumInput
             type="text"
             name="Year_of_studying"
-            className="form-input"
             placeholder="e.g. 2nd Year"
             value={formData.Year_of_studying}
             onChange={handleChange}
           />
-        </div>
-        <div className="form-group">
-          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Branch / Department</label>
-          <input
+        </FormGroup>
+
+        <FormGroup>
+          <FormLabel>Branch / Department</FormLabel>
+          <PremiumInput
             type="text"
             name="Branch_of_studying"
-            className="form-input"
             placeholder="e.g. Computer Science"
             value={formData.Branch_of_studying}
             onChange={handleChange}
           />
-        </div>
-        <div className="form-group">
-          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Gender</label>
-          <select name="Gender" className="form-select" value={formData.Gender} onChange={handleChange}>
+        </FormGroup>
+
+        <FormGroup>
+          <FormLabel>Gender</FormLabel>
+          <Select
+            name="Gender"
+            value={formData.Gender}
+            onChange={handleChange}
+          >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Mobile Number</label>
-          <input
+          </Select>
+        </FormGroup>
+
+        <FormGroup>
+          <FormLabel>Mobile Number</FormLabel>
+          <PremiumInput
             type="text"
             name="Mobile_number"
-            className="form-input"
             placeholder="10-digit mobile number"
             value={formData.Mobile_number}
             onChange={handleChange}
           />
-        </div>
-        <div className="form-group sm:col-span-2">
-          <label className="text-sm font-medium mb-1.5 block text-muted-foreground">Email Address</label>
-          <input
-            type="email"
-            name="Email_id"
-            className="form-input"
-            placeholder="student@example.com"
-            value={formData.Email_id}
-            onChange={handleChange}
-          />
+        </FormGroup>
+
+        <div className="sm:col-span-2">
+          <FormGroup>
+            <FormLabel>Email Address</FormLabel>
+            <PremiumInput
+              type="email"
+              name="Email_id"
+              placeholder="student@example.com"
+              value={formData.Email_id}
+              onChange={handleChange}
+            />
+          </FormGroup>
         </div>
       </div>
 
       <div className="flex justify-end pt-4">
-        <PremiumButton
+        <Button
           type="submit"
           variant="primary"
           isLoading={loading}
@@ -142,7 +151,7 @@ function StudentForm({ refreshStudents }) {
           className="min-w-[160px]"
         >
           Add Student
-        </PremiumButton>
+        </Button>
       </div>
     </form>
   );

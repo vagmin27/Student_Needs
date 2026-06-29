@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import API, { ATTENDANCE_PATHS } from "../../services/Attendance/api";
 import { MdSearch } from "react-icons/md";
 import { PageLayout, SectionContainer, PremiumCard, PremiumButton } from "../../components/dashboard/shared/Primitives";
+import StudentTable from "../../components/Attendance/StudentTable";
 
 function Attendance() {
   const [students, setStudents] = useState([]);
@@ -41,17 +42,38 @@ function Attendance() {
   };
 
   const handleAttendance = (id, status) => {
-    setAttendanceData((prev) => ({ ...prev, [id]: status }));
+    setAttendanceData((prev) => {
+      const next = { ...prev };
+      if (status === undefined) {
+        delete next[id];
+      } else {
+        next[id] = status;
+      }
+      return next;
+    });
   };
 
   const submitAttendance = async () => {
-    if (!subject) { toast.error("Please select a subject"); return; }
-    if (Object.keys(attendanceData).length === 0) { toast.error("Please mark attendance for at least one student"); return; }
+    if (!subject) {
+      toast.error("Please select a subject");
+      return;
+    }
+    if (Object.keys(attendanceData).length === 0) {
+      toast.error("Please mark attendance for at least one student");
+      return;
+    }
 
     setLoading(true);
     try {
-      const attendanceArray = Object.entries(attendanceData).map(([studentId, attendance]) => ({ studentId, attendance }));
-      await API.post(ATTENDANCE_PATHS.root, { subject, date, attendanceData: attendanceArray });
+      const attendanceArray = Object.entries(attendanceData).map(([studentId, attendance]) => ({
+        studentId,
+        attendance,
+      }));
+      await API.post(ATTENDANCE_PATHS.root, {
+        subject,
+        date,
+        attendanceData: attendanceArray,
+      });
       toast.success("Attendance submitted successfully!");
       setAttendanceData({});
     } catch (error) {
@@ -68,7 +90,7 @@ function Attendance() {
   const markedCount = Object.keys(attendanceData).length;
 
   return (
-    <PageLayout className="attendance-module">
+    <PageLayout>
       <div className="page-header">
         <h1 className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">Mark Attendance</h1>
         <p className="text-sm text-muted-foreground mt-1">Select a subject, date, then mark each student present or absent</p>
@@ -87,7 +109,9 @@ function Attendance() {
               >
                 <option value="">Select Subject</option>
                 {subjects?.map((sub) => (
-                  <option key={sub._id} value={sub.subjectName}>{sub.subjectName}</option>
+                  <option key={sub._id} value={sub.subjectName}>
+                    {sub.subjectName}
+                  </option>
                 ))}
               </select>
             </div>
@@ -128,53 +152,11 @@ function Attendance() {
             />
           </div>
 
-          {filtered.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <p>No students found</p>
-            </div>
-          ) : (
-            <div className="table-responsive">
-              <table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Register No.</th>
-                    <th>Branch</th>
-                    <th>Attendance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered?.map((student, i) => (
-                    <tr key={student._id}>
-                      <td>{i + 1}</td>
-                      <td className="font-semibold text-foreground">{student.Name}</td>
-                      <td>{student.Register_number}</td>
-                      <td>{student.Branch_of_studying || "—"}</td>
-                      <td>
-                        <div className="att-toggle">
-                          <button
-                            type="button"
-                            className={`att-btn present ${attendanceData[student._id] === "present" ? "active" : ""}`}
-                            onClick={() => handleAttendance(student._id, "present")}
-                          >
-                            Present
-                          </button>
-                          <button
-                            type="button"
-                            className={`att-btn absent ${attendanceData[student._id] === "absent" ? "active" : ""}`}
-                            onClick={() => handleAttendance(student._id, "absent")}
-                          >
-                            Absent
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          <StudentTable
+            students={filtered}
+            attendanceData={attendanceData}
+            handleAttendance={handleAttendance}
+          />
 
           <div className="mt-6 flex justify-end">
             <PremiumButton

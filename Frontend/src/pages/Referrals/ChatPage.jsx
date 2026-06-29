@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { useWebSocket } from "@/hooks/useWebSocket.js";
 import { chatApi } from "@/services/Referrals/chat.js";
-import { ChatList } from "@/components/Referrals/Chat/ChatList.jsx";
+import { ConversationList } from "@/components/Referrals/Chat/ConversationList.jsx";
 import { ChatWindow } from "@/components/Referrals/Chat/ChatWindow.jsx";
 import { ChatSkeleton } from "@/components/Referrals/Chat/ChatSkeleton.jsx";
 import { showToast } from "@/components/Referrals/TransactionToast.jsx";
@@ -495,7 +495,7 @@ export default function ChatPage() {
           {loadingChats ? (
             <ChatSkeleton />
           ) : (
-            <ChatList
+            <ConversationList
               chats={chats}
               activeChatId={activeChat?._id}
               onSelectChat={handleSelectChat}
@@ -534,14 +534,14 @@ export default function ChatPage() {
               <a 
                 href={lightbox.url} 
                 download={lightbox.name}
-                className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all"
+                className="p-2.5 bg-[var(--border-color)] hover:bg-[var(--bg-tertiary)] rounded-full transition-all"
                 title="Download"
               >
                 <Download className="w-5 h-5" />
               </a>
               <button 
                 onClick={() => setLightbox(null)}
-                className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all"
+                className="p-2.5 bg-[var(--border-color)] hover:bg-[var(--bg-tertiary)] rounded-full transition-all"
                 title="Close"
               >
                 <X className="w-5 h-5" />
@@ -552,7 +552,7 @@ export default function ChatPage() {
             <img 
               src={lightbox.url} 
               alt={lightbox.name} 
-              className="max-w-full max-h-[85vh] object-contain rounded-[var(--radius-sm)] shadow-[var(--shadow-lg)] border border-white/10"
+              className="max-w-full max-h-[85vh] object-contain rounded-[var(--radius-sm)] shadow-[var(--shadow-lg)] border border-[var(--border-color)]"
             />
             <p className="text-white/60 text-xs mt-3 select-none">{lightbox.name}</p>
           </div>

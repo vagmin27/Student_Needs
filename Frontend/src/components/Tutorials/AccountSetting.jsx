@@ -5,8 +5,6 @@ import { ThemePreference } from "@/components/ThemePreference.jsx";
 import StudentProfileView from "@/components/profile/StudentProfileView.jsx";
 import TutorProfileView from "@/components/profile/TutorProfileView.jsx";
 import AlumniProfileView from "@/components/profile/AlumniProfileView.jsx";
-import { expensesApi } from "@/services/api/expensesApi";
-import Modal from "@/components/Expenses/ui/Modal";
 import { 
   User, 
   Settings as SettingsIcon, 
@@ -21,6 +19,8 @@ import {
   AlertCircle
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.jsx";
+
 
 const STUDENT_CATEGORIES = [
   "Tuition Fees",
@@ -740,192 +740,194 @@ function AccountSetting({ mode }) {
       </div>
 
       {/* Add Bill Modal inside Settings */}
-      <Modal
-        isOpen={isAddBillOpen}
-        onClose={() => setIsAddBillOpen(false)}
-        title="Quick Add Bill"
-      >
-        <form onSubmit={handleAddBill} className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-muted-foreground">Bill Name</label>
-            <input
-              type="text"
-              value={billForm.billName}
-              onChange={(e) => setBillForm({ ...billForm, billName: e.target.value })}
-              className="premium-input text-foreground h-10 w-full"
-              placeholder="e.g. Electricity Bill, Exam Fee"
-              required
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-muted-foreground">Amount (₹)</label>
-            <input
-              type="number"
-              value={billForm.amount}
-              onChange={(e) => setBillForm({ ...billForm, amount: e.target.value })}
-              className="premium-input text-foreground h-10 w-full"
-              placeholder="0.00"
-              min="0.01"
-              step="0.01"
-              required
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-muted-foreground">Due Date</label>
-            <input
-              type="date"
-              value={billForm.dueDate}
-              onChange={(e) => setBillForm({ ...billForm, dueDate: e.target.value })}
-              className="premium-input text-foreground h-10 w-full cursor-pointer"
-              required
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <Dialog open={isAddBillOpen} onOpenChange={setIsAddBillOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Quick Add Bill</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleAddBill} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">Priority Level</label>
-              <select
-                value={billForm.priority}
-                onChange={(e) => setBillForm({ ...billForm, priority: e.target.value })}
-                className="premium-input text-foreground h-10 w-full cursor-pointer"
-              >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-                <option value="Critical">Critical</option>
-              </select>
+              <label className="text-xs font-semibold text-muted-foreground">Bill Name</label>
+              <input
+                type="text"
+                value={billForm.billName}
+                onChange={(e) => setBillForm({ ...billForm, billName: e.target.value })}
+                className="premium-input text-foreground h-10 w-full"
+                placeholder="e.g. Electricity Bill, Exam Fee"
+                required
+              />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">Recurring Cycle</label>
-              <select
-                value={billForm.recurringType}
-                onChange={(e) => setBillForm({ 
-                  ...billForm, 
-                  recurringType: e.target.value,
-                  isRecurring: e.target.value !== "None"
-                })}
-                className="premium-input text-foreground h-10 w-full cursor-pointer"
-              >
-                <option value="None">None</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Quarterly">Quarterly</option>
-                <option value="Semester">Semester (6 Mo.)</option>
-                <option value="Yearly">Yearly</option>
-              </select>
+              <label className="text-xs font-semibold text-muted-foreground">Amount (₹)</label>
+              <input
+                type="number"
+                value={billForm.amount}
+                onChange={(e) => setBillForm({ ...billForm, amount: e.target.value })}
+                className="premium-input text-foreground h-10 w-full"
+                placeholder="0.00"
+                min="0.01"
+                step="0.01"
+                required
+              />
             </div>
-          </div>
 
-          <div className="flex gap-4 justify-end pt-4 border-t border-border/20">
-            <button
-              type="button"
-              onClick={() => setIsAddBillOpen(false)}
-              className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
-            >
-              Confirm
-            </button>
-          </div>
-        </form>
-      </Modal>
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-muted-foreground">Due Date</label>
+              <input
+                type="date"
+                value={billForm.dueDate}
+                onChange={(e) => setBillForm({ ...billForm, dueDate: e.target.value })}
+                className="premium-input text-foreground h-10 w-full cursor-pointer"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-muted-foreground">Priority Level</label>
+                <select
+                  value={billForm.priority}
+                  onChange={(e) => setBillForm({ ...billForm, priority: e.target.value })}
+                  className="premium-input text-foreground h-10 w-full cursor-pointer"
+                >
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-muted-foreground">Recurring Cycle</label>
+                <select
+                  value={billForm.recurringType}
+                  onChange={(e) => setBillForm({ 
+                    ...billForm, 
+                    recurringType: e.target.value,
+                    isRecurring: e.target.value !== "None"
+                  })}
+                  className="premium-input text-foreground h-10 w-full cursor-pointer"
+                >
+                  <option value="None">None</option>
+                  <option value="Monthly">Monthly</option>
+                  <option value="Quarterly">Quarterly</option>
+                  <option value="Semester">Semester (6 Mo.)</option>
+                  <option value="Yearly">Yearly</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex gap-4 justify-end pt-4 border-t border-border/20">
+              <button
+                type="button"
+                onClick={() => setIsAddBillOpen(false)}
+                className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              >
+                Confirm
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {/* Add Expense Modal inside Settings */}
-      <Modal
-        isOpen={isAddExpenseOpen}
-        onClose={() => setIsAddExpenseOpen(false)}
-        title="Quick Add Expense"
-      >
-        <form onSubmit={handleAddExpense} className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-muted-foreground">Description / Title</label>
-            <input
-              type="text"
-              value={expenseForm.title}
-              onChange={(e) => setExpenseForm({ ...expenseForm, title: e.target.value })}
-              className="premium-input text-foreground h-10 w-full"
-              placeholder="e.g. Lunch with friends, Books purchase"
-              required
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-muted-foreground">Amount (₹)</label>
-            <input
-              type="number"
-              value={expenseForm.amount}
-              onChange={(e) => setExpenseForm({ ...expenseForm, amount: e.target.value })}
-              className="premium-input text-foreground h-10 w-full"
-              placeholder="0.00"
-              min="0.01"
-              step="0.01"
-              required
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <Dialog open={isAddExpenseOpen} onOpenChange={setIsAddExpenseOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Quick Add Expense</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleAddExpense} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">Category</label>
-              <select
-                value={expenseForm.category}
-                onChange={(e) => setExpenseForm({ ...expenseForm, category: e.target.value })}
-                className="premium-input text-foreground h-10 w-full cursor-pointer"
-              >
-                {STUDENT_CATEGORIES.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
+              <label className="text-xs font-semibold text-muted-foreground">Description / Title</label>
+              <input
+                type="text"
+                value={expenseForm.title}
+                onChange={(e) => setExpenseForm({ ...expenseForm, title: e.target.value })}
+                className="premium-input text-foreground h-10 w-full"
+                placeholder="e.g. Lunch with friends, Books purchase"
+                required
+              />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">Payment Method</label>
-              <select
-                value={expenseForm.paymentMethod}
-                onChange={(e) => setExpenseForm({ ...expenseForm, paymentMethod: e.target.value })}
-                className="premium-input text-foreground h-10 w-full cursor-pointer"
-              >
-                <option value="UPI">UPI</option>
-                <option value="Cash">Cash</option>
-                <option value="Card">Card</option>
-                <option value="Bank">Bank Transfer</option>
-              </select>
+              <label className="text-xs font-semibold text-muted-foreground">Amount (₹)</label>
+              <input
+                type="number"
+                value={expenseForm.amount}
+                onChange={(e) => setExpenseForm({ ...expenseForm, amount: e.target.value })}
+                className="premium-input text-foreground h-10 w-full"
+                placeholder="0.00"
+                min="0.01"
+                step="0.01"
+                required
+              />
             </div>
-          </div>
 
-          <div className="space-y-1">
-            <label className="text-xs font-semibold text-muted-foreground">Date</label>
-            <input
-              type="date"
-              value={expenseForm.date}
-              onChange={(e) => setExpenseForm({ ...expenseForm, date: e.target.value })}
-              className="premium-input text-foreground h-10 w-full cursor-pointer"
-              required
-            />
-          </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-muted-foreground">Category</label>
+                <select
+                  value={expenseForm.category}
+                  onChange={(e) => setExpenseForm({ ...expenseForm, category: e.target.value })}
+                  className="premium-input text-foreground h-10 w-full cursor-pointer"
+                >
+                  {STUDENT_CATEGORIES.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="flex gap-4 justify-end pt-4 border-t border-border/20">
-            <button
-              type="button"
-              onClick={() => setIsAddExpenseOpen(false)}
-              className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
-            >
-              Confirm
-            </button>
-          </div>
-        </form>
-      </Modal>
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-muted-foreground">Payment Method</label>
+                <select
+                  value={expenseForm.paymentMethod}
+                  onChange={(e) => setExpenseForm({ ...expenseForm, paymentMethod: e.target.value })}
+                  className="premium-input text-foreground h-10 w-full cursor-pointer"
+                >
+                  <option value="UPI">UPI</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                  <option value="Bank">Bank Transfer</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-muted-foreground">Date</label>
+              <input
+                type="date"
+                value={expenseForm.date}
+                onChange={(e) => setExpenseForm({ ...expenseForm, date: e.target.value })}
+                className="premium-input text-foreground h-10 w-full cursor-pointer"
+                required
+              />
+            </div>
+
+            <div className="flex gap-4 justify-end pt-4 border-t border-border/20">
+              <button
+                type="button"
+                onClick={() => setIsAddExpenseOpen(false)}
+                className="px-5 py-2.5 rounded-[var(--radius-sm)] border border-border text-foreground hover:bg-secondary transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2.5 rounded-[var(--radius-sm)] bg-primary text-primary-foreground hover:bg-primary/95 transition-colors font-bold cursor-pointer"
+              >
+                Confirm
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
-import { Button } from "@/components/Referrals/ui/button.jsx";
-import { Input } from "@/components/Referrals/ui/input.jsx";
-import { Label } from "@/components/Referrals/ui/label.jsx";
-import { Textarea } from "@/components/Referrals/ui/textarea.jsx";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/Referrals/ui/card.jsx";
+import { Button } from "@/components/ui/button.jsx";
+import { Input } from "@/components/ui/input.jsx";
+import { Label } from "@/components/ui/label.jsx";
+import { Textarea } from "@/components/ui/textarea.jsx";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card.jsx";
 import {
   Briefcase,
   Users,

@@ -14,6 +14,7 @@ import {
 } from "react-icons/md";
 import toast from "react-hot-toast";
 import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext";
+import { Button } from "@/components/ui/button";
 
 const teacherNav = [
   { label: "Dashboard",      to: "/attendance/dashboard",      icon: <MdDashboard /> },
@@ -51,11 +52,7 @@ const DashboardLayoutContent = ({ children, pageTitle }) => {
       {isMobileMenuOpen && (
         <div
           onClick={closeMobileMenu}
-          style={{
-            position: "fixed", inset: 0, background: "var(--glass-bg)",
-            zIndex: 99,
-          }}
-          className="sidebar-overlay"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[99] sidebar-overlay"
         />
       )}
 
@@ -98,9 +95,13 @@ const DashboardLayoutContent = ({ children, pageTitle }) => {
               <div className="user-role">{user?.role}</div>
             </div>
           </div>
-          <button className="btn btn-ghost" style={{ width: "100%", gap: 8 }} onClick={handleLogout}>
+          <Button
+            variant="ghost"
+            className="w-full flex items-center justify-start gap-2 text-[var(--text-secondary)] hover:bg-[var(--neutral-bg)]/20"
+            onClick={handleLogout}
+          >
             <MdLogout size={18} /> Sign Out
-          </button>
+          </Button>
         </div>
       </aside>
 
@@ -113,15 +114,15 @@ const DashboardLayoutContent = ({ children, pageTitle }) => {
             </button>
             <span className="topbar-title">{pageTitle || "Dashboard"}</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div className="flex items-center gap-[10px]">
             <span className="topbar-badge">{user?.role}</span>
-            <div className="user-avatar" style={{ width: 32, height: 32, fontSize: 12 }}>
+            <div className="user-avatar w-8 h-8 text-[12px] flex items-center justify-center rounded-full bg-[var(--accent)] text-white">
               {initials}
             </div>
           </div>
         </header>
 
-        <main className="page-content" style={{ padding: 0 }}>
+        <main className="page-content p-0">
           <div className="max-w-[1600px] mx-auto w-full p-space-md md:p-space-lg space-y-space-lg">
             {children}
           </div>

@@ -19,6 +19,9 @@ import { DashboardCard } from "@/components/dashboard/shared/DashboardCard";
 import { MetricCard } from "@/components/dashboard/shared/MetricCard";
 import AttendanceCharts from "@/components/Attendance/AttendanceCharts";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import { getAttendanceStatus } from "@/utils/Attendance/helpers";
 import {
   Dialog,
   DialogContent,
@@ -248,7 +251,7 @@ const StudentDashboard = () => {
     );
   }
   return (
-    <PageLayout className="attendance-module pb-8">
+    <PageLayout className="pb-8">
       <BackToStudentDashboard />
 
       {loadError && (
@@ -306,9 +309,7 @@ const StudentDashboard = () => {
             subtext="Across all subjects"
             icon={MdBook}
             iconClassName={
-              overall.percentage >= MIN_ATTENDANCE
-                ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"
-                : "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+              getAttendanceStatus(overall.percentage).badgeClass
             }
           />
           <MetricCard
@@ -349,6 +350,7 @@ const StudentDashboard = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-md mt-2">
                 {subjectProgress.map((s) => {
                   const pct = s.percentage;
+                  const status = getAttendanceStatus(pct);
                   return (
                     <div
                       key={s.subjectId}
@@ -356,30 +358,16 @@ const StudentDashboard = () => {
                     >
                       <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold text-sm">{s.subjectName}</span>
-                        <span
-                          className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                            pct >= MIN_ATTENDANCE
-                              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
-                              : pct >= 60
-                                ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                                : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
-                          }`}
-                        >
+                        <Badge variant={status.variant}>
                           {pct}%
-                        </span>
+                        </Badge>
                       </div>
                       <p className="text-xs text-muted-foreground mb-2">
                         {s.present} present · {s.absent} absent · {s.total} total
                       </p>
                       <div className="w-full bg-muted rounded-full h-2">
                         <div
-                          className={`h-2 rounded-full ${
-                            pct >= MIN_ATTENDANCE
-                              ? "bg-emerald-500"
-                              : pct >= 60
-                                ? "bg-amber-500"
-                                : "bg-red-500"
-                          }`}
+                          className={`h-2 rounded-full ${status.progressColor}`}
                           style={{ width: `${Math.min(pct, 100)}%` }}
                         />
                       </div>
@@ -460,53 +448,52 @@ const StudentDashboard = () => {
           <p className="text-sm text-muted-foreground text-center py-6">No records found.</p>
         ) : (
           <div className="table-responsive">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border text-left text-muted-foreground">
-                  <th className="py-2 pr-4">Date</th>
-                  <th className="py-2 pr-4">Subject</th>
-                  <th className="py-2 pr-4">Status</th>
-                  <th className="py-2 text-right font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead scope="col">Date</TableHead>
+                  <TableHead scope="col">Subject</TableHead>
+                  <TableHead scope="col">Status</TableHead>
+                  <TableHead scope="col" className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {records.map((r) => (
-                  <tr key={r._id || r.id} className="border-b border-border/60">
-                    <td className="py-3 pr-4">{r.date}</td>
-                    <td className="py-3 pr-4">{r.subjectName || r.subject}</td>
-                    <td className="py-3 pr-4">
-                      <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                          (r.status || r.attendance) === "present"
-                            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
-                            : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
-                        }`}
+                  <TableRow key={r._id || r.id}>
+                    <TableCell className="font-medium">{r.date}</TableCell>
+                    <TableCell>{r.subjectName || r.subject}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={(r.status || r.attendance) === "present" ? "success" : "destructive"}
                       >
                         {(r.status || r.attendance) === "present" ? (
-                          <MdCheckCircle />
+                          <MdCheckCircle className="mr-1" />
                         ) : (
-                          <MdCancel />
+                          <MdCancel className="mr-1" />
                         )}
                         {r.status || r.attendance}
-                      </span>
-                    </td>
-                    <td className="py-3 text-right">
-                      <Button variant="ghost" size="icon" onClick={() => openEditRecord(r)}>
-                        <MdEdit />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-destructive"
-                        onClick={() => deleteRecord(r._id || r.id)}
-                      >
-                        <MdDelete />
-                      </Button>
-                    </td>
-                  </tr>
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="inline-flex gap-1 justify-end">
+                        <Button variant="ghost" size="icon" onClick={() => openEditRecord(r)} aria-label="Edit record">
+                          <MdEdit />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-destructive"
+                          onClick={() => deleteRecord(r._id || r.id)}
+                          aria-label="Delete record"
+                        >
+                          <MdDelete />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         )}
       </DashboardCard>

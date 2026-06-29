@@ -88,14 +88,14 @@ function Register() {
 
   if (step === "success") {
     return (
-      <div className="uc-login-page">
-        <div className="uc-login-card">
-          <section className="uc-login-panel">
-            <div className="uc-login-icon">
-              <GraduationCap />
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] px-4 py-12">
+        <div className="w-full max-w-md bg-[var(--card-bg)] border border-[var(--border-color)] rounded-[var(--radius-lg)] p-8 shadow-[var(--shadow-lg)] space-y-6 text-center">
+          <section className="flex flex-col items-center space-y-4">
+            <div className="p-3.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">
+              <GraduationCap className="w-6 h-6" />
             </div>
-            <h1>Registration Successful</h1>
-            <p>{message}</p>
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">Registration Successful</h1>
+            <p className="text-sm text-[var(--text-muted)]">{message}</p>
           </section>
         </div>
       </div>
@@ -103,52 +103,53 @@ function Register() {
   }
 
   return (
-    <div className="uc-login-page">
-      <div className="uc-login-card">
-        <Link to="/role-selection" className="uc-back-link">
-          <span>{"<- "}</span>
-          Back to role selection
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] px-4 py-12">
+      <div className="w-full max-w-md bg-[var(--card-bg)] border border-[var(--border-color)] rounded-[var(--radius-lg)] p-8 shadow-[var(--shadow-lg)] space-y-6">
+        <Link to="/role-selection" className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all">
+          ← Back to role selection
         </Link>
 
-        <section className="uc-login-panel">
-          <div className="uc-login-icon">
-            <GraduationCap />
+        <section className="flex flex-col items-center text-center space-y-4">
+          <div className="p-3.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">
+            <GraduationCap className="w-6 h-6" />
           </div>
-          <h1>Student Sign Up</h1>
-          <p>Create your account to start matching with expert tutors.</p>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">Student Sign Up</h1>
+          <p className="text-sm text-[var(--text-muted)]">Create your account to start matching with expert tutors.</p>
 
           {step === "form" && (
-            <form className="uc-login-form" onSubmit={requestOtp}>
-              <label className="uc-field">
-                <span>Email address</span>
+            <form className="w-full space-y-4 text-left pt-2" onSubmit={requestOtp}>
+              <label className="block space-y-1.5">
+                <span className="text-xs font-semibold text-[var(--text-secondary)]">Email address</span>
                 <input
                   type="email"
                   placeholder="Enter Email"
                   value={user.email}
                   onChange={onInputChange}
                   name="email"
+                  className="w-full p-3 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm placeholder:text-[var(--text-muted)]"
                   required
                 />
               </label>
-              <small style={{ color: "var(--text-secondary)", opacity: 0.8, display: "block" }}>
+              <small className="text-xs text-[var(--text-muted)] opacity-80 block -mt-2">
                 We will never share your email.
               </small>
-              {error.email && <span className="text-xs text-destructive">{error.email}</span>}
+              {error.email && <span className="text-xs text-red-500 font-medium block">{error.email}</span>}
 
-              <label className="uc-field">
-                <span>Password</span>
+              <label className="block space-y-1.5">
+                <span className="text-xs font-semibold text-[var(--text-secondary)]">Password</span>
                 <input
                   type="password"
                   placeholder="Enter your password"
                   name="password"
                   value={user.password}
                   onChange={onInputChange}
+                  className="w-full p-3 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm placeholder:text-[var(--text-muted)]"
                   required
                 />
               </label>
 
-              <label className="uc-field">
-                <span>Confirm Password</span>
+              <label className="block space-y-1.5">
+                <span className="text-xs font-semibold text-[var(--text-secondary)]">Confirm Password</span>
                 <input
                   type="password"
                   placeholder="Confirm your password"
@@ -156,44 +157,57 @@ function Register() {
                   value={user.confirmedPassword}
                   onChange={onInputChange}
                   onBlur={validateInput}
+                  className="w-full p-3 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm placeholder:text-[var(--text-muted)]"
                   required
                 />
               </label>
               {error.confirmedPassword && (
-                <span className="text-xs text-destructive">{error.confirmedPassword}</span>
+                <span className="text-xs text-red-500 font-medium block">{error.confirmedPassword}</span>
               )}
 
-              <button type="submit" className="uc-login-submit">
+              <button 
+                type="submit" 
+                className="w-full py-3 px-4 font-bold text-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-hover)] rounded-[var(--radius-md)] transition-all duration-200 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[1px] mt-4"
+              >
                 Send OTP
               </button>
 
-              <p className="uc-login-switch">
-                Already have an account? <Link to="/login/student">Login</Link>
+              <p className="text-xs text-[var(--text-secondary)] text-center pt-2">
+                Already have an account? <Link to="/login/student" className="text-[var(--primary)] hover:underline font-semibold">Login</Link>
               </p>
             </form>
           )}
 
           {step === "otp" && (
-            <form className="uc-login-form" onSubmit={verifyOtp}>
-              <p className="text-sm text-success mb-3">{message}</p>
-              <label className="uc-field">
-                <span>Enter 6-digit OTP sent to {user.email}</span>
+            <form className="w-full space-y-4 text-left pt-2" onSubmit={verifyOtp}>
+              <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 p-2.5 rounded-[var(--radius-md)]">{message}</p>
+              
+              <label className="block space-y-1.5">
+                <span className="text-xs font-semibold text-[var(--text-secondary)]">Enter 6-digit OTP sent to {user.email}</span>
                 <input
                   type="text"
                   placeholder="Enter OTP"
                   value={otp}
                   onChange={onOtpChange}
                   maxLength="6"
+                  className="w-full p-3 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm placeholder:text-[var(--text-muted)] tracking-wider text-center font-bold"
                   required
                 />
               </label>
-              {error.otp && <span className="text-xs text-destructive">{error.otp}</span>}
+              {error.otp && <span className="text-xs text-red-500 font-medium block">{error.otp}</span>}
 
-              <button type="submit" className="uc-login-submit">
+              <button 
+                type="submit" 
+                className="w-full py-3 px-4 font-bold text-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-hover)] rounded-[var(--radius-md)] transition-all duration-200 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[1px] mt-4"
+              >
                 Verify and Register
               </button>
 
-              <button type="button" className="uc-secondary-button w-full" onClick={resendOtp}>
+              <button 
+                type="button" 
+                className="w-full py-2.5 px-4 font-semibold text-xs border border-[var(--border-color)] text-[var(--text-primary)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-secondary)]/80 rounded-[var(--radius-md)] transition-all"
+                onClick={resendOtp}
+              >
                 Resend OTP
               </button>
             </form>

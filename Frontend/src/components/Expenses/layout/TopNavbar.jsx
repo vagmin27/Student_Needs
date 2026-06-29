@@ -30,7 +30,7 @@ const TopNavbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-30 flex items-center justify-between h-20 px-4 md:px-8 bg-[var(--navbar-bg)] backdrop-blur-md border-b border-border gemini-navbar">
+    <div className="sticky top-0 z-30 flex items-center justify-between h-[72px] px-6 bg-[var(--card-bg)]/80 backdrop-blur-md border-b border-[var(--border-color)]">
       <LoadingBar color='var(--primary)' ref={ref} height={3} />
       
       <div className="flex items-center gap-4 min-w-0">
@@ -39,24 +39,24 @@ const TopNavbar = () => {
           className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-animation rounded-[var(--radius-sm)] shrink-0 cursor-pointer"
           aria-label="Toggle Sidebar"
         >
-          <HiOutlineMenuAlt2 size={24} className="text-foreground" />
+          <HiOutlineMenuAlt2 size={22} className="text-foreground" />
         </button>
 
         <Link
           to="/student/dashboard"
-          className="flex items-center gap-2 px-3 py-2 rounded-[var(--radius-md)] text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors text-sm font-medium shrink-0"
+          className="flex items-center gap-2 px-3 py-2 rounded-[var(--radius-sm)] text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors text-sm font-medium shrink-0"
           aria-label="Back to Dashboard"
         >
           <MdArrowBack size={20} />
           <span className="hidden sm:inline">Back to Dashboard</span>
         </Link>
         
-        <div className="hidden md:flex items-center bg-secondary/50 border border-border/50 rounded-[var(--radius-md)] px-4 py-2 hover:border-[var(--primary)]/50 transition-colors min-w-0">
-          <HiOutlineSearch size={20} className="text-muted-foreground mr-2" />
+        <div className="hidden md:flex items-center bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-[var(--radius-sm)] px-4 py-2 hover:border-[var(--primary)]/50 transition-colors min-w-0 h-10 w-[320px]">
+          <HiOutlineSearch size={20} className="text-muted-foreground mr-2 shrink-0" />
           <input 
             type="text" 
             placeholder="Search transactions..." 
-            className="bg-transparent border-none outline-none text-foreground placeholder-muted-foreground/60 w-64"
+            className="bg-transparent border-none outline-none text-foreground placeholder-muted-foreground/60 w-full text-sm"
           />
         </div>
       </div>
@@ -74,11 +74,11 @@ const TopNavbar = () => {
         {/* User Profile */}
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right">
-            <p className="text-sm font-semibold text-foreground">{user?.username || user?.name || "User"}</p>
-            <Link to="/student/settings?tab=expenses" className="text-xs text-[var(--primary)] hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
+            <p className="text-xs font-bold text-foreground">{user?.username || user?.name || "User"}</p>
+            <Link to="/student/settings?tab=expenses" className="text-[10px] font-semibold text-[var(--primary)] hover:underline hover:text-indigo-300 transition-colors">Profile & Settings</Link>
           </div>
           
-          <Link to="/student/settings?tab=expenses" className="w-10 h-10 rounded-[var(--radius-md)] bg-gradient-to-tr from-[var(--primary)] to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-[var(--shadow-lg)] shadow-[var(--primary)]/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-white/10">
+          <Link to="/student/settings?tab=expenses" className="w-10 h-10 rounded-[var(--radius-sm)] bg-gradient-to-tr from-[var(--primary)] to-[var(--accent)] flex items-center justify-center text-white font-bold text-lg shadow-[var(--shadow-lg)] shadow-[var(--primary)]/20 hover:scale-105 transition-transform duration-200 cursor-pointer border border-[var(--border-color)] shrink-0">
             {(user?.username?.charAt(0) || user?.name?.charAt(0) || user?.fullName?.charAt(0) || 'U').toUpperCase()}
           </Link>
 

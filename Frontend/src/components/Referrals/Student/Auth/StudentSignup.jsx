@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { GraduationCap, ArrowLeft, Loader2 } from 'lucide-react';
 import { useStudentSignup } from '../../../../services/Referrals/Auth/hooks.js';
 
-import { Button } from '@/components/Referrals/ui/button.jsx';
-import { Input } from '@/components/Referrals/ui/input.jsx';
-import { Label } from '@/components/Referrals/ui/label.jsx';
+import { Button } from "@/components/ui/button.jsx";
+import { Input } from "@/components/ui/input.jsx";
+import { Label } from "@/components/ui/label.jsx";
 import {
   Card,
   CardContent,
@@ -13,12 +13,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/Referrals/ui/card.jsx';
+} from "@/components/ui/card.jsx";
 
 import {
   Alert,
   AlertDescription,
-} from '@/components/Referrals/ui/alert.jsx';
+} from "@/components/ui/alert.jsx";
 
 /**
  * Student Signup Page Component

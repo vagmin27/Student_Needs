@@ -33,8 +33,10 @@ import { getUserId } from "@/utils/Expenses/authHelper.js";
 import { opportunitiesApi } from "@/services/Referrals/opportunities.js";
 import { studentProfileApi } from "@/services/Referrals/studentProfile.js";
 import { TUTORIAL_PATHS } from "@/utils/tutorialRoutes";
-import Modal from "@/components/Expenses/ui/Modal";
 import { toast } from "react-hot-toast";
+import { Select } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog.jsx";
+
 
 // Import Custom Design System Primitives
 import {
@@ -461,9 +463,9 @@ const UnifiedDashboard = () => {
 
     return recentActivity.slice(0, 3).map((act, idx) => {
       let IconComponent = Activity;
-      let iconBg = "bg-slate-500/10";
-      let iconColor = "text-slate-500";
-      let dotColor = "bg-slate-500";
+      let iconBg = "bg-[var(--neutral-bg)]";
+      let iconColor = "text-[var(--neutral)]";
+      let dotColor = "bg-[var(--neutral)]";
       let title = "Update";
 
       if (act.module === "Attendance") {
@@ -539,21 +541,21 @@ const UnifiedDashboard = () => {
       className="space-y-8 relative pb-16 px-1 w-full min-w-0 max-w-full overflow-hidden box-border"
     >
       {/* 👋 Welcome Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-border/40 mb-2 w-full min-w-0 max-w-full box-border overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-[var(--border-color)] mb-2 w-full min-w-0 max-w-full box-border overflow-hidden">
         <div className="space-y-1.5 min-w-0 max-w-full">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 capitalize tracking-wider shrink-0">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20 capitalize tracking-wider shrink-0">
               {displayRole} Portal
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight flex flex-wrap items-center gap-2 mt-1 break-words whitespace-normal leading-tight max-w-full">
-            Welcome back, <span className="text-primary break-all">{displayName}</span> <span className="animate-bounce shrink-0">👋</span>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight flex flex-wrap items-center gap-2 mt-1 break-words whitespace-normal leading-tight max-w-full">
+            Welcome back, <span className="text-[var(--accent)] break-all">{displayName}</span> <span className="animate-bounce shrink-0">👋</span>
           </h1>
-          <p className="text-sm text-muted-foreground font-medium break-words whitespace-normal max-w-full">Here's what's happening with your academic journey today.</p>
+          <p className="text-sm text-[var(--text-muted)] font-medium break-words whitespace-normal max-w-full">Here's what's happening with your academic journey today.</p>
         </div>
         <div className="flex items-center gap-3 self-start md:self-center shrink-0">
-          <div className="px-4 py-2.5 rounded-2xl bg-card border border-border/80 text-xs font-bold text-muted-foreground shadow-sm flex items-center gap-2 shrink-0">
-            <CalendarIcon size={14} className="text-primary shrink-0" />
+          <div className="px-4 py-2.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] text-xs font-bold text-[var(--text-muted)] shadow-sm flex items-center gap-2 shrink-0">
+            <CalendarIcon size={14} className="text-[var(--accent)] shrink-0" />
             <span className="whitespace-normal break-words">{new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
           </div>
         </div>
@@ -562,50 +564,50 @@ const UnifiedDashboard = () => {
       {/* Row 1: KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full min-w-0 max-w-full">
         {/* Card 1: Attendance */}
-        <div className="bg-card/50 backdrop-blur-md border border-border/85 rounded-[20px] p-6 flex flex-col justify-between shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] relative group hover:-translate-y-1 hover:shadow-lg hover:border-accent/30 transition-all duration-300 min-h-[170px] min-w-0 max-w-full overflow-hidden box-border h-full w-full">
+        <PremiumCard className="hover:border-[var(--accent)]/30 min-h-[170px]" hoverEffect={true}>
           <div className="flex justify-between items-center gap-4 w-full min-w-0 pt-1">
             <div className="space-y-1 min-w-0 text-left">
-              <span className="text-[11px] font-bold text-muted-foreground tracking-wider uppercase break-words whitespace-normal block">Class Attendance</span>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-foreground tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
+              <span className="text-[11px] font-bold text-[var(--text-muted)] tracking-wider uppercase break-words whitespace-normal block">Class Attendance</span>
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-[var(--text-primary)] tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
                 {attendanceStats.percentage > 0 ? `${attendanceStats.percentage}%` : "94.2%"}
               </h3>
-              <span className="text-xs text-muted-foreground block font-semibold mt-1 break-words whitespace-normal">This Month</span>
+              <span className="text-xs text-[var(--text-muted)] block font-semibold mt-1 break-words whitespace-normal">This Month</span>
             </div>
-            <div className="p-3.5 rounded-[14px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 transition-transform duration-300 group-hover:scale-105 border border-indigo-500/20 shadow-[0_2px_8px_rgba(99,102,241,0.08)] dark:shadow-[0_0_15px_rgba(167,139,250,0.15)] shrink-0 self-center">
+            <div className="p-3.5 rounded-[14px] bg-[var(--accent)]/10 text-[var(--accent)] transition-transform duration-300 group-hover:scale-105 border border-[var(--accent)]/20 shadow-[0_2px_8px_rgba(59,130,246,0.08)] dark:shadow-[0_0_15px_rgba(59,130,246,0.15)] shrink-0 self-center">
               <GraduationCap size={20} className="shrink-0" />
             </div>
           </div>
           <div className="mt-6 w-full min-w-0 pb-1">
-            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" 
+                className="h-full bg-[var(--accent)] rounded-full" 
                 style={{ width: `${attendanceStats.percentage > 0 ? attendanceStats.percentage : 94.2}%` }}
               />
             </div>
-            <span className="text-[10px] text-muted-foreground font-semibold block mt-2.5 break-words whitespace-normal leading-normal text-left">
+            <span className="text-[10px] text-[var(--text-muted)] font-semibold block mt-2.5 break-words whitespace-normal leading-normal text-left">
               {attendanceStats.total > 0 ? `${attendanceStats.present} attended • ${attendanceStats.total - attendanceStats.present} missed` : "27 attended • 3 missed"}
             </span>
           </div>
-        </div>
+        </PremiumCard>
 
         {/* Card 2: Total Spending */}
-        <div className="bg-card/50 backdrop-blur-md border border-border/85 rounded-[20px] p-6 flex flex-col justify-between shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] relative group hover:-translate-y-1 hover:shadow-lg hover:border-accent/30 transition-all duration-300 min-h-[170px] min-w-0 max-w-full overflow-hidden box-border h-full w-full">
+        <PremiumCard className="hover:border-[var(--accent)]/30 min-h-[170px]" hoverEffect={true}>
           <div className="flex justify-between items-center gap-4 w-full min-w-0 pt-1">
             <div className="space-y-1 min-w-0 text-left">
-              <span className="text-[11px] font-bold text-muted-foreground tracking-wider uppercase break-words whitespace-normal block">Total Spending</span>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-foreground tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
+              <span className="text-[11px] font-bold text-[var(--text-muted)] tracking-wider uppercase break-words whitespace-normal block">Total Spending</span>
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-[var(--text-primary)] tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
                 {expenseSummary?.totalSpent !== undefined ? `${currencySymbol}${expenseSummary.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "₹4,257.01"}
               </h3>
-              <span className="text-xs text-muted-foreground block font-semibold mt-1 break-words whitespace-normal">This Month</span>
+              <span className="text-xs text-[var(--text-muted)] block font-semibold mt-1 break-words whitespace-normal">This Month</span>
             </div>
-            <div className="p-3.5 rounded-[14px] bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 transition-transform duration-300 group-hover:scale-105 border border-cyan-500/20 shadow-[0_2px_8px_rgba(6,182,212,0.08)] dark:shadow-[0_0_15px_rgba(56,189,248,0.15)] shrink-0 self-center">
+            <div className="p-3.5 rounded-[14px] bg-[var(--accent)]/10 text-[var(--accent)] transition-transform duration-300 group-hover:scale-105 border border-[var(--accent)]/20 shadow-[0_2px_8px_rgba(59,130,246,0.08)] dark:shadow-[0_0_15px_rgba(59,130,246,0.15)] shrink-0 self-center">
               <Wallet size={20} className="shrink-0" />
             </div>
           </div>
           <div className="mt-6 w-full min-w-0 pb-1">
-            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" 
+                className="h-full bg-[var(--accent)] rounded-full" 
                 style={{ 
                   width: `${
                     expenseSummary?.totalSpent && expenseSummary?.monthlyBudget
@@ -615,84 +617,84 @@ const UnifiedDashboard = () => {
                 }}
               />
             </div>
-            <span className="text-[10px] text-muted-foreground font-semibold block mt-2.5 break-words whitespace-normal leading-normal text-left">
+            <span className="text-[10px] text-[var(--text-muted)] font-semibold block mt-2.5 break-words whitespace-normal leading-normal text-left">
               {expenseSummary?.remainingBudget !== undefined && expenseSummary?.monthlyBudget !== undefined 
                 ? `${currencySymbol}${expenseSummary.remainingBudget.toLocaleString()} left of ${currencySymbol}${expenseSummary.monthlyBudget.toLocaleString()}` 
                 : "₹1,743 left of ₹6,000"}
             </span>
           </div>
-        </div>
+        </PremiumCard>
 
         {/* Card 3: Profile Progress */}
-        <div className="bg-card/50 backdrop-blur-md border border-border/85 rounded-[20px] p-6 flex flex-col justify-between shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] relative group hover:-translate-y-1 hover:shadow-lg hover:border-accent/30 transition-all duration-300 min-h-[170px] min-w-0 max-w-full overflow-hidden box-border h-full w-full">
+        <PremiumCard className="hover:border-[var(--accent)]/30 min-h-[170px]" hoverEffect={true}>
           <div className="flex justify-between items-center gap-4 w-full min-w-0 pt-1">
             <div className="space-y-1 min-w-0 text-left">
-              <span className="text-[11px] font-bold text-muted-foreground tracking-wider uppercase break-words whitespace-normal block">Profile Progress</span>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-foreground tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
+              <span className="text-[11px] font-bold text-[var(--text-muted)] tracking-wider uppercase break-words whitespace-normal block">Profile Progress</span>
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-[var(--text-primary)] tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
                 {profileCompleteness !== null ? `${profileCompleteness}%` : "100%"}
               </h3>
-              <span className="text-xs text-muted-foreground block font-semibold mt-1 break-words whitespace-normal">Complete</span>
+              <span className="text-xs text-[var(--text-muted)] block font-semibold mt-1 break-words whitespace-normal">Complete</span>
             </div>
-            <div className="p-3.5 rounded-[14px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:scale-105 border border-emerald-500/20 shadow-[0_2px_8px_rgba(52,211,153,0.08)] dark:shadow-[0_0_15px_rgba(52,211,153,0.15)] shrink-0 self-center">
+            <div className="p-3.5 rounded-[14px] bg-[var(--success)]/10 text-[var(--success)] transition-transform duration-300 group-hover:scale-105 border border-[var(--success)]/20 shadow-[0_2px_8px_rgba(16,185,129,0.08)] dark:shadow-[0_0_15px_rgba(16,185,129,0.15)] shrink-0 self-center">
               <TrendingUp size={20} className="shrink-0" />
             </div>
           </div>
           <div className="mt-6 w-full min-w-0 pb-1">
-            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" 
+                className="h-full bg-[var(--success)] rounded-full" 
                 style={{ width: `${profileCompleteness !== null ? profileCompleteness : 100}%` }}
               />
             </div>
             <div className="flex items-center gap-2 mt-2.5 min-w-0 text-left">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="text-[10px] text-muted-foreground font-semibold break-words whitespace-normal leading-normal">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)] animate-pulse shrink-0" />
+              <span className="text-[10px] text-[var(--text-muted)] font-semibold break-words whitespace-normal leading-normal">
                 {profileCompleteness !== null && profileCompleteness < 100 ? `${100 - profileCompleteness}% tasks remaining` : "All tasks completed"}
               </span>
             </div>
           </div>
-        </div>
+        </PremiumCard>
 
         {/* Card 4: Referrals Made */}
-        <div className="bg-card/50 backdrop-blur-md border border-border/85 rounded-[20px] p-6 flex flex-col justify-between shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] relative group hover:-translate-y-1 hover:shadow-lg hover:border-accent/30 transition-all duration-300 min-h-[170px] min-w-0 max-w-full overflow-hidden box-border h-full w-full">
+        <PremiumCard className="hover:border-[var(--accent)]/30 min-h-[170px]" hoverEffect={true}>
           <div className="flex justify-between items-center gap-4 w-full min-w-0 pt-1">
             <div className="space-y-1 min-w-0 text-left">
-              <span className="text-[11px] font-bold text-muted-foreground tracking-wider uppercase break-words whitespace-normal block">Referrals Made</span>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-foreground tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
+              <span className="text-[11px] font-bold text-[var(--text-muted)] tracking-wider uppercase break-words whitespace-normal block">Referrals Made</span>
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-[var(--text-primary)] tracking-tight mt-1.5 break-words whitespace-normal block leading-none">
                 {opportunities.length > 0 ? opportunities.length : "8"}
               </h3>
-              <span className="text-xs text-muted-foreground block font-semibold mt-1 break-words whitespace-normal">Opportunities</span>
+              <span className="text-xs text-[var(--text-muted)] block font-semibold mt-1 break-words whitespace-normal">Opportunities</span>
             </div>
-            <div className="p-3.5 rounded-[14px] bg-pink-500/10 text-pink-600 dark:text-pink-400 transition-transform duration-300 group-hover:scale-105 border border-pink-500/20 shadow-[0_2px_8px_rgba(244,114,182,0.08)] dark:shadow-[0_0_15px_rgba(244,114,182,0.15)] shrink-0 self-center">
+            <div className="p-3.5 rounded-[14px] bg-[var(--accent)]/10 text-[var(--accent)] transition-transform duration-300 group-hover:scale-105 border border-[var(--accent)]/20 shadow-[0_2px_8px_rgba(59,130,246,0.08)] dark:shadow-[0_0_15px_rgba(59,130,246,0.15)] shrink-0 self-center">
               <Gift size={20} className="shrink-0" />
             </div>
           </div>
           <div className="mt-6 w-full min-w-0 pb-1">
-            <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-pink-500 to-rose-500 rounded-full" 
+                className="h-full bg-[var(--accent)] rounded-full" 
                 style={{ width: `${Math.min((opportunities.length || 8) * 10, 100)}%` }}
               />
             </div>
-            <span className="text-[10px] text-muted-foreground font-semibold block mt-2.5 break-words whitespace-normal leading-normal text-left">
+            <span className="text-[10px] text-[var(--text-muted)] font-semibold block mt-2.5 break-words whitespace-normal leading-normal text-left">
               {(opportunities.length || 8) >= 8 ? "Top tier advocate status" : `${opportunities.length || 8} tracked applications`}
             </span>
           </div>
-        </div>
+        </PremiumCard>
       </div>
 
       {/* Row 2: Upcoming Classes & Expense Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full min-w-0 max-w-full">
         {/* Column 1: Upcoming Classes */}
-        <div className="lg:col-span-5 bg-card/50 backdrop-blur-md border border-border/80 rounded-[20px] p-6 shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] flex flex-col h-full justify-between min-w-0 max-w-full overflow-hidden box-border w-full">
-          <div className="flex justify-between items-center pb-4 border-b border-border/60 mb-4 w-full gap-2 min-w-0">
+        <PremiumCard className="lg:col-span-5" hoverEffect={false}>
+          <div className="flex justify-between items-center pb-4 border-b border-[var(--border-color)] mb-4 w-full gap-2 min-w-0">
             <div className="min-w-0">
-              <h3 className="text-sm font-bold text-foreground tracking-wide break-words whitespace-normal">Upcoming Classes</h3>
-              <p className="text-[11px] text-muted-foreground font-semibold mt-0.5 break-words whitespace-normal">Tutorial sessions scheduled for your modules</p>
+              <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-wide break-words whitespace-normal">Upcoming Classes</h3>
+              <p className="text-[11px] text-[var(--text-muted)] font-semibold mt-0.5 break-words whitespace-normal">Tutorial sessions scheduled for your modules</p>
             </div>
             <button 
               onClick={() => navigate("/tutorials/profile/manageBooking")}
-              className="text-[11px] font-bold text-indigo-600 dark:text-[#818cf8] hover:text-indigo-700 dark:hover:text-[#a5b4fc] transition-colors cursor-pointer shrink-0"
+              className="text-[11px] font-bold text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors cursor-pointer shrink-0"
             >
               View all
             </button>
@@ -701,25 +703,25 @@ const UnifiedDashboard = () => {
           <div className="flex-1 flex flex-col justify-center space-y-4 py-2 w-full min-w-0">
             {upcomingClasses.length > 0 ? (
               upcomingClasses.map((item) => (
-                <div key={item.id} className="bg-secondary/40 border border-border/60 rounded-2xl p-4 flex items-center justify-between hover:bg-secondary/70 hover:border-accent/40 transition-all duration-200 group gap-3 min-w-0 max-w-full overflow-hidden box-border">
+                <div key={item.id} className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl p-4 flex items-center justify-between hover:border-[var(--accent)]/40 transition-all duration-200 group gap-3 min-w-0 max-w-full overflow-hidden box-border">
                   <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                    <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 dark:text-indigo-400 shrink-0">
+                    <div className="p-3 rounded-xl bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)] shrink-0">
                       <CalendarIcon size={16} className="shrink-0" />
                     </div>
                     <div className="min-w-0 flex-1 text-left">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 mb-1.5 shrink-0 whitespace-nowrap">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-bold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20 mb-1.5 shrink-0 whitespace-nowrap">
                         UPCOMING
                       </span>
-                      <h4 className="text-xs font-bold text-foreground break-words whitespace-normal leading-normal group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors mt-1">{item.title}</h4>
-                      <p className="text-[10px] text-muted-foreground mt-1 break-words whitespace-normal font-medium flex items-center gap-1.5 min-w-0 w-full">
-                        <Clock size={10} className="text-muted-foreground shrink-0" />
+                      <h4 className="text-xs font-bold text-[var(--text-primary)] break-words whitespace-normal leading-normal group-hover:text-[var(--accent)] transition-colors mt-1">{item.title}</h4>
+                      <p className="text-[10px] text-[var(--text-muted)] mt-1 break-words whitespace-normal font-medium flex items-center gap-1.5 min-w-0 w-full">
+                        <Clock size={10} className="text-[var(--text-muted)] shrink-0" />
                         <span className="break-words">{item.date} • Online Session</span>
                       </p>
                     </div>
                   </div>
                   <button 
                     onClick={() => navigate("/tutorials")}
-                    className="p-2 rounded-xl bg-accent text-white hover:bg-accent-hover transition-colors shrink-0 cursor-pointer shadow-[0_2px_8px_rgba(79,70,229,0.2)]"
+                    className="p-2 rounded-xl bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors shrink-0 cursor-pointer shadow-[0_2px_8px_rgba(59,130,246,0.2)]"
                   >
                     <ArrowRight size={12} className="stroke-[3] shrink-0" />
                   </button>
@@ -727,17 +729,17 @@ const UnifiedDashboard = () => {
               ))
             ) : (
               /* Mock booking layout */
-              <div className="bg-secondary/40 border border-border/60 rounded-2xl p-4 flex items-center justify-between hover:bg-secondary/70 hover:border-accent/40 transition-all duration-200 group gap-3 min-w-0 max-w-full overflow-hidden box-border">
+              <div className="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl p-4 flex items-center justify-between hover:border-[var(--accent)]/40 transition-all duration-200 group gap-3 min-w-0 max-w-full overflow-hidden box-border">
                 <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                  <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 dark:text-indigo-400 shrink-0">
+                  <div className="p-3 rounded-xl bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)] shrink-0">
                     <CalendarIcon size={16} className="shrink-0" />
                   </div>
                   <div className="min-w-0 flex-1 text-left">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 mb-1.5 shrink-0 whitespace-nowrap">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-bold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20 mb-1.5 shrink-0 whitespace-nowrap">
                       UPCOMING
                     </span>
-                    <h4 className="text-xs font-bold text-foreground break-words whitespace-normal leading-normal group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors mt-1">CS-301 Algorithms with Dr. Marcus</h4>
-                    <p className="text-[10px] text-muted-foreground mt-1 break-words whitespace-normal font-semibold flex items-center gap-1.5 min-w-0 w-full">
+                    <h4 className="text-xs font-bold text-[var(--text-primary)] break-words whitespace-normal leading-normal group-hover:text-[var(--accent)] transition-colors mt-1">CS-301 Algorithms with Dr. Marcus</h4>
+                    <p className="text-[10px] text-[var(--text-muted)] mt-1 break-words whitespace-normal font-semibold flex items-center gap-1.5 min-w-0 w-full">
                       <Clock size={10} className="shrink-0" />
                       <span className="break-words">17 Jun, 05:30 PM • Online Session</span>
                     </p>
@@ -745,25 +747,25 @@ const UnifiedDashboard = () => {
                 </div>
                 <button 
                   onClick={() => navigate("/tutorials")}
-                  className="p-2 rounded-xl bg-accent text-white hover:bg-accent-hover transition-colors shrink-0 cursor-pointer shadow-[0_2px_8px_rgba(79,70,229,0.2)]"
+                  className="p-2 rounded-xl bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors shrink-0 cursor-pointer shadow-[0_2px_8px_rgba(59,130,246,0.2)]"
                 >
                   <ArrowRight size={12} className="stroke-[3] shrink-0" />
                 </button>
               </div>
             )}
           </div>
-        </div>
+        </PremiumCard>
 
         {/* Column 2: Expense Overview */}
-        <div className="lg:col-span-7 bg-card/50 backdrop-blur-md border border-border/80 rounded-[20px] p-6 shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] flex flex-col justify-between h-full min-w-0 max-w-full overflow-hidden box-border w-full">
-          <div className="flex justify-between items-center pb-4 border-b border-border/60 mb-4 w-full gap-2 min-w-0">
+        <PremiumCard className="lg:col-span-7" hoverEffect={false}>
+          <div className="flex justify-between items-center pb-4 border-b border-[var(--border-color)] mb-4 w-full gap-2 min-w-0">
             <div className="min-w-0">
-              <h3 className="text-sm font-bold text-foreground tracking-wide break-words whitespace-normal">Expense Overview</h3>
-              <p className="text-[11px] text-muted-foreground font-semibold mt-0.5 break-words whitespace-normal">Visual breakdown of your expenses</p>
+              <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-wide break-words whitespace-normal">Expense Overview</h3>
+              <p className="text-[11px] text-[var(--text-muted)] font-semibold mt-0.5 break-words whitespace-normal">Visual breakdown of your expenses</p>
             </div>
             <button 
               onClick={() => navigate("/expenses-tracker")}
-              className="text-[11px] font-bold text-indigo-600 dark:text-[#818cf8] hover:text-indigo-700 dark:hover:text-[#a5b4fc] transition-colors cursor-pointer shrink-0"
+              className="text-[11px] font-bold text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors cursor-pointer shrink-0"
             >
               View report
             </button>
@@ -773,8 +775,8 @@ const UnifiedDashboard = () => {
             {/* Recharts Pie Donut with explicit sizing container */}
             <div className="relative w-[160px] h-[160px] flex items-center justify-center shrink-0 mx-auto sm:mx-0 min-w-0 max-w-full overflow-hidden">
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-                <span className="text-[9px] uppercase font-bold text-muted-foreground tracking-widest leading-none">Total</span>
-                <span className="text-sm font-black text-foreground mt-1 leading-none break-words">
+                <span className="text-[9px] uppercase font-bold text-[var(--text-muted)] tracking-widest leading-none">Total</span>
+                <span className="text-sm font-black text-[var(--text-primary)] mt-1 leading-none break-words">
                   {expenseSummary?.totalSpent !== undefined ? `${currencySymbol}${expenseSummary.totalSpent.toLocaleString()}` : "₹4,257.01"}
                 </span>
               </div>
@@ -801,45 +803,45 @@ const UnifiedDashboard = () => {
                 <div key={index} className="flex items-center justify-between text-xs w-full gap-2.5 min-w-0 max-w-full overflow-hidden box-border">
                   <div className="flex items-center gap-2.5 min-w-0">
                     <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                    <span className="font-bold text-muted-foreground text-[11px] break-words whitespace-normal leading-normal">{item.name}</span>
+                    <span className="font-bold text-[var(--text-muted)] text-[11px] break-words whitespace-normal leading-normal">{item.name}</span>
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
-                    <span className="font-extrabold text-foreground text-[11px] whitespace-nowrap">{currencySymbol}{item.amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>
-                    <span className="text-muted-foreground font-bold w-10 text-right text-[10px] shrink-0 whitespace-nowrap">{item.percentage}</span>
+                    <span className="font-extrabold text-[var(--text-primary)] text-[11px] whitespace-nowrap">{currencySymbol}{item.amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>
+                    <span className="text-[var(--text-muted)] font-bold w-10 text-right text-[10px] shrink-0 whitespace-nowrap">{item.percentage}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </PremiumCard>
       </div>
 
       {/* Row 3: Grid for Bills Due Calendar & Quick Modules */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full min-w-0 max-w-full">
         {/* Column 1: Bills Due Calendar */}
-        <div className="lg:col-span-5 bg-card/50 backdrop-blur-md border border-border/80 rounded-[20px] p-6 shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] flex flex-col h-full justify-between min-w-0 max-w-full overflow-hidden box-border w-full">
-          <div className="flex justify-between items-center pb-4 border-b border-border/60 mb-4 w-full min-w-0">
+        <PremiumCard className="lg:col-span-5" hoverEffect={false}>
+          <div className="flex justify-between items-center pb-4 border-b border-[var(--border-color)] mb-4 w-full min-w-0">
             <div className="min-w-0">
-              <h3 className="text-sm font-bold text-foreground tracking-wide break-words whitespace-normal">Bills Due Calendar</h3>
-              <p className="text-[11px] text-muted-foreground font-semibold mt-0.5 break-words whitespace-normal">Monitor billing cycles and premium deadlines</p>
+              <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-wide break-words whitespace-normal">Bills Due Calendar</h3>
+              <p className="text-[11px] text-[var(--text-muted)] font-semibold mt-0.5 break-words whitespace-normal">Monitor billing cycles and premium deadlines</p>
             </div>
           </div>
 
           <div className="space-y-4 w-full min-w-0">
             {/* Header with Arrow controls */}
-            <div className="flex justify-between items-center bg-secondary/50 p-2.5 rounded-2xl border border-border/60 w-full gap-2 min-w-0">
+            <div className="flex justify-between items-center bg-[var(--bg-secondary)] p-2.5 rounded-2xl border border-[var(--border-color)] w-full gap-2 min-w-0">
               <button 
                 onClick={handlePrevMonth} 
-                className="p-1.5 rounded-xl hover:bg-card hover:text-foreground transition-colors cursor-pointer text-muted-foreground shrink-0"
+                className="p-1.5 rounded-xl hover:bg-[var(--card-bg)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-[var(--text-muted)] shrink-0"
               >
                 <ChevronLeft size={16} className="shrink-0" />
               </button>
-              <span className="text-xs font-bold text-foreground tracking-wider uppercase truncate min-w-0">
+              <span className="text-xs font-bold text-[var(--text-primary)] tracking-wider uppercase truncate min-w-0">
                 {selectedCalendarDate.toLocaleString("en-US", { month: "long", year: "numeric" })}
               </span>
               <button 
                 onClick={handleNextMonth} 
-                className="p-1.5 rounded-xl hover:bg-card hover:text-foreground transition-colors cursor-pointer text-muted-foreground shrink-0"
+                className="p-1.5 rounded-xl hover:bg-[var(--card-bg)] hover:text-[var(--text-primary)] transition-colors cursor-pointer text-[var(--text-muted)] shrink-0"
               >
                 <ChevronRight size={16} className="shrink-0" />
               </button>
@@ -848,7 +850,7 @@ const UnifiedDashboard = () => {
             {/* Grid days */}
             <div className="grid grid-cols-7 gap-1 text-center w-full min-w-0 max-w-full px-2.5 pb-2.5">
               {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((dayName) => (
-                <span key={dayName} className="font-bold text-[10px] text-muted-foreground py-2 uppercase tracking-widest block">{dayName}</span>
+                <span key={dayName} className="font-bold text-[10px] text-[var(--text-muted)] py-2 uppercase tracking-widest block">{dayName}</span>
               ))}
               {calendarCells.map((cellObj, idx) => {
                 const { date, isCurrentMonth } = cellObj;
@@ -876,9 +878,9 @@ const UnifiedDashboard = () => {
                   hasDot = true;
                   const priorities = dueBills.map(b => b.priority);
                   if (priorities.includes("Critical") || priorities.includes("High")) {
-                    dotColorClass = "bg-red-500";
+                    dotColorClass = "bg-[var(--danger)]";
                   } else {
-                    dotColorClass = "bg-indigo-500";
+                    dotColorClass = "bg-[var(--accent)]";
                   }
                 }
 
@@ -890,10 +892,10 @@ const UnifiedDashboard = () => {
                   >
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 text-xs font-bold shrink-0
                       ${isSelected 
-                        ? "bg-primary text-white shadow-[0_0_12px_rgba(79,70,229,0.4)]" 
+                        ? "bg-[var(--accent)] text-white shadow-[0_0_12px_rgba(59,130,246,0.4)]" 
                         : isCurrentMonth 
-                        ? "text-foreground hover:bg-secondary" 
-                        : "text-muted-foreground/40 hover:bg-secondary/30"
+                        ? "text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" 
+                        : "text-[var(--text-muted)]/40 hover:bg-[var(--bg-secondary)]/30"
                       }
                     `}>
                       {dayNum}
@@ -906,14 +908,14 @@ const UnifiedDashboard = () => {
               })}
             </div>
           </div>
-        </div>
+        </PremiumCard>
 
         {/* Column 2: Quick Modules Shortcuts */}
-        <div className="lg:col-span-7 bg-card/50 backdrop-blur-md border border-border/80 rounded-[20px] p-6 shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] flex flex-col h-full justify-between min-w-0 max-w-full overflow-hidden box-border w-full">
-          <div className="flex justify-between items-center pb-4 border-b border-border/60 mb-4 w-full min-w-0">
+        <PremiumCard className="lg:col-span-7" hoverEffect={false}>
+          <div className="flex justify-between items-center pb-4 border-b border-[var(--border-color)] mb-4 w-full min-w-0">
             <div className="min-w-0">
-              <h3 className="text-sm font-bold text-foreground tracking-wide break-words whitespace-normal">Quick Modules</h3>
-              <p className="text-[11px] text-muted-foreground font-semibold mt-0.5 break-words whitespace-normal">Access your most-used features</p>
+              <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-wide break-words whitespace-normal">Quick Modules</h3>
+              <p className="text-[11px] text-[var(--text-muted)] font-semibold mt-0.5 break-words whitespace-normal">Access your most-used features</p>
             </div>
           </div>
 
@@ -961,76 +963,76 @@ const UnifiedDashboard = () => {
                 <Link
                   key={idx}
                   to={mod.to}
-                  className={`border border-border/60 border-l-4 ${mod.borderClass} ${mod.bgClass} rounded-2xl p-6 flex flex-col justify-between h-full hover:shadow-md transition-all duration-300 group cursor-pointer w-full min-w-0 max-w-full overflow-hidden box-border`}
+                  className={`border border-[var(--border-color)] border-l-4 ${mod.borderClass} ${mod.bgClass} rounded-2xl p-6 flex flex-col justify-between h-full hover:shadow-md transition-all duration-300 group cursor-pointer w-full min-w-0 max-w-full overflow-hidden box-border`}
                 >
                   <div className="flex items-center justify-between w-full gap-2 mb-3">
-                    <div className={`p-2.5 rounded-xl bg-card border border-border/80 shrink-0 ${mod.textClass}`}>
+                    <div className={`p-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--border-color)] shrink-0 ${mod.textClass}`}>
                       <Icon size={18} className="transition-transform duration-300 group-hover:scale-110 shrink-0" />
                     </div>
-                    <ArrowRight size={14} className="text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all duration-200 shrink-0" />
+                    <ArrowRight size={14} className="text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all duration-200 shrink-0" />
                   </div>
                   <div className="mt-4 min-w-0 w-full text-left">
-                    <h4 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors break-words whitespace-normal leading-snug">{mod.label}</h4>
-                    <p className="text-[11px] text-muted-foreground mt-1 font-medium leading-normal break-words whitespace-normal">{mod.desc}</p>
+                    <h4 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors break-words whitespace-normal leading-snug">{mod.label}</h4>
+                    <p className="text-[11px] text-[var(--text-muted)] mt-1 font-medium leading-normal break-words whitespace-normal">{mod.desc}</p>
                   </div>
                 </Link>
               );
             })}
           </div>
-        </div>
+        </PremiumCard>
       </div>
 
       {/* Row 4: Recent Activity timeline events */}
-      <div className="bg-card/50 backdrop-blur-md border border-border/80 rounded-[20px] p-6 shadow-sm dark:shadow-[0_10px_35px_rgba(0,0,0,0.3)] flex flex-col space-y-6 min-w-0 max-w-full overflow-hidden box-border w-full">
-        <div className="flex justify-between items-center pb-3 border-b border-border/60 w-full min-w-0 gap-2">
+      <PremiumCard hoverEffect={false}>
+        <div className="flex justify-between items-center pb-3 border-b border-[var(--border-color)] w-full min-w-0 gap-2">
           <div className="min-w-0">
-            <h3 className="text-sm font-bold text-foreground tracking-wide break-words whitespace-normal">Recent Activity</h3>
-            <p className="text-[11px] text-muted-foreground font-semibold mt-0.5 break-words whitespace-normal">Your latest actions and updates across portals</p>
+            <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-wide break-words whitespace-normal">Recent Activity</h3>
+            <p className="text-[11px] text-[var(--text-muted)] font-semibold mt-0.5 break-words whitespace-normal">Your latest actions and updates across portals</p>
           </div>
           <button 
             onClick={() => navigate("/student/attendance")}
-            className="text-[11px] font-bold text-indigo-600 dark:text-[#818cf8] hover:text-indigo-700 dark:hover:text-[#a5b4fc] transition-colors cursor-pointer shrink-0"
+            className="text-[11px] font-bold text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors cursor-pointer shrink-0"
           >
             View all activity
           </button>
         </div>
 
-        <div className="relative border-l border-border/60 ml-4 pl-6 space-y-6 py-2 w-full min-w-0 max-w-full">
+        <div className="relative border-l border-[var(--border-color)] ml-4 pl-6 space-y-6 py-2 w-full min-w-0 max-w-full">
           {activityCards.map((card, idx) => {
             const Icon = card.icon;
             return (
               <div key={idx} className="relative flex items-center gap-4 group w-full min-w-0 max-w-full overflow-hidden box-border">
                 {/* Timeline node */}
                 <div className="absolute -left-[31px] top-1/2 -translate-y-1/2 flex items-center justify-center shrink-0">
-                  <div className="w-3.5 h-3.5 rounded-full border border-background bg-card flex items-center justify-center shadow-sm">
+                  <div className="w-3.5 h-3.5 rounded-full border border-[var(--bg-primary)] bg-[var(--card-bg)] flex items-center justify-center shadow-sm">
                     <span className={`w-1.5 h-1.5 rounded-full ${card.dotColor}`} />
                   </div>
                 </div>
                 {/* Icon wrapper */}
-                <div className={`p-2.5 rounded-xl ${card.iconBg} ${card.iconColor} border border-border/60 shrink-0 self-center`}>
+                <div className={`p-2.5 rounded-xl ${card.iconBg} ${card.iconColor} border border-[var(--border-color)] shrink-0 self-center`}>
                   <Icon size={16} className="shrink-0" />
                 </div>
                 {/* Content */}
-                <div className="flex-1 min-w-0 max-w-full bg-secondary/20 hover:bg-secondary/40 border border-border/40 hover:border-accent/20 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 transition-all duration-300 box-border text-left">
+                <div className="flex-1 min-w-0 max-w-full bg-[var(--bg-secondary)]/40 hover:bg-[var(--bg-secondary)]/60 border border-[var(--border-color)]/60 hover:border-[var(--accent)]/20 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 transition-all duration-300 box-border text-left">
                   <div className="min-w-0 max-w-full">
-                    <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors break-words whitespace-normal leading-normal">{card.title}</h4>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed break-words whitespace-normal">{card.desc}</p>
+                    <h4 className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors break-words whitespace-normal leading-normal">{card.title}</h4>
+                    <p className="text-xs text-[var(--text-muted)] mt-1 leading-relaxed break-words whitespace-normal">{card.desc}</p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
-                    <span className="text-xs text-muted-foreground/80 font-medium whitespace-nowrap">{card.time}</span>
+                    <span className="text-xs text-[var(--text-muted)]/80 font-medium whitespace-nowrap">{card.time}</span>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
-      </div>
+      </PremiumCard>
 
       {/* Global floating action button on bottom right of student dashboard */}
       <div className="fixed bottom-8 right-8 z-50">
         <button
           onClick={() => setIsQuickAddExpenseOpen(true)}
-          className="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-[0_4px_20px_rgba(79,70,229,0.3)] hover:shadow-[0_8px_30px_rgba(79,70,229,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-primary/20 shrink-0"
+          className="w-14 h-14 rounded-full bg-[var(--primary)] text-white flex items-center justify-center shadow-[0_4px_20px_rgba(59,130,246,0.3)] hover:shadow-[0_8px_30px_rgba(59,130,246,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-[var(--primary)]/20 shrink-0"
           title="Quick Add Expense"
         >
           <Plus size={24} className="shrink-0" />
@@ -1038,105 +1040,104 @@ const UnifiedDashboard = () => {
       </div>
 
       {/* Quick Add Expense Modal */}
-      <Modal
-        isOpen={isQuickAddExpenseOpen}
-        onClose={() => setIsQuickAddExpenseOpen(false)}
-        title="Quick Add Expense"
-      >
-        <form onSubmit={handleQuickAddExpenseSubmit} className="space-y-4 pt-1">
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-muted-foreground">Description / Title</label>
-            <PremiumInput
-              type="text"
-              value={quickExpenseForm.title}
-              onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, title: e.target.value })}
-              placeholder="e.g. Textbook, Transit pass"
-              required
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-muted-foreground">Amount (₹)</label>
-            <PremiumInput
-              type="number"
-              value={quickExpenseForm.amount}
-              onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, amount: e.target.value })}
-              placeholder="0.00"
-              min="0.01"
-              step="0.01"
-              required
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <Dialog open={isQuickAddExpenseOpen} onOpenChange={setIsQuickAddExpenseOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Quick Add Expense</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleQuickAddExpenseSubmit} className="space-y-4 pt-1">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Category</label>
-              <select
-                value={quickExpenseForm.category}
-                onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, category: e.target.value })}
-                className="premium-input text-foreground h-11 w-full cursor-pointer rounded-[var(--radius-md)] bg-[var(--bg-secondary)] border border-border/80 text-sm py-2 px-3 focus:outline-none focus:border-[var(--primary)]"
-              >
-                {[
-                  "Tuition Fees",
-                  "Hostel Fees",
-                  "Mess Fees",
-                  "Books",
-                  "Transportation",
-                  "Internet",
-                  "Mobile Recharge",
-                  "Subscriptions",
-                  "Food",
-                  "Shopping",
-                  "Healthcare",
-                  "Other",
-                ].map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
+              <label className="text-xs font-semibold text-[var(--text-muted)]">Description / Title</label>
+              <PremiumInput
+                type="text"
+                value={quickExpenseForm.title}
+                onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, title: e.target.value })}
+                placeholder="e.g. Textbook, Transit pass"
+                required
+              />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Payment Method</label>
-              <select
-                value={quickExpenseForm.paymentMethod}
-                onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, paymentMethod: e.target.value })}
-                className="premium-input text-foreground h-11 w-full cursor-pointer rounded-[var(--radius-md)] bg-[var(--bg-secondary)] border border-border/80 text-sm py-2 px-3 focus:outline-none focus:border-[var(--primary)]"
-              >
-                <option value="UPI">UPI</option>
-                <option value="Cash">Cash</option>
-                <option value="Card">Card</option>
-                <option value="Bank">Bank Transfer</option>
-              </select>
+              <label className="text-xs font-semibold text-[var(--text-muted)]">Amount (₹)</label>
+              <PremiumInput
+                type="number"
+                value={quickExpenseForm.amount}
+                onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, amount: e.target.value })}
+                placeholder="0.00"
+                min="0.01"
+                step="0.01"
+                required
+              />
             </div>
-          </div>
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-muted-foreground">Date</label>
-            <PremiumInput
-              type="date"
-              value={quickExpenseForm.date}
-              onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, date: e.target.value })}
-              required
-            />
-          </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5 text-left">
+                <label className="text-xs font-semibold text-[var(--text-muted)]">Category</label>
+                <Select
+                  value={quickExpenseForm.category}
+                  onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, category: e.target.value })}
+                >
+                  {[
+                    "Tuition Fees",
+                    "Hostel Fees",
+                    "Mess Fees",
+                    "Books",
+                    "Transportation",
+                    "Internet",
+                    "Mobile Recharge",
+                    "Subscriptions",
+                    "Food",
+                    "Shopping",
+                    "Healthcare",
+                    "Other",
+                  ].map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </Select>
+              </div>
 
-          <div className="flex gap-3 justify-end pt-5 border-t border-border/30 mt-6">
-            <PremiumButton
-              type="button"
-              variant="secondary"
-              onClick={() => setIsQuickAddExpenseOpen(false)}
-            >
-              Cancel
-            </PremiumButton>
-            <PremiumButton
-              type="submit"
-              variant="default"
-            >
-              Confirm
-            </PremiumButton>
-          </div>
-        </form>
-      </Modal>
+              <div className="space-y-1.5 text-left">
+                <label className="text-xs font-semibold text-[var(--text-muted)]">Payment Method</label>
+                <Select
+                  value={quickExpenseForm.paymentMethod}
+                  onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, paymentMethod: e.target.value })}
+                >
+                  <option value="UPI">UPI</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                  <option value="Bank">Bank Transfer</option>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--text-muted)]">Date</label>
+              <PremiumInput
+                type="date"
+                value={quickExpenseForm.date}
+                onChange={(e) => setQuickExpenseForm({ ...quickExpenseForm, date: e.target.value })}
+                required
+              />
+            </div>
+
+            <div className="flex gap-3 justify-end pt-5 border-t border-[var(--border-color)]/30 mt-6">
+              <PremiumButton
+                type="button"
+                variant="secondary"
+                onClick={() => setIsQuickAddExpenseOpen(false)}
+              >
+                Cancel
+              </PremiumButton>
+              <PremiumButton
+                type="submit"
+                variant="default"
+              >
+                Confirm
+              </PremiumButton>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </motion.div>
   );
 };

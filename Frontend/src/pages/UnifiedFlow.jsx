@@ -136,7 +136,7 @@ function Brand() {
       <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#4f46e5] to-[#3b82f6] flex items-center justify-center shadow-[0_4px_12px_rgba(79,70,229,0.25)] group-hover:scale-105 transition-transform duration-300">
         <span className="text-white font-extrabold text-base leading-none">U</span>
       </div>
-      <span className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">
+      <span className="text-base font-bold tracking-tight text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors">
         UniConnect
       </span>
     </Link>
@@ -1197,11 +1197,11 @@ export function UnifiedLanding() {
 
 export function RoleSelectionPage() {
   return (
-    <main className="uc-auth-shell bg-gradient-to-tr from-slate-50/50 via-slate-100/30 to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-zinc-950 min-h-screen relative overflow-hidden font-sans">
+    <main className="uc-auth-shell bg-[var(--bg-primary)] min-h-screen relative overflow-hidden font-sans">
       {/* Background layered radial glows - low opacity */}
       <div className="absolute -top-40 -left-40 w-[450px] h-[450px] rounded-full bg-indigo-500/[0.02] dark:bg-indigo-500/[0.015] blur-[100px] pointer-events-none select-none" />
       <div className="absolute -top-40 -right-40 w-[450px] h-[450px] rounded-full bg-cyan-500/[0.02] dark:bg-cyan-500/[0.015] blur-[100px] pointer-events-none select-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] bg-white/[0.04] dark:bg-slate-900/[0.005] blur-[120px] pointer-events-none select-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] bg-[var(--border-color)] blur-[120px] pointer-events-none select-none" />
 
       <Link to="/" className="uc-brand" aria-label="UniConnect home">
         <span className="uc-brand-mark">U</span>
@@ -1209,7 +1209,7 @@ export function RoleSelectionPage() {
       </Link>
 
       <section className="uc-role-panel">
-        <h1 className="text-slate-900 dark:text-slate-50 font-semibold">
+        <h1 className="text-[var(--text-primary)] font-semibold">
           Choose how you want to continue
         </h1>
 
@@ -1229,20 +1229,20 @@ export function RoleSelectionPage() {
               <Link
                 key={role.id}
                 to={role.loginTo}
-                className="uc-role-card backdrop-blur-lg border border-slate-200/50 dark:border-white/20 bg-white/60 dark:bg-slate-900/50 hover:bg-white/80 dark:hover:bg-slate-900/70 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group min-w-0 max-w-full box-border"
+                className="uc-role-card backdrop-blur-lg border border-[var(--border-color)] bg-[var(--card-bg)]/80 hover:bg-[var(--bg-secondary)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-1 transition-all duration-300 group min-w-0 max-w-full box-border"
               >
-                <span className={`uc-role-avatar rounded-2xl flex items-center justify-center shrink-0 border ${iconBox} transition-transform duration-300 group-hover:scale-105`}>
+                <span className={`uc-role-avatar rounded-[var(--radius-xl)] flex items-center justify-center shrink-0 border ${iconBox} transition-transform duration-300 group-hover:scale-105`}>
                   <Icon size={28} className="shrink-0" />
                 </span>
                 <div className="min-w-0 flex-1 text-left">
-                  <strong className="text-base font-semibold text-slate-800 dark:text-slate-100 leading-tight block">
+                  <strong className="text-base font-semibold text-[var(--text-primary)] leading-tight block">
                     {role.title}
                   </strong>
-                  <small className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium leading-normal block mt-2">
+                  <small className="text-xs sm:text-sm text-[var(--text-secondary)] font-medium leading-normal block mt-2">
                     {role.description}
                   </small>
                 </div>
-                <span className="uc-arrow transition-transform duration-300 group-hover:translate-x-1 text-slate-800 dark:text-slate-200">
+                <span className="uc-arrow transition-transform duration-300 group-hover:translate-x-1 text-[var(--text-primary)]">
                   →
                 </span>
               </Link>
@@ -1250,7 +1250,7 @@ export function RoleSelectionPage() {
           })}
         </div>
 
-        <p className="uc-auth-switch text-slate-500 dark:text-slate-400">
+        <p className="uc-auth-switch text-[var(--text-muted)]">
           Already have an account?
           <Link to="/login/student" className="ml-1.5 text-primary hover:text-primary-hover font-semibold transition-colors duration-200 hover:underline">
             Login

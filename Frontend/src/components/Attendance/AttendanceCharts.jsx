@@ -15,7 +15,14 @@ import {
 } from "recharts";
 import { useTheme } from "../../context/ThemeContext";
 
-const COLORS = ["#6366f1", "#22c55e", "#ef4444", "#f59e0b", "#38bdf8", "#a855f7"];
+const COLORS = [
+  "var(--accent)",
+  "var(--success)",
+  "var(--warning)",
+  "var(--danger)",
+  "var(--info)",
+  "var(--text-secondary)"
+];
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
@@ -34,16 +41,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectId = "" }) {
   const { theme } = useTheme();
-  const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  const currentColors = isDark
-    ? COLORS
-    : ["#4F46E5", "#6366F1", "#818CF8", "#A5B4FC", "#C7D2FE"];
 
   const barData = bySubject.map((s) => ({
-    subject: s.subjectName || s.subject,
+    subject: s.subjectName || s.subject || "Unknown",
     percentage: s.percentage ?? 0,
-    presentDays: s.present ?? 0,
-    total: s.total ?? 0,
+    presentDays: s.presentDays ?? s.present ?? 0,
+    total: s.totalClasses ?? s.total ?? 0,
   }));
 
   const pieData = barData.filter((d) => d.total > 0);
@@ -73,11 +76,12 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
                   <XAxis dataKey="subject" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
                   <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="percentage" name="Attendance %" fill={isDark ? "#6366f1" : "#4F46E5"} radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="percentage" name="Attendance %" fill="var(--accent)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
+
           {pieData.length > 0 && (
             <div className="space-y-2 min-w-0 overflow-hidden">
               <p className="text-sm font-medium text-[var(--text-muted)]">Present classes by subject</p>
@@ -111,7 +115,7 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
                       }}
                     >
                       {pieData.map((_, i) => (
-                        <Cell key={i} fill={currentColors[i % currentColors.length]} />
+                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
                       ))}
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />
@@ -123,6 +127,7 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
           )}
         </>
       )}
+
       {filteredTimeline.length > 0 && (
         <div className="xl:col-span-2 space-y-2 min-w-0 overflow-hidden">
           <p className="text-sm font-medium text-[var(--text-muted)]">
@@ -135,8 +140,8 @@ export function AttendanceCharts({ bySubject = [], timeline = [], filterSubjectI
                 <XAxis dataKey="date" tick={{ fontSize: 11, fill: "var(--text-secondary)" }} />
                 <YAxis tick={{ fontSize: 11, fill: "var(--text-secondary)" }} allowDecimals={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Line type="monotone" dataKey="present" stroke="#22c55e" strokeWidth={2} name="Present" />
-                <Line type="monotone" dataKey="absent" stroke="#ef4444" strokeWidth={2} name="Absent" />
+                <Line type="monotone" dataKey="present" stroke="var(--success)" strokeWidth={2} name="Present" />
+                <Line type="monotone" dataKey="absent" stroke="var(--danger)" strokeWidth={2} name="Absent" />
               </LineChart>
             </ResponsiveContainer>
           </div>

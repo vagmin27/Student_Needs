@@ -15,9 +15,9 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Toaster as HotToaster } from "react-hot-toast";
-import { Toaster } from "@/components/Referrals/ui/toaster.jsx";
-import { Toaster as Sonner } from "@/components/Referrals/ui/sonner.jsx";
-import { TooltipProvider } from "@/components/Referrals/ui/tooltip.jsx";
+import { Toaster } from "@/components/ui/toaster.jsx";
+import { Toaster as Sonner } from "@/components/ui/sonner.jsx";
+import { TooltipProvider } from "@/components/ui/tooltip.jsx";
 
 // ======================================================
 //                    CONTEXTS

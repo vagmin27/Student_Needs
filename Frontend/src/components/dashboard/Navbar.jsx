@@ -56,7 +56,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
   };
 
   return (
-    <header className="h-16 border-b border-border/40 bg-background/70 backdrop-blur-[20px] sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 transition-all duration-300 gemini-navbar">
+    <header className="h-[72px] border-b border-[var(--border-color)] bg-[var(--card-bg)]/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-6 transition-all duration-300">
       <div className="flex items-center gap-3 min-w-0">
         <button
           onClick={handleHamburgerClick}
@@ -82,7 +82,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
 
       <div className="flex items-center gap-4">
         {location.pathname !== "/tutorials/home" && (
-          <form onSubmit={handleSearchSubmit} className="relative hidden md:block w-64 md:w-[420px] transition-all duration-300">
+          <form onSubmit={handleSearchSubmit} className="relative hidden md:block w-[320px] transition-all duration-300">
             <style>{`
               .nav-search-input::placeholder {
                 color: rgba(100,116,139,.75) !important;
@@ -95,13 +95,13 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
                 opacity: 1 !important;
               }
             `}</style>
-            <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 h-4 w-4 text-muted-foreground top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="search"
               placeholder="Search tutorials, tutors, bookings..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="nav-search-input w-full bg-[var(--bg-secondary)] border border-border pl-10 h-10 rounded-full text-sm focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 transition-all text-[var(--text-primary)]"
+              className="nav-search-input w-full bg-[var(--bg-primary)] border border-[var(--border-color)] pl-9 h-10 rounded-[var(--radius-sm)] text-sm focus-visible:outline-none focus-visible:border-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/10 transition-all text-[var(--text-primary)]"
             />
           </form>
         )}
@@ -110,7 +110,7 @@ const Navbar = ({ pageTitle = "Dashboard", showBackToDashboard }) => {
 
         <NotificationCenter />
 
-        <div className="w-8 h-8 rounded-full bg-secondary border border-border overflow-hidden flex items-center justify-center font-bold text-primary">
+        <div className="w-10 h-10 rounded-full bg-secondary border border-[var(--border-color)] overflow-hidden flex items-center justify-center font-bold text-primary shrink-0">
           {user?.profilePic ? (
             <img
               src={user.profilePic}

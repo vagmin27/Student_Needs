@@ -40,16 +40,8 @@ const Sidebar = ({ className, role = "student" }) => {
 
   if (currentRole === "tutor") {
     links = [
-      {
-        name: "Dashboard",
-        href: "/tutorials/tutor/dashboard",
-        icon: LayoutDashboard,
-      },
-      {
-        name: "Schedule",
-        href: "/tutorials/tutor/schedule",
-        icon: CalendarDays,
-      },
+      { name: "Dashboard", href: "/tutorials/tutor/dashboard", icon: LayoutDashboard },
+      { name: "Schedule", href: "/tutorials/tutor/schedule", icon: CalendarDays },
       { name: "Requests", href: "/tutorials/tutor/accept", icon: Inbox },
       { name: "Profile", href: "/tutorials/tutor/editProfile", icon: Users },
       { name: "Attendance", href: "/tutorials/attendance", icon: CalendarCheck },
@@ -63,87 +55,50 @@ const Sidebar = ({ className, role = "student" }) => {
     ];
   } else if (currentRole === "alumni") {
     links = [
-      {
-        name: "Dashboard",
-        href: "/alumni/dashboard",
-        icon: LayoutDashboard,
-      },
-      {
-        name: "Chat",
-        href: "/alumni/chat",
-        icon: MessageSquare,
-      },
+      { name: "Dashboard", href: "/alumni/dashboard", icon: LayoutDashboard },
+      { name: "Chat", href: "/alumni/chat", icon: MessageSquare },
     ];
   } else if (currentRole === "admin") {
     links = [
-      {
-        name: "Dashboard",
-        href: "/student/dashboard",
-        icon: LayoutDashboard,
-      },
-      {
-        name: "Contact Messages",
-        href: "/admin/contact-messages",
-        icon: Inbox,
-      },
+      { name: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
+      { name: "Contact Messages", href: "/admin/contact-messages", icon: Inbox },
     ];
   } else {
-    // Default Student Links (Calendar, Alumni Hub, Messages are removed completely)
     links = [
-      {
-        name: "Dashboard",
-        href: "/student/dashboard",
-        icon: LayoutDashboard,
-      },
-      {
-        name: "Attendance",
-        href: "/student/attendance",
-        icon: CalendarDays,
-      },
-      {
-        name: "Expenses",
-        href: "/expenses-tracker",
-        icon: CreditCard,
-      },
-      {
-        name: "Tutorials",
-        href: TUTORIAL_PATHS.unifiedEntry,
-        icon: BookOpen,
-      },
-      {
-        name: "Referrals",
-        href: "/referrals/browse-referrals",
-        icon: Briefcase,
-      },
+      { name: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
+      { name: "Attendance", href: "/student/attendance", icon: CalendarDays },
+      { name: "Expenses", href: "/expenses-tracker", icon: CreditCard },
+      { name: "Tutorials", href: TUTORIAL_PATHS.unifiedEntry, icon: BookOpen },
+      { name: "Referrals", href: "/referrals/browse-referrals", icon: Briefcase },
     ];
   }
 
   return (
     <div
       className={cn(
-        "flex flex-col h-full bg-card overflow-y-auto overflow-x-hidden select-none sidebar-transition border-r border-border gemini-sidebar",
-        isCollapsed ? "px-2.5 py-6" : "p-6",
+        "flex flex-col h-full bg-[var(--card-bg)] select-none sidebar-transition border-r border-[var(--border-color)]",
         className
       )}
     >
-      {/* Logo */}
-      <div className={cn("flex items-center gap-3 mb-8 px-2 shrink-0", isCollapsed ? "justify-center" : "")}>
-        <div className="w-8 h-8 rounded-[8px] bg-gradient-to-br from-[#4f46e5] to-[#3b82f6] flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(79,70,229,0.3)]">
-          <span className="text-white font-bold text-lg leading-none">
-            U
-          </span>
+      {/* Branding Logo & Header */}
+      <div className={cn(
+        "flex items-center gap-3 h-[72px] border-b border-[var(--border-color)] px-6 shrink-0 mb-4",
+        isCollapsed ? "justify-center px-4" : ""
+      )}>
+        <div className="w-8 h-8 rounded-[8px] bg-gradient-to-br from-[#3b82f6] to-[#2563eb] flex items-center justify-center shrink-0 shadow-[0_4px_12px_rgba(59,130,246,0.25)]">
+          <span className="text-white font-extrabold text-base leading-none">U</span>
         </div>
         {!isCollapsed && (
-          <span className="text-lg font-bold tracking-tight text-foreground whitespace-nowrap">
+          <span className="text-base font-bold tracking-tight text-[var(--text-primary)] whitespace-nowrap">
             UniConnect
           </span>
         )}
       </div>
 
-      {/* Navigation */}
+      {/* Main Navigation Links */}
       <nav className={cn(
-        "flex flex-col flex-1",
-        isCollapsed ? "items-center gap-3" : "space-y-4"
+        "flex flex-col flex-1 overflow-y-auto overflow-x-hidden px-3 space-y-1.5",
+        isCollapsed ? "items-center" : ""
       )}>
         {links?.map((link) => {
           const isActive = location.pathname === link.href || (link.href !== "/student/dashboard" && location.pathname.startsWith(link.href));
@@ -154,31 +109,26 @@ const Sidebar = ({ className, role = "student" }) => {
               key={link.name}
               to={link.href}
               className={cn(
-                "group relative flex items-center transition-all duration-200",
+                "group relative flex items-center transition-all duration-200 cursor-pointer w-full",
                 isCollapsed 
-                  ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
-                  : "gap-4 px-[18px] py-[14px] rounded-[14px]",
+                  ? "w-10 h-10 justify-center rounded-lg" 
+                  : "gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold",
                 isActive 
-                  ? "text-[#4f46e5] dark:text-[#818cf8] font-semibold" 
-                  : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground hover:translate-x-1"
+                  ? "bg-[var(--accent)]/[0.08] text-[var(--accent)]" 
+                  : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"
               )}
-              style={isActive ? {
-                background: "linear-gradient(90deg, rgba(99, 102, 241, 0.28), rgba(59, 130, 246, 0.18))"
-              } : undefined}
             >
-              <Icon className={cn("w-6 h-6 shrink-0", isActive ? "text-[#4f46e5] dark:text-[#818cf8]" : "text-muted-foreground group-hover:text-foreground")} />
+              {isActive && (
+                <div className="absolute left-0 top-2 bottom-2 w-[3px] bg-[var(--accent)] rounded-r" />
+              )}
+              <Icon className={cn("w-5 h-5 shrink-0", isActive ? "text-[var(--accent)]" : "text-[var(--text-muted)] group-hover:text-[var(--text-primary)]")} />
               {!isCollapsed && (
-                <span className={cn(
-                  "whitespace-nowrap font-medium text-base lg:text-lg tracking-wide",
-                  isActive ? "text-[#4f46e5] dark:text-[#818cf8]" : "text-muted-foreground group-hover:text-foreground"
-                )}>
+                <span className="truncate">
                   {link.name}
                 </span>
               )}
-              
-              {/* Premium CSS Tooltip */}
               {isCollapsed && (
-                <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+                <div className="absolute left-14 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--border-color)] text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                   {link.name}
                 </div>
               )}
@@ -186,10 +136,10 @@ const Sidebar = ({ className, role = "student" }) => {
           );
         })}
 
-        {/* Settings & Logout inside nav as part of middle navigation */}
+        {/* Separator and Secondary Settings Panel */}
         <div className={cn(
-          "pt-4 border-t border-border flex flex-col",
-          isCollapsed ? "items-center gap-3" : "space-y-4 pt-4"
+          "pt-4 border-t border-[var(--border-color)] flex flex-col space-y-1.5 w-full",
+          isCollapsed ? "items-center" : ""
         )}>
           <Link
             to={
@@ -204,29 +154,22 @@ const Sidebar = ({ className, role = "student" }) => {
                 : "/tutorials/profile/accountSettings"
             }
             className={cn(
-              "group relative flex items-center transition-all duration-200",
+              "group relative flex items-center transition-all duration-200 cursor-pointer w-full",
               isCollapsed 
-                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
-                : "gap-4 px-[18px] py-[14px] rounded-[14px]",
+                ? "w-10 h-10 justify-center rounded-lg" 
+                : "gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold",
               location.pathname.includes("settings")
-                ? "text-[#4f46e5] dark:text-[#818cf8] font-semibold" 
-                : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground hover:translate-x-1"
+                ? "bg-[var(--accent)]/[0.08] text-[var(--accent)]" 
+                : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"
             )}
-            style={location.pathname.includes("settings") ? {
-              background: "linear-gradient(90deg, rgba(99, 102, 241, 0.28), rgba(59, 130, 246, 0.18))"
-            } : undefined}
           >
-            <Settings className={cn("w-6 h-6 shrink-0", location.pathname.includes("settings") ? "text-[#4f46e5] dark:text-[#818cf8]" : "text-muted-foreground group-hover:text-foreground")} />
-            {!isCollapsed && (
-              <span className={cn(
-                "whitespace-nowrap font-medium text-base lg:text-lg tracking-wide",
-                location.pathname.includes("settings") ? "text-[#4f46e5] dark:text-[#818cf8]" : "text-muted-foreground group-hover:text-foreground"
-              )}>
-                Settings
-              </span>
+            {location.pathname.includes("settings") && (
+              <div className="absolute left-0 top-2 bottom-2 w-[3px] bg-[var(--accent)] rounded-r" />
             )}
+            <Settings className={cn("w-5 h-5 shrink-0", location.pathname.includes("settings") ? "text-[var(--accent)]" : "text-[var(--text-muted)] group-hover:text-[var(--text-primary)]")} />
+            {!isCollapsed && <span className="truncate">Settings</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-14 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--border-color)] text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Settings
               </div>
             )}
@@ -235,21 +178,17 @@ const Sidebar = ({ className, role = "student" }) => {
           <Link
             to="/student/settings"
             className={cn(
-              "group relative flex items-center transition-all duration-200",
+              "group relative flex items-center transition-all duration-200 cursor-pointer w-full",
               isCollapsed 
-                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
-                : "gap-4 px-[18px] py-[14px] rounded-[14px]",
-              "text-muted-foreground hover:bg-secondary/60 hover:text-foreground hover:translate-x-1"
+                ? "w-10 h-10 justify-center rounded-lg" 
+                : "gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold",
+              "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"
             )}
           >
-            <HelpCircle className="w-6 h-6 shrink-0 text-muted-foreground group-hover:text-foreground" />
-            {!isCollapsed && (
-              <span className="whitespace-nowrap font-medium text-base lg:text-lg tracking-wide text-muted-foreground group-hover:text-foreground">
-                Help & Support
-              </span>
-            )}
+            <HelpCircle className="w-5 h-5 shrink-0 text-[var(--text-muted)] group-hover:text-[var(--text-primary)]" />
+            {!isCollapsed && <span className="truncate">Help & Support</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-14 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--border-color)] text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Help & Support
               </div>
             )}
@@ -258,20 +197,16 @@ const Sidebar = ({ className, role = "student" }) => {
           <button
             onClick={logout}
             className={cn(
-              "group relative flex items-center transition-all duration-200 cursor-pointer text-[#ef4444] hover:bg-[#ef4444]/10",
+              "group relative flex items-center transition-all duration-200 cursor-pointer w-full text-[var(--danger)] hover:bg-[var(--danger)]/10",
               isCollapsed 
-                ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)]" 
-                : "gap-4 px-[18px] py-[14px] rounded-[14px]"
+                ? "w-10 h-10 justify-center rounded-lg" 
+                : "gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold"
             )}
           >
-            <LogOut className="w-6 h-6 shrink-0 text-[#ef4444]" />
-            {!isCollapsed && (
-              <span className="whitespace-nowrap font-semibold text-base lg:text-lg tracking-wide text-[#ef4444]">
-                Log out
-              </span>
-            )}
+            <LogOut className="w-5 h-5 shrink-0 text-[var(--danger)]" />
+            {!isCollapsed && <span className="truncate">Log out</span>}
             {isCollapsed && (
-              <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+              <div className="absolute left-14 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-[var(--card-bg)] text-[var(--danger)] border border-[var(--border-color)] text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
                 Log out
               </div>
             )}
@@ -279,18 +214,18 @@ const Sidebar = ({ className, role = "student" }) => {
         </div>
       </nav>
 
-      {/* Bottom Actions */}
+      {/* Footer Profile Section */}
       <div className={cn(
-        "mt-auto shrink-0 flex flex-col pt-4 border-t border-border mt-4",
-        isCollapsed ? "items-center gap-3" : "space-y-4"
+        "mt-auto shrink-0 flex flex-col p-3 border-t border-[var(--border-color)] bg-[var(--bg-primary)]/40",
+        isCollapsed ? "items-center" : ""
       )}>
-        {/* User Card */}
+        {/* User Badge Info Card */}
         <div className={cn(
-          "flex items-center transition-all duration-200 overflow-hidden",
-          isCollapsed ? "w-12 h-12 justify-center p-0 bg-muted border border-border rounded-[var(--radius-lg)]" : "gap-3 py-3 px-2 w-full"
+          "flex items-center rounded-lg border border-[var(--border-color)] transition-all duration-200 overflow-hidden bg-[var(--card-bg)] shadow-sm",
+          isCollapsed ? "w-10 h-10 justify-center p-0 border-none" : "gap-3 p-2.5 w-full"
         )}>
-          {/* Avatar */}
-          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#3b82f6] to-[#8b5cf6] border border-indigo-500/20 overflow-hidden flex items-center justify-center shrink-0 font-bold text-white shadow-md">
+          {/* User Avatar Circle */}
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#3b82f6] to-[#8b5cf6] border border-[var(--border-color)] overflow-hidden flex items-center justify-center shrink-0 font-bold text-white shadow-sm">
             {user?.profilePic ? (
               <img
                 src={user.profilePic}
@@ -298,16 +233,16 @@ const Sidebar = ({ className, role = "student" }) => {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-sm uppercase font-extrabold">
+              <span className="text-xs uppercase font-bold">
                 {displayName.charAt(0).toUpperCase()}
               </span>
             )}
           </div>
-          {/* Name & Role */}
+          {/* Expanded Name & Role Details */}
           {!isCollapsed && (
-            <div className="flex-1 flex flex-col min-w-0">
-              <span className="text-sm font-bold text-foreground truncate">{displayName}</span>
-              <span className="text-xs text-muted-foreground capitalize mt-0.5 truncate">
+            <div className="flex-1 flex flex-col min-w-0 text-left">
+              <span className="text-xs font-bold text-[var(--text-primary)] truncate">{displayName}</span>
+              <span className="text-[10px] text-[var(--text-muted)] capitalize mt-0.5 truncate">
                 {user?.role || user?.accountType || "Student"}
               </span>
             </div>
@@ -318,19 +253,19 @@ const Sidebar = ({ className, role = "student" }) => {
         <button
           onClick={toggleSidebar}
           className={cn(
-            "group relative flex items-center text-muted-foreground hover:bg-muted hover:text-foreground transition-all duration-200 cursor-pointer mt-1",
+            "group relative flex items-center text-[var(--text-muted)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] transition-all duration-200 w-full cursor-pointer mt-2",
             isCollapsed 
-              ? "w-12 h-12 justify-center p-0 rounded-[var(--radius-lg)] bg-muted border border-border" 
-              : "w-full gap-4 px-[18px] py-[14px] rounded-[14px] text-sm font-semibold"
+              ? "w-10 h-10 justify-center rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)]" 
+              : "gap-3 px-3 py-2.5 rounded-lg text-xs font-bold"
           )}
           aria-label={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
           <ChevronsLeft
-            className={cn("w-6 h-6 shrink-0 transform transition-transform duration-300", isCollapsed ? "rotate-180" : "")}
+            className={cn("w-5 h-5 shrink-0 transform transition-transform duration-300", isCollapsed ? "rotate-180" : "")}
           />
-          {!isCollapsed && <span className="sidebar-label text-sm text-muted-foreground font-bold group-hover:text-foreground">Collapse</span>}
+          {!isCollapsed && <span className="truncate">Collapse Sidebar</span>}
           {isCollapsed && (
-            <div className="absolute left-16 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-popover text-popover-foreground border border-border text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
+            <div className="absolute left-14 scale-0 rounded-[var(--radius-sm)] px-2 py-1 bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--border-color)] text-xs font-semibold shadow-[var(--shadow-md)] transition-all group-hover:scale-100 whitespace-nowrap z-50 pointer-events-none">
               Expand
             </div>
           )}
