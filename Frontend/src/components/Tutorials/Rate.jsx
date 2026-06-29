@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import "../../styles/Tutorials/Rate.css";
 
 /**
  * component that renders star ratings in Review Modal

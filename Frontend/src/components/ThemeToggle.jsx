@@ -47,7 +47,7 @@ export const ThemeToggle = ({ className }) => {
             "w-4.5 h-4.5 transition-all duration-300",
             theme === "light"
               ? "text-amber-500 scale-110 opacity-100"
-              : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80"
+              : "text-[var(--text-muted)] scale-95 opacity-50 hover:opacity-80"
           )}
         />
       </button>
@@ -69,7 +69,7 @@ export const ThemeToggle = ({ className }) => {
             "w-4.5 h-4.5 transition-all duration-300",
             theme === "system"
               ? "text-[var(--primary)] dark:text-[var(--nav-accent)] scale-110 opacity-100"
-              : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80"
+              : "text-[var(--text-muted)] scale-95 opacity-50 hover:opacity-80"
           )}
         />
       </button>
@@ -91,7 +91,7 @@ export const ThemeToggle = ({ className }) => {
             "w-4.5 h-4.5 transition-all duration-300",
             theme === "dark"
               ? "text-[var(--primary)] dark:text-[var(--nav-accent)] scale-110 opacity-100"
-              : "text-slate-400 dark:text-slate-500 scale-95 opacity-50 hover:opacity-80"
+              : "text-[var(--text-muted)] scale-95 opacity-50 hover:opacity-80"
           )}
         />
       </button>

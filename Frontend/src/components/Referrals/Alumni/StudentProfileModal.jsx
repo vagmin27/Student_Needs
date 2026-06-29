@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/Referrals/ui/button.jsx";
+import { Button } from "@/components/ui/button.jsx";
 import {
   X,
   User,
@@ -31,7 +31,17 @@ import { showToast } from "@/components/Referrals/TransactionToast.jsx";
  * @param {Object|null} props.student - Student profile data object
  * @param {boolean} [props.loading] - Loading state for fetching data
  */
-export function StudentProfileModal({ isOpen, onClose, student, loading }) {
+export function StudentProfileModal({ 
+  isOpen, 
+  onClose, 
+  student, 
+  loading,
+  application,
+  onShortlist,
+  onReject,
+  onRefer,
+  onApprove
+}) {
   const navigate = useNavigate();
   if (!isOpen) return null;
 
@@ -378,20 +388,74 @@ export function StudentProfileModal({ isOpen, onClose, student, loading }) {
                 </div>
               </div>
 
-              <div className="mt-6 pt-6 border-t border-border/50 flex justify-end gap-3">
-                <Button
-                  onClick={() => {
-                    onClose();
-                    navigate(`/alumni/chat?chatId=${student.chatId || ''}`);
-                  }}
-                  className="flex items-center gap-1.5 bg-primary text-primary-foreground hover:bg-primary/95"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  Message Student
-                </Button>
-                <Button variant="outline" onClick={onClose}>
-                  Close
-                </Button>
+              <div className="mt-6 pt-6 border-t border-border/50 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap gap-2">
+                  {/* Action buttons based on application status */}
+                  {application && application.status === "pending" && onApprove && (
+                    <Button
+                      onClick={async () => {
+                        await onApprove(application._id);
+                        onClose();
+                      }}
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs h-9 px-3"
+                    >
+                      Approve Candidate
+                    </Button>
+                  )}
+                  {application && application.status === "pending" && onShortlist && (
+                    <Button
+                      onClick={async () => {
+                        await onShortlist(application._id, application.opportunity?._id || application.opportunity);
+                        onClose();
+                      }}
+                      variant="outline"
+                      className="text-xs h-9 px-3 font-semibold"
+                    >
+                      Shortlist
+                    </Button>
+                  )}
+                  {application && (application.status === "pending" || application.status === "shortlisted") && onRefer && (
+                    <Button
+                      onClick={async () => {
+                        await onRefer(application._id, application.opportunity?._id || application.opportunity);
+                        onClose();
+                      }}
+                      className="bg-primary hover:bg-primary/95 text-primary-foreground font-semibold text-xs h-9 px-3"
+                    >
+                      Sign & Refer
+                    </Button>
+                  )}
+                  {application && application.status !== "rejected" && onReject && (
+                    <Button
+                      onClick={async () => {
+                        if (window.confirm("Are you sure you want to reject this application?")) {
+                          await onReject(application._id, application.opportunity?._id || application.opportunity);
+                          onClose();
+                        }
+                      }}
+                      variant="destructive"
+                      className="font-semibold text-xs h-9 px-3"
+                    >
+                      Reject
+                    </Button>
+                  )}
+                </div>
+
+                <div className="flex gap-2 ml-auto">
+                  <Button
+                    onClick={() => {
+                      onClose();
+                      navigate(`/referrals/chat?chatId=${student.chatId || ''}`);
+                    }}
+                    className="flex items-center gap-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs h-9 px-3 font-semibold"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    Message Student
+                  </Button>
+                  <Button variant="outline" onClick={onClose} className="text-xs h-9 px-3 font-semibold">
+                    Close
+                  </Button>
+                </div>
               </div>
             </div>
           ) : (

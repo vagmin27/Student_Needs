@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../../styles/Tutorials/EditProfile.css";
 import bulb2 from "../../assets/images/bulb2.png";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button.jsx";
 
 // ✅ USE FUNCTIONS INSTEAD OF API
 import {
@@ -158,188 +158,176 @@ function EditProfile() {
   };
 
   return (
-    <main className="EditProfile">
-      {" "}
-      <div className="container-xl px-4 mt-4">
-        {" "}
-        <div className="background-white">
-          {/* LEFT PROFILE CARD */}
-          <div id="uploadProfileCard">
-            <h1 className="card-header">Profile</h1>
+    <main className="w-full py-4 md:py-8">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-8 bg-[var(--card-bg)] border border-[var(--border-color)] p-6 md:p-8 rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)]">
+        {/* LEFT PROFILE CARD */}
+        <div className="w-full md:w-[280px] flex-shrink-0 flex flex-col items-center p-6 bg-[var(--bg-secondary)]/20 border border-[var(--border-color)] rounded-[var(--radius-lg)] text-center h-fit">
+          <h3 className="text-lg font-bold text-[var(--text-primary)] mb-4">Profile Picture</h3>
 
-            <div className="card-body text-center">
-              <img
-                className="img-account-profile"
-                src={pic || bulb2}
-                alt="Profile"
-              />
+          <img
+            className="w-32 h-32 rounded-full object-cover border-4 border-[var(--primary)] mb-3 shadow-[var(--shadow-sm)]"
+            src={pic || bulb2}
+            alt="Profile"
+          />
 
-              <div className="small text-muted">
-                JPG or PNG no larger than 5 MB
-              </div>
-
-              <form ref={form} onSubmit={handleUpload}>
-                <label htmlFor="files" className="btnEditProfile">
-                  Upload new image
-                </label>
-
-                <input
-                  id="files"
-                  name="img"
-                  type="file"
-                  hidden
-                  onChange={(e) => uploadImage(e.target.files[0])}
-                />
-
-                <button className="btnEditProfile" type="submit">
-                  Save Profile Picture
-                </button>
-
-                <button className="btnEditProfile" onClick={delPic}>
-                  Delete Profile Picture
-                </button>
-              </form>
-            </div>
+          <div className="text-xs text-[var(--text-muted)] mb-5">
+            JPG or PNG no larger than 5 MB
           </div>
 
-          {/* RIGHT FORM */}
-          <div className="pl-3">
-            <h2 className="card-header">Account Details</h2>
-
-            <form
-              id="mainForm"
-              onSubmit={handleSaveProfile}
-              className="card-body form-grid"
+          <form ref={form} onSubmit={handleUpload} className="w-full flex flex-col gap-2">
+            <label 
+              htmlFor="files" 
+              className="w-full py-2 px-4 text-xs font-semibold rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-secondary)]/80 text-[var(--text-primary)] transition-all cursor-pointer block text-center"
             >
-              {/* Username */}
-              <div className="mb-3 full-row">
-                <label className="small">Username</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="username"
-                  value={profile.username}
-                  onChange={onInputChange}
-                />
-              </div>
+              Upload new image
+            </label>
 
-              {/* First Name */}
-              <div className="mb-3">
-                <label className="small">First Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="fName"
-                  value={profile.fName}
-                  onChange={onInputChange}
-                />
-              </div>
+            <input
+              id="files"
+              name="img"
+              type="file"
+              hidden
+              onChange={(e) => uploadImage(e.target.files[0])}
+            />
 
-              {/* Last Name */}
-              <div className="mb-3">
-                <label className="small">Last Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="lName"
-                  value={profile.lName}
-                  onChange={onInputChange}
-                />
-              </div>
+            <Button className="w-full text-xs h-9 font-semibold" type="submit">
+              Save Photo
+            </Button>
 
-              {/* Email */}
-              <div className="mb-3 full-row">
-                <label className="small">Email</label>
-                <input
-                  className="form-control"
-                  type="email"
-                  name="email"
-                  value={profile.email}
-                  onChange={onInputChange}
-                />
-              </div>
+            <Button variant="outline" className="w-full text-xs h-9 font-semibold border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-900/30 dark:text-red-400 dark:hover:bg-red-950/20" onClick={delPic}>
+              Delete Photo
+            </Button>
+          </form>
+        </div>
 
-              {/* Subjects */}
-              <div className="mb-3">
-                <label className="small">Subjects</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="subjects"
-                  value={profile.subjects}
-                  onChange={onInputChange}
-                />
-              </div>
+        {/* RIGHT FORM */}
+        <div className="flex-1 flex flex-col">
+          <h3 className="text-lg font-bold text-[var(--text-primary)] mb-6 pb-2 border-b border-[var(--border-color)]">
+            Account Details
+          </h3>
 
-              {/* Location */}
-              <div className="mb-3">
-                <label className="small">Location</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="location"
-                  value={profile.location}
-                  onChange={onInputChange}
-                />
-              </div>
+          <form
+            onSubmit={handleSaveProfile}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+          >
+            {/* Username */}
+            <div className="sm:col-span-2 space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--text-secondary)]">Username</label>
+              <input
+                className="w-full p-2.5 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm"
+                type="text"
+                name="username"
+                value={profile.username}
+                onChange={onInputChange}
+              />
+            </div>
 
-              {/* Schedule */}
-              <div className="mb-3 full-row">
-                <label className="small">Schedule Preference</label>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                    marginTop: "6px",
-                  }}
-                >
-                  {[
-                    "weekdays AM",
-                    "weekdays PM",
-                    "weekends AM",
-                    "weekends PM",
-                    "flexible",
-                  ]?.map((option) => (
-                    <label
-                      key={option}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                        cursor: "pointer",
-                        fontSize: "14px",
+            {/* First Name */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--text-secondary)]">First Name</label>
+              <input
+                className="w-full p-2.5 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm"
+                type="text"
+                name="fName"
+                value={profile.fName}
+                onChange={onInputChange}
+              />
+            </div>
+
+            {/* Last Name */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--text-secondary)]">Last Name</label>
+              <input
+                className="w-full p-2.5 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm"
+                type="text"
+                name="lName"
+                value={profile.lName}
+                onChange={onInputChange}
+              />
+            </div>
+
+            {/* Email */}
+            <div className="sm:col-span-2 space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--text-secondary)]">Email</label>
+              <input
+                className="w-full p-2.5 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm"
+                type="email"
+                name="email"
+                value={profile.email}
+                onChange={onInputChange}
+              />
+            </div>
+
+            {/* Subjects */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--text-secondary)]">Subjects</label>
+              <input
+                className="w-full p-2.5 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm"
+                type="text"
+                name="subjects"
+                value={profile.subjects}
+                onChange={onInputChange}
+              />
+            </div>
+
+            {/* Location */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--text-secondary)]">Location</label>
+              <input
+                className="w-full p-2.5 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/50 focus:border-transparent transition-all text-sm"
+                type="text"
+                name="location"
+                value={profile.location}
+                onChange={onInputChange}
+              />
+            </div>
+
+            {/* Schedule */}
+            <div className="sm:col-span-2 space-y-2">
+              <label className="text-xs font-semibold text-[var(--text-secondary)] block">Schedule Preference</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-1">
+                {[
+                  "weekdays AM",
+                  "weekdays PM",
+                  "weekends AM",
+                  "weekends PM",
+                  "flexible",
+                ]?.map((option) => (
+                  <label
+                    key={option}
+                    className="flex items-center gap-2.5 text-sm text-[var(--text-secondary)] cursor-pointer select-none"
+                  >
+                    <input
+                      type="checkbox"
+                      value={option}
+                      checked={preferredSchedule.includes(option)}
+                      className="rounded border-[var(--border-color)] text-[var(--primary)] focus:ring-[var(--primary)]/50 w-4 h-4"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setPreferredSchedule([
+                            ...preferredSchedule,
+                            option,
+                          ]);
+                        } else {
+                          setPreferredSchedule(
+                            preferredSchedule?.filter((s) => s !== option),
+                          );
+                        }
                       }}
-                    >
-                      <input
-                        type="checkbox"
-                        value={option}
-                        checked={preferredSchedule.includes(option)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setPreferredSchedule([
-                              ...preferredSchedule,
-                              option,
-                            ]);
-                          } else {
-                            setPreferredSchedule(
-                              preferredSchedule?.filter((s) => s !== option),
-                            );
-                          }
-                        }}
-                      />
-                      {option.charAt(0).toUpperCase() + option.slice(1)}
-                    </label>
-                  ))}
-                </div>
+                    />
+                    {option.charAt(0).toUpperCase() + option.slice(1)}
+                  </label>
+                ))}
               </div>
+            </div>
 
-              {/* Save Button */}
-              <button type="submit" className="btnEditProfile saveBtn">
-                Save changes
-              </button>
-            </form>
-          </div>
+            {/* Save Button */}
+            <div className="sm:col-span-2 pt-4 flex justify-end">
+              <Button type="submit" className="w-full sm:w-[160px] font-bold text-sm h-10 shadow-[var(--shadow-sm)]">
+                Save Changes
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
     </main>

@@ -25,8 +25,8 @@
 
   --border-subtle: var(--border-color);
 
-  --focus-ring: rgba(108, 76, 241, 0.25);
-  --active-bg: rgba(108, 76, 241, 0.12);
+  --focus-ring: rgba(59, 130, 246, 0.25);
+  --active-bg: rgba(59, 130, 246, 0.12);
 
   --theme-transition:
     background-color 0.3s ease,
@@ -47,8 +47,8 @@
 
   --border-subtle: var(--border-color);
 
-  --focus-ring: rgba(127, 192, 255, 0.35);
-  --active-bg: rgba(127, 192, 255, 0.15);
+  --focus-ring: rgba(59, 130, 246, 0.35);
+  --active-bg: rgba(59, 130, 246, 0.15);
 }
 
 html,

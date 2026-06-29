@@ -7,6 +7,8 @@ import { MdTrendingUp, MdLightbulbOutline, MdSavings } from "react-icons/md";
 import { getUserId } from "../../utils/Expenses/authHelper";
 import { PageLayout, SectionContainer, DashboardGrid, PremiumCard } from "../../components/dashboard/shared/Primitives";
 import { cn } from "@/lib/utils";
+import ExpenseFilters from "../../components/Expenses/shared/ExpenseFilters";
+import { getExpenseCategory } from "../../utils/Expenses/categories";
 
 const Analytics = () => {
   const [userexp, setUserexp] = useState([]);
@@ -38,6 +40,8 @@ const Analytics = () => {
         highestCategory[a] > highestCategory[b] ? a : b,
       )
     : "N/A";
+
+  const topCategoryMeta = getExpenseCategory(topCategoryStr);
 
   // Weekly totals
   const weeklyTotals = {};
@@ -79,9 +83,9 @@ const Analytics = () => {
   const yearlyTrendData = Object.values(yearlyTotals);
 
   return (
-    <PageLayout className="w-full animate-fade-in-up">
+    <PageLayout className="w-full animate-fade-in-up px-6 py-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h1 className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
             Financial Analytics
@@ -91,7 +95,7 @@ const Analytics = () => {
           </p>
         </div>
 
-        {/* Monthly / Yearly Toggle */}
+        {/* View Toggle integrated in a filter structure */}
         <div className="bg-[var(--bg-secondary)] border border-border/60 rounded-[var(--radius-md)] p-1 flex">
           <button
             onClick={() => setViewType("monthly")}
@@ -119,8 +123,21 @@ const Analytics = () => {
         </div>
       </div>
 
+      {/* Canonical Filters Row (Empty state since filters are visual toggle type, but standardizes padding) */}
+      <SectionContainer className="mb-6">
+        <ExpenseFilters
+          sortBy={viewType}
+          onSortChange={setViewType}
+          sortOptions={[
+            { value: "monthly", label: "View Monthly Spend" },
+            { value: "yearly", label: "View Yearly Spend" }
+          ]}
+          className="rounded-[var(--radius-lg)] border border-border/40"
+        />
+      </SectionContainer>
+
       {/* Smart Insights */}
-      <SectionContainer>
+      <SectionContainer className="mb-6">
         <DashboardGrid cols={3}>
           <PremiumCard hoverEffect={true} className="p-6 flex flex-col justify-between hover:border-amber-500/30 transition-colors group">
             <div>
@@ -129,7 +146,7 @@ const Analytics = () => {
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Your highest spending is on{" "}
-                <strong className="text-foreground">{topCategoryStr}</strong>. Try
+                <strong className="text-foreground">{topCategoryMeta.label}</strong>. Try
                 setting a specific budget to constrain this category.
               </p>
             </div>
@@ -164,10 +181,10 @@ const Analytics = () => {
       </SectionContainer>
 
       {/* Charts */}
-      <SectionContainer>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+      <SectionContainer className="mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Trend Chart */}
-          <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col">
+          <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
             <h3 className="font-sans text-lg font-bold text-foreground mb-4">
               {viewType === "monthly" ? "Monthly Spend Trend" : "Yearly Spend Trend"}
             </h3>
@@ -182,7 +199,7 @@ const Analytics = () => {
           </PremiumCard>
 
           {/* Weekly Chart */}
-          <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col">
+          <PremiumCard hoverEffect={false} className="p-6 min-h-[380px] flex flex-col bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
             <h3 className="font-sans text-lg font-bold text-foreground mb-4">
               Weekly Spend Comparison
             </h3>
@@ -198,7 +215,7 @@ const Analytics = () => {
 
       {/* Category Chart */}
       <SectionContainer>
-        <PremiumCard hoverEffect={false} className="p-6">
+        <PremiumCard hoverEffect={false} className="p-6 bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
           <h3 className="font-sans text-lg font-bold text-foreground mb-4">Category breakdown</h3>
           <CategoryPieChart exdata={userexp} />
         </PremiumCard>

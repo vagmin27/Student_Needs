@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { expensesApi } from "../../services/api/expensesApi";
 import { Link } from "react-router-dom";
-import { 
-  MdSearch, 
-  MdCalendarToday, 
-  MdOutlineFileDownload, 
-  MdArrowBack
-} from "react-icons/md";
+import { MdOutlineFileDownload, MdArrowBack } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import { PageLayout, SectionContainer, PremiumCard, PremiumButton } from "../../components/dashboard/shared/Primitives";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
+import { Badge } from "../../components/ui/badge";
+import { Skeleton } from "../../components/ui/skeleton";
+import ExpenseFilters from "../../components/Expenses/shared/ExpenseFilters";
+import { getExpenseStatus } from "../../utils/Expenses/helpers";
 
 const BillHistory = () => {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("all");
+  const [selectedMonth, setSelectedMonth] = useState("");
   const [settings, setSettings] = useState(null);
 
   const loadHistory = async () => {
@@ -61,7 +61,7 @@ const BillHistory = () => {
       const matchesSearch = item.billName.toLowerCase().includes(search.toLowerCase());
       
       let matchesMonth = true;
-      if (selectedMonth !== "all" && item.paidDate) {
+      if (selectedMonth !== "" && item.paidDate) {
         const date = new Date(item.paidDate);
         const monthName = date.toLocaleString("en-US", { month: "long", year: "numeric" });
         matchesMonth = monthName === selectedMonth;
@@ -74,7 +74,7 @@ const BillHistory = () => {
   const currencySymbol = getCurrencySymbol();
 
   return (
-    <PageLayout className="w-full animate-fade-in-up">
+    <PageLayout className="w-full animate-fade-in-up px-6 py-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -111,104 +111,80 @@ const BillHistory = () => {
         </div>
       </div>
 
-      {/* Filter Toolbar */}
-      <SectionContainer>
-        <PremiumCard hoverEffect={false} className="p-4">
-          <div className="flex flex-col sm:flex-row gap-md items-stretch sm:items-center">
-            {/* Search */}
-            <div className="flex-1 relative flex items-center">
-              <MdSearch size={20} className="absolute left-3 text-muted-foreground pointer-events-none" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search by bill name..."
-                className="form-input pl-10"
-              />
-            </div>
-
-            {/* Month Selector */}
-            <div className="relative flex items-center sm:w-64">
-              <MdCalendarToday size={18} className="absolute left-3 text-muted-foreground pointer-events-none" />
-              <select
-                value={selectedMonth}
-                onChange={(e) => setSelectedMonth(e.target.value)}
-                className="form-select pl-10"
-              >
-                <option value="all">All Months</option>
-                {uniqueMonths.map(m => (
-                  <option key={m} value={m}>{m}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </PremiumCard>
+      {/* Filter Toolbar using canonical filters */}
+      <SectionContainer className="mt-6">
+        <ExpenseFilters
+          searchQuery={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search by bill name..."
+          filterCategory={selectedMonth}
+          onCategoryChange={setSelectedMonth}
+          categories={uniqueMonths}
+          className="rounded-[var(--radius-lg)] border border-border bg-card shadow-sm p-6"
+        />
       </SectionContainer>
 
       {/* Data Table */}
-      <SectionContainer>
-        <PremiumCard hoverEffect={false}>
+      <SectionContainer className="mt-6">
+        <PremiumCard hoverEffect={false} className="bg-card border border-border rounded-[var(--radius-lg)] shadow-sm">
           <div className="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>Bill Name</th>
-                  <th>Amount</th>
-                  <th>Due Date</th>
-                  <th>Paid Date</th>
-                  <th>Priority</th>
-                  <th className="text-right">Status</th>
-                </tr>
-              </thead>
-              <tbody>
+            <Table className="w-full text-left border-collapse whitespace-nowrap">
+              <TableHeader>
+                <TableRow className="bg-[var(--bg-secondary)] text-[var(--text-muted)] text-sm">
+                  <TableHead className="px-6 h-12">Bill Name</TableHead>
+                  <TableHead className="px-6 h-12">Amount</TableHead>
+                  <TableHead className="px-6 h-12">Due Date</TableHead>
+                  <TableHead className="px-6 h-12">Paid Date</TableHead>
+                  <TableHead className="px-6 h-12">Priority</TableHead>
+                  <TableHead className="px-6 text-right h-12">Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {isLoading ? (
-                  <tr>
-                    <td colSpan="6" className="text-center text-muted-foreground py-8">
-                      Loading paid history logs...
-                    </td>
-                  </tr>
+                  <TableRow className="h-14">
+                    <TableCell colSpan="6" className="text-center text-muted-foreground py-8">
+                      <Skeleton className="h-10 w-full mb-2" />
+                      <Skeleton className="h-10 w-full" />
+                    </TableCell>
+                  </TableRow>
                 ) : filteredHistory.length === 0 ? (
-                  <tr>
-                    <td colSpan="6" className="text-center text-muted-foreground italic py-8">
+                  <TableRow className="h-14">
+                    <TableCell colSpan="6" className="text-center text-muted-foreground italic py-8">
                       No paid bill logs found matching your filters.
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ) : (
-                  filteredHistory.map(item => (
-                    <tr key={item._id}>
-                      <td className="font-bold text-foreground">{item.billName}</td>
-                      <td className="font-extrabold text-foreground">
-                        {currencySymbol}{item.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                      </td>
-                      <td className="text-muted-foreground text-xs">
-                        {new Date(item.dueDate).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' })}
-                      </td>
-                      <td className="text-emerald-500 font-semibold text-xs">
-                        {item.paidDate ? new Date(item.paidDate).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : "N/A"}
-                      </td>
-                      <td>
-                        <span className={`badge ${
-                          item.priority === "Critical" 
-                            ? "badge-danger" 
-                            : item.priority === "High" 
-                            ? "badge-warning" 
-                            : item.priority === "Medium"
-                            ? "badge-info"
-                            : "badge-neutral"
-                        }`}>
-                          {item.priority}
-                        </span>
-                      </td>
-                      <td className="text-right">
-                        <span className="badge badge-success">
-                          Paid
-                        </span>
-                      </td>
-                    </tr>
-                  ))
+                  filteredHistory.map(item => {
+                    const priorityMeta = getExpenseStatus(item.priority);
+                    const statusMeta = getExpenseStatus("Paid");
+                    return (
+                      <TableRow key={item._id} className="h-14">
+                        <TableCell className="px-6 font-bold text-foreground">{item.billName}</TableCell>
+                        <TableCell className="px-6 font-extrabold text-foreground">
+                          {currencySymbol}{item.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </TableCell>
+                        <TableCell className="px-6 text-muted-foreground text-xs">
+                          {new Date(item.dueDate).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </TableCell>
+                        <TableCell className="px-6 text-emerald-500 font-semibold text-xs">
+                          {item.paidDate ? new Date(item.paidDate).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : "N/A"}
+                        </TableCell>
+                        <TableCell className="px-6">
+                          <Badge variant={priorityMeta.badgeVariant}>
+                            {item.priority}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="px-6 text-right">
+                          <Badge variant={statusMeta.badgeVariant}>
+                            Paid
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 )}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         </PremiumCard>
       </SectionContainer>

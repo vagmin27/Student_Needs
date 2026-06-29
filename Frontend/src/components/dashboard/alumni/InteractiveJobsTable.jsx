@@ -63,7 +63,7 @@ export const InteractiveJobsTable = React.memo(({ jobs = [], onRowClick, onActio
       <div className="rounded-[var(--radius-sm)] border border-border overflow-x-auto table-responsive">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="h-[48px] border-b border-border/40 hover:bg-transparent">
               <TableHead className="w-[200px]">
                 <Button variant="ghost" onClick={() => requestSort('title')} className="-ml-4 h-8 data-[state=open]:bg-accent">
                   Job Title <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -84,7 +84,7 @@ export const InteractiveJobsTable = React.memo(({ jobs = [], onRowClick, onActio
             {paginatedJobs?.map((job) => (
               <TableRow 
                 key={job.id || job._id}
-                className="cursor-pointer hover:bg-secondary/40"
+                className="h-[56px] border-b border-border/30 cursor-pointer hover:bg-secondary/40"
                 onClick={() => onRowClick && onRowClick(job)}
               >
                 <TableCell className="font-medium text-foreground">{job.title || job.jobTitle}</TableCell>
@@ -98,6 +98,7 @@ export const InteractiveJobsTable = React.memo(({ jobs = [], onRowClick, onActio
                   <Button 
                     variant="outline" 
                     size="sm"
+                    className="h-8 text-xs font-semibold"
                     onClick={(e) => {
                       e.stopPropagation();
                       onActionClick && onActionClick(job);

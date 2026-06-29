@@ -1,10 +1,11 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useMemo } from "react";
 import { motion } from "framer-motion";
+import { ReferralFilters } from "@/components/Referrals/shared/ReferralFilters.jsx";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import BackToStudentDashboard from "@/components/dashboard/BackToStudentDashboard";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
 import { storage } from "@/lib/Referrals/storage.js";
-import { Button } from "@/components/Referrals/ui/button.jsx";
+import { Button } from "@/components/ui/button.jsx";
 import { StatusBadge } from "@/components/Referrals/StatusBadge.jsx";
 import { PageLayout, SectionContainer, PremiumCard } from "@/components/dashboard/shared/Primitives";
 import {
@@ -56,6 +57,78 @@ export function StudentDashboard() {
   // Applied jobs state
   const [myApplications, setMyApplications] = useState([]);
   const [loadingApplications, setLoadingApplications] = useState(false);
+
+  // Filters state & memoized calculations
+  const [filters, setFilters] = useState({
+    search: "",
+    company: "",
+    role: "",
+    status: "",
+    stage: "",
+    sortBy: "date-desc"
+  });
+
+  const uniqueCompanies = useMemo(() => {
+    const cos = new Set();
+    opportunities.forEach(opp => {
+      const co = opp.company || opp.postedBy?.company;
+      if (co) cos.add(co);
+    });
+    return Array.from(cos);
+  }, [opportunities]);
+
+  const uniqueRoles = useMemo(() => {
+    const rs = new Set();
+    opportunities.forEach(opp => {
+      const r = opp.jobTitle || opp.role;
+      if (r) rs.add(r);
+    });
+    return Array.from(rs);
+  }, [opportunities]);
+
+  const filteredOpportunities = useMemo(() => {
+    let result = [...opportunities];
+    
+    // Filter by search
+    if (filters.search) {
+      const s = filters.search.toLowerCase();
+      result = result.filter(opp => {
+        const title = (opp.jobTitle || "").toLowerCase();
+        const co = (opp.company || opp.postedBy?.company || "").toLowerCase();
+        const desc = (opp.roleDescription || "").toLowerCase();
+        return title.includes(s) || co.includes(s) || desc.includes(s);
+      });
+    }
+
+    // Filter by company
+    if (filters.company) {
+      result = result.filter(opp => {
+        const co = opp.company || opp.postedBy?.company || "";
+        return co.toLowerCase() === filters.company.toLowerCase();
+      });
+    }
+
+    // Filter by role
+    if (filters.role) {
+      result = result.filter(opp => {
+        const r = opp.jobTitle || opp.role || "";
+        return r.toLowerCase() === filters.role.toLowerCase();
+      });
+    }
+
+    // Sort
+    if (filters.sortBy === "date-desc") {
+      result.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    } else if (filters.sortBy === "date-asc") {
+      result.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+    } else if (filters.sortBy === "name-asc") {
+      result.sort((a, b) => (a.jobTitle || "").localeCompare(b.jobTitle || ""));
+    } else if (filters.sortBy === "name-desc") {
+      result.sort((a, b) => (b.jobTitle || "").localeCompare(a.jobTitle || ""));
+    }
+
+    return result;
+  }, [opportunities, filters]);
 
   // Check if user is authenticated
   useEffect(() => {
@@ -292,7 +365,7 @@ export function StudentDashboard() {
           <div className="flex flex-col gap-2 w-full">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-              <span className="font-semibold text-foreground dark:text-slate-100">
+              <span className="font-semibold text-[var(--text-primary)]">
                 Application Submitted Successfully
               </span>
             </div>
@@ -387,19 +460,27 @@ export function StudentDashboard() {
               Connect with alumni from across the platform and get referred
             </p>
           </div>
-          <OpportunitiesList
-            opportunities={opportunities?.filter(opp => 
-              (opp.opportunityType === 'Referral' || !opp.opportunityType) && 
-              !appliedOpportunities.includes(opp._id)
-            )}
-            appliedOpportunities={appliedOpportunities}
-            loading={loadingOpportunities}
-            isApplying={isApplying}
-            onApply={handleApplyJob}
-            onViewDetails={handleViewDetails}
-            canApply={true}
-            profileStatus={profileStatus}
-          />
+          <div className="space-y-4">
+            <ReferralFilters
+              filters={filters}
+              onFilterChange={setFilters}
+              companies={uniqueCompanies}
+              roles={uniqueRoles}
+            />
+            <OpportunitiesList
+              opportunities={filteredOpportunities?.filter(opp => 
+                (opp.opportunityType === 'Referral' || !opp.opportunityType) && 
+                !appliedOpportunities.includes(opp._id)
+              )}
+              appliedOpportunities={appliedOpportunities}
+              loading={loadingOpportunities}
+              isApplying={isApplying}
+              onApply={handleApplyJob}
+              onViewDetails={handleViewDetails}
+              canApply={true}
+              profileStatus={profileStatus}
+            />
+          </div>
         </motion.div>
       )}
 
@@ -438,19 +519,27 @@ export function StudentDashboard() {
               Browse exclusive job openings posted by alumni
             </p>
           </div>
-          <OpportunitiesList
-            opportunities={opportunities?.filter(opp => 
-              opp.opportunityType === 'Job' && 
-              !appliedOpportunities.includes(opp._id)
-            )}
-            appliedOpportunities={appliedOpportunities}
-            loading={loadingOpportunities}
-            isApplying={isApplying}
-            onApply={handleApplyJob}
-            onViewDetails={handleViewDetails}
-            canApply={true}
-            profileStatus={profileStatus}
-          />
+          <div className="space-y-4">
+            <ReferralFilters
+              filters={filters}
+              onFilterChange={setFilters}
+              companies={uniqueCompanies}
+              roles={uniqueRoles}
+            />
+            <OpportunitiesList
+              opportunities={filteredOpportunities?.filter(opp => 
+                opp.opportunityType === 'Job' && 
+                !appliedOpportunities.includes(opp._id)
+              )}
+              appliedOpportunities={appliedOpportunities}
+              loading={loadingOpportunities}
+              isApplying={isApplying}
+              onApply={handleApplyJob}
+              onViewDetails={handleViewDetails}
+              canApply={true}
+              profileStatus={profileStatus}
+            />
+          </div>
         </motion.div>
       )}
 

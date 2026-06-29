@@ -17,17 +17,17 @@
   --input-bg: #ffffff;
 
   --text-primary: #0F172A;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
 
-  --border-color: #E2E8F0;
+  --border-color: rgba(15, 23, 42, 0.06);
 
-  --accent: #4F46E5;
-  --accent-hover: #4338CA;
+  --accent: #3B82F6;
+  --accent-hover: #2563EB;
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
-  --info: #4F46E5;
+  --info: #3B82F6;
 
   /* Legacy Backward Compatibility Mappings */
   --bg-main-page: var(--bg-primary);
@@ -47,30 +47,30 @@
 .dark,
 .dark-theme {
   /* Design Token System - Premium SaaS Dark Theme (Deep Midnight Navy) */
-  --bg-primary: #020617;
-  --bg-secondary: #111827;
-  --bg-tertiary: #1F2937;
+  --bg-primary: #030712;
+  --bg-secondary: #0B0F19;
+  --bg-tertiary: #111827;
   
   --surface-primary: #0F172A;
-  --surface-secondary: #111827;
+  --surface-secondary: #0B0F19;
 
   --card-bg: #0F172A;
-  --card-hover-bg: #1F2937;
+  --card-hover-bg: #1E293B;
 
-  --input-bg: #111827;
+  --input-bg: #0B0F19;
 
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
+  --text-primary: #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted: #9CA3AF;
 
   --border-color: rgba(255, 255, 255, 0.08);
 
-  --accent: #6366F1;
-  --accent-hover: #4F46E5;
+  --accent: #3B82F6;
+  --accent-hover: #60A5FA;
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
-  --info: #6366F1;
+  --info: #3B82F6;
 
   /* Legacy Backward Compatibility Mappings */
   --bg-main-page: var(--bg-primary);
@@ -298,21 +298,21 @@ a {
 [data-theme="dark"],
 .dark,
 .dark-theme {
-  --text-primary: #F8FAFC !important;
-  --text-secondary: #94A3B8 !important;
-  --text-muted: #64748B !important;
-  --foreground: #F8FAFC !important;
-  --muted-foreground: #64748B !important;
+  --text-primary: #F9FAFB !important;
+  --text-secondary: #D1D5DB !important;
+  --text-muted: #9CA3AF !important;
+  --foreground: #F9FAFB !important;
+  --muted-foreground: #9CA3AF !important;
 }
 
 [data-theme="dark"] *,
 .dark *,
 .dark-theme * {
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --foreground: #F8FAFC;
-  --muted-foreground: #64748B;
+  --text-primary: #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted: #9CA3AF;
+  --foreground: #F9FAFB;
+  --muted-foreground: #9CA3AF;
 }
 
 /* Map heading and paragraph elements in dark mode to preserve contrast */

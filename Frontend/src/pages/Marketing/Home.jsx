@@ -101,7 +101,7 @@ export default function Home() {
             {/* Student Profile & Attendance Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Profile Widget */}
-              <div className="p-3 bg-white/5 border border-white/[0.06] rounded-[16px] flex items-center gap-3">
+              <div className="p-3 bg-[var(--bg-secondary)]/10 border border-[var(--border-color)] rounded-[var(--radius-lg)] flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[var(--accent)] text-white flex items-center justify-center font-black shrink-0">
                   AR
                 </div>
@@ -112,14 +112,14 @@ export default function Home() {
               </div>
 
               {/* Attendance Indicator */}
-              <div className="p-3 bg-white/5 border border-white/[0.06] rounded-[16px] flex items-center justify-between">
+              <div className="p-3 bg-[var(--bg-secondary)]/10 border border-[var(--border-color)] rounded-[var(--radius-lg)] flex items-center justify-between">
                 <div className="text-left">
                   <h4 className="text-[9.5px] uppercase font-bold text-[var(--text-secondary)]">Attendance</h4>
                   <p className="text-base font-black text-emerald-400">94.2% Rate</p>
                 </div>
                 <div className="w-9 h-9 relative flex items-center justify-center shrink-0">
                   <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-white/10" strokeWidth="2.5" fill="transparent" />
+                    <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-[var(--border-color)]" strokeWidth="2.5" fill="transparent" />
                     <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-emerald-400" strokeWidth="2.5" strokeDasharray={88} strokeDashoffset={5} fill="transparent" />
                   </svg>
                   <span className="absolute text-[8px] font-bold text-emerald-400">94%</span>
@@ -128,7 +128,7 @@ export default function Home() {
             </div>
 
             {/* Expense Budget Indicator */}
-            <div className="p-3 bg-white/5 border border-white/[0.06] rounded-[16px] space-y-2">
+            <div className="p-3 bg-[var(--bg-secondary)]/10 border border-[var(--border-color)] rounded-[var(--radius-lg)] space-y-2">
               <div className="flex justify-between items-center text-left">
                 <div>
                   <h4 className="text-[9.5px] uppercase font-bold text-[var(--text-secondary)]">Monthly Budget</h4>
@@ -136,7 +136,7 @@ export default function Home() {
                 </div>
                 <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold">Within Limit</span>
               </div>
-              <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden flex">
+              <div className="w-full h-2 bg-[var(--border-color)] rounded-full overflow-hidden flex">
                 <div className="h-full bg-indigo-500" style={{ width: "45%" }} />
                 <div className="h-full bg-purple-500" style={{ width: "22%" }} />
                 <div className="h-full bg-cyan-400" style={{ width: "8%" }} />
@@ -149,8 +149,8 @@ export default function Home() {
             </div>
 
             {/* Tutor Booking Slot */}
-            <div className="p-3 bg-white/5 border border-white/[0.06] rounded-[16px] flex items-center gap-3">
-              <div className="w-8 h-8 rounded-[12px] bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/20">
+            <div className="p-3 bg-[var(--bg-secondary)]/10 border border-[var(--border-color)] rounded-[var(--radius-lg)] flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[var(--radius-md)] bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/20">
                 <BookOpen className="w-4 h-4" />
               </div>
               <div className="text-left flex-grow min-w-0">
@@ -162,8 +162,8 @@ export default function Home() {
             </div>
 
             {/* Referral Alert Match */}
-            <div className="p-3 bg-white/5 border border-white/[0.06] rounded-[16px] flex items-center gap-3">
-              <div className="w-8 h-8 rounded-[12px] bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-500/20">
+            <div className="p-3 bg-[var(--bg-secondary)]/10 border border-[var(--border-color)] rounded-[var(--radius-lg)] flex items-center gap-3">
+              <div className="w-8 h-8 rounded-[var(--radius-md)] bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-500/20">
                 <Briefcase className="w-4 h-4" />
               </div>
               <div className="text-left flex-grow min-w-0">

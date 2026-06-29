@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/Referrals/ui/button.jsx';
+import { Button } from "@/components/ui/button.jsx";
 import { cn } from '@/lib/Referrals/utils.js';
 import { Eye, MessageSquare, Download, Check, X } from 'lucide-react';
 import { applicationsApi } from '@/services/Referrals/application.js';

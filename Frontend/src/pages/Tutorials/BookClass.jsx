@@ -3,8 +3,6 @@ import Navbar from "../../components/Tutorials/Navbar";
 
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
 import SearchTutor from "../../components/Tutorials/SearchTutor";
-import "../../styles/Tutorials/BookClass.css";
-import "../../styles/Tutorials/BookModal.css";
 import TutorProfile from "../../components/Tutorials/TutorProfile";
 import TutorInfo from "../../components/Tutorials/TutorInfo";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -13,6 +11,7 @@ import { dateHelper } from "../../utils/Tutorials/bookDates";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import TutorPagination from "../../components/Tutorials/TutorPagination";
 import API, { getTutorAvailability } from "@/services/api/tutorialsApi.js";
+
 
 function BookClass() {
   const [query, setQuery] = useState(null);
@@ -349,7 +348,7 @@ function BookClass() {
   }
 
   return (
-    <div className="BookClassMain">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-primary)]">
       {!isUnifiedLayout && <Navbar />}
       {isUnifiedLayout && (
         <div className="px-2 pt-2 flex flex-wrap gap-4">
@@ -363,8 +362,9 @@ function BookClass() {
         </div>
       )}
 
-      <div className="container BookContainer">
-        <div className="searchDiv">{renderFunc()}</div>
+      <div className="container mx-auto px-4 py-8 max-w-6xl flex-grow">
+        <div className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-[var(--radius-lg)] p-6 shadow-[var(--shadow-sm)] min-h-[400px]">{renderFunc()}</div>
+
 
         {render === 2 && <TutorPagination choosePage={choosePage} />}
 

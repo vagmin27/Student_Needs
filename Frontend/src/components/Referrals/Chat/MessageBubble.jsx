@@ -118,7 +118,7 @@ export function MessageBubble({
     const refSenderName = refMsg.senderType === "student" ? "Student" : "Alumni";
 
     return (
-      <div className="p-2 mb-1.5 rounded-[var(--radius-sm)] bg-black/5 dark:bg-white/5 border-l-3 border-primary/45 text-left text-xs opacity-75 max-w-full truncate">
+      <div className="p-2 mb-1.5 rounded-[var(--radius-sm)] bg-[var(--bg-secondary)] border border-[var(--border-color)] border-l-3 border-l-primary/45 text-left text-xs opacity-75 max-w-full truncate">
         <span className="font-semibold text-[10px] text-primary block uppercase">
           {refSenderName}
         </span>

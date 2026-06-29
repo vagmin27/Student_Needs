@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
-import "../../styles/Tutorials/ClassHistory.css";
 import ReviewModal from "./ReviewModal";
 import API from "@/services/api/tutorialsApi.js";
 
@@ -40,14 +39,14 @@ function ClassHistory() {
   const renderCommentBtn = (i) => {
     return (
       <button
-        className="commentBtnHistory"
+        className="px-4 py-2 text-xs font-bold rounded-[var(--radius-md)] bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] transition-all shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-px"
         onClick={(evt) => {
           evt.preventDefault();
           setModalOpen(true);
           setCurrTutor(i);
         }}
       >
-        add review
+        Add Review
       </button>
     );
   };
@@ -58,37 +57,48 @@ function ClassHistory() {
   };
 
   return (
-    <div className="mainDivHistory" role="main">
-      <div className="innerDivHistory">
-        <h1 className="titleHistory">My Class History</h1>
-        {history?.map((i, idx) => {
-          return (
-            <div className="line1" key={`${i.date}_${idx}`}>
-              <div className="scheduleDivHistory">
-                <p className="datep">
-                  <strong>Date :</strong> {i.date}
-                </p>
-                <p className="timep">
-                  <strong>Time :</strong> {i.time}
-                </p>
-                <p className="tutorp">
-                  <strong>Tutor :</strong> {i.tutor}
-                </p>
-                <p className="subjectp">
-                  <strong>Subject :</strong> {i.subject}
-                </p>
-                <span className="commentBtnSpanHistory">
+    <div className="w-full max-w-4xl mx-auto p-4 md:p-6" role="main">
+      <div className="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-[var(--radius-lg)] p-6 shadow-[var(--shadow-sm)]">
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-6 text-center">
+          My Class History
+        </h1>
+        
+        {history.length === 0 ? (
+          <div className="text-center py-8 text-[var(--text-muted)] text-sm">
+            No completed classes found in your history.
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {history.map((i, idx) => (
+              <div 
+                key={`${i.date}_${idx}`}
+                className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-[var(--card-bg)] border border-[var(--border-color)] rounded-[var(--radius-md)] shadow-[var(--shadow-sm)] hover:-translate-y-[2px] transition-all duration-200 hover:shadow-[var(--shadow-md)]"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--text-secondary)] flex-grow">
+                  <p className="flex items-center gap-1.5">
+                    <span className="font-semibold text-[var(--text-primary)]">Date:</span> {i.date}
+                  </p>
+                  <p className="flex items-center gap-1.5">
+                    <span className="font-semibold text-[var(--text-primary)]">Time:</span> {i.time}
+                  </p>
+                  <p className="flex items-center gap-1.5">
+                    <span className="font-semibold text-[var(--text-primary)]">Tutor:</span> {i.tutor} {i.tutor_lastname || ""}
+                  </p>
+                  <p className="flex items-center gap-1.5">
+                    <span className="font-semibold text-[var(--text-primary)]">Subject:</span> {i.subject}
+                  </p>
+                </div>
+                <div className="flex justify-end md:ml-auto">
                   {renderCommentBtn(i)}
-                </span>
+                </div>
               </div>
-            </div>
-          );
-        })}
-        <div className="reviewModalDiv">
-          {modalOpen ? (
-            <ReviewModal handleModal={handleModal} currTutor={currTutor} />
-          ) : null}
-        </div>
+            ))}
+          </div>
+        )}
+        
+        {modalOpen && (
+          <ReviewModal handleModal={handleModal} currTutor={currTutor} />
+        )}
       </div>
     </div>
   );

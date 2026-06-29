@@ -4,7 +4,6 @@ import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
 import { useNavigate, Link } from "react-router-dom";
 import { API_PREFIXES, getApiUrl } from "@/config/api.js";
 import { BookOpen, Eye, EyeOff, Loader2 } from "lucide-react";
-import "./TutorLoginPage.css";
 
 // Google SVG Icon
 const GoogleIcon = () => (
@@ -91,18 +90,17 @@ function TutorLoginPage() {
   };
 
   return (
-    <div className="uc-login-page tutor-login-wrapper">
-      <div className="uc-login-card tutor-login-card-override">
+    <main className="uc-login-page">
+      <div className="uc-login-card">
         <Link to="/role-selection" className="uc-back-link" aria-label="Back to role selection">
-          <span>{"<- "}</span>
-          Back to role selection
+          <span>{"<-"}</span> Back to role selection
         </Link>
 
-        <section className="uc-login-panel">
+        <section className="uc-login-panel" aria-labelledby="tutor-login-title">
           <div className="uc-login-icon">
-            <BookOpen />
+            <BookOpen className="w-7 h-7" />
           </div>
-          <h1>Tutor Sign In</h1>
+          <h1 id="tutor-login-title">Tutor Sign In</h1>
           <p>Login to start teaching and manage your student bookings.</p>
 
           <form onSubmit={handleSubmit} className="uc-login-form">
@@ -114,30 +112,27 @@ function TutorLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="input-enhanced"
                 disabled={isLoading}
                 aria-label="Email address"
               />
             </label>
 
             <div className="uc-field">
-              <div className="password-header">
-                <span>Password</span>
-              </div>
-              <div className="password-input-container">
+              <span>Password</span>
+              <div className="relative w-full">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="input-enhanced"
                   disabled={isLoading}
                   aria-label="Password"
+                  className="pr-12 w-full"
                 />
                 <button
                   type="button"
-                  className="password-toggle-btn"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors focus:outline-none cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   tabIndex="-1"
@@ -147,60 +142,69 @@ function TutorLoginPage() {
               </div>
             </div>
 
-            <div className="password-header" style={{ marginTop: '-10px', marginBottom: '8px' }}>
-              <div className="remember-me-container" style={{ margin: 0 }}>
+            <div className="flex justify-between items-center text-xs pt-1.5">
+              <div className="flex items-center gap-2 select-none">
                 <input
                   type="checkbox"
                   id="remember-me"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                   disabled={isLoading}
+                  className="rounded border-[var(--border-color)] text-[var(--primary)] focus:ring-[var(--primary)]/50 w-4 h-4"
                 />
-                <label htmlFor="remember-me">Remember me</label>
+                <label htmlFor="remember-me" className="text-[var(--text-secondary)] cursor-pointer m-0">Remember me</label>
               </div>
-              <Link to="/forgot-password?role=tutor" className="forgot-password-link">
+              <Link to="/forgot-password?role=tutor" className="text-[var(--primary)] hover:underline font-semibold">
                 Forgot Password?
               </Link>
             </div>
 
             <button 
               type="submit" 
-              className="login-btn-enhanced"
+              className="uc-primary-button w-full h-11 font-bold text-sm rounded-[var(--radius-sm)] transition-all duration-200 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[1px] flex items-center justify-center gap-2 cursor-pointer"
               disabled={isLoading}
               aria-busy={isLoading}
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="login-spinner" size={20} />
-                  SIGNING IN...
+                  <Loader2 className="animate-spin" size={20} />
+                  Signing In...
                 </>
               ) : (
-                "LOGIN"
+                "Login"
               )}
             </button>
           </form>
 
-          <div className="divider-container">
+          <div className="w-full flex items-center text-center my-6 text-xs text-[var(--text-muted)] tracking-wider font-semibold before:content-[''] before:flex-1 before:border-b before:border-[var(--border-color)] before:mr-3 after:content-[''] after:flex-1 after:border-b after:border-[var(--border-color)] after:ml-3">
             OR CONTINUE WITH
           </div>
 
-          <div className="social-auth-grid">
-            <button type="button" className="social-btn" onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/google?role=tutor`}>
+          <div className="social-auth-grid w-full grid grid-cols-2 gap-4">
+            <button 
+              type="button" 
+              className="flex items-center justify-center gap-2 h-11 bg-transparent border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 rounded-[var(--radius-sm)] text-sm font-semibold text-[var(--text-primary)] transition-all cursor-pointer" 
+              onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/google?role=tutor`}
+            >
               <GoogleIcon />
               Google
             </button>
-            <button type="button" className="social-btn" onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/github?role=tutor`}>
+            <button 
+              type="button" 
+              className="flex items-center justify-center gap-2 h-11 bg-transparent border border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/80 rounded-[var(--radius-sm)] text-sm font-semibold text-[var(--text-primary)] transition-all cursor-pointer" 
+              onClick={() => window.location.href = `${getApiUrl(API_PREFIXES.referrals)}/student/auth/github?role=tutor`}
+            >
               <GitHubIcon />
               GitHub
             </button>
           </div>
 
-          <p className="signup-prompt">
-            New here? <Link to="/signup/tutor" className="signup-link">Sign up as Tutor</Link>
+          <p className="text-xs text-[var(--text-secondary)] pt-4">
+            New here? <Link to="/signup/tutor" className="text-[var(--primary)] hover:underline font-semibold ml-1">Sign up as Tutor</Link>
           </p>
         </section>
       </div>
-    </div>
+    </main>
   );
 }
 

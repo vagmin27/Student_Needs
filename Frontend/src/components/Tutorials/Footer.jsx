@@ -1,5 +1,4 @@
 import React from "react";
-import "../../styles/Tutorials/Landing.css";
 
 /**
  * @returns footer that generates new date every year
@@ -8,12 +7,14 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="footer">
-      <div className="footerContent">
-        <h3>Tutor Match</h3>
-        <p>Learn smarter with expert tutors anytime, anywhere.</p>
+    <footer className="w-full bg-[var(--bg-secondary)] border-t border-[var(--border-color)] text-[var(--text-primary)] py-8 px-6 mt-auto text-center">
+      <div className="max-w-4xl mx-auto space-y-4">
+        <h3 className="text-lg font-bold">Tutor Match</h3>
+        <p className="text-sm text-[var(--text-secondary)] opacity-80 max-w-md mx-auto">
+          Learn smarter with expert tutors anytime, anywhere.
+        </p>
 
-        <div className="footerBottom">
+        <div className="text-xs text-[var(--text-secondary)] opacity-60 border-t border-[var(--border-color)]/60 pt-4 mt-4">
           © {year} Tutor App, Inc. All Rights Reserved
         </div>
       </div>

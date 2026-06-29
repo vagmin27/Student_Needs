@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API, { getBookings } from "@/services/api/tutorialsApi.js";
-import "../../styles/Tutorials/ManageBook.css";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.jsx";
 import Navbar from "../../components/Tutorials/Navbar";
 import { LayoutContext } from "@/components/layouts/DashboardLayout";
-
+import { PremiumCard } from "@/components/ui/card.jsx";
+import { Badge } from "@/components/ui/badge.jsx";
+import { EmptyState } from "@/components/shared";
+import { Calendar, BookOpen, Clock, User, ShieldCheck } from "lucide-react";
 
 function ManageBookingPage() {
   const isUnifiedLayout = useContext(LayoutContext);
@@ -56,129 +58,139 @@ function ManageBookingPage() {
     return new Date(date) >= new Date();
   };
 
+  const getStatusBadge = (status) => {
+    const s = status ? status.toLowerCase() : "pending";
+    if (s === "booked" || s === "pending") return "warning";
+    if (s === "upcoming" || s === "accepted") return "info";
+    if (s === "in_progress" || s === "completed") return "success";
+    return "destructive";
+  };
+
   return (
     <>
       {!isUnifiedLayout && <Navbar />}
 
-
       <div
-        className={isUnifiedLayout ? "" : "mainDivBook h-[calc(100vh-100px)] md:h-screen overflow-y-auto"}
-        style={{}}
+        className={isUnifiedLayout ? "p-6 md:p-8 max-w-4xl mx-auto space-y-6 pb-20" : "container mx-auto px-4 py-8 max-w-4xl min-h-[calc(100vh-100px)] overflow-y-auto pb-20"}
         data-lenis-prevent={isUnifiedLayout ? "false" : "true"}
       >
-        <div className="innerDivBook">
-          <h1 className="titleBook">📚 My Bookings</h1>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-black tracking-tight text-[var(--text-primary)]">📚 My Bookings</h1>
+            <Button size="sm" onClick={() => navigate("/tutorials/find")}>
+              Book New Session
+            </Button>
+          </div>
 
           {bookings.length === 0 ? (
-            <div className="emptyState">
-              <h3>No bookings yet 😔</h3>
-
-              <p>Go ahead and book your first class!</p>
+            <div className="py-12">
+              <EmptyState
+                title="No bookings yet"
+                description="Go ahead and find the perfect tutor to book your first class!"
+                actionLabel="Find Tutor"
+                onAction={() => navigate("/tutorials/find")}
+              />
             </div>
           ) : (
-            bookings?.map((b) => (
-              <div className="line1" key={b._id}>
-                <div
-                  className={`scheduleDivBook ${
-                    isUpcoming(b.date) ? "upcoming" : ""
-                  }`}
+            <div className="space-y-4">
+              {bookings?.map((b) => (
+                <PremiumCard
+                  key={b._id}
+                  glow={false}
+                  hoverEffect={true}
+                  className="p-6 border border-[var(--border-color)] bg-[var(--card-bg)]"
                 >
-                  {/* LEFT INFO */}
-                  <div>
-                    <p className="tutorp">👨‍🏫 {b.tutorName}</p>
-
-                    <p className="subjectp">📖 {b.subject}</p>
-
-                    <p className="datep">📅 {b.date}</p>
-
-                    <p className="timep">⏰ {b.time}</p>
-
-                    {/* STATUS */}
-                    <p>
-                      <strong>Status:</strong>{" "}
-                      <span
-                        style={{
-                          color:
-                            b.status === "Booked" || b.status === "pending"
-                              ? "var(--warning)"
-                              : b.status === "upcoming" || b.status === "accepted"
-                                ? "var(--info)"
-                                : b.status === "in_progress"
-                                  ? "var(--success)"
-                                  : b.status === "Completed" || b.status === "completed"
-                                    ? "var(--success)"
-                                    : "var(--danger)",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {b.status || "pending"}
-                      </span>
-                    </p>
-
-                    {/* UPCOMING */}
-                    {isUpcoming(b.date) && (
-                      <span
-                        style={{
-                          marginLeft: "8px",
-                        }}
-                      >
-                        🟢 Upcoming
-                      </span>
-                    )}
-                  </div>
-
-                  {/* ACTION BUTTONS */}
-                  <div className="actionButtons">
-                    {(b.status === "Booked" || b.status === "pending" || b.status === "upcoming" || b.status === "accepted") && (
-                      <div className="flex gap-[10px] mt-[10px] flex-wrap">
-                        <Button
-                          variant="destructive"
-                          onClick={() => cancelBooking(b._id)}
-                        >
-                          ❌ Cancel Booking
-                        </Button>
-                        <Button
-                          variant="success"
-                          onClick={() => navigate(`/tutorials/chat?tutorId=${b.tutorId}`)}
-                        >
-                          💬 Message Tutor
-                        </Button>
-                      </div>
-                    )}
-                    
-                    {(b.status === "upcoming" || b.status === "in_progress") && (
-                      <div className="mt-[10px]">
-                        {b.meetingLinkPublished && b.meetingLink ? (
-                          <Button
-                            variant="default"
-                            className="ml-[10px]"
-                            onClick={async () => {
-                              if (b.status === "upcoming") {
-                                try {
-                                  await API.patch(`/booking/${b._id}/status`, { status: "in_progress" });
-                                  setBookings((prev) =>
-                                    prev?.map((bk) => (bk._id === b._id ? { ...bk, status: "in_progress" } : bk)),
-                                  );
-                                } catch (err) {
-                                  console.error("Failed to update status to in_progress:", err);
-                                }
-                              }
-                              window.open(b.meetingLink, "_blank");
-                            }}
-                          >
-                            🟢 Join Session
-                          </Button>
-                        ) : (
-                          <p className="text-sm text-muted-foreground italic mt-[10px]">
-                            Waiting for tutor to publish meeting link
-                          </p>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    {/* LEFT INFO */}
+                    <div className="space-y-2 text-left">
+                      <div className="flex items-center gap-2 text-lg font-bold text-[var(--text-primary)]">
+                        <User className="w-5 h-5 text-[var(--accent)]" />
+                        <span>👨‍🏫 {b.tutorName}</span>
+                        {isUpcoming(b.date) && (
+                          <Badge variant="success" className="ml-2 text-[10px]">Upcoming</Badge>
                         )}
                       </div>
-                    )}
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm text-[var(--text-secondary)]">
+                        <p className="flex items-center gap-1.5">
+                          <BookOpen className="w-4 h-4 text-[var(--text-muted)]" />
+                          <span>Subject: <strong className="text-[var(--text-primary)] font-semibold">{b.subject}</strong></span>
+                        </p>
+                        <p className="flex items-center gap-1.5">
+                          <Calendar className="w-4 h-4 text-[var(--text-muted)]" />
+                          <span>Date: <strong className="text-[var(--text-primary)] font-semibold">{b.date}</strong></span>
+                        </p>
+                        <p className="flex items-center gap-1.5">
+                          <Clock className="w-4 h-4 text-[var(--text-muted)]" />
+                          <span>Time: <strong className="text-[var(--text-primary)] font-semibold">{b.time}</strong></span>
+                        </p>
+                        <p className="flex items-center gap-1.5">
+                          <ShieldCheck className="w-4 h-4 text-[var(--text-muted)]" />
+                          <span>
+                            Status: <Badge variant={getStatusBadge(b.status)} className="ml-1 text-[10px]">{b.status || "pending"}</Badge>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* ACTION BUTTONS */}
+                    <div className="flex items-center gap-2 select-none shrink-0 self-end md:self-center">
+                      {(b.status === "Booked" || b.status === "pending" || b.status === "upcoming" || b.status === "accepted") && (
+                        <div className="flex gap-2 flex-wrap">
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => cancelBooking(b._id)}
+                            className="text-xs font-semibold h-9"
+                          >
+                            Cancel Booking
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate(`/tutorials/chat?tutorId=${b.tutorId}`)}
+                            className="text-xs font-semibold h-9"
+                          >
+                            Message Tutor
+                          </Button>
+                        </div>
+                      )}
+
+                      {(b.status === "upcoming" || b.status === "in_progress") && (
+                        <div>
+                          {b.meetingLinkPublished && b.meetingLink ? (
+                            <Button
+                              variant="default"
+                              size="sm"
+                              onClick={async () => {
+                                if (b.status === "upcoming") {
+                                  try {
+                                    await API.patch(`/booking/${b._id}/status`, { status: "in_progress" });
+                                    setBookings((prev) =>
+                                      prev?.map((bk) => (bk._id === b._id ? { ...bk, status: "in_progress" } : bk)),
+                                    );
+                                  } catch (err) {
+                                    console.error("Failed to update status to in_progress:", err);
+                                  }
+                                }
+                                window.open(b.meetingLink, "_blank");
+                              }}
+                              className="text-xs font-bold h-9"
+                            >
+                              Join Session
+                            </Button>
+                          ) : (
+                            <p className="text-xs text-[var(--text-muted)] italic font-medium">
+                              Waiting for meeting link
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))
+                </PremiumCard>
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -187,3 +199,8 @@ function ManageBookingPage() {
 }
 
 export default ManageBookingPage;
+;
+// }
+
+
+// export default ManageBookingPage;

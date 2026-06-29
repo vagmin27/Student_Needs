@@ -446,14 +446,14 @@ export default function ChatPage() {
               download={lightbox.name}
               target="_blank"
               rel="noreferrer"
-              className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all cursor-pointer"
+              className="p-2.5 bg-[var(--border-color)] hover:bg-[var(--bg-tertiary)] rounded-full transition-all cursor-pointer"
               title="Download image"
             >
               <Download className="w-5 h-5" />
             </a>
             <button
               onClick={() => setLightbox(null)}
-              className="p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all cursor-pointer"
+              className="p-2.5 bg-[var(--border-color)] hover:bg-[var(--bg-tertiary)] rounded-full transition-all cursor-pointer"
               title="Close preview"
             >
               <X className="w-5 h-5" />
@@ -462,7 +462,7 @@ export default function ChatPage() {
           <img
             src={lightbox.url}
             alt={lightbox.name}
-            className="max-w-full max-h-[85vh] object-contain rounded-[var(--radius-sm)] shadow-[var(--shadow-lg)] border border-white/10"
+            className="max-w-full max-h-[85vh] object-contain rounded-[var(--radius-sm)] shadow-[var(--shadow-lg)] border border-[var(--border-color)]"
           />
           <p className="text-white/60 text-xs mt-3 select-none">{lightbox.name}</p>
         </div>

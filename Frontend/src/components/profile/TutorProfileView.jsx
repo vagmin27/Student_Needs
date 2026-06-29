@@ -26,7 +26,6 @@ import {
   BASE_URL
 } from "@/services/api/tutorialsApi.js";
 import bulb2 from "@/assets/images/bulb2.png";
-import "@/styles/Tutorials/EditProfile.css";
 import { calculateTutorProfileCompleteness } from "@/utils/profileCompleteness.js";
 
 const Linkedin = (props) => (

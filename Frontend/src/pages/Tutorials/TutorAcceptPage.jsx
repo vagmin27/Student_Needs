@@ -3,6 +3,8 @@ import API from "@/services/api/tutorialsApi.js";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { Button } from "@/components/ui/button";
+import EmptyState from "@/components/ui/EmptyState";
+
 function TutorAcceptPage() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,8 +62,8 @@ function TutorAcceptPage() {
   if (loading) {
     return (
       <DashboardLayout pageTitle="Manage Requests" role="tutor">
-        <div className="space-y-4 pb-8">
-          Loading...
+        <div className="flex items-center justify-center h-48">
+          <p className="text-sm text-[var(--text-secondary)] animate-pulse">Loading requests... ⏳</p>
         </div>
       </DashboardLayout>
     );
@@ -69,101 +71,119 @@ function TutorAcceptPage() {
 
   return (
     <DashboardLayout pageTitle="Manage Requests" role="tutor">
-      <div className="space-y-4 pb-8">
-        <h1 style={{ marginBottom: "30px" }}>
-          📥 Student Booking Requests
-        </h1>
+      <div className="space-y-6 pb-8">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+            📥 Student Booking Requests
+          </h1>
+        </div>
 
         {bookings.length === 0 ? (
-          <p>No pending requests at the moment.</p>
+          <EmptyState 
+            title="No requests pending" 
+            description="You don't have any student booking requests at the moment."
+          />
         ) : (
-          bookings?.map((b) => (
-            <div
-              key={b._id}
-              className="rounded-[var(--radius-md)] border border-border bg-card p-5 shadow-[var(--shadow-sm)] space-y-2"
-            >
-              <p><strong>📖 Subject:</strong> {b.subject}</p>
-              <p><strong>📅 Date:</strong> {b.date}</p>
-              <p><strong>⏰ Time:</strong> {b.time}</p>
-              <p><strong>👤 Student ID:</strong> {b.userId}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {bookings.map((b) => (
+              <div
+                key={b._id}
+                className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-[var(--radius-lg)] p-5 shadow-[var(--shadow-sm)] flex flex-col justify-between space-y-4 hover:shadow-[var(--shadow-md)] transition-all duration-200"
+              >
+                <div>
+                  <div className="flex justify-between items-start border-b border-[var(--border-color)] pb-3 mb-3">
+                    <span className="text-sm font-bold text-[var(--text-primary)]">
+                      {b.subject}
+                    </span>
+                    <span
+                      className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
+                        b.status === "Booked" || b.status === "pending"
+                          ? "bg-amber-100 text-amber-800 dark:bg-amber-955/40 dark:text-amber-400"
+                          : b.status === "upcoming" || b.status === "accepted"
+                            ? "bg-blue-100 text-blue-800 dark:bg-blue-955/40 dark:text-blue-400"
+                            : b.status === "in_progress"
+                              ? "bg-purple-100 text-purple-800 dark:bg-purple-955/40 dark:text-purple-400"
+                              : b.status === "Completed" || b.status === "completed"
+                                ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-955/40 dark:text-emerald-400"
+                                : "bg-rose-100 text-rose-800 dark:bg-rose-955/40 dark:text-rose-400"
+                      }`}
+                    >
+                      {b.status}
+                    </span>
+                  </div>
 
-              <p>
-                <strong>Status:</strong>{" "}
-                <span
-                  className={
-                    b.status === "Booked" || b.status === "pending"
-                      ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
-                      : b.status === "upcoming" || b.status === "accepted"
-                        ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-[var(--primary)]/10 text-blue-700 dark:bg-blue-900/30 dark:text-[var(--primary)]"
-                        : b.status === "in_progress"
-                          ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                          : b.status === "Completed" || b.status === "completed"
-                            ? "text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
-                            : "text-xs font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
-                  }
-                >
-                  {b.status}
-                </span>
-              </p>
-
-              {(b.status === "Booked" || b.status === "pending") && (
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "12px",
-                    marginTop: "12px",
-                  }}
-                >
-                  <Button size="sm" onClick={() => updateStatus(b._id, "upcoming")}>✅ Accept</Button>
-                  <Button size="sm" variant="destructive" onClick={() => updateStatus(b._id, "declined")}>❌ Reject</Button>
+                  <div className="space-y-1.5 text-sm text-[var(--text-secondary)]">
+                    <p className="flex items-center gap-2">
+                      <span className="font-semibold text-[var(--text-primary)]">Date:</span> {b.date}
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <span className="font-semibold text-[var(--text-primary)]">Time:</span> {b.time}
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <span className="font-semibold text-[var(--text-primary)]">Student ID:</span> {b.userId}
+                    </p>
+                  </div>
                 </div>
-              )}
 
-              {(b.status === "upcoming" || b.status === "accepted") && (
-                <div className="mt-4 p-4 border rounded bg-muted/30 space-y-2">
-                  <p className="font-semibold text-sm">Meeting Link:</p>
-                  
-                  {b.meetingLinkPublished && !editingLink[b._id] ? (
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
-                        ✅ Meeting link published
-                      </span>
-                      <a href={b.meetingLink} target="_blank" rel="noreferrer" className="text-xs text-blue-500 hover:underline truncate max-w-[200px] block">
-                        {b.meetingLink}
-                      </a>
-                      <Button size="sm" variant="outline" onClick={() => {
-                        setLinkInputs(prev => ({ ...prev, [b._id]: b.meetingLink }));
-                        setEditingLink(prev => ({ ...prev, [b._id]: true }));
-                      }}>
-                        Edit Link
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <input
-                        type="url"
-                        placeholder="https://meet.google.com/..."
-                        className="flex-1 rounded-[var(--radius-sm)] border border-input bg-background px-3 py-2 text-sm"
-                        value={linkInputs[b._id] !== undefined ? linkInputs[b._id] : (b.meetingLink || "")}
-                        onChange={(e) => setLinkInputs(prev => ({ ...prev, [b._id]: e.target.value }))}
-                      />
-                      <Button size="sm" onClick={() => publishMeetingLink(b._id, linkInputs[b._id] !== undefined ? linkInputs[b._id] : b.meetingLink)}>
-                        {b.meetingLinkPublished ? "Update Link" : "Publish Link"}
-                      </Button>
-                      {b.meetingLinkPublished && (
-                        <Button size="sm" variant="ghost" onClick={() => setEditingLink(prev => ({ ...prev, [b._id]: false }))}>
-                          Cancel
+                {(b.status === "Booked" || b.status === "pending") && (
+                  <div className="flex gap-3 pt-3 border-t border-[var(--border-color)]/50">
+                    <Button size="sm" className="text-xs h-8 px-3" onClick={() => updateStatus(b._id, "upcoming")}>✅ Accept</Button>
+                    <Button size="sm" variant="destructive" className="text-xs h-8 px-3" onClick={() => updateStatus(b._id, "declined")}>❌ Reject</Button>
+                  </div>
+                )}
+
+                {(b.status === "upcoming" || b.status === "accepted") && (
+                  <div className="mt-2 p-3.5 border border-[var(--border-color)] rounded-[var(--radius-md)] bg-[var(--bg-secondary)]/20 space-y-2.5">
+                    <p className="font-semibold text-xs text-[var(--text-primary)]">Meeting Link:</p>
+                    
+                    {b.meetingLinkPublished && !editingLink[b._id] ? (
+                      <div className="flex items-center justify-between gap-3 text-xs flex-wrap">
+                        <div className="flex items-center gap-2 truncate flex-grow">
+                          <span className="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shrink-0">
+                            ✅ Published:
+                          </span>
+                          <a href={b.meetingLink} target="_blank" rel="noreferrer" className="text-[var(--primary)] hover:underline truncate max-w-[150px] font-medium">
+                            {b.meetingLink}
+                          </a>
+                        </div>
+                        <Button size="xs" variant="outline" className="h-7 text-xs px-2.5 shrink-0" onClick={() => {
+                          setLinkInputs(prev => ({ ...prev, [b._id]: b.meetingLink }));
+                          setEditingLink(prev => ({ ...prev, [b._id]: true }));
+                        }}>
+                          Edit Link
                         </Button>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          ))
+                      </div>
+                    ) : (
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <input
+                          type="url"
+                          placeholder="https://meet.google.com/..."
+                          className="flex-1 rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)]/20 px-3 py-1.5 text-xs text-[var(--text-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)] placeholder:text-[var(--text-muted)]"
+                          value={linkInputs[b._id] !== undefined ? linkInputs[b._id] : (b.meetingLink || "")}
+                          onChange={(e) => setLinkInputs(prev => ({ ...prev, [b._id]: e.target.value }))}
+                        />
+                        <Button size="sm" className="h-8 text-xs font-semibold shrink-0" onClick={() => publishMeetingLink(b._id, linkInputs[b._id] !== undefined ? linkInputs[b._id] : b.meetingLink)}>
+                          {b.meetingLinkPublished ? "Update Link" : "Publish Link"}
+                        </Button>
+                        {b.meetingLinkPublished && (
+                          <Button size="sm" variant="ghost" className="h-8 text-xs shrink-0" onClick={() => setEditingLink(prev => ({ ...prev, [b._id]: false }))}>
+                            Cancel
+                          </Button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         )}
 
-        <Button variant="outline" onClick={() => navigate("/tutorials/tutor/dashboard")}>← Back to Dashboard</Button>
+        <div className="pt-4">
+          <Button variant="outline" className="text-xs h-9" onClick={() => navigate("/tutorials/tutor/dashboard")}>
+            ← Back to Dashboard
+          </Button>
+        </div>
       </div>
     </DashboardLayout>
   );

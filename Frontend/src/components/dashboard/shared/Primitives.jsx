@@ -2,11 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, animate } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MetricCard } from "../../ui/card";
+import { Card, MetricCard } from "../../ui/card";
+import { Button } from "@/components/ui/button.jsx";
+import { PremiumInput as GlobalPremiumInput } from "../../ui/input";
+import { EmptyState as GlobalEmptyState } from "../../ui/EmptyState";
 
 // Re-export MetricCard and alias as StatCard
 export { MetricCard };
 export const StatCard = MetricCard;
+
+const MotionCard = motion(Card);
 
 // 1. PremiumCard Component
 export const PremiumCard = React.forwardRef(({
@@ -22,7 +27,7 @@ export const PremiumCard = React.forwardRef(({
   ...props
 }, ref) => {
   return (
-    <motion.div
+    <MotionCard
       ref={ref}
       onClick={onClick}
       role={onClick ? "button" : undefined}
@@ -34,8 +39,8 @@ export const PremiumCard = React.forwardRef(({
         }
       }}
       className={cn(
-        "premium-card rounded-[var(--radius-lg)] border border-[var(--border-color)] bg-[var(--card-bg)] text-[var(--text-primary)] shadow-sm flex flex-col h-full relative overflow-hidden",
-        hoverEffect && "cursor-pointer",
+        "flex flex-col h-full relative overflow-hidden",
+        hoverEffect && "cursor-pointer hover:border-[var(--accent)] hover:shadow-[var(--shadow-glow)]",
         gradient && "bg-gradient-to-b from-[var(--card-bg)] to-[var(--bg-secondary)]",
         className
       )}
@@ -66,7 +71,7 @@ export const PremiumCard = React.forwardRef(({
       <div className="flex-1 flex flex-col z-10">
         {children}
       </div>
-    </motion.div>
+    </MotionCard>
   );
 });
 PremiumCard.displayName = "PremiumCard";
@@ -245,48 +250,20 @@ export const PremiumButton = React.forwardRef(({
   disabled,
   ...props
 }, ref) => {
-  const baseStyles = "inline-flex items-center justify-center font-medium transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none rounded-[var(--radius-sm)]";
-  
-  const variants = {
-    default: "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover border border-transparent shadow-sm",
-    primary: "bg-btn-primary text-btn-primary-text hover:bg-btn-primary-hover border border-transparent shadow-sm",
-    secondary: "bg-btn-secondary text-btn-secondary-text hover:bg-btn-secondary-hover border border-[var(--border-color)]",
-    outline: "border border-[var(--border-color)] bg-btn-secondary hover:bg-btn-secondary-hover text-btn-secondary-text",
-    ghost: "bg-transparent hover:bg-btn-ghost-hover text-btn-ghost-text hover:text-btn-ghost-hover-text",
-    destructive: "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover",
-    danger: "bg-btn-danger text-btn-danger-text hover:bg-btn-danger-hover",
-    success: "bg-btn-success text-btn-success-text hover:bg-btn-success-hover",
-    glass: "bg-white/5 backdrop-blur-md text-btn-secondary-text border border-white/10 hover:bg-btn-secondary-hover",
-  };
-
-  const sizes = {
-    default: "h-10 px-4 text-sm",
-    sm: "h-8 px-3 text-xs rounded-[var(--radius-sm)]",
-    lg: "h-12 px-6 text-base rounded-[var(--radius-lg)]",
-    icon: "h-10 w-10 p-0",
-  };
-
   return (
-    <button
+    <Button
       ref={ref}
-      disabled={disabled || isLoading}
-      className={cn(baseStyles, variants[variant], sizes[size], className)}
+      variant={variant}
+      size={size}
+      isLoading={isLoading}
+      leftIcon={LeftIcon}
+      rightIcon={RightIcon}
+      disabled={disabled}
+      className={className}
       {...props}
     >
-      {isLoading ? (
-        <Loader2 className="w-4 h-4 mr-2 animate-spin text-current" />
-      ) : LeftIcon ? (
-        <span className="mr-2 text-current flex items-center justify-center">
-          {React.isValidElement(LeftIcon) ? LeftIcon : <LeftIcon className="w-4 h-4" />}
-        </span>
-      ) : null}
       {children}
-      {!isLoading && RightIcon && (
-        <span className="ml-2 text-current flex items-center justify-center">
-          {React.isValidElement(RightIcon) ? RightIcon : <RightIcon className="w-4 h-4" />}
-        </span>
-      )}
-    </button>
+    </Button>
   );
 });
 PremiumButton.displayName = "PremiumButton";
@@ -301,37 +278,15 @@ export const PremiumInput = React.forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className="relative w-full flex flex-col gap-1.5">
-      <div className="relative flex items-center w-full">
-        {LeftIcon && (
-          <div className="absolute left-3.5 h-5 w-5 text-[var(--text-muted)] pointer-events-none flex items-center justify-center">
-            {React.isValidElement(LeftIcon) ? LeftIcon : <LeftIcon className="w-4 h-4" />}
-          </div>
-        )}
-        <input
-          ref={ref}
-          type={type}
-          className={cn(
-            "flex h-11 w-full rounded-[var(--radius-md)] border border-[var(--border-color)] bg-[var(--bg-secondary)] px-3.5 py-2.5 text-sm text-[var(--text-primary)] transition-all placeholder:text-[var(--text-muted)]/60 focus-visible:outline-none focus-visible:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)]/10 disabled:cursor-not-allowed disabled:opacity-50",
-            LeftIcon && "pl-11",
-            RightIcon && "pr-11",
-            error && "border-[var(--danger)] focus-visible:ring-[var(--danger)]/10 focus-visible:border-[var(--danger)]",
-            className
-          )}
-          {...props}
-        />
-        {RightIcon && (
-          <div className="absolute right-3.5 h-5 w-5 text-[var(--text-muted)] flex items-center justify-center">
-            {React.isValidElement(RightIcon) ? RightIcon : <RightIcon className="w-4 h-4" />}
-          </div>
-        )}
-      </div>
-      {error && (
-        <span className="text-xs font-medium text-[var(--danger)] px-1">
-          {error}
-        </span>
-      )}
-    </div>
+    <GlobalPremiumInput
+      ref={ref}
+      className={className}
+      type={type}
+      leftIcon={LeftIcon}
+      rightIcon={RightIcon}
+      error={error}
+      {...props}
+    />
   );
 });
 PremiumInput.displayName = "PremiumInput";
@@ -374,45 +329,7 @@ export const AnimatedCounter = ({
 };
 
 // 10. EmptyState Component
-export const EmptyState = React.memo(({
-  icon: Icon,
-  title = "No information found",
-  description,
-  actionLabel,
-  onAction,
-  className
-}) => {
-  return (
-    <div className={cn(
-      "flex flex-col items-center justify-center p-8 md:p-12 text-center border border-dashed border-[var(--border-color)] rounded-[var(--radius-lg)] bg-[var(--bg-secondary)]/10 backdrop-blur-sm hover:border-[var(--accent)]/30 transition-all duration-300 group max-w-lg mx-auto w-full",
-      className
-    )}>
-      {Icon && (
-        <div className="w-16 h-16 rounded-[var(--radius-lg)] bg-[var(--accent)]/[0.03] border border-[var(--accent)]/10 flex items-center justify-center mb-5 text-[var(--text-secondary)] group-hover:text-[var(--accent)] group-hover:scale-105 transition-all duration-300 shadow-sm">
-          <Icon className="w-7 h-7 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors duration-300" />
-        </div>
-      )}
-      <h4 className="text-base font-semibold text-[var(--text-primary)] mb-1.5">
-        {title}
-      </h4>
-      {description && (
-        <p className="text-sm text-[var(--text-muted)] description-text mb-6 max-w-md leading-relaxed">
-          {description}
-        </p>
-      )}
-      {actionLabel && onAction && (
-        <PremiumButton
-          variant="outline"
-          size="sm"
-          onClick={onAction}
-        >
-          {actionLabel}
-        </PremiumButton>
-      )}
-    </div>
-  );
-});
-EmptyState.displayName = "EmptyState";
+export const EmptyState = GlobalEmptyState;
 
 // 11. PageLayout Component
 export const PageLayout = ({ children, className, ...props }) => {

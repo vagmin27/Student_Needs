@@ -1,5 +1,7 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { ChartContainer, ChartTooltip } from '../../dashboard/shared/ChartContainer';
+import { chartPalette } from '../../../utils/chartPalette';
 
 const WeeklySpendingChart = ({ data, labels }) => {
   const chartData = labels?.map((label, index) => ({
@@ -9,20 +11,19 @@ const WeeklySpendingChart = ({ data, labels }) => {
   })) || [];
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ChartContainer height="100%" minHeight={280}>
       <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
         <XAxis dataKey="name" stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
         <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
         <Tooltip 
-          contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)' }}
-          itemStyle={{ color: 'var(--text-secondary)' }}
+          content={<ChartTooltip formatter={(value) => `₹ ${value.toLocaleString()}`} />}
         />
         <Legend wrapperStyle={{ color: 'var(--text-secondary)' }} iconType="circle" />
-        <Bar dataKey="ThisWeek" fill="var(--success)" radius={[4, 4, 0, 0]} />
-        <Bar dataKey="LastWeek" fill="var(--neutral-bg)" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="ThisWeek" name="This Week" fill={chartPalette.success} radius={[4, 4, 0, 0]} />
+        <Bar dataKey="LastWeek" name="Last Week" fill={chartPalette.secondary} radius={[4, 4, 0, 0]} />
       </BarChart>
-    </ResponsiveContainer>
+    </ChartContainer>
   );
 };
 

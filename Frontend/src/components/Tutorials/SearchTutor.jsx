@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/Tutorials/SearchTutor.css";
 import { useSearchParams } from "react-router-dom";
 import study2 from "../../assets/images/study2.jpg";
 import PropTypes from "prop-types";
+import { Input } from "@/components/ui/input.jsx";
+import { Button } from "@/components/ui/button.jsx";
+import { Alert, AlertDescription } from "@/components/ui/alert.jsx";
+import { Search, X } from "lucide-react";
 
 /** * This module handles the search query for tutors
  * @param {function} handleQuery prop passed in from parent component in SearchTutor.jsx
@@ -58,52 +61,43 @@ function SearchTutor({ notFound, search, handleSubmit, page }) {
   // renders no result
   const noRes = () => {
     return (
-      <div
-        className="flash flash-warning alert alert-dismissible fade show"
-        role="alert"
-      >
-        <span>No results. Please try another keyword. </span>
-        <button 
-          type="button" 
-          className="btn-close" 
-          data-bs-dismiss="alert" 
-          aria-label="Close"
-        >
-          <i className="fas fa-times"></i>
-        </button>
-      </div>
+      <Alert variant="warning" className="max-w-md mx-auto mb-6 flex justify-between items-center">
+        <AlertDescription className="text-sm font-medium">
+          No results. Please try another keyword.
+        </AlertDescription>
+      </Alert>
     );
   };
 
   return (
-    <>
-      <div className="wrap" role="main">
-        <h1 className="searchHeader">Find a tutor</h1>
-        <div className="search">
-          <input
+    <div className="flex flex-col items-center justify-center py-8 w-full max-w-lg mx-auto">
+      <div className="w-full text-center mb-8" role="main">
+        <h1 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-6">Find a tutor</h1>
+        <div className="flex gap-2 w-full">
+          <Input
             type="text"
-            className="searchTerm"
             value={searchword}
             onChange={handleChange}
             placeholder="What would you like to work on?"
+            className="flex-grow h-11"
           />
-          <button
+          <Button
             type="button"
             aria-label="search"
-            className="searchButton"
             onClick={handleClick}
+            className="h-11 px-5"
           >
-            <i className="fa fa-search"></i>
-          </button>
+            <Search className="w-4 h-4 mr-2" /> Search
+          </Button>
         </div>
       </div>
-      <div className="imgContainer" role="complementary">
+      <div className="w-full" role="complementary">
         {notFound ? noRes() : null}
-        <div className="imageDiv">
-          <img src={study2} className="study2pic" alt="study picture" />
+        <div className="max-w-md mx-auto rounded-[var(--radius-lg)] overflow-hidden border border-[var(--border-color)] shadow-[var(--shadow-sm)]">
+          <img src={study2} className="w-full h-auto object-cover" alt="study picture" />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -114,4 +108,4 @@ SearchTutor.propTypes = {
   handleSubmit: PropTypes.func,
 };
 
-export default SearchTutor;
+export default SearchTutor;

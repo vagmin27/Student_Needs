@@ -5,7 +5,7 @@ import { opportunitiesApi } from '@/services/Referrals/opportunities.js';
 import { analyzeApi } from '@/services/Referrals/analyze.js';
 import { linkedInApi, resumeApi, studentProfileApi } from '@/services/Referrals/studentProfile.js';
 import { useAuth } from "@/contexts/GlobalAuthContext.jsx";
-import { Button } from '@/components/Referrals/ui/button.jsx';
+import { Button } from "@/components/ui/button.jsx";
 import { cn } from '@/lib/Referrals/utils.js';
 import {
   Mic,
@@ -388,7 +388,7 @@ export default function InterviewPage() {
           <div className="flex flex-col gap-2 w-full">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-              <span className="font-semibold text-foreground dark:text-slate-100">
+              <span className="font-semibold text-[var(--text-primary)]">
                 Application Submitted Successfully
               </span>
             </div>

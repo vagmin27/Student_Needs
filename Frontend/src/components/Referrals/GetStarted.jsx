@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/Referrals/ui/button.jsx";
+import { Button } from "@/components/ui/button.jsx";
 
 /**
  * GetStarted Component

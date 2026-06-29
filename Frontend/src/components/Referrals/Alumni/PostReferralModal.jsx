@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/Referrals/ui/button.jsx';
-import { Input } from '@/components/Referrals/ui/input.jsx';
-import { Label } from '@/components/Referrals/ui/label.jsx';
-import { Textarea } from '@/components/Referrals/ui/textarea.jsx';
+import { Button } from "@/components/ui/button.jsx";
+import { Input } from "@/components/ui/input.jsx";
+import { Label } from "@/components/ui/label.jsx";
+import { Textarea } from "@/components/ui/textarea.jsx";
 import { X, Plus, Loader2 } from 'lucide-react';
 
 /**

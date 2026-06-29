@@ -801,7 +801,7 @@ export default function ModuleDetail() {
             <div className="flex justify-center gap-3">
               <Link 
                 to="/role-selection" 
-                className="px-6 py-2.5 bg-white text-primary rounded-[var(--radius-sm)] text-xs font-bold hover:bg-slate-100 transition-colors shadow-[var(--shadow-lg)]"
+                className="px-6 py-2.5 bg-white text-primary rounded-[var(--radius-sm)] text-xs font-bold hover:bg-white/90 transition-colors shadow-[var(--shadow-lg)]"
               >
                 Log In to Workspace
               </Link>
