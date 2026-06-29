@@ -64,7 +64,7 @@ export default function Home() {
             Manage academics, tutoring, attendance, finances, and career opportunities from one unified platform.
           </p>
           <div className="uc-actions flex flex-wrap gap-4 select-none pt-2">
-            <Link className="uc-btn-primary px-8 py-4 text-white rounded-[var(--radius-md)] text-sm font-bold flex items-center gap-1.5 shadow-[var(--shadow-lg)] shadow-primary/20 hover:scale-105 transition-all duration-300" to="/role-selection">
+            <Link className="uc-btn-primary px-8 py-4 rounded-[var(--radius-md)] text-sm font-bold flex items-center gap-1.5 shadow-[var(--shadow-lg)] shadow-primary/20 hover:scale-105 transition-all duration-300" to="/role-selection">
               Get Started &rarr;
             </Link>
             <Link className="uc-btn-secondary px-8 py-4 rounded-[var(--radius-md)] text-sm font-bold transition-all duration-300 flex items-center gap-2" to="/features">
@@ -86,10 +86,10 @@ export default function Home() {
           aria-hidden="true"
         >
           {/* Central Live Environment Container */}
-          <div className="w-full max-w-[500px] bg-[#020617] border border-white/10 rounded-[24px] p-6 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-md">
+          <div className="w-full max-w-[500px] bg-[var(--card-bg)] border border-[var(--border-color)] rounded-[24px] p-6 shadow-2xl space-y-4 relative overflow-hidden backdrop-blur-md">
             
             {/* Window bar */}
-            <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-1.5">
+            <div className="flex items-center justify-between border-b border-[var(--border-color)] pb-3 mb-1.5">
               <div className="flex items-center gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                 <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
@@ -106,7 +106,7 @@ export default function Home() {
                   AR
                 </div>
                 <div className="text-left min-w-0">
-                  <h4 className="text-xs font-bold text-white truncate">Alex Rivera</h4>
+                  <h4 className="text-xs font-bold text-[var(--text-primary)] truncate">Alex Rivera</h4>
                   <p className="text-[9.5px] text-[var(--text-secondary)] truncate font-medium">CS Junior • GPA 3.82</p>
                 </div>
               </div>
@@ -115,14 +115,14 @@ export default function Home() {
               <div className="p-3 bg-[var(--bg-secondary)]/10 border border-[var(--border-color)] rounded-[var(--radius-lg)] flex items-center justify-between">
                 <div className="text-left">
                   <h4 className="text-[9.5px] uppercase font-bold text-[var(--text-secondary)]">Attendance</h4>
-                  <p className="text-base font-black text-emerald-400">94.2% Rate</p>
+                  <p className="text-base font-black text-emerald-500">94.2% Rate</p>
                 </div>
                 <div className="w-9 h-9 relative flex items-center justify-center shrink-0">
                   <svg className="w-full h-full transform -rotate-90">
                     <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-[var(--border-color)]" strokeWidth="2.5" fill="transparent" />
-                    <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-emerald-400" strokeWidth="2.5" strokeDasharray={88} strokeDashoffset={5} fill="transparent" />
+                    <circle cx="18" cy="18" r="14" stroke="currentColor" className="text-emerald-500" strokeWidth="2.5" strokeDasharray={88} strokeDashoffset={5} fill="transparent" />
                   </svg>
-                  <span className="absolute text-[8px] font-bold text-emerald-400">94%</span>
+                  <span className="absolute text-[8px] font-bold text-emerald-500">94%</span>
                 </div>
               </div>
             </div>
@@ -132,7 +132,7 @@ export default function Home() {
               <div className="flex justify-between items-center text-left">
                 <div>
                   <h4 className="text-[9.5px] uppercase font-bold text-[var(--text-secondary)]">Monthly Budget</h4>
-                  <p className="text-xs font-bold text-white">$428.50 / $600.00</p>
+                  <p className="text-xs font-bold text-[var(--text-primary)]">$428.50 / $600.00</p>
                 </div>
                 <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold">Within Limit</span>
               </div>
@@ -155,7 +155,7 @@ export default function Home() {
               </div>
               <div className="text-left flex-grow min-w-0">
                 <h4 className="text-[9.5px] font-bold text-[var(--text-secondary)] uppercase">Next Tutor Session</h4>
-                <p className="text-xs font-bold text-white truncate">CS-301 Algorithms with Dr. Marcus</p>
+                <p className="text-xs font-bold text-[var(--text-primary)] truncate">CS-301 Algorithms with Dr. Marcus</p>
                 <p className="text-[9.5px] text-indigo-400 font-bold">Today at 4:30 PM (Online Match)</p>
               </div>
               <span className="text-[8px] px-2 py-0.5 bg-indigo-500/15 text-indigo-400 rounded font-black uppercase shrink-0 border border-indigo-500/20">UPCOMING</span>
@@ -168,14 +168,14 @@ export default function Home() {
               </div>
               <div className="text-left flex-grow min-w-0">
                 <h4 className="text-[9.5px] font-bold text-[var(--text-secondary)] uppercase">Referrals & Jobs</h4>
-                <p className="text-xs font-bold text-white truncate">Stripe Intern Referral Approved</p>
+                <p className="text-xs font-bold text-[var(--text-primary)] truncate">Stripe Intern Referral Approved</p>
                 <p className="text-[9.5px] text-cyan-400 font-bold">Referred by Priya S. (Alumni '23)</p>
               </div>
               <span className="text-[8px] px-2 py-0.5 bg-cyan-500/15 text-cyan-400 rounded-full font-black uppercase shrink-0 border border-cyan-500/20 animate-pulse">Matched</span>
             </div>
             
             {/* Glowing Accent Ring */}
-            <div className="absolute -inset-px rounded-[24px] border border-white/10 pointer-events-none" />
+            <div className="absolute -inset-px rounded-[24px] border border-[var(--border-color)] pointer-events-none" />
           </div>
         </motion.div>
       </section>
@@ -410,7 +410,7 @@ export default function Home() {
               Join the platform that thousands of university students use daily to manage their entire academic lifecycle.
             </p>
             <div className="flex justify-center gap-4 select-none">
-              <Link className="uc-btn-primary px-8 py-4 text-white rounded-[var(--radius-md)] text-sm font-bold flex items-center gap-1.5 hover:scale-105 transition-all duration-300" to="/role-selection">
+              <Link className="uc-btn-primary px-8 py-4 rounded-[var(--radius-md)] text-sm font-bold flex items-center gap-1.5 hover:scale-105 transition-all duration-300" to="/role-selection">
                 Get Started Now &rarr;
               </Link>
               <Link className="uc-btn-secondary px-8 py-4 text-white border border-white/20 rounded-[var(--radius-md)] text-sm font-bold hover:bg-white/10 transition-all duration-300" to="/features">
