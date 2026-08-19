@@ -43,7 +43,6 @@ https://student-needs.vercel.app/
 * 🔎 Search and filtering functionality
 * 💾 Persistent data storage using MongoDB
 * 📱 Responsive and modern user interface
-* 🧩 Modular architecture for independent student services
 
 ---
 
@@ -96,8 +95,6 @@ Connects students with alumni for career and referral opportunities.
 * Tailwind CSS
 * React Router
 * Axios
-* Lucide React
-* Framer Motion
 
 ### Backend
 
@@ -134,15 +131,15 @@ Connects students with alumni for career and referral opportunities.
              ┌──────────────┼──────────────┐
              │              │              │
              ▼              ▼              ▼
-      ┌─────────────────────────────────────────┐
-      │          Student Needs Platform         │
-      │                                         │
-      │  📊 Attendance Management               │
-      │  💰 Expense Tracker                     │
-      │  👨‍🏫 Tutor Finder                       │
-      │  🤝 Alumni Referrals                    │
-      │                                         │
-      └────────────────────┬────────────────────┘
+        ─────────────────────────────────────────
+                Student Needs Platform         
+                                               
+                📊 Attendance Management              
+                💰 Expense Tracker                    
+                👨‍🏫 Tutor Finder                       
+                🤝 Alumni Referrals                    
+                                                     
+       ────────────────────┬────────────────────
                            │
                            ▼
                     Express.js Backend
@@ -184,77 +181,26 @@ Protected routes ensure that authenticated users can access the appropriate modu
 
 ---
 
-## 📂 Project Structure
 
-```bash
-Student_Needs/
-│
-├── client/                  # React Frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── context/
-│   │   ├── services/
-│   │   └── ...
-│   │
-│   └── package.json
-│
-├── server/                  # Express Backend
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── services/
-│   └── ...
-│
-├── README.md
-└── package.json
-```
 
----
 
-## 🔄 Application Flow
-
-```text
-                    Student
-                       │
-                       ▼
-                Login / Register
-                       │
-                       ▼
-              Student Dashboard
-                       │
-       ┌───────────────┼────────────────┐
-       │               │                │
-       ▼               ▼                ▼
-   Attendance       Expenses        Tutor Finder
-       │               │                │
-       └───────────────┼────────────────┘
-                       │
-                       ▼
-                 Alumni Referrals
-                       │
-                       ▼
-                    MongoDB
-```
-
----
 
 ## ⚙️ Installation
 
 ### Clone Repository
 
 ```bash
-git clone https://github.com/chaitna27/[YOUR-REPOSITORY].git
+git clone https://github.com/vagmin27/Student_Needs.git
 cd Student_Needs
 ```
 
 ### Backend
 
 ```bash
-cd server
+cd backend
 npm install
 npm run dev
+node index.js
 ```
 
 ### Frontend
@@ -262,7 +208,7 @@ npm run dev
 Open another terminal:
 
 ```bash
-cd client
+cd frontend
 npm install
 npm run dev
 ```
@@ -274,9 +220,19 @@ npm run dev
 Create a `.env` file inside the backend directory:
 
 ```env
-MONGO_URI=
+PORT = 
+MONGO_URI = 
 JWT_SECRET=
-PORT=
+SMTP_USER=
+SMTP_PASS=
+SESSION_SECRET=
+
+FRONTEND_URL = 
+GEMINI_API_KEY=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
 ```
 
 Add any additional environment variables required by the individual modules.
@@ -314,15 +270,5 @@ By integrating multiple independent modules into one application, the platform r
 
 ---
 
-## 🔮 Future Improvements
-
-* 📱 Mobile application
-* 🔔 Real-time notifications
-* 💬 Real-time chat between students and tutors
-* 📅 Calendar integration
-* 🤖 AI-powered academic recommendations
-* 📊 Advanced student analytics
-* 🔔 Automated attendance alerts
-* 🔎 Improved tutor and alumni recommendation system
 
 
