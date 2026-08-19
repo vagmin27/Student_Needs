@@ -23,10 +23,13 @@ https://student-needs.vercel.app/
 <img width="1919" height="1008" alt="image" src="https://github.com/user-attachments/assets/5c7516d0-8047-4517-b993-ae429c8d05a3" />
 <img width="1917" height="1017" alt="image" src="https://github.com/user-attachments/assets/d1acf6e1-f4c3-40c4-a902-a79701117db0" />
 <img width="474" height="866" alt="image" src="https://github.com/user-attachments/assets/59164e76-2fd0-46c7-bd1d-3fb712eb305b" />
+<img width="1918" height="1004" alt="image" src="https://github.com/user-attachments/assets/5b208187-c56a-4487-a48d-fdb4d988a095" />
 <img width="1919" height="979" alt="image" src="https://github.com/user-attachments/assets/c444d4ca-aa11-48e2-a401-c62564a00c7f" />
 <img width="1919" height="1020" alt="image" src="https://github.com/user-attachments/assets/ecec015d-a8bd-4e44-ab2d-a3a6680edcb0" />
 <img width="1919" height="1014" alt="image" src="https://github.com/user-attachments/assets/fb6c8a53-8e7d-40a1-a2c3-addf6992cafd" />
 <img width="1800" height="1009" alt="image" src="https://github.com/user-attachments/assets/dea46511-0f30-4af3-b43e-1bbf3c893a91" />
+<img width="1919" height="1016" alt="image" src="https://github.com/user-attachments/assets/23f0c599-6634-4e18-baeb-dc7b844e214d" />
+
 
 
 ---
