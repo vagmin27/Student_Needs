@@ -712,8 +712,8 @@ export default function StudentProfileView() {
               <input
                 id="college" value={collegeName}
                 onChange={e => handleCollegeChange(e.target.value)}
-                onFocus={() => setShowSuggestions(true)}
-                onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                // onFocus={() => setShowSuggestions(true)}
+                // onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                 placeholder="Search your college..."
                 style={{ ...fieldStyle, borderColor: !isCollegeNameValid && collegeName.trim() ? "#ef4444" : "var(--border-color)" }}
                 onFocus={e => { e.target.style.borderColor = "#6366f1"; e.target.style.boxShadow = "0 0 0 3px rgba(99,102,241,0.10)"; }}
